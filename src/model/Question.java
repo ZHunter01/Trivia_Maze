@@ -1,7 +1,6 @@
 package model;
 
 public class Question {
-   // private Question myQ;
     private String myQuestion;
     private String mySolution;
     
@@ -28,5 +27,6 @@ public class Question {
         
         return  mySolution.equals(theInput.toLowerCase());
     }
+    
    
 }
