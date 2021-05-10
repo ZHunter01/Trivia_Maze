@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
+<<<<<<< HEAD
 	<name>Trivia Maze</name>
+=======
+	<name>Trivia_Maze</name>
+>>>>>>> e13ed6300f9d5da45a1f6edfd75db55692fff82c
 	<comment></comment>
 	<projects>
 	</projects>
@@ -10,8 +14,20 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+<<<<<<< HEAD
 	</buildSpec>
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
+=======
+		<buildCommand>
+			<name>net.sourceforge.pmd.eclipse.plugin.pmdBuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>org.eclipse.jdt.core.javanature</nature>
+		<nature>net.sourceforge.pmd.eclipse.plugin.pmdNature</nature>
+>>>>>>> e13ed6300f9d5da45a1f6edfd75db55692fff82c
 	</natures>
 </projectDescription>
