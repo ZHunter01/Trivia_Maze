@@ -15,7 +15,11 @@ public class Door {
         
     }
     
-    public void checkLock(String theSolution) {
+    public Question getQuestion() {
+        return myQuestion;
+    }
+    
+    public void checkLock(final String theSolution) {
         if (myQuestion.isSolution(theSolution)) {
             myLock = false;
         }
@@ -24,7 +28,15 @@ public class Door {
         }
     }
     
-    public boolean isLocked( ) {
+    public void setLock(boolean theBoolean) {
+        myLock = theBoolean;
+    }
+    
+    public void setPermaLock(boolean theBoolean) {
+        myPermaLock = theBoolean;
+    }
+    
+    public boolean isLocked() {
         return myLock;
     }
     

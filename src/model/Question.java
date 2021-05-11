@@ -7,6 +7,7 @@ public class Question {
     
     public Question() {
         //myQ = new Question();
+        //getQuestion();
         myQuestion = "What color is the sky?";
         mySolution = "blue";
     }
@@ -23,7 +24,7 @@ public class Question {
     
     //getSolution
     
-    public boolean isSolution(String theInput) {
+    public boolean isSolution(final String theInput) {
         
         return  mySolution.equals(theInput.toLowerCase());
     }
