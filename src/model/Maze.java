@@ -54,6 +54,11 @@ public class Maze {
         userDir = 0;
     }
     
+    public int getQuestionCount() {
+        return myQuestionCounter;
+    }
+    
+    
     public Question doorQuestion(final int theDir) {
         
         myCurrentDoor = getUserDoor(theDir);         
@@ -64,10 +69,16 @@ public class Maze {
     
     public void doorSolution(final String theSolution) {
         if (myCurrentDoor.getQuestion().isSolution(theSolution.trim()) == true) {
-            incrementMaze();
             myQuestionCounter ++;
             myCurrentDoor.setLock(false);
-            myPlayer.setLocation(myYCount, myXCount);
+            
+            if (checkWin() == true) {
+                return;
+            }
+            else {
+                incrementMaze();
+                myPlayer.setLocation(myYCount, myXCount);
+            }
         }
         else {
             myCurrentDoor.setPermaLock(true);
@@ -107,5 +118,11 @@ public class Maze {
     
     }
         
+    private boolean checkWin() {
+        if (myXCount == myMaze[0].length && myYCount == myMaze.length) {
+            myWin = true;
+        }
+        return myWin;
+    }
     
 }
