@@ -9,6 +9,8 @@ public class Maze {
     private final static int DEFAULT_SIZE = 4;
     /**Boolean for if user has reached the final room */
     private boolean myWin;
+    /**Boolean for if all door in a room are permanently locked and the user loses */
+    private boolean myLose;
     /**Int counter for how many question have been answered correctly*/
     private int myQuestionCounter; 
     /**Int value for current x position in maze */
@@ -61,7 +63,7 @@ public class Maze {
     
     public Question doorQuestion(final int theDir) {
         
-        myCurrentDoor = getUserDoor(theDir);         
+        myCurrentDoor = myMaze [myXCount][myYCount].getUserDoor(theDir);         
         userDir = theDir;
         
         return myCurrentDoor.getQuestion();
@@ -74,8 +76,9 @@ public class Maze {
             
             if (checkWin() == true) {
                 return;
-            }
-            else {
+            } else if (checkLose() == true) {
+                return;
+            } else {
                 incrementMaze();
                 myPlayer.setLocation(myYCount, myXCount);
             }
@@ -85,23 +88,23 @@ public class Maze {
         }
     }
     
-    private Door getUserDoor(final int theDir) {
-        Door userDoor = new Door();
-        
-        if (theDir == UP) {
-            userDoor = myMaze [myXCount][myYCount].accessUp(); 
-        } else if (theDir == LEFT) {
-            userDoor = myMaze [myXCount][myYCount].accessLeft(); 
-        } else if (theDir == DOWN) {
-            userDoor = myMaze [myXCount][myYCount].accessDown(); 
-        } else if (theDir == RIGHT) {
-            userDoor = myMaze [myXCount][myYCount].accessRight(); 
-        } else {
-            throw new IllegalArgumentException("Error: Parameter must be an int value from 0 to 3");
-        }
-        
-        return userDoor;
-    }
+//    private Door getUserDoor(final int theDir) {
+//        Door userDoor = new Door();
+//        
+//        if (theDir == UP) {
+//            userDoor = myMaze [myXCount][myYCount].accessUp(); 
+//        } else if (theDir == LEFT) {
+//            userDoor = myMaze [myXCount][myYCount].accessLeft(); 
+//        } else if (theDir == DOWN) {
+//            userDoor = myMaze [myXCount][myYCount].accessDown(); 
+//        } else if (theDir == RIGHT) {
+//            userDoor = myMaze [myXCount][myYCount].accessRight(); 
+//        } else {
+//            throw new IllegalArgumentException("Error: Parameter must be an int value from 0 to 3");
+//        }
+//        
+//        return userDoor;
+//    }
     
     private void incrementMaze() {
         if (userDir == UP) {
@@ -123,6 +126,23 @@ public class Maze {
             myWin = true;
         }
         return myWin;
+    }
+    
+    private boolean checkLose() {
+        final Room currentRoom = myMaze [myXCount][myYCount].getRoom();
+        boolean permaLock = false;
+        
+        boolean up = currentRoom.getDoorPermaLock(UP);
+        boolean left = currentRoom.getDoorPermaLock(LEFT);
+        boolean down = currentRoom.getDoorPermaLock(DOWN);
+        boolean right = currentRoom.getDoorPermaLock(RIGHT);
+
+        //If three of the four doors are permanently locked, game is over
+        if ((up ? 1:0) + (left ? 1:0) + (down ? 1:0) + (right ? 1:0) == 3) {
+            permaLock = true;
+        }
+        
+        return permaLock;
     }
     
 }
