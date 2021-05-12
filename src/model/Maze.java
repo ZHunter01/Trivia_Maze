@@ -76,8 +76,6 @@ public class Maze {
             
             if (checkWin() == true) {
                 return;
-            } else if (checkLose() == true) {
-                return;
             } else {
                 incrementMaze();
                 myPlayer.setLocation(myYCount, myXCount);
@@ -85,6 +83,10 @@ public class Maze {
         }
         else {
             myCurrentDoor.setPermaLock(true);
+            
+            if (checkLose() == true) {
+                return;
+            }
         }
     }
     
@@ -128,6 +130,10 @@ public class Maze {
         return myWin;
     }
     
+    /** Checks if three of four doors in the current room are locked
+     * 
+     * @return permaLock
+     */
     private boolean checkLose() {
         final Room currentRoom = myMaze [myXCount][myYCount].getRoom();
         boolean permaLock = false;
