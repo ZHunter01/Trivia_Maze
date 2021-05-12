@@ -1,5 +1,6 @@
 package db;
 
+import java.awt.Cursor;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -28,14 +29,20 @@ public class SqliteDB {
             ResultSet rs = stmt.executeQuery("SELECT * FROM QuestionTable");
             
             while(rs.next()) {
+                int id = rs.getInt("ID");
                 String question = rs.getString("Question");
                 String answer = rs.getString("Answer");
-                System.out.println("Question: " + question);
-                System.out.println("Answer: " + answer);
+                System.out.println("ID: " + id + "Question: " + question + "Answer: " + answer);
+                
             }
          } catch ( Exception e ) {
             System.out.println("Error: " + e.getMessage() );
          }
+    }
+    
+    public String getQuestion(int id) {
+       
+      return "23";  
     }
     
     public void InsertToDB(String Q, String A) {
