@@ -1,15 +1,33 @@
 package model;
 
 public class Maze {
+    /**Player object */
     private Player myPlayer;
+    /**2-d array of room representing the maze */
     private Room [][] myMaze;
+    /**Default width and length of maze */
     private final static int DEFAULT_SIZE = 4;
     /**Boolean for if user has reached the final room */
     private boolean myWin;
+    /**Int counter for how many question have been answered correctly*/
     private int myQuestionCounter; 
+    /**Int value for current x position in maze */
     private int myXCount;
+    /**Int value for current y position in maze */
     private int myYCount;
+    /**Door object for current selected door*/
     private Door myCurrentDoor;
+    /**Int value to indicate up door is selected */
+    private final static int UP = 0;
+    /**Int value to indicate left door is selected */
+    private final static int LEFT = 1;
+    /**Int value to indicate down door is selected */
+    private final static int DOWN = 2;
+    /**Int value to indicate right door is selected */
+    private final static int RIGHT = 3;
+    /**Int value to keep track of what direction door is being accessed */
+    private int userDir;
+    
     
     
     /*Default maze constructor with a 4x4 2d array
@@ -22,6 +40,7 @@ public class Maze {
         myXCount = 0;
         myYCount = 0;
         myCurrentDoor = new Door();
+        userDir = 0;
     }
     
     
@@ -32,82 +51,61 @@ public class Maze {
         myXCount = 0;
         myYCount = 0;
         myCurrentDoor = new Door();
+        userDir = 0;
     }
     
-    public Question doorUpQuestion() {
-        myCurrentDoor = myMaze [myXCount][myYCount].accessUp(); 
+    public Question doorQuestion(final int theDir) {
+        
+        myCurrentDoor = getUserDoor(theDir);         
+        userDir = theDir;
         
         return myCurrentDoor.getQuestion();
     }
     
-    public void doorUpSolution(final String theSolution) {
+    public void doorSolution(final String theSolution) {
         if (myCurrentDoor.getQuestion().isSolution(theSolution.trim()) == true) {
+            incrementMaze();
+            myQuestionCounter ++;
+            myCurrentDoor.setLock(false);
+            myPlayer.setLocation(myYCount, myXCount);
+        }
+        else {
+            myCurrentDoor.setPermaLock(true);
+        }
+    }
+    
+    private Door getUserDoor(final int theDir) {
+        Door userDoor = new Door();
+        
+        if (theDir == UP) {
+            userDoor = myMaze [myXCount][myYCount].accessUp(); 
+        } else if (theDir == LEFT) {
+            userDoor = myMaze [myXCount][myYCount].accessLeft(); 
+        } else if (theDir == DOWN) {
+            userDoor = myMaze [myXCount][myYCount].accessDown(); 
+        } else if (theDir == RIGHT) {
+            userDoor = myMaze [myXCount][myYCount].accessRight(); 
+        } else {
+            throw new IllegalArgumentException("Error: Parameter must be an int value from 0 to 3");
+        }
+        
+        return userDoor;
+    }
+    
+    private void incrementMaze() {
+        if (userDir == UP) {
             myYCount ++;
-            myQuestionCounter ++;
-            myCurrentDoor.setLock(false);
-            myPlayer.setLocation(myYCount, myXCount);
-
-        }
-        else {
-            myCurrentDoor.setPermaLock(true);
-        }
-    }
-    
-    public Question doorLeftQuestion() {
-        myCurrentDoor = myMaze [myXCount][myYCount].accessLeft(); 
-        
-        return myCurrentDoor.getQuestion();
-    }
-    
-    public void doorLeftSolution(final String theSolution) {
-        if (myCurrentDoor.getQuestion().isSolution(theSolution.trim()) == true) {
+        } else if (userDir == LEFT) {
             myXCount --;
-            myQuestionCounter ++;
-            myCurrentDoor.setLock(false);
-            myPlayer.setLocation(myYCount, myXCount);
-
-        }
-        else {
-            myCurrentDoor.setPermaLock(true);
-        }
-    }
-    
-    public Question doorRightQuestion() {
-        myCurrentDoor = myMaze [myXCount][myYCount].accessRight(); 
-        
-        return myCurrentDoor.getQuestion();
-    }
-    
-    public void doorRightSolution(final String theSolution) {
-        if (myCurrentDoor.getQuestion().isSolution(theSolution.trim()) == true) {
+        } else if (userDir == DOWN) {
+            myYCount --;
+        } else if (userDir == RIGHT) {
             myXCount ++;
-            myQuestionCounter ++;
-            myCurrentDoor.setLock(false);
-            myPlayer.setLocation(myYCount, myXCount);
-
+        } else {
+            throw new IllegalArgumentException("Error: Improper door directional value.");
         }
-        else {
-            myCurrentDoor.setPermaLock(true);
-        }
-        
-    }  
-        public Question doorDownQuestion() {
-            myCurrentDoor = myMaze [myXCount][myYCount].accessDown(); 
-            
-            return myCurrentDoor.getQuestion();
-        }
-        
-        public void doorDownSolution(final String theSolution) {
-            if (myCurrentDoor.getQuestion().isSolution(theSolution.trim()) == true) {
-                myYCount --;
-                myQuestionCounter ++;
-                myCurrentDoor.setLock(false);
-                myPlayer.setLocation(myYCount, myXCount);
-            }
-            else {
-                myCurrentDoor.setPermaLock(true);
-            }
-        }
+    
+    }
         
     
 }
