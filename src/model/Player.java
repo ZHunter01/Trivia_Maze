@@ -23,8 +23,16 @@ public class Player {
         myPlayerImage = theImage;
     }
     
+    public ImageIcon getIcon() {
+        return myPlayerImage;
+    }
+    
     public void setColor(final Color theColor) {
         myPlayerColor = theColor;
+    }
+    
+    public Color getColor() {
+        return myPlayerColor;
     }
     
     public void setLocation(final int theX, final int theY) {

@@ -32,7 +32,7 @@ public class Maze {
     
     
     
-    /*Default maze constructor with a 4x4 2d array
+    /* Creates default 2-d array maze with 4x4 dimensions
      * 
      */
     public Maze() {
@@ -45,7 +45,11 @@ public class Maze {
         userDir = 0;
     }
     
-    
+    /** Creates a 2-d array maze with specified dimensions
+     * 
+     * @param theX
+     * @param theY
+     */
     public Maze(final int theX, final int theY) {
         myMaze = new Room [theX][theY];
         myWin = false;
@@ -56,11 +60,19 @@ public class Maze {
         userDir = 0;
     }
     
+    /** Returns current count of correctly answered questions
+     * 
+     * @return myQuestionCounter
+     */
     public int getQuestionCount() {
         return myQuestionCounter;
     }
     
-    
+    /** Gets question object from specified door
+     * 
+     * @param theDir
+     * @return myCurrentDoor.getQuestion()
+     */
     public Question doorQuestion(final int theDir) {
         
         myCurrentDoor = myMaze [myXCount][myYCount].getUserDoor(theDir);         
@@ -69,8 +81,14 @@ public class Maze {
         return myCurrentDoor.getQuestion();
     }
     
+    /** Processes a user answer to question from a door.
+     *  If answer is correct, check if user has won and increment maze
+     *  Otherwise permanently lock the door and check if user has lost.
+     * 
+     * @param theSolution
+     */
     public void doorSolution(final String theSolution) {
-        if (myCurrentDoor.getQuestion().isSolution(theSolution.trim()) == true) {
+        if (myCurrentDoor.getQuestion().isSolution(theSolution.trim().toLowerCase()) == true) {
             myQuestionCounter ++;
             myCurrentDoor.setLock(false);
             
@@ -108,6 +126,9 @@ public class Maze {
 //        return userDoor;
 //    }
     
+    /** Increments maze array depending on int input
+     * 
+     */
     private void incrementMaze() {
         if (userDir == UP) {
             myYCount ++;
@@ -123,6 +144,10 @@ public class Maze {
     
     }
         
+    /** If x count and y count match the max size of the 2-d array return myWin as true
+     * 
+     * @return myWin
+     */
     private boolean checkWin() {
         if (myXCount == myMaze[0].length && myYCount == myMaze.length) {
             myWin = true;
@@ -132,11 +157,10 @@ public class Maze {
     
     /** Checks if three of four doors in the current room are locked
      * 
-     * @return permaLock
+     * @return myLose
      */
     private boolean checkLose() {
         final Room currentRoom = myMaze [myXCount][myYCount].getRoom();
-        boolean permaLock = false;
         
         boolean up = currentRoom.getDoorPermaLock(UP);
         boolean left = currentRoom.getDoorPermaLock(LEFT);
@@ -145,10 +169,10 @@ public class Maze {
 
         //If three of the four doors are permanently locked, game is over
         if ((up ? 1:0) + (left ? 1:0) + (down ? 1:0) + (right ? 1:0) == 3) {
-            permaLock = true;
+            myLose = true;
         }
         
-        return permaLock;
+        return myLose;
     }
     
 }
