@@ -11,8 +11,10 @@ public class Maze {
     private boolean myWin;
     /**Boolean for if all door in a room are permanently locked and the user loses */
     private boolean myLose;
+    /**Int counter for how many questions have been asked */
+    private int myQuestionCounter;
     /**Int counter for how many question have been answered correctly*/
-    private int myQuestionCounter; 
+    private int myCorrectCounter; 
     /**Int value for current x position in maze */
     private int myXCount;
     /**Int value for current y position in maze */
@@ -39,6 +41,7 @@ public class Maze {
         myMaze = new Room [DEFAULT_SIZE][DEFAULT_SIZE];
         myWin = false;
         myQuestionCounter = 0;
+        myCorrectCounter = 0;
         myXCount = 0;
         myYCount = 0;
         myCurrentDoor = new Door();
@@ -54,18 +57,23 @@ public class Maze {
         myMaze = new Room [theX][theY];
         myWin = false;
         myQuestionCounter = 0;
+        myCorrectCounter = 0;
         myXCount = 0;
         myYCount = 0;
         myCurrentDoor = new Door();
         userDir = 0;
     }
     
+    public int getQuestionCount() {
+        return myQuestionCounter;
+    }
+    
     /** Returns current count of correctly answered questions
      * 
      * @return myQuestionCounter
      */
-    public int getQuestionCount() {
-        return myQuestionCounter;
+    public int getCorrectCount() {
+        return myCorrectCounter;
     }
     
     /** Gets question object from specified door
@@ -88,8 +96,9 @@ public class Maze {
      * @param theSolution
      */
     public void doorSolution(final String theSolution) {
+        myQuestionCounter ++;
         if (myCurrentDoor.getQuestion().isSolution(theSolution.trim().toLowerCase()) == true) {
-            myQuestionCounter ++;
+            myCorrectCounter ++;
             myCurrentDoor.setLock(false);
             
             if (checkWin() == true) {

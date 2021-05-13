@@ -19,22 +19,51 @@ public class Player {
         myY = 0;
     }
     
-    public void setIcon(final ImageIcon theImage) {
-        myPlayerImage = theImage;
+    
+    public Player(final ImageIcon theIcon) {
+        myPlayerImage = theIcon;
+        myPlayerColor = new Color(0, 0, 0);
+        myX = 0;
+        myY = 0;
     }
+    
+    public Player(final Color theColor) {
+        myPlayerColor = theColor;
+        myX = 0;
+        myY = 0;
+    }
+    
     
     public ImageIcon getIcon() {
-        return myPlayerImage;
-    }
-    
-    public void setColor(final Color theColor) {
-        myPlayerColor = theColor;
+        return myPlayerImage;   
     }
     
     public Color getColor() {
         return myPlayerColor;
     }
     
+    public int getX() {
+        return myX;
+    }
+    
+    public int getY() {
+        return myY;
+    }
+    
+    public void setIcon(final ImageIcon theImage) {
+        myPlayerImage = theImage;
+    }
+    
+    public void setColor(final Color theColor) {
+        myPlayerColor = theColor;
+    }
+    
+    
+    /** Sets the x and y location of the player object
+     * 
+     * @param theX
+     * @param theY
+     */
     public void setLocation(final int theX, final int theY) {
         myX = theX;
         myY = theY;
