@@ -28,18 +28,34 @@ public class Door {
         }
     }
     
+    /** Set door lock state to input boolean
+     * 
+     * @param theBoolean
+     */
     public void setLock(boolean theBoolean) {
         myLock = theBoolean;
     }
     
+    /** Set door permanent lock state to input boolean
+     * 
+     * @param theBoolean
+     */
     public void setPermaLock(boolean theBoolean) {
         myPermaLock = theBoolean;
     }
     
+    /** Returns boolean if door is currently locked
+     * 
+     * @return myLock
+     */
     public boolean isLocked() {
         return myLock;
     }
-    
+     
+    /** Returns boolean if door is permanently locked
+     * 
+     * @return myPermaLock
+     */
     public boolean isPermaLocked() {
         return myPermaLock;
     }

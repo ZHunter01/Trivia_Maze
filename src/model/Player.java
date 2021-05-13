@@ -10,6 +10,14 @@ public class Player {
     private int myX;
     private int myY;
     
+    //1 Perma locked door unlock key
+    //Method that checks if user has one
+    //Room will contain it and will give it to user upon entry
+    //1 free question answer
+    //Method that checks if user has it
+    
+    
+    
     /** Creates a default player object with default black color
      * 
      */

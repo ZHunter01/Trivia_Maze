@@ -10,13 +10,13 @@ public class Room {
     private Door myDoorDown;
     //Int Values 0 -- 3 determine which way user is trying to go
     /**Int value to indicate up door is selected */
-    private final static int UP = 0;
+    public final static int UP = 0;
     /**Int value to indicate left door is selected */
-    private final static int LEFT = 1;
+    public final static int LEFT = 1;
     /**Int value to indicate down door is selected */
-    private final static int DOWN = 2;
+    public final static int DOWN = 2;
     /**Int value to indicate right door is selected */
-    private final static int RIGHT = 3;
+    public final static int RIGHT = 3;
     /**ImageIcon to display room object */
     private ImageIcon myIcon;
     

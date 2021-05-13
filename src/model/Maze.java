@@ -22,13 +22,13 @@ public class Maze {
     /**Door object for current selected door*/
     private Door myCurrentDoor;
     /**Int value to indicate up door is selected */
-    private final static int UP = 0;
+    //private final static int UP = 0;
     /**Int value to indicate left door is selected */
-    private final static int LEFT = 1;
+    //private final static int LEFT = 1;
     /**Int value to indicate down door is selected */
-    private final static int DOWN = 2;
+    //private final static int DOWN = 2;
     /**Int value to indicate right door is selected */
-    private final static int RIGHT = 3;
+    //private final static int RIGHT = 3;
     /**Int value to keep track of what direction door is being accessed */
     private int userDir;
     
@@ -49,14 +49,21 @@ public class Maze {
      * 
      */
     public Maze() {
+        //2-d array of default size
         myMaze = new Room [DEFAULT_SIZE][DEFAULT_SIZE];
         myWin = false;
+        
         myQuestionCounter = 0;
         myCorrectCounter = 0;
+        
         myXCount = 0;
         myYCount = 0;
+        //current door object initialized
         myCurrentDoor = new Door();
-        userDir = 0;
+        //default directions is down
+        userDir = 2;
+                
+        //generatePowerUps
     }
     
     /** Creates a 2-d array maze with specified dimensions
@@ -65,14 +72,22 @@ public class Maze {
      * @param theY
      */
     public Maze(final int theX, final int theY) {
+        //2-d array of specified size
         myMaze = new Room [theX][theY];
+        
         myWin = false;
+        
         myQuestionCounter = 0;
         myCorrectCounter = 0;
+        
         myXCount = 0;
         myYCount = 0;
+        
         myCurrentDoor = new Door();
-        userDir = 0;
+        
+        userDir = 2;
+                
+        //generatePowerUps
     }
     
     /** Returns current count of how many questions have been asked
@@ -140,13 +155,13 @@ public class Maze {
     public boolean isInBounds(final int theDir) {
         boolean isIn;
         
-        if (theDir == UP && myYCount++ > myMaze[0].length) {
+        if (theDir == Room.UP && myYCount++ > myMaze[0].length) {
             isIn = false;
-        } else if (theDir == LEFT && myXCount-- < 0) {
+        } else if (theDir == Room.LEFT && myXCount-- < 0) {
             isIn = false;
-        } else if (theDir == DOWN && myYCount-- < 0) {
+        } else if (theDir == Room.DOWN && myYCount-- < 0) {
             isIn = false;
-        } else if (theDir == RIGHT && myXCount++ > myMaze.length) {
+        } else if (theDir == Room.RIGHT && myXCount++ > myMaze.length) {
             isIn = false;
         } else {
             isIn = true;
@@ -159,13 +174,13 @@ public class Maze {
      * 
      */
     private void incrementMaze() {
-        if (userDir == UP) {
-            myYCount ++;
-        } else if (userDir == LEFT) {
-            myXCount --;
-        } else if (userDir == DOWN) {
+        if (userDir == Room.UP) {
             myYCount --;
-        } else if (userDir == RIGHT) {
+        } else if (userDir == Room.LEFT) {
+            myXCount --;
+        } else if (userDir == Room.DOWN) {
+            myYCount ++;
+        } else if (userDir == Room.RIGHT) {
             myXCount ++;
         } else {
             throw new IllegalArgumentException("Error: Improper door directional value.");
@@ -191,10 +206,10 @@ public class Maze {
     private boolean checkLose() {
         final Room currentRoom = myMaze [myXCount][myYCount].getRoom();
         
-        boolean up = currentRoom.getDoorPermaLock(UP);
-        boolean left = currentRoom.getDoorPermaLock(LEFT);
-        boolean down = currentRoom.getDoorPermaLock(DOWN);
-        boolean right = currentRoom.getDoorPermaLock(RIGHT);
+        boolean up = currentRoom.getDoorPermaLock(Room.UP);
+        boolean left = currentRoom.getDoorPermaLock(Room.LEFT);
+        boolean down = currentRoom.getDoorPermaLock(Room.DOWN);
+        boolean right = currentRoom.getDoorPermaLock(Room.RIGHT);
 
         //If three of the four doors are permanently locked, game is over
         if ((up ? 1:0) + (left ? 1:0) + (down ? 1:0) + (right ? 1:0) == 3) {
@@ -203,5 +218,8 @@ public class Maze {
         
         return myLose;
     }
-    
+
+    private void generatePowerUps() {
+        
+    }
 }

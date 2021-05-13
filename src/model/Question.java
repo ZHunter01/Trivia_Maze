@@ -22,10 +22,8 @@ public class Question {
         return mySolution;
     }
     
-    //getSolution
-    
+    //Determine if input is solution  
     public boolean isSolution(final String theInput) {
-        
         return  mySolution.equals(theInput.toLowerCase());
     }
     
