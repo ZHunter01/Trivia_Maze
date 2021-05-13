@@ -220,6 +220,6 @@ public class Maze {
     }
 
     private void generatePowerUps() {
-        
+        //ToDo
     }
 }
