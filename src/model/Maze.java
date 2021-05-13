@@ -75,6 +75,10 @@ public class Maze {
         userDir = 0;
     }
     
+    /** Returns current count of how many questions have been asked
+     * 
+     * @return myQuestionCounter
+     */
     public int getQuestionCount() {
         return myQuestionCounter;
     }
