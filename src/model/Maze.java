@@ -32,6 +32,17 @@ public class Maze {
     /**Int value to keep track of what direction door is being accessed */
     private int userDir;
     
+//    public static enum Direction {
+//        UPP(0),
+//        
+//        LEFTT(1),
+//        
+//        DOWNN(2),
+//        
+//        RIGHTT(3);
+//        
+//    }
+    
     
     
     /* Creates default 2-d array maze with 4x4 dimensions
@@ -117,23 +128,28 @@ public class Maze {
         }
     }
     
-//    private Door getUserDoor(final int theDir) {
-//        Door userDoor = new Door();
-//        
-//        if (theDir == UP) {
-//            userDoor = myMaze [myXCount][myYCount].accessUp(); 
-//        } else if (theDir == LEFT) {
-//            userDoor = myMaze [myXCount][myYCount].accessLeft(); 
-//        } else if (theDir == DOWN) {
-//            userDoor = myMaze [myXCount][myYCount].accessDown(); 
-//        } else if (theDir == RIGHT) {
-//            userDoor = myMaze [myXCount][myYCount].accessRight(); 
-//        } else {
-//            throw new IllegalArgumentException("Error: Parameter must be an int value from 0 to 3");
-//        }
-//        
-//        return userDoor;
-//    }
+    /** Returns boolean of if the door being accessed leads to outside the array bounds
+     * 
+     * @param theDir
+     * @return isIn
+     */
+    public boolean isInBounds(final int theDir) {
+        boolean isIn;
+        
+        if (theDir == UP && myYCount++ > myMaze[0].length) {
+            isIn = false;
+        } else if (theDir == LEFT && myXCount-- < 0) {
+            isIn = false;
+        } else if (theDir == DOWN && myYCount-- < 0) {
+            isIn = false;
+        } else if (theDir == RIGHT && myXCount++ > myMaze.length) {
+            isIn = false;
+        } else {
+            isIn = true;
+        }
+        
+        return isIn;
+    }
     
     /** Increments maze array depending on int input
      * 
