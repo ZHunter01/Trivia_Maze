@@ -7,6 +7,7 @@ public class DataBase {
         db.listQuestions();
 //        db.InsertToDB("Sky is", "blue");
         db.CloseDB();
+        
      }
 
     
