@@ -1,10 +1,12 @@
 package model;
 
+import java.io.IOException;
+
 public class Maze {
     /**Player object */
     private Player myPlayer;
     /**2-d array of room representing the maze */
-    private Room [][] myMaze;
+    private final Room [][] myMaze;
     /**Default width and length of maze */
     private final static int DEFAULT_SIZE = 4;
     /**Boolean for if user has reached the final room */
@@ -21,14 +23,6 @@ public class Maze {
     private int myYCount;
     /**Door object for current selected door*/
     private Door myCurrentDoor;
-    /**Int value to indicate up door is selected */
-    private final static int UP = 0;
-    /**Int value to indicate left door is selected */
-    private final static int LEFT = 1;
-    /**Int value to indicate down door is selected */
-    private final static int DOWN = 2;
-    /**Int value to indicate right door is selected */
-    private final static int RIGHT = 3;
     /**Int value to keep track of what direction door is being accessed */
     private int userDir;
     
@@ -46,8 +40,17 @@ public class Maze {
         myYCount = 0;
         myCurrentDoor = new Door();
         userDir = 0;
+        initMaze();
     }
-    
+
+    private void initMaze() {
+        for (Room[] rooms : myMaze) {
+            for (int j = 0; j < rooms.length; j++) {
+                rooms[j] = new Room();
+            }
+        }
+    }
+
     /** Creates a 2-d array maze with specified dimensions
      * 
      * @param theX
@@ -117,35 +120,17 @@ public class Maze {
         }
     }
     
-//    private Door getUserDoor(final int theDir) {
-//        Door userDoor = new Door();
-//        
-//        if (theDir == UP) {
-//            userDoor = myMaze [myXCount][myYCount].accessUp(); 
-//        } else if (theDir == LEFT) {
-//            userDoor = myMaze [myXCount][myYCount].accessLeft(); 
-//        } else if (theDir == DOWN) {
-//            userDoor = myMaze [myXCount][myYCount].accessDown(); 
-//        } else if (theDir == RIGHT) {
-//            userDoor = myMaze [myXCount][myYCount].accessRight(); 
-//        } else {
-//            throw new IllegalArgumentException("Error: Parameter must be an int value from 0 to 3");
-//        }
-//        
-//        return userDoor;
-//    }
-    
     /** Increments maze array depending on int input
      * 
      */
     private void incrementMaze() {
-        if (userDir == UP) {
+        if (userDir == Room.UP) {
             myYCount ++;
-        } else if (userDir == LEFT) {
+        } else if (userDir == Room.LEFT) {
             myXCount --;
-        } else if (userDir == DOWN) {
+        } else if (userDir == Room.DOWN) {
             myYCount --;
-        } else if (userDir == RIGHT) {
+        } else if (userDir == Room.RIGHT) {
             myXCount ++;
         } else {
             throw new IllegalArgumentException("Error: Improper door directional value.");
@@ -169,19 +154,22 @@ public class Maze {
      * @return myLose
      */
     private boolean checkLose() {
-        final Room currentRoom = myMaze [myXCount][myYCount].getRoom();
-        
-        boolean up = currentRoom.getDoorPermaLock(UP);
-        boolean left = currentRoom.getDoorPermaLock(LEFT);
-        boolean down = currentRoom.getDoorPermaLock(DOWN);
-        boolean right = currentRoom.getDoorPermaLock(RIGHT);
+        final Room currentRoom = myMaze [myXCount][myYCount];
+
+        boolean up = currentRoom.getDoorPermaLock(Room.UP);
+        boolean left = currentRoom.getDoorPermaLock(Room.LEFT);
+        boolean down = currentRoom.getDoorPermaLock(Room.DOWN);
+        boolean right = currentRoom.getDoorPermaLock(Room.RIGHT);
 
         //If three of the four doors are permanently locked, game is over
         if ((up ? 1:0) + (left ? 1:0) + (down ? 1:0) + (right ? 1:0) == 3) {
             myLose = true;
         }
-        
+
         return myLose;
     }
-    
+
+    public Room[][] getMyMaze() {
+        return myMaze;
+    }
 }
