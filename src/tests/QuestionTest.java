@@ -10,30 +10,27 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import model.Door;
 import model.Question;
 
-public class DoorTest {
-    Door myDoor;
-    Question myQ;
+public class QuestionTest {
+    private Question myQ;
+    private final static String QUESTION = "What color is the sky?";
     
     
     @BeforeEach
     void setUp() {
-        myDoor = new Door();
-        myQ = new Question();
-        
-        //myDoor.setQuestion(myQ);
+       myQ = new Question(); 
+    }
+    
+    
+    @Test
+    void getQuestionTest() {
+        assertEquals(QUESTION, myQ.getQuestion());
     }
     
     @Test
-    void checkLockTrue() {
-        myQ.setQuestionAndSolution("Does this work?", "Yes");
-        myDoor.setQuestion(myQ);
-        myDoor.checkLock("YES");
-        
-        assertFalse(myDoor.isLocked());
+    void isSolutionTest() {
+        assertTrue(myQ.isSolution(myQ.getSolution()));
     }
-    
     
 }

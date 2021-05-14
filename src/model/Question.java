@@ -22,9 +22,14 @@ public class Question {
         return mySolution;
     }
     
+    public void setQuestionAndSolution(final String theQ, final String theSol) {
+        myQuestion = theQ;
+        mySolution = theSol;
+    }
+    
     //Determine if input is solution  
     public boolean isSolution(final String theInput) {
-        return  mySolution.equals(theInput.toLowerCase());
+        return  mySolution.toLowerCase().equals(theInput.toLowerCase());
     }
     
    

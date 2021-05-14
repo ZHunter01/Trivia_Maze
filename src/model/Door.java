@@ -19,6 +19,10 @@ public class Door {
         return myQuestion;
     }
     
+    public void setQuestion(final Question theQ) {
+        myQuestion = theQ;
+    }
+    
     public void checkLock(final String theSolution) {
         if (myQuestion.isSolution(theSolution)) {
             myLock = false;
