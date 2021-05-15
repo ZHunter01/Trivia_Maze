@@ -27,7 +27,7 @@ public class DoorTest {
     }
     
     @Test
-    void checkLockTrue() {
+    void checkLockFalse() {
         myQ.setQuestionAndSolution("Does this work?", "Yes");
         myDoor.setQuestion(myQ);
         myDoor.checkLock("YES");
@@ -35,5 +35,21 @@ public class DoorTest {
         assertFalse(myDoor.isLocked());
     }
     
+    @Test
+    void checkLockTrue() {
+        myQ.setQuestionAndSolution("Does this work?", "Yes");
+        myDoor.setQuestion(myQ);
+        myDoor.checkLock("NO");
+        
+        assertTrue(myDoor.isLocked());
+    }
     
+    @Test
+    void checkPermaLockTrue() {
+        myQ.setQuestionAndSolution("Does this work?", "Yes");
+        myDoor.setQuestion(myQ);
+        myDoor.checkLock("NO");
+        
+        assertTrue(myDoor.isPermaLocked());
+    }
 }

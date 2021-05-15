@@ -36,7 +36,7 @@ public class Door {
      * 
      * @param theBoolean
      */
-    public void setLock(boolean theBoolean) {
+    private void setLock(boolean theBoolean) {
         myLock = theBoolean;
     }
     
@@ -44,7 +44,7 @@ public class Door {
      * 
      * @param theBoolean
      */
-    public void setPermaLock(boolean theBoolean) {
+    private void setPermaLock(boolean theBoolean) {
         myPermaLock = theBoolean;
     }
     

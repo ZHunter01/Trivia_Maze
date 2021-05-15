@@ -127,20 +127,17 @@ public class Maze {
      */
     public void doorSolution(final String theSolution) {
         myQuestionCounter ++;
-        if (myCurrentDoor.getQuestion().isSolution(theSolution.trim().toLowerCase()) == true) {
-            myCorrectCounter ++;
-            myCurrentDoor.setLock(false);
+        myCurrentDoor.checkLock(theSolution.trim().toLowerCase());
             
+        if (myCurrentDoor.isLocked() == false) {
+            myCorrectCounter ++;
             if (checkWin() == true) {
                 return;
             } else {
                 incrementMaze();
                 myPlayer.setLocation(myYCount, myXCount);
             }
-        }
-        else {
-            myCurrentDoor.setPermaLock(true);
-            
+        } else {
             if (checkLose() == true) {
                 return;
             }
