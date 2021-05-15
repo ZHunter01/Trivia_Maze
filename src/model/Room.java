@@ -1,11 +1,11 @@
 package model;
 
 public class Room {
-    private final static Room MY_ROOM = new Room();
     private Door myDoorUp;
     private Door myDoorLeft;
     private Door myDoorRight;
     private Door myDoorDown;
+    private Player myPlayer;
     private PowerUp myPowerUp;
     /**Int value to indicate up door is selected */
     public final static int UP = 0;
@@ -22,14 +22,19 @@ public class Room {
         myDoorRight = new Door();
         myDoorDown = new Door();
         
+        myPlayer = new Player();
+        
         myPowerUp = new PowerUp();
         //myRoom = new Room();
     }
     
     public Room getRoom() {
-        return MY_ROOM;
+        return this;
     }
     
+    public PowerUp getRoomPowerUp() {
+        return myPowerUp;
+    }
     
     public Door getUserDoor(final int theDir) {
         Door userDoor = new Door();

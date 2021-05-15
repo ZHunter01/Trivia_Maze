@@ -23,29 +23,9 @@ public class Maze {
     private int myYCount;
     /**Door object for current selected door*/
     private Door myCurrentDoor;
-    /**Int value to indicate up door is selected */
-    //private final static int UP = 0;
-    /**Int value to indicate left door is selected */
-    //private final static int LEFT = 1;
-    /**Int value to indicate down door is selected */
-    //private final static int DOWN = 2;
-    /**Int value to indicate right door is selected */
-    //private final static int RIGHT = 3;
     /**Int value to keep track of what direction door is being accessed */
     private int userDir;
-    
-//    public static enum Direction {
-//        UPP(0),
-//        
-//        LEFTT(1),
-//        
-//        DOWNN(2),
-//        
-//        RIGHTT(3);
-//        
-//    }
-    
-    
+     
     
     /* Creates default 2-d array maze with 4x4 dimensions
      * 
@@ -89,7 +69,7 @@ public class Maze {
         
         userDir = 2;
                 
-        //generatePowerUps
+        generatePowerUps();
     }
     
     /** Returns current count of how many questions have been asked
@@ -106,6 +86,14 @@ public class Maze {
      */
     public int getCorrectCount() {
         return myCorrectCounter;
+    }
+    
+    /** Returns current room
+     * 
+     * @return myMaze [myXCount][myYCount]
+     */
+    public Room getCurrentRoom() {
+        return myMaze [myXCount][myYCount];
     }
     
     /** Gets question object from specified door
@@ -138,6 +126,7 @@ public class Maze {
             } else {
                 incrementMaze();
                 myPlayer.setLocation(myYCount, myXCount);
+                checkRoomPowerUp();
             }
         } else {
             if (checkLose() == true) {
@@ -218,6 +207,9 @@ public class Maze {
         return myLose;
     }
 
+    /** Generates 2 powerups in 2 random rooms in the maze
+     * 
+     */
     private void generatePowerUps() {
         //ToDo
         Random randNum = new Random();
@@ -226,6 +218,7 @@ public class Maze {
         int randNumY;
 
         PowerUp tempPower = new PowerUp();
+        
         //Generate 2 powerups
         randNumX = randNum.nextInt(myMaze.length);
         randNumY = randNum.nextInt(myMaze[0].length);
@@ -239,5 +232,14 @@ public class Maze {
         myMaze [randNumX] [randNumY].roomWithPowerUp(tempPower.createPermaUnlock());
 
         
+    }
+    
+    /** Checks if current room has a powerup and if it does the player picks it up
+     * 
+     */
+    private void checkRoomPowerUp() {
+        if (this.getCurrentRoom().containsFreeQuestion() || this.getCurrentRoom().containsPermaUnlock()) {
+            myPlayer.addPowerUp(this.getCurrentRoom().getRoomPowerUp());
+        }
     }
 }

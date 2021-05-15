@@ -120,6 +120,10 @@ public class Player {
         myY = theY;
     }
     
+    public void addPowerUp(final PowerUp thePowerUp) {
+        myPowerUp = thePowerUp;
+    }
+    
     public boolean containsPermaUnlock() {
         return myPowerUp.isPermaUnlock();
     }
