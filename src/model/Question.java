@@ -6,7 +6,7 @@ import db.SqliteDB;
 
 /**
  * 
- * @author Zach Hunter
+ * @author Zach Hunter 
  *
  */
 public class Question {

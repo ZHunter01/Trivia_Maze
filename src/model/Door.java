@@ -9,6 +9,7 @@ public class Door {
     private boolean myLock;
     private boolean myPermaLock;
     private Question myQuestion;
+    private int myId;
     
     public Door() {
         //Grab question from database
@@ -17,7 +18,7 @@ public class Door {
         myLock = true;
         myPermaLock = false;
         myQuestion = new Question();
-        
+        myId = 0;
     }
     
     public Question getQuestion() {
@@ -72,6 +73,14 @@ public class Door {
     @Override
     public boolean equals(final Object theObj) {
         return this.getQuestion().equals(theObj);
+    }
+    
+    protected void setId(final int theId) {
+        myId = theId;
+    }
+    
+    public int getId() {
+        return myId;
     }
 
 }
