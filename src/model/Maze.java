@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Random;
+
 public class Maze {
     /**Player object */
     private Player myPlayer;
@@ -218,5 +220,24 @@ public class Maze {
 
     private void generatePowerUps() {
         //ToDo
+        Random randNum = new Random();
+        
+        int randNumX;
+        int randNumY;
+
+        PowerUp tempPower = new PowerUp();
+        //Generate 2 powerups
+        randNumX = randNum.nextInt(myMaze.length);
+        randNumY = randNum.nextInt(myMaze[0].length);
+            
+        myMaze [randNumX] [randNumY].roomWithPowerUp(tempPower.createFreeQuestion());
+       
+        
+        randNumX = randNum.nextInt(myMaze.length);
+        randNumY = randNum.nextInt(myMaze[0].length);
+        
+        myMaze [randNumX] [randNumY].roomWithPowerUp(tempPower.createPermaUnlock());
+
+        
     }
 }

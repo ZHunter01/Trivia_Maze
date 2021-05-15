@@ -6,6 +6,7 @@ public class Room {
     private Door myDoorLeft;
     private Door myDoorRight;
     private Door myDoorDown;
+    private PowerUp myPowerUp;
     /**Int value to indicate up door is selected */
     public final static int UP = 0;
     /**Int value to indicate left door is selected */
@@ -20,6 +21,8 @@ public class Room {
         myDoorLeft = new Door();
         myDoorRight = new Door();
         myDoorDown = new Door();
+        
+        myPowerUp = new PowerUp();
         //myRoom = new Room();
     }
     
@@ -80,6 +83,18 @@ public class Room {
         }
         
         return userLock;
+    }
+    
+    public void roomWithPowerUp(final PowerUp thePowerUp) {
+        myPowerUp = thePowerUp;
+    }
+    
+    public boolean containsPermaUnlock() {
+        return myPowerUp.isPermaUnlock();
+    }
+    
+    public boolean containsFreeQuestion() {
+        return myPowerUp.isPermaUnlock();
     }
     
 }

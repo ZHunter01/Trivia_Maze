@@ -9,6 +9,7 @@ public class Player {
     private Color myPlayerColor;
     private int myX;
     private int myY;
+    private PowerUp myPowerUp;
     
     //1 Perma locked door unlock key
     //Method that checks if user has one
@@ -24,6 +25,8 @@ public class Player {
     public Player() {
         myPlayerImage = new ImageIcon();
         
+        myPowerUp = new PowerUp();
+        
         //Set default color to black
         myPlayerColor = new Color(0, 0, 0);
         myX = 0;
@@ -36,6 +39,8 @@ public class Player {
      */
     public Player(final ImageIcon theIcon) {
         myPlayerImage = theIcon;
+        myPowerUp = new PowerUp();
+
         myPlayerColor = new Color(0, 0, 0);
         myX = 0;
         myY = 0;
@@ -47,6 +52,8 @@ public class Player {
      */
     public Player(final Color theColor) {
         myPlayerColor = theColor;
+        myPowerUp = new PowerUp();
+
         myX = 0;
         myY = 0;
     }
@@ -111,6 +118,14 @@ public class Player {
         }
         myX = theX;
         myY = theY;
+    }
+    
+    public boolean containsPermaUnlock() {
+        return myPowerUp.isPermaUnlock();
+    }
+    
+    public boolean containsFreeQuestion() {
+        return myPowerUp.isPermaUnlock();
     }
     
     @Override 
