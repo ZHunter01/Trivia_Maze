@@ -2,6 +2,8 @@ package model;
 
 import java.util.Objects;
 
+import db.SqliteDB;
+
 /**
  * 
  * @author Zach Hunter
@@ -10,13 +12,14 @@ import java.util.Objects;
 public class Question {
     private String myQuestion;
     private String mySolution;
-    
+    private SqliteDB database;
     
     public Question() {
         //myQ = new Question();
         //getQuestion();
         myQuestion = "What color is the sky?";
         mySolution = "blue";
+        database = new SqliteDB();
     }
     
     

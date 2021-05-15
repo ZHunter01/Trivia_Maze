@@ -164,6 +164,10 @@ public class Maze {
         return isIn;
     }
     
+    /**
+     * 
+     * @param thePowerUp
+     */
     public void usePowerUp(final PowerUp thePowerUp) {
         if (thePowerUp.isFreeQuestion()) {
             incrementMaze();

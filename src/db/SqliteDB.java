@@ -9,16 +9,16 @@ public class SqliteDB {
     Connection c = null;
     Statement stmt = null;
     
-    SqliteDB() {
-    try {
-       Class.forName("org.sqlite.JDBC");
-       c = DriverManager.getConnection("jdbc:sqlite:QuestionsDB.db");
+    public SqliteDB() {
+        try {
+            Class.forName("org.sqlite.JDBC");
+            c = DriverManager.getConnection("jdbc:sqlite:QuestionsDB.db");
        
-    } catch ( Exception e ) {
-       System.err.println( e.getClass().getName() + ": " + e.getMessage() );
-       System.exit(0);
-    }
-    System.out.println("Opened database successfully");
+        } catch ( Exception e ) {
+            System.err.println( e.getClass().getName() + ": " + e.getMessage() );
+            System.exit(0);
+        }
+        System.out.println("Opened database successfully");
     
     }
     
