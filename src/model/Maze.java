@@ -51,7 +51,7 @@ public class Maze {
         //default directions is down
         userDir = 2;
                 
-        //generatePowerUps
+        generatePowerUps();
     }
     
     /** Creates a 2-d array maze with specified dimensions
@@ -165,7 +165,13 @@ public class Maze {
     }
     
     public void usePowerUp(final PowerUp thePowerUp) {
-        //myPlayer.removePowerUp(thePowerUp);
+        if (thePowerUp.isFreeQuestion()) {
+            incrementMaze();
+        } else {
+            
+        }
+        
+        myPlayer.removePowerUp(thePowerUp);
     }
     
     /** Increments maze array depending on int input
@@ -217,7 +223,7 @@ public class Maze {
         return myLose;
     }
 
-    /** Generates 2 powerups in 2 random rooms in the maze
+    /** Generates 2 PowerUps in 2 random rooms in the maze
      * 
      */
     private void generatePowerUps() {
@@ -229,7 +235,7 @@ public class Maze {
 
         PowerUp tempPower = new PowerUp();
         
-        //Generate 2 powerups
+        //Generate 2 PowerUps
         randNumX = randNum.nextInt(myMaze.length);
         randNumY = randNum.nextInt(myMaze[0].length);
             
@@ -244,7 +250,7 @@ public class Maze {
         
     }
     
-    /** Checks if current room has a powerup and if it does the player picks it up
+    /** Checks if current room has a PowerUp and if it does the player picks it up
      * 
      */
     private void checkRoomPowerUp() {

@@ -34,7 +34,12 @@ public class Question {
         mySolution = theSol;
     }
     
-    //Determine if input is solution  
+    //Determine if input is solution 
+    /**
+     * 
+     * @param theInput
+     * @return mySolution.toLowerCase().equals(theInput.toLowerCase())
+     */
     public boolean isSolution(final String theInput) {
         return  mySolution.toLowerCase().equals(theInput.toLowerCase());
     }

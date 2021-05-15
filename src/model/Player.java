@@ -138,7 +138,7 @@ public class Player {
         return myPowerUp.isPermaUnlock();
     }
     
-    /** Remove powerup from player by setting value to false
+    /** Remove PowerUp from player by setting value to false
      * 
      * @param thePowerUp
      */

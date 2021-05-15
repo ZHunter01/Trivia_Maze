@@ -25,6 +25,9 @@ public class Room {
     /**Int value to indicate right door is selected */
     public final static int RIGHT = 3;
     
+    /**
+     * 
+     */
     public Room() {
         myDoorUp = new Door();
         myDoorLeft = new Door();
