@@ -164,6 +164,10 @@ public class Maze {
         return isIn;
     }
     
+    public void usePowerUp(final PowerUp thePowerUp) {
+        //myPlayer.removePowerUp(thePowerUp);
+    }
+    
     /** Increments maze array depending on int input
      * 
      */

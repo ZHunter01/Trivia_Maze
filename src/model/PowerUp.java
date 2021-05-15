@@ -42,4 +42,12 @@ public class PowerUp {
     public boolean isFreeQuestion() {
         return myFreeQuestion;
     }
+    
+    public void setPermaUnlock(final boolean theBoolean) {
+        myPermaUnlock = theBoolean;
+    }
+    
+    public void setFreeQuestion(final boolean theBoolean) {
+        myFreeQuestion = theBoolean;
+    }
 }

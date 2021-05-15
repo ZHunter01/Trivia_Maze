@@ -49,7 +49,7 @@ public class Door {
      * 
      * @param theBoolean
      */
-    private void setPermaLock(boolean theBoolean) {
+    protected void setPermaLock(boolean theBoolean) {
         myPermaLock = theBoolean;
     }
     

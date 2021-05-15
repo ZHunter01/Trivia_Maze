@@ -6,11 +6,15 @@ package model;
  *
  */
 public class Room {
+    /**Door object to represent door at the top of the room */
     private Door myDoorUp;
+    /**Door object to represent door at the left side of the room */
     private Door myDoorLeft;
+    /**Door object to represent door at the right side of the room */
     private Door myDoorRight;
+    /**Door object to represent door at the bottom of the room */
     private Door myDoorDown;
-    private Player myPlayer;
+    /**PowerUp object that is contained in a room */
     private PowerUp myPowerUp;
     /**Int value to indicate up door is selected */
     public final static int UP = 0;
@@ -26,21 +30,27 @@ public class Room {
         myDoorLeft = new Door();
         myDoorRight = new Door();
         myDoorDown = new Door();
-        
-        myPlayer = new Player();
-        
+                
         myPowerUp = new PowerUp();
-        //myRoom = new Room();
     }
     
     public Room getRoom() {
         return this;
     }
     
+    /** Returns powerup object contained in the room
+     * 
+     * @return myPowerUp
+     */
     public PowerUp getRoomPowerUp() {
         return myPowerUp;
     }
     
+    /** Returns the door user is pointing at. Determined by input 0-3
+     * 
+     * @param theDir
+     * @return userDoor
+     */
     public Door getUserDoor(final int theDir) {
         Door userDoor = new Door();
         
@@ -59,9 +69,14 @@ public class Room {
         return userDoor;
     }
     
+    /** Returns current state of the lock on the door user is pointing at
+     * 
+     * @param theDir
+     * @return userLock
+     */
     public boolean getDoorLock(final int theDir) {
         boolean userLock = false;
-        
+          
         if (theDir == UP) {
             userLock = myDoorUp.isLocked(); 
         } else if (theDir == LEFT) {
@@ -77,6 +92,11 @@ public class Room {
         return userLock;
     }
     
+    /** Returns current state of the permaLock on the door user is pointing at
+     * 
+     * @param theDir
+     * @return userLock
+     */
     public boolean getDoorPermaLock(final int theDir) {
         boolean userLock = false;
         
@@ -95,16 +115,36 @@ public class Room {
         return userLock;
     }
     
+    /** Sets room PowerUp to input PowerUp
+     * 
+     * @param thePowerUp
+     */
     public void roomWithPowerUp(final PowerUp thePowerUp) {
         myPowerUp = thePowerUp;
     }
     
+    /** Returns boolean if PowerUp in the room is a PermaUnlock PowerUp
+     * 
+     * @return myPowerUp.isPermaUnlock() 
+     */
     public boolean containsPermaUnlock() {
         return myPowerUp.isPermaUnlock();
     }
     
+    /**Returns boolean if PowerUp in the room is a FreeQuestion PowerUp
+     * 
+     * @return myPowerUp.isPermaUnlock()
+     */
     public boolean containsFreeQuestion() {
         return myPowerUp.isPermaUnlock();
+    }
+    
+    /** Unlocks door that has a PermaLock value of true
+     * 
+     * @param theDir
+     */
+    public void unlockPermaLock(final int theDir) {
+        getUserDoor(theDir).setPermaLock(false);
     }
     
 }

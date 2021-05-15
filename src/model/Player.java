@@ -138,6 +138,18 @@ public class Player {
         return myPowerUp.isPermaUnlock();
     }
     
+    /** Remove powerup from player by setting value to false
+     * 
+     * @param thePowerUp
+     */
+    public void removePowerUp(final PowerUp thePowerUp) {
+        if (thePowerUp.isFreeQuestion()) {
+            myPowerUp.setFreeQuestion(false);
+        } else {
+            myPowerUp.setPermaUnlock(false);
+        }
+    }
+    
     @Override 
     public String toString() {
         StringBuilder str = new StringBuilder();
