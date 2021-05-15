@@ -2,6 +2,12 @@ package model;
 
 import java.util.Random;
 
+
+/**
+ * 
+ * @author Zach Hunter
+ *
+ */
 public class Maze {
     /**Player object */
     private Player myPlayer;
@@ -200,7 +206,7 @@ public class Maze {
         boolean right = currentRoom.getDoorPermaLock(Room.RIGHT);
 
         //If three of the four doors are permanently locked, game is over
-        if ((up ? 1:0) + (left ? 1:0) + (down ? 1:0) + (right ? 1:0) == 3) {
+        if ((up ? 1:0) + (left ? 1:0) + (down ? 1:0) + (right ? 1:0) == 3 && myPlayer.containsPermaUnlock() == false) {
             myLose = true;
         }
         

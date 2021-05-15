@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * 
+ * @author Zach Hunter
+ *
+ */
 public class Room {
     private Door myDoorUp;
     private Door myDoorLeft;

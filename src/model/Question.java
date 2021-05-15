@@ -1,5 +1,12 @@
 package model;
 
+import java.util.Objects;
+
+/**
+ * 
+ * @author Zach Hunter
+ *
+ */
 public class Question {
     private String myQuestion;
     private String mySolution;
@@ -32,5 +39,12 @@ public class Question {
         return  mySolution.toLowerCase().equals(theInput.toLowerCase());
     }
     
-   
+    @Override
+    public boolean equals(final Object theObj) {
+        if (this == theObj) return true;
+        if (theObj == null || getClass() != theObj.getClass()) return false;
+        
+        Question question = (Question) theObj;
+        return Objects.equals(myQuestion, question.myQuestion) && Objects.equals(mySolution, question.mySolution);
+    }
 }

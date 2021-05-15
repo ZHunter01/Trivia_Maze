@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * 
+ * @author Zach Hunter
+ *
+ */
 public class PowerUp {
     private boolean myPermaUnlock;
     private boolean myFreeQuestion;

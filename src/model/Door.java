@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * 
+ * @author Zach Hunter
+ *
+ */
 public class Door {
     private boolean myLock;
     private boolean myPermaLock;
@@ -62,6 +67,11 @@ public class Door {
      */
     public boolean isPermaLocked() {
         return myPermaLock;
+    }
+    
+    @Override
+    public boolean equals(final Object theObj) {
+        return this.getQuestion().equals(theObj);
     }
 
 }

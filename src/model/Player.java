@@ -4,6 +4,12 @@ import java.awt.Color;
 
 import javax.swing.ImageIcon;
 
+
+/**
+ * 
+ * @author Zach Hunter
+ *
+ */
 public class Player {
     private ImageIcon myPlayerImage;
     private Color myPlayerColor;
