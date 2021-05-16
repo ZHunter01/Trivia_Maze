@@ -1,6 +1,5 @@
 package db;
 
-import java.awt.Cursor;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -10,7 +9,7 @@ public class SqliteDB {
     Connection c = null;
     Statement stmt = null;
     
-    SqliteDB() {
+    public SqliteDB() {
     try {
        Class.forName("org.sqlite.JDBC");
        c = DriverManager.getConnection("jdbc:sqlite:QuestionsDB.db");
@@ -19,7 +18,7 @@ public class SqliteDB {
        System.err.println( e.getClass().getName() + ": " + e.getMessage() );
        System.exit(0);
     }
-    System.out.println("Opened database successfully");
+//    System.out.println("Opened database successfully");
     
     }
     
@@ -41,8 +40,19 @@ public class SqliteDB {
     }
     
     public String getQuestion(int id) {
-       
-      return "23";  
+        String question;
+        try {
+            this.stmt = c.createStatement();
+            
+            ResultSet rs = stmt.executeQuery("select Question from QuestionTable where id = " + id);  
+            question = rs.getString("Question");
+            return question; 
+            
+        } catch ( Exception e ) {
+            System.out.println("Error: " + e.getMessage() );
+         }
+        
+       return "There is no question";
     }
     
     public void InsertToDB(String Q, String A) {
