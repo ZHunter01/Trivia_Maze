@@ -45,7 +45,7 @@ public class SqliteDB {
                 
             }
          } catch ( Exception e ) {
-            System.out.println("Error: " + e.getMessage() );
+            System.out.println("Error 1: " + e.getMessage() );
          }
     }
     
@@ -59,7 +59,7 @@ public class SqliteDB {
             return question; 
             
         } catch ( Exception e ) {
-            System.out.println("Error: " + e.getMessage() );
+            System.out.println("Error 2: " + e.getMessage() );
         }
         
        return "There is no question";
@@ -75,7 +75,7 @@ public class SqliteDB {
             return question; 
             
         } catch ( Exception e ) {
-            System.out.println("Error: " + e.getMessage() );
+            System.out.println("Error 3: " + e.getMessage() );
         }
         
        return "There is no answer";
@@ -89,7 +89,9 @@ public class SqliteDB {
 //            System.out.println("Updated.");
             
         } catch ( Exception e ) {
-            System.out.println("Error: " + e.getMessage() );
+            System.out.println("Error 4: " + e.getMessage() );
+        } finally {
+            closeDB();
         }
     }
     
@@ -101,20 +103,21 @@ public class SqliteDB {
      * @return false if question doesn't use 
      */
     public boolean getIsUsed(int id) {
-        String isUsed;
+        final String checkForUse;
+        boolean isUsed = false;
         try {
             this.stmt = c.createStatement();
             
             ResultSet rs = stmt.executeQuery("select IsUsed from QuestionTable where id = " + id);  
-            isUsed = rs.getString("IsUsed");
+            checkForUse = rs.getString("IsUsed");
 //            System.out.println("Isused: " + isUsed);
-            if (isUsed.equals("1")) {
-                return true;
+            if (checkForUse.equals("1")) {
+                isUsed = true;
             }
         } catch ( Exception e ) {
-            System.out.println("Error: " + e.getMessage() );
-        }
-        return false;
+            System.out.println("Error 5: " + e.getMessage() );
+        } 
+        return isUsed;
     }
     
     public void setIsUsedToDefault() {
@@ -129,7 +132,7 @@ public class SqliteDB {
             } 
             
         } catch ( Exception e ) {
-            System.out.println("Error: " + e.getMessage() );
+            System.out.println("Error 6: " + e.getMessage() );
         }
     }
     
@@ -140,7 +143,7 @@ public class SqliteDB {
                     + " VALUES (\"" + theQuestion + "\", \"" + theAnswer + "\");";
             stmt.executeUpdate(sql);        
         } catch ( Exception e ) {
-            System.out.println("Error: " + e.getMessage() );
+            System.out.println("Error 7: " + e.getMessage() );
         }
     }
     
@@ -155,7 +158,7 @@ public class SqliteDB {
             
 //            System.out.println("get last id: " +id);        
         } catch ( Exception e ) {
-            System.out.println("Error: " + e.getMessage() );
+            System.out.println("Error 8: " + e.getMessage() );
         }
         return id;
     }
@@ -164,7 +167,7 @@ public class SqliteDB {
         try {
             c.close();
          } catch ( Exception e ) {
-            System.out.println("Error: " + e.getMessage() );
+            System.out.println("Error 9: " + e.getMessage() );
          }
     }
     

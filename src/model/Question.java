@@ -33,9 +33,12 @@ public class Question {
      */
     private int idHelper() {
         final Random rand = new Random();
-        final int random = rand.nextInt(myDatabase.getLastId());
-        if (myDatabase.getIsUsed(random)) {
+        final int random = rand.nextInt(myDatabase.getLastId())+1;
+        System.out.println("random #: " + random);
+        if (myDatabase.getIsUsed(random) == true) {
             idHelper();
+        } else {
+            myDatabase.updateIsUsed(random);
         }
         
         return random;
