@@ -1,5 +1,7 @@
 package model;
 
+import javax.swing.ImageIcon;
+
 /**
  * 
  * @author Zach Hunter
@@ -16,6 +18,8 @@ public class Room {
     private Door myDoorDown;
     /**PowerUp object that is contained in a room */
     private PowerUp myPowerUp;
+    private Player myPlayer;
+    private ImageIcon myRoomIcon;
     /**Int value to indicate up door is selected */
     public final static int UP = 0;
     /**Int value to indicate left door is selected */
@@ -35,13 +39,27 @@ public class Room {
         myDoorDown = new Door();
                 
         myPowerUp = new PowerUp();
+        myPlayer = new Player();
+        myRoomIcon = new ImageIcon();
     }
     
     public Room getRoom() {
         return this;
     }
     
-    /** Returns powerup object contained in the room
+    public ImageIcon getRoomIcon() {
+        return myRoomIcon;
+    }
+    
+    public void setRoomIcon(final ImageIcon theIcon) {
+        myRoomIcon = theIcon;
+    }
+    
+    //Player in room image - Do we
+    //Room image
+    
+    
+    /** Returns PowerUp object contained in the room
      * 
      * @return myPowerUp
      */
