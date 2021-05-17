@@ -17,6 +17,7 @@ public class Question {
     public Question() {
         //myQ = new Question();
         //getQuestion();
+        //To be changed once database is up 
         myQuestion = "What color is the sky?";
         mySolution = "blue";
         database = new SqliteDB();
@@ -53,6 +54,6 @@ public class Question {
         if (theObj == null || getClass() != theObj.getClass()) return false;
         
         Question question = (Question) theObj;
-        return Objects.equals(myQuestion, question.myQuestion) && Objects.equals(mySolution, question.mySolution);
+        return Objects.equals(myQuestion, question.getQuestion()) && Objects.equals(mySolution, question.getSolution());
     }
 }
