@@ -10,19 +10,27 @@ package db;
  * @author Oleksandr Maistruk 
  *
  */
-public class Database {
+public final class Database {
     
+    private Database() {
+        
+    }
     
-    public static void main(String[] args) {
-        SqliteDB db = new SqliteDB();
+    /**
+     * The main method to work with database class
+     * 
+     * @param args
+     */
+    public static void main(final String[] args) {
+        final SqliteDB db = new SqliteDB();
         db.listQuestions();
-//        db.InsertToDB("Sky is", "blue");
+//        db.insertToDB("Sky is", "blue");
         System.out.println(db.getQuestion(1));
         System.out.println(db.getAnswer(1));
         db.setIsUsedToDefault();
         System.out.println("Is Used: " + db.getIsUsed(2));
         System.out.println("Last ID: " + db.getLastId());
 //        db.updateIsUsed(1);
-        db.CloseDB();
+        db.closeDB();
      }
 }

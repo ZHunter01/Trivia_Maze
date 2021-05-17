@@ -16,8 +16,8 @@ import java.sql.Statement;
  *
  */
 public class SqliteDB {
-    Connection c = null;
-    Statement stmt = null;
+    private Connection c = null;
+    private Statement stmt = null;
     
     public SqliteDB() {
     try {
@@ -133,11 +133,11 @@ public class SqliteDB {
         }
     }
     
-    public void InsertToDB(String Q, String A) {
+    public void insertToDB(final String theQuestion, final String theAnswer) {
         try {
             this.stmt = c.createStatement();
             String sql = "insert into QuestionTable (Question, Answer)"
-                    + " VALUES (\"" + Q + "\", \"" + A + "\");";
+                    + " VALUES (\"" + theQuestion + "\", \"" + theAnswer + "\");";
             stmt.executeUpdate(sql);        
         } catch ( Exception e ) {
             System.out.println("Error: " + e.getMessage() );
@@ -160,7 +160,7 @@ public class SqliteDB {
         return id;
     }
     
-    public void CloseDB() {
+    public void closeDB() {
         try {
             c.close();
          } catch ( Exception e ) {
