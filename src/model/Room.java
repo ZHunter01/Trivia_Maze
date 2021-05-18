@@ -1,5 +1,7 @@
 package model;
 
+import java.awt.Image;
+
 import javax.swing.ImageIcon;
 
 /**
@@ -19,7 +21,7 @@ public class Room {
     /**PowerUp object that is contained in a room */
     private PowerUp myPowerUp;
     private Player myPlayer;
-    private ImageIcon myRoomIcon;
+    private Image myRoomIcon;
     /**Int value to indicate up door is selected */
     public final static int UP = 0;
     /**Int value to indicate left door is selected */
@@ -40,24 +42,23 @@ public class Room {
                 
         myPowerUp = new PowerUp();
         myPlayer = new Player();
-        myRoomIcon = new ImageIcon();
+        myRoomIcon = new ImageIcon("./resources/w.gif").getImage();
     }
     
-    public Room getRoom() {
-        return this;
-    }
-    
-    public ImageIcon getRoomIcon() {
+    public Image getRoomIcon() {
         return myRoomIcon;
     }
     
-    public void setRoomIcon(final ImageIcon theIcon) {
+    public void setRoomIcon(final Image theIcon) {
         myRoomIcon = theIcon;
     }
     
     //Player in room image - Do we
     //Room image
     
+    public Player getPlayer() {
+        return myPlayer;
+    }
     
     /** Returns PowerUp object contained in the room
      * 
@@ -140,24 +141,8 @@ public class Room {
      * 
      * @param thePowerUp
      */
-    public void roomWithPowerUp(final PowerUp thePowerUp) {
+    public void setRoomWithPowerUp(final PowerUp thePowerUp) {
         myPowerUp = thePowerUp;
-    }
-    
-    /** Returns boolean if PowerUp in the room is a PermaUnlock PowerUp
-     * 
-     * @return myPowerUp.isPermaUnlock() 
-     */
-    public boolean containsPermaUnlock() {
-        return myPowerUp.isPermaUnlock();
-    }
-    
-    /**Returns boolean if PowerUp in the room is a FreeQuestion PowerUp
-     * 
-     * @return myPowerUp.isPermaUnlock()
-     */
-    public boolean containsFreeQuestion() {
-        return myPowerUp.isPermaUnlock();
     }
     
     /** Unlocks door that has a PermaLock value of true
@@ -165,7 +150,12 @@ public class Room {
      * @param theDir
      */
     public void unlockPermaLock(final int theDir) {
-        getUserDoor(theDir).setPermaLock(false);
+        if (myPlayer.containsPermaUnlock()) {
+            getUserDoor(theDir).setPermaLock(false);
+
+        } else {
+            return;
+        }
     }
     
 }

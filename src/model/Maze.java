@@ -48,8 +48,8 @@ public class Maze {
         myYCount = 0;
         //current door object initialized
         myCurrentDoor = new Door();
-        //default directions is down
-        userDir = 2;
+        //default directions is up
+        userDir = 0;
                 
         generatePowerUps();
     }
@@ -73,7 +73,7 @@ public class Maze {
         
         myCurrentDoor = new Door();
         
-        userDir = 2;
+        userDir = 0;
                 
         generatePowerUps();
     }
@@ -92,6 +92,14 @@ public class Maze {
      */
     public int getCorrectCount() {
         return myCorrectCounter;
+    }
+    
+    public int getXLength() {
+        return myMaze.length;
+    }
+    
+    public int getYLength() {
+        return myMaze[0].length;
     }
     
     /** Returns current room
@@ -168,11 +176,17 @@ public class Maze {
      * 
      * @param thePowerUp
      */
-    public void usePowerUp(final PowerUp thePowerUp) {
+    public void usePowerUp(final PowerUp thePowerUp, final int theDir) {
         if (thePowerUp.isFreeQuestion()) {
             incrementMaze();
+        } else if (thePowerUp.isPermaUnlock()){
+            if (!getCurrentRoom().getUserDoor(theDir).isPermaLocked()) {
+                return;
+            } else {
+                getCurrentRoom().unlockPermaLock(theDir);
+            }
         } else {
-            
+            return;
         }
         
         myPlayer.removePowerUp(thePowerUp);
@@ -212,7 +226,7 @@ public class Maze {
      * @return myLose
      */
     private boolean checkLose() {
-        final Room currentRoom = myMaze [myXCount][myYCount].getRoom();
+        final Room currentRoom = myMaze [myXCount][myYCount];
         
         boolean up = currentRoom.getDoorPermaLock(Room.UP);
         boolean left = currentRoom.getDoorPermaLock(Room.LEFT);
@@ -242,14 +256,15 @@ public class Maze {
         //Generate 2 PowerUps
         randNumX = randNum.nextInt(myMaze.length);
         randNumY = randNum.nextInt(myMaze[0].length);
-            
-        myMaze [randNumX] [randNumY].roomWithPowerUp(tempPower.createFreeQuestion());
+          
+        tempPower.createFreeQuestion();
+        myMaze [randNumX - 1] [randNumY - 1].setRoomWithPowerUp(tempPower);
        
         
         randNumX = randNum.nextInt(myMaze.length);
         randNumY = randNum.nextInt(myMaze[0].length);
         
-        myMaze [randNumX] [randNumY].roomWithPowerUp(tempPower.createPermaUnlock());
+        myMaze [randNumX - 1] [randNumY - 1].setRoomWithPowerUp(tempPower.createPermaUnlock());
 
         
     }
@@ -258,7 +273,7 @@ public class Maze {
      * 
      */
     private void checkRoomPowerUp() {
-        if (this.getCurrentRoom().containsFreeQuestion() || this.getCurrentRoom().containsPermaUnlock()) {
+        if (this.getCurrentRoom().getRoomPowerUp().isFreeQuestion() || this.getCurrentRoom().getRoomPowerUp().isPermaUnlock()) {
             myPlayer.addPowerUp(this.getCurrentRoom().getRoomPowerUp());
         }
     }

@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.Color;
+import java.awt.Image;
 
 import javax.swing.ImageIcon;
 
@@ -11,7 +12,7 @@ import javax.swing.ImageIcon;
  *
  */
 public class Player {
-    private ImageIcon myPlayerImage;
+    private Image myPlayerImage;
     private Color myPlayerColor;
     private int myX;
     private int myY;
@@ -29,12 +30,14 @@ public class Player {
      * 
      */
     public Player() {
-        myPlayerImage = new ImageIcon();
+        myPlayerImage = new ImageIcon("./resources/w.gif").getImage();
         
         myPowerUp = new PowerUp();
         
         //Set default color to black
         myPlayerColor = new Color(0, 0, 0);
+        myPlayerColor = Color.BLACK;
+        
         myX = 0;
         myY = 0;
     }
@@ -43,11 +46,13 @@ public class Player {
      * 
      * @param theIcon
      */
-    public Player(final ImageIcon theIcon) {
+    public Player(final Image theIcon) {
         myPlayerImage = theIcon;
         myPowerUp = new PowerUp();
 
         myPlayerColor = new Color(0, 0, 0);
+        myPlayerColor = Color.BLACK;
+        
         myX = 0;
         myY = 0;
     }
@@ -68,7 +73,7 @@ public class Player {
      * 
      * @return
      */
-    public ImageIcon getIcon() {
+    public Image getIcon() {
         return myPlayerImage;   
     }
     
@@ -100,7 +105,7 @@ public class Player {
      * 
      * @param theImage
      */
-    public void setIcon(final ImageIcon theImage) {
+    public void setImage(final Image theImage) {
         myPlayerImage = theImage;
     }
     
@@ -135,7 +140,7 @@ public class Player {
     }
     
     public boolean containsFreeQuestion() {
-        return myPowerUp.isPermaUnlock();
+        return myPowerUp.isFreeQuestion();
     }
     
     /** Remove PowerUp from player by setting value to false
@@ -144,9 +149,11 @@ public class Player {
      */
     public void removePowerUp(final PowerUp thePowerUp) {
         if (thePowerUp.isFreeQuestion()) {
-            myPowerUp.setFreeQuestion(false);
+            myPowerUp.removeFreeQuestion();;
+        } else if (thePowerUp.isPermaUnlock()){
+            myPowerUp.removePermaUnlock();;
         } else {
-            myPowerUp.setPermaUnlock(false);
+            return;
         }
     }
     

@@ -43,11 +43,27 @@ public class PowerUp {
         return myFreeQuestion;
     }
     
-    public void setPermaUnlock(final boolean theBoolean) {
+    public void removePermaUnlock() {
+        if (this.isFreeQuestion() || !this.isPermaUnlock()) {
+            return;
+        }
+        
+        this.setPermaUnlock(false);
+    }
+    
+    public void removeFreeQuestion() {
+        if (this.isPermaUnlock() || !this.isFreeQuestion()) {
+            return;
+        }
+        
+        this.setFreeQuestion(false);
+    }
+    
+    private void setPermaUnlock(final boolean theBoolean) {
         myPermaUnlock = theBoolean;
     }
     
-    public void setFreeQuestion(final boolean theBoolean) {
+    private void setFreeQuestion(final boolean theBoolean) {
         myFreeQuestion = theBoolean;
     }
 }
