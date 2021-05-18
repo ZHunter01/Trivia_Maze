@@ -2,6 +2,7 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import view.MazePanel.*;
 
 /**
  * @author Alik Balika
@@ -28,12 +29,21 @@ public class DirectionPanel extends JPanel {
     private JButton myRightButton;
 
     /**
-     * Constructs the panel and initializes buttons
+     * The adapter passed in from the mazePanel which controls the player
      */
-    public DirectionPanel() {
+    private TAdapter myAdapter;
+
+    /**
+     * Constructs the panel and initializes buttons
+     * @param theAdapter the adapter passed in from mazePanel
+     */
+    public DirectionPanel(TAdapter theAdapter) {
         //setBorder(BorderFactory.createLineBorder(Color.BLUE));
         setLayout(new GridLayout());
         setPreferredSize(new Dimension(0, 50));
+
+        myAdapter = theAdapter;
+
 
         initAndAddButtons();
     }
@@ -48,9 +58,11 @@ public class DirectionPanel extends JPanel {
         myLeftButton = createButton("LEFT");
         myRightButton = createButton("RIGHT");
         add(myUpButton);
-        add(myDownButton);
         add(myLeftButton);
         add(myRightButton);
+        add(myDownButton);
+
+        addActionListeners();
     }
 
     /**
@@ -64,6 +76,17 @@ public class DirectionPanel extends JPanel {
         button.setForeground(Color.WHITE);
         button.setFocusable(false);
         return button;
+    }
+
+    /**
+     * adds all of the actionListeners to the buttons
+     */
+    private void addActionListeners() {
+        myLeftButton.addActionListener(e -> myAdapter.keyPressed(37));
+        myUpButton.addActionListener(e -> myAdapter.keyPressed(38));
+        myRightButton.addActionListener(e -> myAdapter.keyPressed(39));
+        myDownButton.addActionListener(e -> myAdapter.keyPressed(40));
+
     }
 
 }

@@ -1,5 +1,7 @@
 package view;
 
+import model.Maze;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -30,10 +32,12 @@ public class Window extends JFrame{
         setLocationRelativeTo(null);
         setResizable(false);
 
+        MazePanel mazePanel = new MazePanel();
+
         setJMenuBar(new MyMenuBar());
-        add(new MazePanel(), BorderLayout.CENTER);
+        add(mazePanel, BorderLayout.CENTER);
         add(new AnswerPanel(), BorderLayout.EAST);
         add(new QuestionPanel(), BorderLayout.NORTH);
-        add(new DirectionPanel(), BorderLayout.SOUTH);
+        add(new DirectionPanel(mazePanel.getMyAdapter()), BorderLayout.SOUTH);
     }
 }

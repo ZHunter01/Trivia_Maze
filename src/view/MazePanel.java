@@ -16,6 +16,11 @@ public class MazePanel extends JPanel {
      */
     private Maze maze;
 
+    /**
+     * The adapter controls the movement of the player
+     */
+    private TAdapter myAdapter;
+
 //    private Timer timer;
 //
 //    public static int DELAY = 100;
@@ -25,9 +30,10 @@ public class MazePanel extends JPanel {
      */
     public MazePanel() {
 
+        myAdapter = new TAdapter();
         setFocusable(true);
         maze = new Maze();
-        addKeyListener(new TAdapter());
+        addKeyListener(myAdapter);
 
     }
 
@@ -75,9 +81,16 @@ public class MazePanel extends JPanel {
     }
 
     /**
+     * @return an instance of the TAdapter that controls the player
+     */
+    public TAdapter getMyAdapter() {
+        return myAdapter;
+    }
+
+    /**
      * This class handles the movement of the player object
      */
-    private class TAdapter extends KeyAdapter {
+    public class TAdapter extends KeyAdapter {
 
         /**
          * handles the button that the user pressed
@@ -88,6 +101,14 @@ public class MazePanel extends JPanel {
             int key = e.getKeyCode();
 
             keySwitch(key);
+        }
+
+        /**
+         * handles the button that the user pressed. Used for the button actionListeners in DirectionPanel
+         * @param theKey the KeyEvent
+         */
+        public void keyPressed(int theKey) {
+            keySwitch(theKey);
         }
 
         /**
