@@ -2,17 +2,27 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
 
-public class Application extends JFrame {
+/**
+ * @author Alik Balika
+ *
+ * This class creates a window that is displayed on the users screen
+ */
+public class Window extends JFrame{
 
     private static final int WIDTH = 900;
     private static final int HEIGHT = 600;
 
-    public Application() throws IOException {
+    /**
+     * calls a method that constructs the Frame
+     */
+    public Window() {
         init();
     }
 
+    /**
+     * does all the necessary work to construct the frame as well as add all the needed panels
+     */
     private void init() {
         setSize(WIDTH, HEIGHT);
         setTitle("Trivia Maze");

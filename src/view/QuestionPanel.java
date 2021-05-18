@@ -3,10 +3,21 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * @author Alik Balika
+ *
+ * This class is a panel that will display the question
+ */
 public class QuestionPanel extends JPanel {
 
+    /**
+     * The JLabel will hold the question
+     */
     private JLabel myQuestion;
 
+    /**
+     * Constructs the panel as well as initializes myQuestion
+     */
     public QuestionPanel() {
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(50, 50));
@@ -20,11 +31,26 @@ public class QuestionPanel extends JPanel {
         add(myQuestion);
     }
 
+    /**
+     *
+     * @return myQuestion
+     */
     public JLabel getMyQuestion() {
         return myQuestion;
     }
 
-    public void setMyQuestion(JLabel theQuestion) {
-        myQuestion = theQuestion;
+    /**
+     * Sets the question to a new question
+     * @param theQuestion the new question to be displayed
+     */
+    public void setMyQuestion(String theQuestion) {
+        myQuestion.setText(theQuestion);
+    }
+
+    /**
+     * clears myQuestion
+     */
+    public void clear() {
+        myQuestion.setText("");
     }
 }
