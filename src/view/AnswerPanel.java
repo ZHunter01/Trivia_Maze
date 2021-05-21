@@ -7,6 +7,7 @@ import java.awt.*;
  * @author Alik Balika
  *
  * This class is a panel where the user can enter their answer
+ * This is a Singleton class
  */
 public class AnswerPanel extends JPanel {
 
@@ -24,15 +25,27 @@ public class AnswerPanel extends JPanel {
     private JButton mySubmit;
 
     /**
+     * Create an instance of the AnswerPanel
+     */
+    private static final AnswerPanel answerPanel = new AnswerPanel();
+
+    /**
      * constructs the panel and initializes everything
      */
-    public AnswerPanel() {
+    private AnswerPanel() {
         setPreferredSize(new Dimension(222, 0));
         setBackground(Color.RED);
 
         initAndAddAnswerPrompt();
         initAndAddAnswer();
         initAndAddSubmit();
+    }
+
+    /**
+     * @return the only instance of AnswerPanel
+     */
+    public static AnswerPanel getInstance() {
+        return answerPanel;
     }
 
     /**

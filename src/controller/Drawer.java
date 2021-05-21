@@ -1,6 +1,5 @@
 package controller;
 
-import model.Door;
 import model.Player;
 import model.Room;
 import view.MazePanel;

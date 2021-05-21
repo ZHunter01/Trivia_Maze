@@ -11,6 +11,8 @@ import java.awt.event.ActionListener;
  * @author Oleksandr Maistruk
  *
  * Creates the menu bar of the program
+ *
+ * This is a Singleton class
  */
 public class MyMenuBar extends JMenuBar {
 
@@ -36,11 +38,23 @@ public class MyMenuBar extends JMenuBar {
     private JMenu myOptions;
 
     /**
+     * Create an instance of the DirectionPanel
+     */
+    private static final MyMenuBar myMenuBar = new MyMenuBar();
+
+    /**
      * constructs the Menu Bar
      */
-    public MyMenuBar() {
+    private MyMenuBar() {
         super();
         initAndAddJMenus();
+    }
+
+    /**
+     * @return the only instance of MenuBar
+     */
+    public static MyMenuBar getInstance() {
+        return myMenuBar;
     }
 
     /**

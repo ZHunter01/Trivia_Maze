@@ -2,6 +2,7 @@ package view;
 
 import controller.Drawer;
 import model.Maze;
+import model.Question;
 import model.Room;
 
 import javax.swing.*;
@@ -9,17 +10,28 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+/**
+ * @author Alik Balika
+ * This class contains the Maze object and player object and displays the entire maze and where the player will move
+ *
+ * This is a Singleton class
+ */
 public class MazePanel extends JPanel {
 
     /**
      * The maze object that contains all of the data
      */
-    private Maze maze;
+    private final Maze maze;
 
     /**
      * The adapter controls the movement of the player
      */
-    private TAdapter myAdapter;
+    private final TAdapter myAdapter;
+
+    /**
+     * Create an instance of the MazePanel
+     */
+    private static final MazePanel mazePanel = new MazePanel();
 
 //    private Timer timer;
 //
@@ -28,13 +40,20 @@ public class MazePanel extends JPanel {
     /**
      * initializes the maze and constructs the panel
      */
-    public MazePanel() {
+    private MazePanel() {
 
         myAdapter = new TAdapter();
         setFocusable(true);
         maze = new Maze();
         addKeyListener(myAdapter);
 
+    }
+
+    /**
+     * @return the only instance of mazePanel
+     */
+    public static MazePanel getInstance() {
+        return mazePanel;
     }
 
     //166 - width of the room
@@ -48,9 +67,8 @@ public class MazePanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-//        drawObjects(g);
-        System.out.println(getWidth());
         int y = 0;
+//        int i = 0;
         for (Room[] rooms : maze.getMyMaze()) {
             int x = 0;
             for (Room room : rooms) {
@@ -68,8 +86,9 @@ public class MazePanel extends JPanel {
                 if (y + 110 >= getHeight()) {
                     room.setMyDoorDown(null);
                 }
-
-                System.out.println(x);
+//                System.out.println("room #" + i + ": \nLEFT: " + room.getMyDoorLeft()+"\nRIGHT: " + room.getMyDoorRight()
+//                + "\nUP: " + room.getMyDoorUp() + "\nDOWN: " + room.getMyDoorDown());
+//                i++;
                 //g.drawImage(room.getImage(), x, y, this);
                 Drawer.drawRoom(g, room);
                 x+= 166;
@@ -124,6 +143,11 @@ public class MazePanel extends JPanel {
                     if (maze.getMyPlayer().getX() - 166 < 0) {
                         return;
                     }
+//                    Question question = maze.doorQuestion(Room.LEFT);
+//                    if (question != null) {
+//                        QuestionPanel.getInstance().setMyQuestion(question.getQuestion());
+//                    }
+
                     maze.getMyPlayer().move(-166, 0);
                     break;
 
@@ -132,6 +156,11 @@ public class MazePanel extends JPanel {
                     if (maze.getMyPlayer().getX() + 166 > getWidth()) {
                         return;
                     }
+
+//                    Question question = maze.doorQuestion(Room.RIGHT);
+//                    if (question != null) {
+//                        QuestionPanel.getInstance().setMyQuestion(question.getQuestion());
+//                    }
                     maze.getMyPlayer().move(166, 0);
                     break;
 
@@ -140,6 +169,8 @@ public class MazePanel extends JPanel {
                     if (maze.getMyPlayer().getY() - 110 <= 0) {
                         return;
                     }
+
+                    //QuestionPanel.getInstance().setMyQuestion("Going Up!");
                     maze.getMyPlayer().move(0, -110);
                     break;
 
@@ -148,6 +179,8 @@ public class MazePanel extends JPanel {
                     if (maze.getMyPlayer().getY() + 110 >= getHeight()) {
                         return;
                     }
+
+                    //QuestionPanel.getInstance().setMyQuestion("Going Down!");
                     maze.getMyPlayer().move(0, 110);
                     break;
                 default:

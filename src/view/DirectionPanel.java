@@ -8,6 +8,7 @@ import view.MazePanel.*;
  * @author Alik Balika
  *
  * Contains the movement buttons that will move the player
+ * This is a Singleton class
  */
 public class DirectionPanel extends JPanel {
 
@@ -31,21 +32,32 @@ public class DirectionPanel extends JPanel {
     /**
      * The adapter passed in from the mazePanel which controls the player
      */
-    private TAdapter myAdapter;
+    private final TAdapter myAdapter;
+
+    /**
+     * Create an instance of the DirectionPanel
+     */
+    private static final DirectionPanel directionPanel = new DirectionPanel();
 
     /**
      * Constructs the panel and initializes buttons
-     * @param theAdapter the adapter passed in from mazePanel
      */
-    public DirectionPanel(TAdapter theAdapter) {
+    private DirectionPanel() {
         //setBorder(BorderFactory.createLineBorder(Color.BLUE));
         setLayout(new GridLayout());
         setPreferredSize(new Dimension(0, 50));
 
-        myAdapter = theAdapter;
+        myAdapter = MazePanel.getInstance().getMyAdapter();
 
 
         initAndAddButtons();
+    }
+
+    /**
+     * @return the only instance of DirectionPanel
+     */
+    public static DirectionPanel getInstance() {
+        return directionPanel;
     }
 
     /**

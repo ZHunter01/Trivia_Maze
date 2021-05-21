@@ -50,6 +50,7 @@ public class Room extends GameObject {
         if (theDir == UP) {
             return myDoorUp;
         } else if (theDir == LEFT) {
+            System.out.println("Door left: " + myDoorLeft);
             return myDoorLeft;
         } else if (theDir == DOWN) {
             return myDoorDown;

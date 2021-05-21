@@ -7,7 +7,7 @@ import java.awt.*;
  *
  * Runs the whole program
  */
-public class Game {
+public class TriviaMaze {
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {

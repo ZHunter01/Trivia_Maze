@@ -7,6 +7,7 @@ import java.awt.*;
  * @author Alik Balika
  *
  * This class is a panel that will display the question
+ * This is a Singleton Class
  */
 public class QuestionPanel extends JPanel {
 
@@ -16,9 +17,15 @@ public class QuestionPanel extends JPanel {
     private JLabel myQuestion;
 
     /**
+     * Create an instance of the QuestionPanel
+     */
+    private static final QuestionPanel questionPanel = new QuestionPanel();
+
+
+    /**
      * Constructs the panel as well as initializes myQuestion
      */
-    public QuestionPanel() {
+    private QuestionPanel() {
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(50, 50));
         setBackground(Color.GREEN);
@@ -30,6 +37,15 @@ public class QuestionPanel extends JPanel {
 
         add(myQuestion);
     }
+
+    /**
+     * @return the only QuestionPanel object
+     */
+    public static QuestionPanel getInstance() {
+        return questionPanel;
+    }
+
+
 
     /**
      *

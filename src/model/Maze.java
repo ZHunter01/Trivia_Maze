@@ -115,9 +115,15 @@ public class Maze {
      */
     public Question doorQuestion(final int theDir) {
         
-        myCurrentDoor = myMaze [myXCount][myYCount].getUserDoor(theDir);         
+        myCurrentDoor = myMaze [myXCount][myYCount].getUserDoor(theDir);
+        System.out.println(myCurrentDoor);
         userDir = theDir;
-        
+
+        if (myCurrentDoor == null) {
+            return null;
+        }
+        System.out.println("MYCURRENTDOOR: myCurrentDoor ----------------------------------------------");
+
         return myCurrentDoor.getQuestion();
     }
 
