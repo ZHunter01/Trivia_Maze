@@ -7,7 +7,7 @@ import javax.swing.ImageIcon;
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -74,6 +74,37 @@ public class RoomTest {
         myRoom.unlockPermaLock(0);
         
         assertTrue(myRoom.getUserDoor(0).isPermaLocked());
+    }
+    
+    @Test
+    void testGetUserDoorUp() {
+        assertTrue(myRoom.isDoorUp(myRoom.getUserDoor(0)));
+    }
+    
+    @Test
+    void testGetUserDoorLeft() {
+        assertTrue(myRoom.isDoorLeft(myRoom.getUserDoor(1)));
+    }
+
+    @Test
+    void testGetUserDoorDown() {
+        assertTrue(myRoom.isDoorDown(myRoom.getUserDoor(2)));
+    }
+
+    @Test
+    void testGetUserDoorRight() {
+        assertTrue(myRoom.isDoorRight(myRoom.getUserDoor(3)));
+    }
+    
+    @Test
+    void testGetUserDoorError() {
+        final IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, 
+                () -> { myRoom.getUserDoor(4); });
+        
+        final String expected = "Error: Parameter must be an int value from 0 to 3";
+        final String actual = exception.getMessage();
+        
+        assertTrue(actual.equals(expected));
     }
 
 }

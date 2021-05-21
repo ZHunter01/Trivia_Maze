@@ -68,6 +68,39 @@ public class Room {
         return myPowerUp;
     }
     
+    public boolean isDoorUp(final Door theDoor) {
+        if (theDoor == myDoorUp) {
+            return true;
+        } else {
+             return false;
+        }
+    }
+    
+    /**
+     * 
+     * @param theDoor
+     * @return boolean
+     */
+    public boolean isDoorLeft(final Door theDoor) {
+        if (theDoor.equals(myDoorLeft)) return true;
+        return false;
+    }
+    
+    /**
+     * 
+     * @param theDoor
+     * @return boolean
+     */
+    public boolean isDoorDown(final Door theDoor) {
+        if (theDoor.equals(myDoorDown)) return true;
+        return false;
+    }
+    
+    public boolean isDoorRight(final Door theDoor) {
+        if (theDoor.equals(myDoorRight)) return true;
+        return false;
+    }
+    
     /** Returns the door user is pointing at. Determined by input 0-3
      * 
      * @param theDir
@@ -97,21 +130,21 @@ public class Room {
      * @return userLock
      */
     public boolean getDoorLock(final int theDir) {
-        boolean userLock = false;
-          
-        if (theDir == UP) {
-            userLock = myDoorUp.isLocked(); 
-        } else if (theDir == LEFT) {
-            userLock = myDoorLeft.isLocked(); 
-        } else if (theDir == DOWN) {
-            userLock = myDoorDown.isLocked(); 
-        } else if (theDir == RIGHT) {
-            userLock = myDoorRight.isLocked(); 
-        } else {
-            throw new IllegalArgumentException("Error: Parameter must be an int value from 0 to 3");
-        }
+        //boolean userLock = false;
+        return getUserDoor(theDir).isLocked();  
+//        if (theDir == UP) {
+//            userLock = getUserDoor(theDir).isLocked(); 
+//        } else if (theDir == LEFT) {
+//            userLock = getUserDoor(theDir).isLocked(); 
+//        } else if (theDir == DOWN) {
+//            userLock = getUserDoor(theDir).isLocked(); 
+//        } else if (theDir == RIGHT) {
+//            userLock = getUserDoor(theDir).isLocked(); 
+//        } else {
+//            throw new IllegalArgumentException("Error: Parameter must be an int value from 0 to 3");
+//        }
         
-        return userLock;
+        //return userLock;
     }
     
     /** Returns current state of the permaLock on the door user is pointing at
@@ -120,21 +153,21 @@ public class Room {
      * @return userLock
      */
     public boolean getDoorPermaLock(final int theDir) {
-        boolean userLock = false;
+        //boolean userLock = false;
+        return getUserDoor(theDir).isPermaLocked();
+//        if (theDir == UP) {
+//            userLock = getUserDoor(theDir).isPermaLocked(); 
+//        } else if (theDir == LEFT) {
+//            userLock = myDoorLeft.isPermaLocked(); 
+//        } else if (theDir == DOWN) {
+//            userLock = myDoorDown.isPermaLocked(); 
+//        } else if (theDir == RIGHT) {
+//            userLock = myDoorRight.isPermaLocked(); 
+//        } else {
+//            throw new IllegalArgumentException("Error: Parameter must be an int value from 0 to 3");
+//        }
         
-        if (theDir == UP) {
-            userLock = myDoorUp.isPermaLocked(); 
-        } else if (theDir == LEFT) {
-            userLock = myDoorLeft.isPermaLocked(); 
-        } else if (theDir == DOWN) {
-            userLock = myDoorDown.isPermaLocked(); 
-        } else if (theDir == RIGHT) {
-            userLock = myDoorRight.isPermaLocked(); 
-        } else {
-            throw new IllegalArgumentException("Error: Parameter must be an int value from 0 to 3");
-        }
-        
-        return userLock;
+       // return userLock;
     }
     
     /** Sets room PowerUp to input PowerUp

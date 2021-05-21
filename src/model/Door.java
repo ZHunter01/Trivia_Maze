@@ -70,10 +70,10 @@ public class Door {
         return myPermaLock;
     }
     
-    @Override
-    public boolean equals(final Object theObj) {
-        return this.getQuestion().equals(theObj);
-    }
+//    @Override
+//    public boolean equals(final Object theObj) {
+//        return this.getQuestion().equals(theObj);
+//    }
     
     protected void setId(final int theId) {
         myId = theId;
