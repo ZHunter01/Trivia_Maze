@@ -40,7 +40,7 @@ public class Room {
         myDoorRight = new Door();
         myDoorDown = new Door();
                 
-        myPowerUp = new PowerUp();
+        //myPowerUp = new PowerUp();
         myPlayer = new Player();
         myRoomIcon = new ImageIcon("./resources/w.gif").getImage();
     }

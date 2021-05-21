@@ -15,6 +15,11 @@ import model.Door;
 import model.PowerUp;
 import model.Room;
 
+/**
+ * 
+ * @author Zach Hunter
+ *
+ */
 public class RoomTest {
     private Room myRoom;
     private PowerUp myPowerUp;
@@ -23,7 +28,7 @@ public class RoomTest {
     @BeforeEach
     void setUp() {
         myRoom = new Room();
-        myPowerUp = new PowerUp();
+       // myPowerUp = new PowerUp();
         myDoor = new Door();
     }
     
@@ -48,7 +53,7 @@ public class RoomTest {
     
     @Test
     void testUnlockPermaLock() {
-        myPowerUp.createPermaUnlock();
+        myPowerUp = PowerUp.createPermaUnlock();
         myRoom.setRoomWithPowerUp(myPowerUp);
         myRoom.getPlayer().addPowerUp(myPowerUp);
         //Should set door to be perma locked
@@ -61,7 +66,7 @@ public class RoomTest {
     
     @Test
     void testUnlockPermaLock_PlayerHasNoPowerUp() {
-        myPowerUp.createPermaUnlock();
+        myPowerUp = PowerUp.createPermaUnlock();
         myRoom.setRoomWithPowerUp(myPowerUp);
         //Should set door to be perma locked
         myRoom.getUserDoor(0).checkLock("Not the solution");

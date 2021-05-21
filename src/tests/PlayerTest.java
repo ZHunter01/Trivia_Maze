@@ -7,9 +7,7 @@ import java.awt.Color;
 import javax.swing.ImageIcon;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,7 +28,7 @@ public class PlayerTest {
     @BeforeEach
     void setUp() {
         myPlayer = new Player();
-        myPowerUp = new PowerUp();
+        //myPowerUp = new PowerUp();
     }
     
     @Test
@@ -84,21 +82,21 @@ public class PlayerTest {
 
     @Test
     void testAddPowerUp_FreeQuestion() {
-        myPlayer.addPowerUp(myPowerUp.createFreeQuestion());
+        myPlayer.addPowerUp(myPowerUp = PowerUp.createFreeQuestion());
         
         assertTrue(myPlayer.containsFreeQuestion());
     }
     
     @Test
     void testAddPowerUp_PermaUnlock() {
-        myPlayer.addPowerUp(myPowerUp.createPermaUnlock());
+        myPlayer.addPowerUp(myPowerUp = PowerUp.createPermaUnlock());
     
         assertTrue(myPlayer.containsPermaUnlock());
     }
     
     @Test
     void testRemoveFreeQuestion() {
-        myPlayer.addPowerUp(myPowerUp.createFreeQuestion());
+        myPlayer.addPowerUp(myPowerUp = PowerUp.createFreeQuestion());
         myPlayer.removePowerUp(myPowerUp);
         
         assertFalse(myPlayer.containsFreeQuestion());      
@@ -106,7 +104,7 @@ public class PlayerTest {
     
     @Test
     void testRemovePermaUnlock() {
-        myPlayer.addPowerUp(myPowerUp.createPermaUnlock());
+        myPlayer.addPowerUp(myPowerUp = PowerUp.createPermaUnlock());
         myPlayer.removePowerUp(myPowerUp);
         
         assertFalse(myPlayer.containsPermaUnlock());
@@ -114,6 +112,8 @@ public class PlayerTest {
     
     @Test
     void testRemoveDefault() {
+        myPlayer.addPowerUp(myPowerUp = PowerUp.createFreeQuestion());
+        myPlayer.removePowerUp(myPowerUp);
         myPlayer.removePowerUp(myPowerUp);
         
         assertFalse(myPlayer.containsFreeQuestion() || myPlayer.containsPermaUnlock());

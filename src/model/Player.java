@@ -2,6 +2,7 @@ package model;
 
 import java.awt.Color;
 import java.awt.Image;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 
@@ -16,7 +17,7 @@ public class Player {
     private Color myPlayerColor;
     private int myX;
     private int myY;
-    private PowerUp myPowerUp;
+    private ArrayList<PowerUp> myPowerUps;
     
     //1 Perma locked door unlock key
     //Method that checks if user has one
@@ -31,9 +32,7 @@ public class Player {
      */
     public Player() {
         myPlayerImage = new ImageIcon("./resources/w.gif").getImage();
-        
-        myPowerUp = new PowerUp();
-        
+        myPowerUps = new ArrayList<>();
         //Set default color to black
         myPlayerColor = new Color(0, 0, 0);
         myPlayerColor = Color.BLACK;
@@ -48,7 +47,7 @@ public class Player {
      */
     public Player(final Image theIcon) {
         myPlayerImage = theIcon;
-        myPowerUp = new PowerUp();
+        //myPowerUp = new PowerUp();
 
         myPlayerColor = new Color(0, 0, 0);
         myPlayerColor = Color.BLACK;
@@ -63,7 +62,7 @@ public class Player {
      */
     public Player(final Color theColor) {
         myPlayerColor = theColor;
-        myPowerUp = new PowerUp();
+        //myPowerUp = new PowerUp();
 
         myX = 0;
         myY = 0;
@@ -132,15 +131,23 @@ public class Player {
     }
     
     public void addPowerUp(final PowerUp thePowerUp) {
-        myPowerUp = thePowerUp;
+        myPowerUps.add(thePowerUp);
     }
     
     public boolean containsPermaUnlock() {
-        return myPowerUp.isPermaUnlock();
+        boolean doesContain = false;
+        for (int n = 0; n < myPowerUps.size(); n++) {
+            if (myPowerUps.get(n).isPermaUnlock()) doesContain = true;
+        }
+        return doesContain;
     }
     
     public boolean containsFreeQuestion() {
-        return myPowerUp.isFreeQuestion();
+        boolean doesContain = false;
+        for (int n = 0; n < myPowerUps.size(); n++) {
+            if (myPowerUps.get(n).isFreeQuestion()) doesContain = true;
+        }
+        return doesContain;
     }
     
     /** Remove PowerUp from player by setting value to false
@@ -148,13 +155,15 @@ public class Player {
      * @param thePowerUp
      */
     public void removePowerUp(final PowerUp thePowerUp) {
-        if (thePowerUp.isFreeQuestion()) {
-            myPowerUp.removeFreeQuestion();;
-        } else if (thePowerUp.isPermaUnlock()){
-            myPowerUp.removePermaUnlock();;
-        } else {
-            return;
-        }
+        myPowerUps.remove(thePowerUp);
+//        if (thePowerUp.isFreeQuestion()) {
+//            myPowerUps.remove(thePowerUp);
+//        } else if (thePowerUp.isPermaUnlock()){
+//            myPowerUps.remove(thePowerUp);
+//        } 
+        //
+        //myPowerUp = null;
+        
     }
     
     @Override 

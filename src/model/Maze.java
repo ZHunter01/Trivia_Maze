@@ -251,13 +251,13 @@ public class Maze {
         int randNumX;
         int randNumY;
 
-        PowerUp tempPower = new PowerUp();
+        PowerUp tempPower;
         
         //Generate 2 PowerUps
         randNumX = randNum.nextInt(myMaze.length);
         randNumY = randNum.nextInt(myMaze[0].length);
           
-        tempPower.createFreeQuestion();
+        tempPower = PowerUp.createFreeQuestion();
         myMaze [randNumX - 1] [randNumY - 1].setRoomWithPowerUp(tempPower);
        
         

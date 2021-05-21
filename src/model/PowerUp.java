@@ -1,38 +1,53 @@
 package model;
 
+import java.io.Serializable;
+
 /**
  * 
  * @author Zach Hunter
  *
  */
-public class PowerUp {
+public class PowerUp implements Serializable{
+  
+    private static final long serialVersionUID = 6950740297210484269L;
+    //private static PowerUp myPowerUp;
     private boolean myPermaUnlock;
     private boolean myFreeQuestion;
     
     
-    public PowerUp() {
-        myPermaUnlock = false;
-        myFreeQuestion = false;
+//    private PowerUp() {
+//        myPermaUnlock = false;
+//        myFreeQuestion = false;
+//    }
+    
+    private PowerUp(final boolean theFreeQ, final boolean thePermaUnlock) {
+        
+        myPermaUnlock = thePermaUnlock;
+        myFreeQuestion = theFreeQ;
     }
         
-    public PowerUp createPermaUnlock() {
-        if (myFreeQuestion == true) {
-            myFreeQuestion = false;
-        }
-        
-        myPermaUnlock = true;
-        
-        return this;
+    public static PowerUp createPermaUnlock() {
+        PowerUp myPowerUp = new PowerUp(false, true);
+        return myPowerUp;
+//        if (myFreeQuestion == true) {
+//            myFreeQuestion = false;
+//        }
+//        
+//        myPermaUnlock = true;
+//        
+//        return this;
     }
     
-    public PowerUp createFreeQuestion() {
-        if (myPermaUnlock == true) {
-            myPermaUnlock = false;
-        }
-        
-        myFreeQuestion = true;
-        
-        return this;
+    public static PowerUp createFreeQuestion() {
+        PowerUp myPowerUp = new PowerUp(true, false);
+        return myPowerUp;
+//        if (myPermaUnlock == true) {
+//            myPermaUnlock = false;
+//        }
+//        
+//        myFreeQuestion = true;
+//        
+//        return this;
     }
     
     public boolean isPermaUnlock() {
@@ -43,18 +58,21 @@ public class PowerUp {
         return myFreeQuestion;
     }
     
+    /** Sets PermaUnlock boolean value to false
+     * 
+     */
     public void removePermaUnlock() {
-        if (this.isFreeQuestion() || !this.isPermaUnlock()) {
-            return;
-        }
+//        if (!this.isPermaUnlock()) {
+//            return;
+//        }
         
         this.setPermaUnlock(false);
     }
     
     public void removeFreeQuestion() {
-        if (this.isPermaUnlock() || !this.isFreeQuestion()) {
-            return;
-        }
+//        if (!this.isFreeQuestion()) {
+//            return;
+//        }
         
         this.setFreeQuestion(false);
     }

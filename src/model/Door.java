@@ -11,7 +11,7 @@ public class Door {
     private Question myQuestion;
     private int myId;
     
-    public Door() {
+    public Door() { 
         //Grab question from database
         //Question object class
         //Make a question object class

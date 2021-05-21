@@ -1,7 +1,6 @@
 package tests;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 
@@ -10,45 +9,50 @@ import org.junit.jupiter.api.Test;
 
 import model.PowerUp;
 
+/**
+ * 
+ * @author Zach Hunter
+ *
+ */
 public class PowerUpTest {
     private PowerUp myPower;
     
     @BeforeEach
     void setUp() {
-        myPower = new PowerUp();
+        //myPower = new PowerUp();
     }
 
     @Test
     void testCreateFreeQuestion() {
-        myPower.createFreeQuestion();
+        myPower = PowerUp.createFreeQuestion();
         
         assertTrue(myPower.isFreeQuestion());
     }
 
     @Test
     void testReplacePermaUnlcomWithFreeQuestion() {
-        myPower.createPermaUnlock();
+        myPower = PowerUp.createPermaUnlock();
         
-        assertTrue(myPower.createFreeQuestion().isFreeQuestion());
+        assertTrue((myPower = PowerUp.createFreeQuestion()).isFreeQuestion());
     }
     
     @Test
     void testCreatePermaUnlock() {
-        myPower.createPermaUnlock();
+        myPower = PowerUp.createPermaUnlock();
         
         assertTrue(myPower.isPermaUnlock());
     }
     
     @Test
     void testReplaceFreeQuestionWithPermaUnlock() {
-        myPower.createFreeQuestion();
+        myPower = PowerUp.createFreeQuestion();
         
-        assertTrue(myPower.createPermaUnlock().isPermaUnlock());
+        assertTrue((myPower = PowerUp.createPermaUnlock()).isPermaUnlock());
     }
     
     @Test
     void testRemovePermaUnlock() {
-        myPower.createPermaUnlock();
+        myPower = PowerUp.createPermaUnlock();
         myPower.removePermaUnlock();
         
         assertFalse(myPower.isPermaUnlock());
@@ -56,7 +60,7 @@ public class PowerUpTest {
     
     @Test
     void testRemovePermaUnlockWithFreeQuestion() {
-        myPower.createFreeQuestion();
+        myPower = PowerUp.createFreeQuestion();
         
         myPower.removePermaUnlock();
         
@@ -64,15 +68,18 @@ public class PowerUpTest {
     }
     
     @Test
-    void testRemovePermaUnlockBasePowerUp() {
-        myPower.removePermaUnlock();
+    void testRemoveFreeQuestionTwice() {
+        myPower = PowerUp.createFreeQuestion();
+        myPower.removeFreeQuestion();
         
-        assertFalse(myPower.isPermaUnlock());
+        myPower.removeFreeQuestion();
+        
+        assertFalse(myPower.isFreeQuestion());
     }
     
     @Test
     void testRemoveFreeQuestion() {
-        myPower.createFreeQuestion();
+        myPower = PowerUp.createFreeQuestion();
         myPower.removeFreeQuestion();
         
         assertFalse(myPower.isFreeQuestion());
@@ -80,7 +87,7 @@ public class PowerUpTest {
     
     @Test
     void testRemoveFreeQuestionWithPermaUnlock() {
-        myPower.createPermaUnlock();
+        myPower = PowerUp.createPermaUnlock();
         
         myPower.removeFreeQuestion();
         
@@ -88,9 +95,11 @@ public class PowerUpTest {
     }
     
     @Test
-    void testRemoveFreeQuestionBasePowerUp() {
-        myPower.removeFreeQuestion();
+    void testRemovePermaUnlockTwice() {
+        myPower = PowerUp.createPermaUnlock();
+        myPower.removePermaUnlock();
+        myPower.removePermaUnlock();
         
-        assertFalse(myPower.isFreeQuestion());
+        assertFalse(myPower.isPermaUnlock());
     }
 }
