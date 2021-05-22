@@ -106,5 +106,25 @@ public class RoomTest {
         
         assertTrue(actual.equals(expected));
     }
+    
+    @Test
+    void testGetDoorLock() {
+        final int roomNum = 2;
+        
+        assertEquals(myRoom.getDoorLock(roomNum), myRoom.getUserDoor(2).isLocked());
+    }
 
+    @Test
+    void testGetDoorPermaLock() {
+     final int roomNum = 2;
+        
+     assertEquals(myRoom.getDoorPermaLock(roomNum), myRoom.getUserDoor(2).isPermaLocked());     
+    }
+    
+    @Test
+    void testSetRoomWithPowerUp() {
+        myRoom.setRoomWithPowerUp(myPowerUp);
+        
+        assertEquals(myRoom.getRoomPowerUp(), myPowerUp);
+    }
 }

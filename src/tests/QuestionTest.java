@@ -21,12 +21,13 @@ public class QuestionTest {
     @BeforeEach
     void setUp() {
        myQ = new Question();
+       myQ.setQuestionAndSolution("Question" , "Answer");
     }
     
     
     @Test
-    void getQuestionTest() {
-        assertEquals(QUESTION, myQ.getQuestion());
+    void testGetQuestion() {
+        assertEquals(myQ.getQuestion(), "Question");
     }
     
     @Test

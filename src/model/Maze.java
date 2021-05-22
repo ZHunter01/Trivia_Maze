@@ -39,6 +39,7 @@ public class Maze {
     public Maze() {
         //2-d array of default size
         myMaze = new Room [DEFAULT_SIZE][DEFAULT_SIZE];
+        fillMaze();
         myWin = false;
         
         myQuestionCounter = 0;
@@ -62,7 +63,7 @@ public class Maze {
     public Maze(final int theX, final int theY) {
         //2-d array of specified size
         myMaze = new Room [theX][theY];
-        
+        fillMaze();
         myWin = false;
         
         myQuestionCounter = 0;
@@ -78,13 +79,13 @@ public class Maze {
         generatePowerUps();
     }
     
-    /** Returns current count of how many questions have been asked
-     * 
-     * @return myQuestionCounter
-     */
-    public int getQuestionCount() {
-        return myQuestionCounter;
-    }
+//    /** Returns current count of how many questions have been asked
+//     * 
+//     * @return myQuestionCounter
+//     */
+//    public int getQuestionCount() {
+//        return myQuestionCounter;
+//    }
     
     /** Returns current count of correctly answered questions
      * 
@@ -108,6 +109,10 @@ public class Maze {
      */
     public Room getCurrentRoom() {
         return myMaze [myXCount][myYCount];
+    }
+    
+    public Room getRoom(final int theX, final int theY) {
+        return myMaze [theX][theY];
     }
     
     /** Gets question object from specified door
@@ -192,6 +197,15 @@ public class Maze {
         myPlayer.removePowerUp(thePowerUp);
     }
     
+    private void fillMaze() {
+        for (int n = 0; n < myMaze.length; n++) {
+            for (int i = 0; i < myMaze[0].length; i++) {
+                myMaze [n][i] = new Room();
+            }
+        }
+    }
+    
+    
     /** Increments maze array depending on int input
      * 
      */
@@ -251,20 +265,30 @@ public class Maze {
         int randNumX;
         int randNumY;
 
+        final int maxX = myMaze.length;
+        final int min = 0;
+        final int maxY = myMaze[0].length;
+        
         PowerUp tempPower;
         
+        randNumX = (int) Math.floor(Math.random() * (maxX + 1));
+        randNumY = (int) Math.floor(Math.random() * (maxY + 1));
+        
         //Generate 2 PowerUps
-        randNumX = randNum.nextInt(myMaze.length);
-        randNumY = randNum.nextInt(myMaze[0].length);
-          
+        //randNumX = randNum.nextInt(myMaze.length - 1);
+        //randNumY = randNum.nextInt(myMaze[0].length - 1);
+        
         tempPower = PowerUp.createFreeQuestion();
-        myMaze [randNumX - 1] [randNumY - 1].setRoomWithPowerUp(tempPower);
+        getRoom(randNumX, randNumY).setRoomWithPowerUp(tempPower);
        
         
-        randNumX = randNum.nextInt(myMaze.length);
-        randNumY = randNum.nextInt(myMaze[0].length);
+        randNumX = (int) Math.floor(Math.random() * (maxX + 1));
+        randNumY = (int) Math.floor(Math.random() * (maxY + 1));
         
-        myMaze [randNumX - 1] [randNumY - 1].setRoomWithPowerUp(tempPower.createPermaUnlock());
+        //randNumX = randNum.nextInt(myMaze.length);
+        //randNumY = randNum.nextInt(myMaze[0].length);
+        
+        getRoom(randNumX, randNumY).setRoomWithPowerUp(tempPower);
 
         
     }

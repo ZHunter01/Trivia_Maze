@@ -17,20 +17,25 @@ public class MazeTest {
     @BeforeEach
     void SetUp() {
         theMaze = new Maze();
-        customMaze = new Maze(6,6);
+        //customMaze = new Maze(6,6);
     }
     
     @Test
-    void testQuestionCount() {
-        theMaze.doorSolution(theMaze.getCurrentRoom().getUserDoor(0).getQuestion().getSolution());
-        final int count = 1;
-        
-        
-        assertTrue(count == theMaze.getQuestionCount());
+    void testGetXLength() {
+        assertEquals(theMaze.getXLength(), 4);
     }
     
-    @Test
-    void testCustomMazeConstructor() {        
-        assertTrue(customMaze.getXLength() == 6 && customMaze.getYLength() == 6);
-    }
+//    @Test
+//    void testQuestionCount() {
+//        theMaze.doorSolution((theMaze.getCurrentRoom().getUserDoor(0).getQuestion()).getSolution());
+//        final int count = 1;
+//        
+//        
+//        assertTrue(count == theMaze.getQuestionCount());
+//    }
+    
+//    @Test
+//    void testCustomMazeConstructor() {        
+//        assertTrue(customMaze.getXLength() == 6 && customMaze.getYLength() == 6);
+//    }
 }
