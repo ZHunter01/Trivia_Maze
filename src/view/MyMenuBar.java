@@ -24,6 +24,9 @@ public class MyMenuBar extends JMenuBar {
     private JMenu myCustomizePlayer;
     private JMenu myOptions;
     
+    /** The Database name by default */
+    private static String myDataBaseName = "SportQuestions";
+    
     // Constructor
 
     /**
@@ -31,7 +34,6 @@ public class MyMenuBar extends JMenuBar {
      */
     public MyMenuBar() {
         super();
-        
         initAndAddJMenus();
     }
 
@@ -126,6 +128,10 @@ public class MyMenuBar extends JMenuBar {
 
         }
 
+    }
+    
+    public static String getDataBaseName() {
+        return myDataBaseName;
     }
 
 //    private JButton mySave;

@@ -2,6 +2,8 @@ package model;
 
 import java.awt.Image;
 
+import javax.swing.ImageIcon;
+
 /**
  * 
  * @author Zach Hunter
@@ -43,6 +45,7 @@ public class Room {
         myDoorRight = new Door();
         myDoorDown = new Door();
 
+        image = new ImageIcon("src/resources/room.png").getImage();
         //myRoom = new Room();
     }
     
@@ -50,8 +53,8 @@ public class Room {
         return MY_ROOM;
     }
 
-     public void setPowerUp() {           
-        myPowerUp = new PowerUp();
+    public void setRoomWithPowerUp(final PowerUp thePowerUp) {
+        myPowerUp = thePowerUp;
     }
 
     

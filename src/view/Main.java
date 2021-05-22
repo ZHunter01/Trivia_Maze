@@ -1,18 +1,35 @@
+/**
+ * Trivia Maze TCSS 360 Spring 2021
+ */
+
 package view;
 import java.awt.*;
 import java.io.IOException;
 
+
+/**
+ * The main class is to launch GUI
+ * 
+ * @author Alik Balika 
+ * @author Oleksandr Maistruk
+ *
+ */
 public class Main {
 
-    public static void main(String[] args) {
+    /**
+     * The main method to launch GUI.
+     * 
+     * @param args
+     */
+    public static void main(final String[] args) {
         EventQueue.invokeLater(() -> {
-            Application ex = null;
+            Application execute = null;
             try {
-                ex = new Application();
-            } catch (IOException e) {
-                e.printStackTrace();
+                execute = new Application();
+            } catch (final IOException theError) {
+                theError.printStackTrace();
             }
-            ex.setVisible(true);
+            execute.setVisible(true);
         });
     }
 

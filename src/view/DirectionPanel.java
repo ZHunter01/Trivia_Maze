@@ -5,6 +5,11 @@ import java.awt.*;
 
 public class DirectionPanel extends JPanel {
 
+    /**
+     * Serial number
+     */
+    private static final long serialVersionUID = -4070967481123778371L;
+    
     private JButton myUpButton;
     private JButton myDownButton;
     private JButton myLeftButton;
