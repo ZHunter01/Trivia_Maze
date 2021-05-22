@@ -12,7 +12,7 @@ public class Application extends JFrame {
     private static final int WIDTH = 900;
     private static final int HEIGHT = 600;
     
-    private SqliteDB myDataBase = new SqliteDB(MyMenuBar.getDataBaseName());
+    private SqliteDB myDataBase = new SqliteDB(QuestionMenu.getDataBaseName());
 
     public Application() throws IOException {
         init();

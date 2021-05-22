@@ -1,10 +1,14 @@
+/**
+ * Trivia Maze TCSS 360 Spring 2021
+ */
+
 package model;
 
 import java.util.Objects;
 import java.util.Random;
 
 import db.SqliteDB;
-import view.MyMenuBar;
+import view.QuestionMenu;
 
 /**
  * 
@@ -20,7 +24,7 @@ public class Question {
     private final int myId;
     
     public Question() {
-        myDatabase = new SqliteDB(MyMenuBar.getDataBaseName());
+        myDatabase = new SqliteDB(QuestionMenu.getDataBaseName());
         myId = idHelper();
     }
     

@@ -23,9 +23,7 @@ public class MyMenuBar extends JMenuBar {
     private JMenu myHelp;
     private JMenu myCustomizePlayer;
     private JMenu myOptions;
-    
-    /** The Database name by default */
-    private static String myDataBaseName = "SportQuestions";
+   
     
     // Constructor
 
@@ -48,7 +46,7 @@ public class MyMenuBar extends JMenuBar {
         myOptions = new JMenu("OPTIONS");
         final JMenuItem myCharacter = new JMenuItem("Character");
         final JMenuItem myColor = new JMenuItem("Color");
-        final JMenuItem myQuestionLevel = new JMenuItem("Questions type");
+        final JMenuItem myQuestionType = new QuestionMenu(); //"Questions type");
         final JMenuItem myAbout = new JMenuItem("About");
         final JMenuItem myRules = new JMenuItem("Rules");
         
@@ -60,13 +58,14 @@ public class MyMenuBar extends JMenuBar {
         
         myCustomizePlayer.add(myCharacter);
         myCustomizePlayer.add(myColor);
-        myCustomizePlayer.add(myQuestionLevel);
+        myCustomizePlayer.add(myQuestionType);
         
         myHelp.add(myAbout);
         myHelp.add(myRules);
         
         myAbout.addActionListener(new About());
         myRules.addActionListener(new Rules());
+//        myQuestionType.addActionListener(new QuestionMenu());
     }
 
     /**
@@ -130,43 +129,5 @@ public class MyMenuBar extends JMenuBar {
 
     }
     
-    public static String getDataBaseName() {
-        return myDataBaseName;
-    }
-
-//    private JButton mySave;
-//    private JButton myLoad;
-//    private JButton myHelp;
-//    private JButton myCustomizePlayer;
-//    private JButton myOptions; // or mySetttings
-//
-//    public MenuPanel() {
-//        setBackground(Color.BLACK);
-//        setLayout(new GridLayout());
-//
-//        addButtons();
-//    }
-//
-//    private void addButtons() {
-//        mySave = initializeButton("SAVE");
-//        myLoad = initializeButton("LOAD");
-//        myHelp = initializeButton("HELP");
-//        myCustomizePlayer = initializeButton("CUSTOMIZE PLAYER");
-//        myOptions = initializeButton("OPTIONS");
-//
-//        add(mySave);
-//        add(myLoad);
-//        add(myHelp);
-//        add(myCustomizePlayer);
-//        add(myOptions);
-//    }
-//
-//    private JButton initializeButton(String name) {
-//        JButton button = new JButton(name);
-//        button.setFocusable(false);
-//        button.setBackground(Color.BLACK);
-//        button.setForeground(Color.WHITE);
-//        return button;
-//    }
 
 }

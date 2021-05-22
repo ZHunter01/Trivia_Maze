@@ -8,6 +8,10 @@ import java.awt.*;
 
 public class MazePanel extends JPanel {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1955289441832917137L;
     private Maze maze;
 
     public MazePanel() {

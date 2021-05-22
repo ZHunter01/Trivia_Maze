@@ -1,7 +1,5 @@
 package model;
 
-import java.io.IOException;
-
 public class Maze {
     /**Player object */
     private Player myPlayer;
