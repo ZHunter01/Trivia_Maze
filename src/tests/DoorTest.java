@@ -24,16 +24,12 @@ public class DoorTest {
     @BeforeEach
     void setUp() {
         myDoor = new Door();
-        myQ = new Question();
-        
-        //myDoor.setQuestion(myQ);
+        myQ = new Question();        
     }
     
     @Test
     void checkLockFalse() {
-        myQ.setQuestionAndSolution("Does this work?", "Yes");
-        myDoor.setQuestion(myQ);
-        myDoor.checkLock("YES");
+        myDoor.checkLock(myDoor.getQuestion().getSolution());
         
         assertFalse(myDoor.isLocked());
     }
@@ -57,9 +53,7 @@ public class DoorTest {
     
     @Test
     void checkPermaLockFalseWithCorrectSolution() {
-        myQ.setQuestionAndSolution("Does this work?", "Yes");
-        myDoor.setQuestion(myQ);
-        myDoor.checkLock("YES");
+        myDoor.checkLock(myDoor.getQuestion().getSolution());
         
         assertFalse(myDoor.isPermaLocked());
     }
@@ -89,12 +83,16 @@ public class DoorTest {
         assert(!myDoor.getQuestion().equals(new Question()));
     }
     
-    @SuppressWarnings("unlikely-arg-type") //To compare doors, we compare their question
     @Test
     void checkEquals() {
         Door newDoor = new Door();
         newDoor = myDoor;
         
-        assertTrue(myDoor.equals(newDoor.getQuestion()));
+        assertTrue(myDoor.equals(newDoor));
+    }
+    
+    @Test
+    void testGetId() {
+        assertEquals(myDoor.getQuestion().getId(), myDoor.getId());
     }
 }

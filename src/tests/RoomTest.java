@@ -77,23 +77,33 @@ public class RoomTest {
     }
     
     @Test
-    void testGetUserDoorUp() {
-        assertTrue(myRoom.isDoorUp(myRoom.getUserDoor(0)));
+    void testIsCorrectDoor() {
+        assertTrue(myRoom.isCorrectDoor(Room.UP, myRoom.getUserDoor(Room.UP)));
+    }
+    
+    @Test
+    void testIsCorrectDoorFalse() {
+        assertFalse(myRoom.isCorrectDoor(Room.LEFT, myRoom.getUserDoor(Room.UP)));
+    }
+    
+    @Test
+    void testGetUserDoorUp() {        
+        assertTrue(myRoom.isCorrectDoor(Room.UP, myRoom.getUserDoor(0)));
     }
     
     @Test
     void testGetUserDoorLeft() {
-        assertTrue(myRoom.isDoorLeft(myRoom.getUserDoor(1)));
+        assertTrue(myRoom.isCorrectDoor(Room.LEFT, myRoom.getUserDoor(1)));
     }
 
     @Test
     void testGetUserDoorDown() {
-        assertTrue(myRoom.isDoorDown(myRoom.getUserDoor(2)));
+        assertTrue(myRoom.isCorrectDoor(Room.DOWN, myRoom.getUserDoor(2)));
     }
 
     @Test
     void testGetUserDoorRight() {
-        assertTrue(myRoom.isDoorRight(myRoom.getUserDoor(3)));
+        assertTrue(myRoom.isCorrectDoor(Room.RIGHT, myRoom.getUserDoor(3)));
     }
     
     @Test

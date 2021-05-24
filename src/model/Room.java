@@ -31,7 +31,7 @@ public class Room {
     /**Int value to indicate right door is selected */
     public final static int RIGHT = 3;
     
-    /**
+    /** Creates default Room object
      * 
      */
     public Room() {
@@ -45,19 +45,35 @@ public class Room {
         myRoomIcon = new ImageIcon("./resources/w.gif").getImage();
     }
     
+    /**
+     * 
+     * @return
+     */
     public Image getRoomIcon() {
         return myRoomIcon;
     }
     
+    /**
+     * 
+     * @param theIcon
+     */
     public void setRoomIcon(final Image theIcon) {
         myRoomIcon = theIcon;
     }
     
-    //Player in room image - Do we
-    //Room image
-    
+    /**
+     * 
+     * @return
+     */
     public Player getPlayer() {
         return myPlayer;
+    }
+    
+    /**
+     * 
+     */
+    public void setPlayer(final Player thePlayer) {
+        myPlayer = thePlayer;
     }
     
     /** Returns PowerUp object contained in the room
@@ -68,36 +84,14 @@ public class Room {
         return myPowerUp;
     }
     
-    public boolean isDoorUp(final Door theDoor) {
-        if (theDoor == myDoorUp) {
-            return true;
-        } else {
-             return false;
-        }
-    }
-    
-    /**
+    /** Returns boolean if the two doors are the same
      * 
+     * @param theDir
      * @param theDoor
-     * @return boolean
+     * @return boolean theDoor.equals(getUserDoor(theDir))
      */
-    public boolean isDoorLeft(final Door theDoor) {
-        if (theDoor.equals(myDoorLeft)) return true;
-        return false;
-    }
-    
-    /**
-     * 
-     * @param theDoor
-     * @return boolean
-     */
-    public boolean isDoorDown(final Door theDoor) {
-        if (theDoor.equals(myDoorDown)) return true;
-        return false;
-    }
-    
-    public boolean isDoorRight(final Door theDoor) {
-        if (theDoor.equals(myDoorRight)) return true;
+    public boolean isCorrectDoor(final int theDir, final Door theDoor) {
+        if (theDoor.equals(getUserDoor(theDir))) return true;
         return false;
     }
     
@@ -130,21 +124,8 @@ public class Room {
      * @return userLock
      */
     public boolean getDoorLock(final int theDir) {
-        //boolean userLock = false;
         return getUserDoor(theDir).isLocked();  
-//        if (theDir == UP) {
-//            userLock = getUserDoor(theDir).isLocked(); 
-//        } else if (theDir == LEFT) {
-//            userLock = getUserDoor(theDir).isLocked(); 
-//        } else if (theDir == DOWN) {
-//            userLock = getUserDoor(theDir).isLocked(); 
-//        } else if (theDir == RIGHT) {
-//            userLock = getUserDoor(theDir).isLocked(); 
-//        } else {
-//            throw new IllegalArgumentException("Error: Parameter must be an int value from 0 to 3");
-//        }
-        
-        //return userLock;
+
     }
     
     /** Returns current state of the permaLock on the door user is pointing at
@@ -153,21 +134,7 @@ public class Room {
      * @return userLock
      */
     public boolean getDoorPermaLock(final int theDir) {
-        //boolean userLock = false;
         return getUserDoor(theDir).isPermaLocked();
-//        if (theDir == UP) {
-//            userLock = getUserDoor(theDir).isPermaLocked(); 
-//        } else if (theDir == LEFT) {
-//            userLock = myDoorLeft.isPermaLocked(); 
-//        } else if (theDir == DOWN) {
-//            userLock = myDoorDown.isPermaLocked(); 
-//        } else if (theDir == RIGHT) {
-//            userLock = myDoorRight.isPermaLocked(); 
-//        } else {
-//            throw new IllegalArgumentException("Error: Parameter must be an int value from 0 to 3");
-//        }
-        
-       // return userLock;
     }
     
     /** Sets room PowerUp to input PowerUp
@@ -183,6 +150,7 @@ public class Room {
      * @param theDir
      */
     public void unlockPermaLock(final int theDir) {
+        //getUserDoor(theDir).setPermaLock(false);
         if (myPlayer.containsPermaUnlock()) {
             getUserDoor(theDir).setPermaLock(false);
 

@@ -29,7 +29,7 @@ public final class Database {
         final SqliteDB dataBase = new SqliteDB(myDataName);
 //        dataBase.listQuestions();
 //        dataBase.insertToDB("Sky is", "blue");
-//        System.out.println(dataBase.getQuestion(1));
+//       System.out.println(dataBase.getQuestion(1));
 //        System.out.println(dataBase.getAnswer(1));
         dataBase.setIsUsedToDefault();
 //        System.out.println("Is Used: " + dataBase.getIsUsed(2));

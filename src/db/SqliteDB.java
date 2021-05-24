@@ -34,7 +34,7 @@ public class SqliteDB {
      */
     public SqliteDB(final String theName) {
         myDBName = theName;
-//        System.out.println("The db name: " + myDBName);
+        //System.out.println("The db name: " + myDBName);
         try {
            Class.forName("org.sqlite.JDBC");
            connection = DriverManager.getConnection("jdbc:sqlite:QuestionsDB.db");
@@ -43,7 +43,7 @@ public class SqliteDB {
            System.err.println( theError.getClass().getName() + ": " + theError.getMessage() );
            System.exit(0);
         }
-    
+        //System.out.println("The db name: " + myDBName);
     }
     
     /**
