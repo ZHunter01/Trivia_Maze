@@ -85,21 +85,21 @@ public class Player extends GameObject{
         return myPlayerColor;
     }
     
-    /** Returns current X coordinate position of player
-     * 
-     * @return
-     */
-    public int getX() {
-        return myX;
-    }
-    
-    /** Returns current Y coordinate position of player
-     * 
-     * @return
-     */
-    public int getY() {
-        return myY;
-    }
+//    /** Returns current X coordinate position of player
+//     * 
+//     * @return
+//     */
+//    public int getX() {
+//        return myX;
+//    }
+//    
+//    /** Returns current Y coordinate position of player
+//     * 
+//     * @return
+//     */
+//    public int getY() {
+//        return myY;
+//    }
     
     /** Sets player ImageIcon to input ImageIcon
      * 
@@ -173,9 +173,9 @@ public class Player extends GameObject{
      * @param y
      */
     public void move(int theX, int theY) {
-        if (theX < 0 || theY < 0) {
-            throw new IllegalArgumentException("Input Error: Values must be greater than or equal to 0.");
-        }
+//        if (theX < 0 || theY < 0) {
+//            throw new IllegalArgumentException("Input Error: Values must be greater than or equal to 0.");
+//        }
         setX(getX() + theX);
         setY(getY() + theY);
     }

@@ -255,20 +255,18 @@ public class Maze {
      */
     public boolean isInBounds(final int theDir) {
         boolean isIn;
-        
         //Check if door attempting to be accessed is on the edge of the Maze
-        if (theDir == Room.UP && myYCount++ > myMaze[0].length) {
+        if (theDir == Room.UP && myYCount - 1 < 0) {
             isIn = false;
-        } else if (theDir == Room.LEFT && myXCount-- < 0) {
+        } else if (theDir == Room.LEFT && myXCount - 1 < 0) {
             isIn = false;
-        } else if (theDir == Room.DOWN && myYCount-- < 0) {
+        } else if (theDir == Room.DOWN && myYCount + 1 >= myMaze.length) {
             isIn = false;
-        } else if (theDir == Room.RIGHT && myXCount++ > myMaze.length) {
+        } else if (theDir == Room.RIGHT && myXCount + 1 >= myMaze.length) {
             isIn = false;
         } else {
             isIn = true;
         }
-        
         return isIn;
     }
     
