@@ -40,7 +40,7 @@ public class MazePanel extends JPanel {
     /**
      * initializes the maze and constructs the panel
      */
-    private MazePanel() {
+    public MazePanel() {
 
         myAdapter = new TAdapter();
         setFocusable(true);
@@ -49,12 +49,12 @@ public class MazePanel extends JPanel {
 
     }
 
-    /**
-     * @return the only instance of mazePanel
-     */
-    public static MazePanel getInstance() {
-        return mazePanel;
-    }
+//    /**
+//     * @return the only instance of mazePanel
+//     */
+//    public static MazePanel getInstance() {
+//        return mazePanel;
+//    }
 
     //166 - width of the room
     //110 - height of the room
@@ -69,34 +69,34 @@ public class MazePanel extends JPanel {
 
         int y = 0;
 //        int i = 0;
-//        for (Room[] rooms : maze.getMyMaze()) {
-//            int x = 0;
-//            for (Room room : rooms) {
-//                room.setX(x);
-//                room.setY(y);
-//                if (x == 0) {
-//                    room.setMyDoorLeft(null);
-//                }
-//                if (y == 0) {
-//                    room.setMyDoorUp(null);
-//                }
-//                if (x + 166 >= getWidth()) {
-//                    room.setMyDoorRight(null);
-//                }
-//                if (y + 110 >= getHeight()) {
-//                    room.setMyDoorDown(null);
-//                }
+        for (Room[] rooms : maze.getMaze()) {
+            int x = 0;
+            for (Room room : rooms) {
+                room.setX(x);
+                room.setY(y);
+                if (x == 0) {
+                    room.setUserDoor(Room.LEFT, null);
+                }
+                if (y == 0) {
+                    room.setUserDoor(Room.UP, null);
+                }
+                if (x + 166 >= getWidth()) {
+                    room.setUserDoor(Room.RIGHT, null);
+                }
+                if (y + 110 >= getHeight()) {
+                    room.setUserDoor(Room.DOWN, null);
+                }
 //                System.out.println("room #" + i + ": \nLEFT: " + room.getMyDoorLeft()+"\nRIGHT: " + room.getMyDoorRight()
 //                + "\nUP: " + room.getMyDoorUp() + "\nDOWN: " + room.getMyDoorDown());
 //                i++;
                 //g.drawImage(room.getImage(), x, y, this);
-//                Drawer.drawRoom(g, room);
-//                x+= 166;
-//
-//            }
-//            y += 110;
-//        }
-//        Drawer.drawPlayer(g, maze.getMyPlayer(), this);
+                Drawer.drawRoom(g, room);
+                x+= 166;
+
+            }
+            y += 110;
+        }
+        Drawer.drawPlayer(g, maze.getPlayer(), this);
     }
 
     /**
@@ -140,7 +140,7 @@ public class MazePanel extends JPanel {
 
                 case KeyEvent.VK_LEFT:
                 case KeyEvent.VK_A:
-                    if (maze.getMyPlayer().getX() - 166 < 0) {
+                    if (maze.getPlayer().getX() - 166 < 0) {
                         return;
                     }
 //                    Question question = maze.doorQuestion(Room.LEFT);
@@ -148,12 +148,12 @@ public class MazePanel extends JPanel {
 //                        QuestionPanel.getInstance().setMyQuestion(question.getQuestion());
 //                    }
 
-                  //  maze.getMyPlayer().move(-166, 0);
+                    maze.getPlayer().move(-166, 0);
                     break;
 
                 case KeyEvent.VK_RIGHT:
                 case KeyEvent.VK_D:
-                    if (maze.getMyPlayer().getX() + 166 > getWidth()) {
+                    if (maze.getPlayer().getX() + 166 > getWidth()) {
                         return;
                     }
 
@@ -161,27 +161,27 @@ public class MazePanel extends JPanel {
 //                    if (question != null) {
 //                        QuestionPanel.getInstance().setMyQuestion(question.getQuestion());
 //                    }
-                 //   maze.getMyPlayer().move(166, 0);
+                    maze.getPlayer().move(166, 0);
                     break;
 
                 case KeyEvent.VK_UP:
                 case KeyEvent.VK_W:
-                    if (maze.getMyPlayer().getY() - 110 <= 0) {
+                    if (maze.getPlayer().getY() - 110 <= 0) {
                         return;
                     }
 
                     //QuestionPanel.getInstance().setMyQuestion("Going Up!");
-                //    maze.getMyPlayer().move(0, -110);
+                    maze.getPlayer().move(0, -110);
                     break;
 
                 case KeyEvent.VK_DOWN:
                 case KeyEvent.VK_S:
-                    if (maze.getMyPlayer().getY() + 110 >= getHeight()) {
+                    if (maze.getPlayer().getY() + 110 >= getHeight()) {
                         return;
                     }
 
                     //QuestionPanel.getInstance().setMyQuestion("Going Down!");
-                //    maze.getMyPlayer().move(0, 110);
+                    maze.getPlayer().move(0, 110);
                     break;
                 default:
                     break;

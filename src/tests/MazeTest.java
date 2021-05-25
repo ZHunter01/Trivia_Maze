@@ -9,6 +9,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import model.Maze;
+import model.PowerUp;
+import model.Question;
 import model.Room;
 
 public class MazeTest {
@@ -39,27 +41,58 @@ public class MazeTest {
     void testCustomMazeConstructor() {        
         assertTrue(customMaze.getXLength() == 6 && customMaze.getYLength() == 6);
     }
-    
-    @Test
-    void testDoorQuestion() {
-        assertEquals(theMaze.doorQuestion(Room.UP), theMaze.getCurrentRoom().getUserDoor(Room.UP).getQuestion());
-    }
+//    
+//    @Test
+//    void testDoorQuestion() {
+//        assertEquals(theMaze.doorQuestion(Room.UP), theMaze.getCurrentRoom().getUserDoor(Room.UP).getQuestion());
+//    }
     
     @Test
     void testGetMyMaze() {
-        final Room[][] testRoom = theMaze.getMyMaze();
-        assertTrue(theMaze.getMyMaze().equals(testRoom));
+        final Room[][] testRoom = theMaze.getMaze();
+        assertTrue(theMaze.getMaze().equals(testRoom));
     }
     
     @Test
     void testGetMyPlayer() {
-        assertTrue(theMaze.getMyPlayer().equals(theMaze.getCurrentRoom().getPlayer()));
+        assertTrue(theMaze.getPlayer().equals(theMaze.getCurrentRoom().getPlayer()));
     }
     
     @Test
-    void testGetCurrentDoor() {
-        assertTrue(theMaze.getCurrentDoor(Room.UP).equals(theMaze.getCurrentRoom().getUserDoor(Room.UP)));
+    void testUsePowerUpFreeQuestion() {
+        final int x = theMaze.getXCount();
+        final int y = theMaze.getYCount();
+        
+        final PowerUp power = PowerUp.createFreeQuestion();
+        
+        theMaze.getPlayer().addPowerUp(power);
+        theMaze.usePowerUp(power, Room.DOWN);
+        
+        assertTrue(theMaze.getXCount() == x  && theMaze.getYCount() == y + 1);
+        
+        
     }
+    
+    @Test
+    void testUsePowerUpPermaUnlock_DoorIsPermaLocked() {
+        theMaze.getCurrentRoom().getUserDoor(Room.UP).getQuestion().setQuestionAndSolution("Does this work?", "Yes");
+        //theMaze.getCurrentRoom().getUserDoor(Room.UP).setQuestion(myQ);
+        theMaze.getCurrentRoom().getUserDoor(Room.UP).checkLock("NO");
+        
+        
+        final PowerUp power = PowerUp.createPermaUnlock();
+        
+        theMaze.getPlayer().addPowerUp(power);
+        theMaze.usePowerUp(power, Room.DOWN);
+        
+        //assertTrue(theMaze.getXCount() == x  && theMaze.getYCount() == y + 1);
+        
+        
+    }
+//    @Test
+//    void testGetCurrentDoor() {
+//        assertTrue(theMaze.getCurrentDoor(Room.UP).equals(theMaze.getCurrentRoom().getUserDoor(Room.UP)));
+//    }
     
 //    @Test
 //    void testGetCorrectCount() {

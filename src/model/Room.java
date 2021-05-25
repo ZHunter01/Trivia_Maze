@@ -9,7 +9,7 @@ import javax.swing.ImageIcon;
  * @author Zach Hunter
  *
  */
-public class Room {
+public class Room extends GameObject{
     /**Door object to represent door at the top of the room */
     private Door myDoorUp;
     /**Door object to represent door at the left side of the room */
@@ -42,7 +42,7 @@ public class Room {
                 
         //myPowerUp = new PowerUp();
         myPlayer = new Player();
-        myRoomIcon = new ImageIcon("./resources/w.gif").getImage();
+       // myRoomIcon = new ImageIcon("./resources/w.gif").getImage();
     }
     
     /**
@@ -116,6 +116,21 @@ public class Room {
         }
         
         return userDoor;
+    }
+    
+    public void setUserDoor(final int theDir, final Door theDoor) {        
+        if (theDir == UP) {
+            myDoorUp = theDoor; 
+        } else if (theDir == LEFT) {
+            myDoorLeft = theDoor; 
+        } else if (theDir == DOWN) {
+            myDoorDown = theDoor; 
+        } else if (theDir == RIGHT) {
+            myDoorRight = theDoor; 
+        } else {
+            throw new IllegalArgumentException("Error: Parameter must be an int value from 0 to 3");
+        }
+        
     }
     
     /** Returns current state of the lock on the door user is pointing at

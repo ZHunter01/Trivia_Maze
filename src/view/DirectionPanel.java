@@ -34,31 +34,31 @@ public class DirectionPanel extends JPanel {
      */
     private final TAdapter myAdapter;
 
-    /**
-     * Create an instance of the DirectionPanel
-     */
-    private static final DirectionPanel directionPanel = new DirectionPanel();
+//    /**
+//     * Create an instance of the DirectionPanel
+//     */
+//    private static final DirectionPanel directionPanel ;
 
     /**
      * Constructs the panel and initializes buttons
      */
-    private DirectionPanel() {
+    public DirectionPanel(final MazePanel thePanel) {
         //setBorder(BorderFactory.createLineBorder(Color.BLUE));
         setLayout(new GridLayout());
         setPreferredSize(new Dimension(0, 50));
 
-        myAdapter = MazePanel.getInstance().getMyAdapter();
+        myAdapter = thePanel.getMyAdapter();
 
 
         initAndAddButtons();
     }
 
-    /**
-     * @return the only instance of DirectionPanel
-     */
-    public static DirectionPanel getInstance() {
-        return directionPanel;
-    }
+//    /**
+//     * @return the only instance of DirectionPanel
+//     */
+//    public static DirectionPanel getInstance(final MazePanel thePanel) {
+//        return directionPanel;
+//    }
 
     /**
      * initializes all the buttons and adds them to the panel

@@ -1,37 +1,34 @@
+
 package view;
 
 import javax.swing.*;
-import java.awt.*;
 
-/**
- * @author Alik Balika
- *
- * This class creates a window that is displayed on the users screen
- */
-public class Window extends JFrame{
+import db.SqliteDB;
+
+import java.awt.*;
+import java.io.IOException;
+
+public class Application extends JFrame {
 
     private static final int WIDTH = 900;
     private static final int HEIGHT = 600;
+    
+    private SqliteDB myDataBase = new SqliteDB(QuestionMenu.getDataBaseName());
 
-    /**
-     * calls a method that constructs the Frame
-     */
-    public Window() {
+    public Application() throws IOException {
         init();
     }
 
-    /**
-     * does all the necessary work to construct the frame as well as add all the needed panels
-     */
     private void init() {
         setSize(WIDTH, HEIGHT);
         setTitle("Trivia Maze");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
-        
-        MazePanel panel = new MazePanel();
+        myDataBase.setIsUsedToDefault();
 
+        MazePanel panel = new MazePanel();
+        
         setJMenuBar(MyMenuBar.getInstance());
         add(panel, BorderLayout.CENTER);
         add(new AnswerPanel(), BorderLayout.EAST);

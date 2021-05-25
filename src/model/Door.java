@@ -5,7 +5,7 @@ package model;
  * @author Zach Hunter
  *
  */
-public class Door {
+public class Door extends GameObject{
     private boolean myLock;
     private boolean myPermaLock;
     private Question myQuestion;

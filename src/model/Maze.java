@@ -132,11 +132,27 @@ public class Maze {
         return myMaze[0].length;
     }
     
+    /** Returns current x location in the Maze
+     * 
+     * @return myXCount
+     */
+    public int getXCount() {
+        return myXCount;
+    }
+    
+    /** Returns current y location in the Maze
+     * 
+     * @return myYCount
+     */
+    public int getYCount() {
+        return myYCount;
+    }
+    
     /** Returns boolean if user has won the game
      * 
      * @return myWin
      */
-    public boolean getMyWin() {
+    public boolean getWin() {
         return myWin;
     }
     
@@ -144,7 +160,7 @@ public class Maze {
      * 
      * @return myLose
      */
-    public boolean getMyLose() {
+    public boolean getLose() {
         return myLose;
     }
     
@@ -170,7 +186,7 @@ public class Maze {
      * 
      * @return myMaze
      */
-    public Room[][] getMyMaze() {
+    public Room[][] getMaze() {
         return myMaze;
     }
 
@@ -178,7 +194,7 @@ public class Maze {
      * 
      * @return myPlayer
      */
-    public Player getMyPlayer() {
+    public Player getPlayer() {
         return myPlayer;
     }
     
@@ -254,6 +270,7 @@ public class Maze {
     public boolean isInBounds(final int theDir) {
         boolean isIn;
         
+        //Check if door attempting to be accessed is on the edge of the Maze
         if (theDir == Room.UP && myYCount++ > myMaze[0].length) {
             isIn = false;
         } else if (theDir == Room.LEFT && myXCount-- < 0) {
@@ -274,6 +291,8 @@ public class Maze {
      * @param thePowerUp
      */
     public void usePowerUp(final PowerUp thePowerUp, final int theDir) {
+        userDir = theDir;
+        
         if (thePowerUp.isFreeQuestion()) {
             incrementMaze();
         } else if (thePowerUp.isPermaUnlock()){

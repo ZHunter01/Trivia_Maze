@@ -9,10 +9,10 @@ import javax.swing.ImageIcon;
 
 /**
  * 
- * @author Zach Hunter
+ * @author Zach Hunter, Alik Balika
  *
  */
-public class Player {
+public class Player extends GameObject{
     private Image myPlayerImage;
     private Color myPlayerColor;
     private int myX;
@@ -31,14 +31,15 @@ public class Player {
      * 
      */
     public Player() {
-        myPlayerImage = new ImageIcon("./resources/w.gif").getImage();
+       myPlayerImage = new ImageIcon("./resources/player.png").getImage();
         myPowerUps = new ArrayList<>();
         //Set default color to black
         myPlayerColor = new Color(0, 0, 0);
         myPlayerColor = Color.BLACK;
         
-        myX = 0;
-        myY = 0;
+        
+        setX(68);
+        setY(40);
     }
     
     /** Creates player object with specified ImageIcon as the object's icon
@@ -51,9 +52,9 @@ public class Player {
 
         myPlayerColor = new Color(0, 0, 0);
         myPlayerColor = Color.BLACK;
-        
-        myX = 0;
-        myY = 0;
+         
+        setX(68);
+        setY(40);
     }
     
     /** Creates player object with specified Color as the object's color
@@ -64,8 +65,8 @@ public class Player {
         myPlayerColor = theColor;
         //myPowerUp = new PowerUp();
 
-        myX = 0;
-        myY = 0;
+        setX(68);
+        setY(40);
     }
     
     /** Returns current ImageIcon of the player
@@ -165,6 +166,20 @@ public class Player {
         //myPowerUp = null;
         
     }
+    
+    /** Updates x and y
+     * 
+     * @param x
+     * @param y
+     */
+    public void move(int theX, int theY) {
+        if (theX < 0 || theY < 0) {
+            throw new IllegalArgumentException("Input Error: Values must be greater than or equal to 0.");
+        }
+        setX(getX() + theX);
+        setY(getY() + theY);
+    }
+    
     
     @Override 
     public String toString() {
