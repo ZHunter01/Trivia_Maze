@@ -226,20 +226,6 @@ public class Maze {
         myCurrentDoor.checkLock(theSolution);
             
         checkSolution();
-//        if (myCurrentDoor.isLocked() == false) {
-//            myCorrectCounter ++;
-//            if (checkWin() == true) {
-//                return;
-//            } else {
-//                incrementMaze();
-//                myPlayer.setLocation(myYCount, myXCount);
-//                checkRoomPowerUp();
-//            }
-//        } else {
-//            if (checkLose() == true) {
-//                return;
-//            }
-//        }
     }
     
     /** Checks how solution effected the door. Changes Maze state based on this.

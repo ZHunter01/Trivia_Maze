@@ -10,6 +10,10 @@ import java.io.IOException;
 
 public class Application extends JFrame {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -1533040357004060524L;
     private static final int WIDTH = 900;
     private static final int HEIGHT = 600;
     

@@ -29,11 +29,11 @@ public class Drawer {
      * @param room the room object
      */
     public static void drawRoom(Graphics g, Room room) {
-//        g.setColor(Color.BLACK);
-//        g.fillRect(room.getX(), room.getY(), 166, 110);
-//        g.setColor(Color.gray);
-//        g.drawRect(room.getX(), room.getY(), 166, 110);
-//        g.drawOval((room.getX() + room.getX() + 166) / 2 - 15, (room.getY() + room.getY() + 110) / 2 - 15, 30, 30);
+        g.setColor(Color.BLACK);
+        g.fillRect(room.getX(), room.getY(), 166, 110);
+        g.setColor(Color.gray);
+        g.drawRect(room.getX(), room.getY(), 166, 110);
+        g.drawOval((room.getX() + room.getX() + 166) / 2 - 15, (room.getY() + room.getY() + 110) / 2 - 15, 30, 30);
 
         g.setColor(new Color(165, 42, 42));
 
