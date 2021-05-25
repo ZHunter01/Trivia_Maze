@@ -1,41 +1,40 @@
 package model;
 
-import java.util.Objects;
-
 public class Door extends GameObject {
     private boolean myLock;
     private boolean myPermaLock;
     private Question myQuestion;
-    private int myId;
     
     public Door() {
-        //Grab question from database
-        //Question object class
-        //Make a question object class
         myLock = true;
         myPermaLock = false;
         myQuestion = new Question();
-        myId = 0;
     }
 
-//    public void setDoorLeftAndRight() {
-//        setImage("src/resources/doorRightAndLeft.png");
-//    }
-//
-//    public void setDoorUpAndDown() {
-//        setImage("src/resources/doorUpAndDown.png");
-//    }
-    
+    /**
+     *
+     * @return
+     */
     public Question getQuestion() {
         return myQuestion;
     }
 
+    /**
+     *
+     * @param theQ
+     */
     public void setQuestion(final Question theQ) {
         myQuestion = theQ;
     }
-    
+
+    /** Checks the input string to see if it matches Question's solution
+     *
+     * @param theSolution
+     */
     public void checkLock(final String theSolution) {
-        if (myQuestion.isSolution(theSolution)) {
+        // if (myQuestion.isSolution(theSolution)) {
+        System.out.println(getQuestion().getSolution());
+        if (myQuestion.getSolution().toLowerCase().equals(theSolution.toLowerCase().trim())) {
             myLock = false;
         }
         else {
@@ -75,20 +74,17 @@ public class Door extends GameObject {
         return myPermaLock;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Door door = (Door) o;
-        return myLock == door.myLock && myPermaLock == door.myPermaLock && myQuestion.equals(door.myQuestion);
-    }
+//    @Override
+//    public boolean equals(final Object theObj) {
+//        return this.getQuestion().equals(theObj);
+//    }
 
-    public void setId(final int theId) {
-        myId = theId;
-    }
+//    protected void setId(final int theId) {
+//        myId = theId;
+//    }
 
     public int getId() {
-        return myId;
+        return myQuestion.getId();
     }
 
 }

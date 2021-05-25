@@ -24,15 +24,15 @@ public class AnswerPanel extends JPanel {
      */
     private JButton mySubmit;
 
-    /**
-     * Create an instance of the AnswerPanel
-     */
-    private static final AnswerPanel answerPanel = new AnswerPanel();
+//    /**
+//     * Create an instance of the AnswerPanel
+//     */
+//    private static final AnswerPanel answerPanel = new AnswerPanel();
 
     /**
      * constructs the panel and initializes everything
      */
-    private AnswerPanel() {
+    public AnswerPanel() {
         setPreferredSize(new Dimension(222, 0));
         setBackground(Color.RED);
 
@@ -41,12 +41,12 @@ public class AnswerPanel extends JPanel {
         initAndAddSubmit();
     }
 
-    /**
-     * @return the only instance of AnswerPanel
-     */
-    public static AnswerPanel getInstance() {
-        return answerPanel;
-    }
+//    /**
+//     * @return the only instance of AnswerPanel
+//     */
+//    public static AnswerPanel getInstance() {
+//        return answerPanel;
+//    }
 
     /**
      * initializes the submit button and adds it to the panel

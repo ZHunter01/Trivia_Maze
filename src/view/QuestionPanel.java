@@ -16,16 +16,16 @@ public class QuestionPanel extends JPanel {
      */
     private JLabel myQuestion;
 
-    /**
-     * Create an instance of the QuestionPanel
-     */
-    private static final QuestionPanel questionPanel = new QuestionPanel();
+//    /**
+//     * Create an instance of the QuestionPanel
+//     */
+//    private static final QuestionPanel questionPanel = new QuestionPanel();
 
 
     /**
      * Constructs the panel as well as initializes myQuestion
      */
-    private QuestionPanel() {
+    public QuestionPanel() {
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(50, 50));
         setBackground(Color.GREEN);
@@ -38,12 +38,12 @@ public class QuestionPanel extends JPanel {
         add(myQuestion);
     }
 
-    /**
-     * @return the only QuestionPanel object
-     */
-    public static QuestionPanel getInstance() {
-        return questionPanel;
-    }
+//    /**
+//     * @return the only QuestionPanel object
+//     */
+//    public static QuestionPanel getInstance() {
+//        return questionPanel;
+//    }
 
 
 

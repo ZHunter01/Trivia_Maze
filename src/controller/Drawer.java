@@ -46,24 +46,24 @@ public class Drawer {
      * @param room the room object
      */
     private static void drawDoors(Graphics g, Room room) {
-        if (room.getMyDoorRight() != null) {
-            room.getMyDoorRight().setX(room.getX() + 161);
-            room.getMyDoorRight().setY(room.getY() + 20);
+        if (room.getUserDoor(Room.RIGHT) != null) {
+            room.getUserDoor(Room.RIGHT).setX(room.getX() + 161);
+            room.getUserDoor(Room.RIGHT).setY(room.getY() + 20);
             g.fillRect(room.getX() + 161, room.getY() + 20, 5, 70);
         }
-        if (room.getMyDoorLeft() != null) {
-            room.getMyDoorLeft().setX(room.getX());
-            room.getMyDoorLeft().setY(room.getY() + 20);
+        if (room.getUserDoor(Room.LEFT) != null) {
+            room.getUserDoor(Room.LEFT).setX(room.getX());
+            room.getUserDoor(Room.LEFT).setY(room.getY() + 20);
             g.fillRect(room.getX(), room.getY() + 20, 5, 70);
         }
-        if (room.getMyDoorDown() != null) {
-            room.getMyDoorDown().setX(room.getX() + 50);
-            room.getMyDoorDown().setY(room.getY() + 105);
+        if (room.getUserDoor(Room.DOWN) != null) {
+            room.getUserDoor(Room.DOWN).setX(room.getX() + 50);
+            room.getUserDoor(Room.DOWN).setY(room.getY() + 105);
             g.fillRect(room.getX() + 50, room.getY() + 105, 70, 5);
         }
-        if (room.getMyDoorUp() != null) {
-            room.getMyDoorUp().setX(room.getX() + 50);
-            room.getMyDoorUp().setY(room.getY());
+        if (room.getUserDoor(Room.UP) != null) {
+            room.getUserDoor(Room.UP).setX(room.getX() + 50);
+            room.getUserDoor(Room.UP).setY(room.getY());
             g.fillRect(room.getX() + 50, room.getY(), 70, 5);
         }
     }

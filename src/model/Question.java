@@ -1,57 +1,117 @@
+
 package model;
 
-//import db.SqliteDB;
+import java.util.Objects;
+import java.util.Random;
 
+import db.SqliteDB;
+import view.MyMenuBar;
+
+/**
+ * 
+ * @author Zach Hunter 
+ * @author Oleksandr Maistruk
+ *
+ */
 public class Question {
     private String myQuestion;
     private String mySolution;
-    //private SqliteDB database;
-    
+    private String myMultiAnswer;
+    private SqliteDB myDatabase;
+    private final int myId;
     
     public Question() {
-        //myQ = new Question();
-        //getQuestion();
-        //To be changed once database is up
-        myQuestion = "What color is the sky?";
-        mySolution = "blue";
-        //database = new SqliteDB();
+        myDatabase = new SqliteDB(MyMenuBar.getDataBaseName());
+        myId = idHelper();
+        myQuestion = getQuestion();
+        mySolution = getSolution();
+    }
+    
+    /**
+     * This method is used to assign question id randomly. 
+     * 
+     * @return question id
+     */
+    private int idHelper() {
+        final Random rand = new Random();
+        int random = rand.nextInt(myDatabase.getLastId())+1;
+       // System.out.println(random);
+      //  while (myDatabase.getIsUsed(random)) {
+         //  random = rand.nextInt(myDatabase.getLastId())+1;
+       // }
+
+        //myDatabase.updateIsUsed(random);
+        
+        return random;
     }
 
-    public Question(String theQuestion, String theSolution) {
-        //myQ = new Question();
-        //getQuestion();
-        myQuestion = theQuestion;
-        mySolution = theSolution;
-    }
     
-    
-    //getQuestion - say they're a string for now
+    /**
+     * 
+     * @return question by id
+     */
     public String getQuestion() {
-        return myQuestion;
+        //System.out.println(myDatabase.getQuestion(myId));
+        return myDatabase.getQuestion(myId);
     }
     
+    /**
+     * 
+     * @return answer by id
+     */
     public String getSolution() {
-        return mySolution;
+        //System.out.println(myDatabase.getAnswer(myId));
+        return myDatabase.getAnswer(myId);
     }
     
-    //getSolution
-
+    /**
+     * 
+     * @return multiple answers
+     */
+    public String getMultiAnswer() {
+        myMultiAnswer = myDatabase.getMultiAnswer(myId);
+        return myMultiAnswer;
+    }
+    
+    /**
+     * 
+     * @return true if the question has multiple answer
+     */
+    public boolean isMultiple() {
+        return myDatabase.getIsMultipleChoice(myId);
+    }
+    
+    /** Manually set question and solution for question object
+     * 
+     * @param theQ
+     * @param theSol
+     */
     public void setQuestionAndSolution(final String theQ, final String theSol) {
         myQuestion = theQ;
         mySolution = theSol;
     }
-
-    //Determine if input is solution
-    public boolean isSolution(final String theInput) {
-        return  mySolution.equalsIgnoreCase(theInput);
+    
+     
+    public int getId() {
+        return myId;
     }
-
+    
+    /**
+     * Determine if input is solution
+     * 
+     * @param theInput
+     * @return mySolution.toLowerCase().equals(theInput.toLowerCase())
+     */
+    public boolean isSolution(final String theInput) {
+        return  mySolution.toLowerCase().equals(theInput.toLowerCase());
+    }
+    
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Question question = (Question) o;
-        return question.myQuestion.equalsIgnoreCase(myQuestion) && question.mySolution.equalsIgnoreCase(mySolution);
-        //return Objects.equals(myQuestion, question.myQuestion) && Objects.equals(mySolution, question.mySolution);
+    public boolean equals(final Object theObj) {
+        if (this == theObj) return true;
+        if (theObj == null || getClass() != theObj.getClass()) return false;
+        
+        Question question = (Question) theObj;
+        return Objects.equals(myQuestion, question.myQuestion) && Objects.equals(mySolution, question.mySolution);
     }
 }

@@ -37,6 +37,8 @@ public class MyMenuBar extends JMenuBar {
      */
     private JMenu myOptions;
 
+    private static String myDataBaseName = "SportQuestions";
+
     /**
      * Create an instance of the DirectionPanel
      */
@@ -147,6 +149,10 @@ public class MyMenuBar extends JMenuBar {
             SwingUtilities.invokeLater(r);
 
         }
-
     }
+
+    public static String getDataBaseName() {
+        return myDataBaseName;
+    }
+
 }

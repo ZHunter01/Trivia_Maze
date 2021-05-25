@@ -1,13 +1,16 @@
 package model;
 
-import java.awt.Color;
+import java.awt.*;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 
 public class Player extends GameObject {
-    //private ImageIcon myPlayerImage;
+    private Image myPlayerImage;
     private Color myPlayerColor;
-    private PowerUp myPowerUp;
+    private int myX;
+    private int myY;
+    private ArrayList<PowerUp> myPowerUps;
 
     //1 Perma locked door unlock key
     //Method that checks if user has one
@@ -21,12 +24,12 @@ public class Player extends GameObject {
      *
      */
     public Player() {
-        //myPlayerImage = new ImageIcon();
+        //myPlayerImage = new ImageIcon("./resources/player.png").getImage();
         setImage("src/resources/player.png");
+        myPowerUps = new ArrayList<>();
 
-        myPowerUp = new PowerUp();
         //Set default color to black
-        myPlayerColor = new Color(0, 0, 0);
+        myPlayerColor = Color.BLACK;
         setX(68);
         setY(40);
     }
@@ -36,13 +39,13 @@ public class Player extends GameObject {
      *
      * @param theIcon
      */
-    public Player(final ImageIcon theIcon) {
-        //myPlayerImage = theIcon;
-        myPowerUp = new PowerUp();
+    public Player(final Image theIcon) {
+        myPlayerImage = theIcon;
+        myPowerUps = new ArrayList<>();
 
-        myPlayerColor = new Color(0, 0, 0);
-        setX(0);
-        setY(0);
+        myPlayerColor = Color.BLACK;
+        setX(68);
+        setY(40);
     }
 
     /** Creates player object with specified Color as the object's color
@@ -51,10 +54,17 @@ public class Player extends GameObject {
      */
     public Player(final Color theColor) {
         myPlayerColor = theColor;
-        myPowerUp = new PowerUp();
 
-        setX(0);
-        setY(0);
+        setX(68);
+        setY(40);
+    }
+
+    /** Returns current ImageIcon of the player
+     *
+     * @return
+     */
+    public Image getIcon() {
+        return myPlayerImage;
     }
 
     /** Returns current color of the player
@@ -73,6 +83,30 @@ public class Player extends GameObject {
         myPlayerColor = theColor;
     }
 
+    /** Sets player ImageIcon to input ImageIcon
+     *
+     * @param theImage
+     */
+    public void setImage(final Image theImage) {
+        myPlayerImage = theImage;
+    }
+
+//    /** Returns current X coordinate position of player
+//     *
+//     * @return
+//     */
+//    public int getX() {
+//        return myX;
+//    }
+
+//    /** Returns current Y coordinate position of player
+//     *
+//     * @return
+//     */
+//    public int getY() {
+//        return myY;
+//    }
+
 
     /** Sets the x and y location of the player object
      *
@@ -88,15 +122,23 @@ public class Player extends GameObject {
     }
 
     public void addPowerUp(final PowerUp thePowerUp) {
-        myPowerUp = thePowerUp;
+        myPowerUps.add(thePowerUp);
     }
 
     public boolean containsPermaUnlock() {
-        return myPowerUp.isPermaUnlock();
+        boolean doesContain = false;
+        for (int n = 0; n < myPowerUps.size(); n++) {
+            if (myPowerUps.get(n).isPermaUnlock()) doesContain = true;
+        }
+        return doesContain;
     }
 
     public boolean containsFreeQuestion() {
-        return myPowerUp.isPermaUnlock();
+        boolean doesContain = false;
+        for (int n = 0; n < myPowerUps.size(); n++) {
+            if (myPowerUps.get(n).isFreeQuestion()) doesContain = true;
+        }
+        return doesContain;
     }
 
     /** Remove PowerUp from player by setting value to false
@@ -104,17 +146,35 @@ public class Player extends GameObject {
      * @param thePowerUp
      */
     public void removePowerUp(final PowerUp thePowerUp) {
-        if (thePowerUp.isFreeQuestion()) {
-            myPowerUp.setFreeQuestion(false);
-        } else {
-            myPowerUp.setPermaUnlock(false);
-        }
+        myPowerUps.remove(thePowerUp);
+//        if (thePowerUp.isFreeQuestion()) {
+//            myPowerUps.remove(thePowerUp);
+//        } else if (thePowerUp.isPermaUnlock()){
+//            myPowerUps.remove(thePowerUp);
+//        }
+        //
+        //myPowerUp = null;
+
     }
 
-    public void move(int x, int y) {
-        setX(getX() + x);
-        setY(getY() + y);
+    /** Updates x and y
+     *
+     * @param theX
+     * @param theY
+     */
+    public void move(int theX, int theY) {
+//        if (theX < 0 || theY < 0) {
+//            throw new IllegalArgumentException("Input Error: Values must be greater than or equal to 0.");
+//        }
+        setX(getX() + theX);
+        setY(getY() + theY);
     }
+
+
+//    public void move(int x, int y) {
+//        setX(getX() + x);
+//        setY(getY() + y);
+//    }
 
     @Override
     public String toString() {

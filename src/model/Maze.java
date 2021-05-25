@@ -33,20 +33,32 @@ public class Maze {
      */
     public Maze() {
         myMaze = new Room [DEFAULT_SIZE][DEFAULT_SIZE];
+
+        //fill maze with rooms
+        fillMaze();
+
         myWin = false;
 
         myPlayer = new Player();
 
+        //How many questions have been asked
         myQuestionCounter = 0;
+        //How many question have been answered correctly
         myCorrectCounter = 0;
 
+        //Counters for the location in the 2-d array Maze
         myXCount = 0;
         myYCount = 0;
+        //Add Player to initial Room
+        myMaze [myXCount][myYCount].setPlayer(myPlayer);
 
+        //current door object initialized
         myCurrentDoor = new Door();
 
-        userDir = Room.DOWN;
-        initMaze();
+        //default directions is up
+        userDir = Room.UP;
+
+        //Generate PowerUps in the Maze
         generatePowerUps();
     }
 
@@ -56,41 +68,42 @@ public class Maze {
      * @param theY
      */
     public Maze(final int theX, final int theY) {
+        //2-d array of specified size
         myMaze = new Room [theX][theY];
+        //Fill maze with Rooms
+        fillMaze();
 
         myWin = false;
 
         myPlayer = new Player();
 
+        //How many questions have been asked
         myQuestionCounter = 0;
+        //How many question have been answered correctly
         myCorrectCounter = 0;
 
+        //Counters for the location in the 2-d array Maze
         myXCount = 0;
         myYCount = 0;
+        //Add Player to initial Room
+        myMaze [myXCount][myYCount].setPlayer(myPlayer);
 
         myCurrentDoor = new Door();
+        //default directions is up
+        userDir = Room.UP;
 
-        userDir = Room.DOWN;
-
-        initMaze();
+        //Generate PowerUps in the Maze
         generatePowerUps();
     }
 
-    private void initMaze() {
-        for (Room[] rooms : myMaze) {
-            for (int j = 0; j < rooms.length; j++) {
-                rooms[j] = new Room();
-            }
-        }
-    }
 
-    /** Returns current count of how many questions have been asked
-     *
-     * @return myQuestionCounter
-     */
-    public int getQuestionCount() {
-        return myQuestionCounter;
-    }
+//    /** Returns current count of how many questions have been asked
+//     *
+//     * @return myQuestionCounter
+//     */
+//    public int getQuestionCount() {
+//        return myQuestionCounter;
+//    }
     
     /** Returns current count of correctly answered questions
      * 
@@ -100,6 +113,54 @@ public class Maze {
         return myCorrectCounter;
     }
 
+    /** Returns current X count of the Maze
+     *
+     * @return myMaze.length
+     */
+    public int getXLength() {
+        return myMaze.length;
+    }
+
+    /** Returns current Y count of the Maze
+     *
+     * @return myMaze[0].length
+     */
+    public int getYLength() {
+        return myMaze[0].length;
+    }
+
+    /** Returns current x location in the Maze
+     *
+     * @return myXCount
+     */
+    public int getXCount() {
+        return myXCount;
+    }
+
+    /** Returns current y location in the Maze
+     *
+     * @return myYCount
+     */
+    public int getYCount() {
+        return myYCount;
+    }
+
+    /** Returns boolean if user has won the game
+     *
+     * @return myWin
+     */
+    public boolean getWin() {
+        return myWin;
+    }
+
+    /** Returns boolean if user has lost the game
+     *
+     * @return myLose
+     */
+    public boolean getLose() {
+        return myLose;
+    }
+
     /** Returns current room
      *
      * @return myMaze [myXCount][myYCount]
@@ -107,24 +168,31 @@ public class Maze {
     public Room getCurrentRoom() {
         return myMaze [myXCount][myYCount];
     }
-    
-    /** Gets question object from specified door
-     * 
-     * @param theDir
-     * @return myCurrentDoor.getQuestion()
+
+    /** Returns Room specified by the inputs theX and theY
+     *
+     * @param theX
+     * @param theY
+     * @return myMaze [theX][theY]
      */
-    public Question doorQuestion(final int theDir) {
-        
-        myCurrentDoor = myMaze [myXCount][myYCount].getUserDoor(theDir);
-        System.out.println(myCurrentDoor);
-        userDir = theDir;
+    public Room getRoom(final int theX, final int theY) {
+        return myMaze [theX][theY];
+    }
 
-        if (myCurrentDoor == null) {
-            return null;
-        }
-        System.out.println("MYCURRENTDOOR: myCurrentDoor ----------------------------------------------");
+    /** Returns current state of the 2-d array Maze
+     *
+     * @return myMaze
+     */
+    public Room[][] getMaze() {
+        return myMaze;
+    }
 
-        return myCurrentDoor.getQuestion();
+    /** Returns current state of the Player object
+     *
+     * @return myPlayer
+     */
+    public Player getPlayer() {
+        return myPlayer;
     }
 
     /** Processes a user answer to question from a door.
@@ -135,8 +203,15 @@ public class Maze {
      */
     public void doorSolution(final String theSolution) {
         myQuestionCounter ++;
-        myCurrentDoor.checkLock(theSolution.trim().toLowerCase());
+        myCurrentDoor.checkLock(theSolution);
 
+        checkSolution();
+    }
+
+    /** Checks how solution effected the door. Changes Maze state based on this.
+     *
+     */
+    private void checkSolution() {
         if (myCurrentDoor.isLocked() == false) {
             myCorrectCounter ++;
             if (checkWin() == true) {
@@ -161,13 +236,14 @@ public class Maze {
     public boolean isInBounds(final int theDir) {
         boolean isIn;
 
-        if (theDir == Room.UP && myYCount++ > myMaze[0].length) {
+        //Check if door attempting to be accessed is on the edge of the Maze
+        if (theDir == Room.UP && myYCount + 1 > myMaze[0].length) {
             isIn = false;
-        } else if (theDir == Room.LEFT && myXCount-- < 0) {
+        } else if (theDir == Room.LEFT && myXCount - 1 < 0) {
             isIn = false;
-        } else if (theDir == Room.DOWN && myYCount-- < 0) {
+        } else if (theDir == Room.DOWN && myYCount - 1 < 0) {
             isIn = false;
-        } else if (theDir == Room.RIGHT && myXCount++ > myMaze.length) {
+        } else if (theDir == Room.RIGHT && myXCount + 1 > myMaze.length) {
             isIn = false;
         } else {
             isIn = true;
@@ -176,21 +252,40 @@ public class Maze {
         return isIn;
     }
 
-    /**
+    /** Processes PowerUp ability and updates maze. Removes PowerUp from Player object
      *
      * @param thePowerUp
      */
-    public void usePowerUp(final PowerUp thePowerUp) {
+    public void usePowerUp(final PowerUp thePowerUp, final int theDir) {
+        userDir = theDir;
+
         if (thePowerUp.isFreeQuestion()) {
             incrementMaze();
+        } else if (thePowerUp.isPermaUnlock()){
+            if (!getCurrentRoom().getUserDoor(theDir).isPermaLocked()) {
+                return;
+            } else {
+                getCurrentRoom().unlockPermaLock(theDir);
+            }
         } else {
-
+            return;
         }
 
         myPlayer.removePowerUp(thePowerUp);
     }
 
-    /** Increments maze array depending on int input
+    /** Fills each location the 2-d array maze with Rooms
+     *
+     */
+    private void fillMaze() {
+        for (int n = 0; n < myMaze.length; n++) {
+            for (int i = 0; i < myMaze[0].length; i++) {
+                myMaze [n][i] = new Room();
+            }
+        }
+    }
+
+    /** Increments Maze array depending on current door
      *
      */
     private void incrementMaze() {
@@ -207,9 +302,9 @@ public class Maze {
         }
 
     }
-        
+
     /** If x count and y count match the max size of the 2-d array return myWin as true
-     * 
+     *
      * @return myWin
      */
     private boolean checkWin() {
@@ -239,7 +334,7 @@ public class Maze {
         return myLose;
     }
 
-    /** Generates 2 powerups in 2 random rooms in the maze
+    /** Generates 2 PowerUps in 2 random rooms in the maze
      *
      */
     private void generatePowerUps() {
@@ -249,37 +344,41 @@ public class Maze {
         int randNumX;
         int randNumY;
 
-        PowerUp tempPower = new PowerUp();
+        final int maxX = myMaze.length;
+        final int min = 0;
+        final int maxY = myMaze[0].length;
 
-        //Generate 2 powerups
+        PowerUp tempPower;
+
+        //randNumX = (int) Math.floor(Math.random() * (maxX + 1)) - 1;
+        // randNumY = (int) Math.floor(Math.random() * (maxY + 1)) - 1;
+
+        //Generate 2 PowerUps
+        randNumX = randNum.nextInt(myMaze.length );
+        randNumY = randNum.nextInt(myMaze[0].length);
+
+        tempPower = PowerUp.createFreeQuestion();
+        getRoom(randNumX, randNumY).setRoomWithPowerUp(tempPower);
+
+
+        // randNumX = (int) Math.floor(Math.random() * (maxX + 1));
+        //randNumY = (int) Math.floor(Math.random() * (maxY + 1));
+
         randNumX = randNum.nextInt(myMaze.length);
         randNumY = randNum.nextInt(myMaze[0].length);
 
-        myMaze [randNumX] [randNumY].roomWithPowerUp(tempPower.createFreeQuestion());
-
-
-        randNumX = randNum.nextInt(myMaze.length);
-        randNumY = randNum.nextInt(myMaze[0].length);
-
-        myMaze [randNumX] [randNumY].roomWithPowerUp(tempPower.createPermaUnlock());
+        tempPower = PowerUp.createPermaUnlock();
+        getRoom(randNumX, randNumY).setRoomWithPowerUp(tempPower);
 
 
     }
 
-    /** Checks if current room has a powerup and if it does the player picks it up
+    /** Checks if current room has a PowerUp and if it does the player picks it up
      *
      */
     private void checkRoomPowerUp() {
-        if (this.getCurrentRoom().containsFreeQuestion() || this.getCurrentRoom().containsPermaUnlock()) {
+        if (this.getCurrentRoom().getRoomPowerUp().isFreeQuestion() || this.getCurrentRoom().getRoomPowerUp().isPermaUnlock()) {
             myPlayer.addPowerUp(this.getCurrentRoom().getRoomPowerUp());
         }
-    }
-
-    public Room[][] getMyMaze() {
-        return myMaze;
-    }
-
-    public Player getMyPlayer() {
-        return myPlayer;
     }
 }

@@ -1,5 +1,7 @@
 package model;
 
+import java.awt.*;
+
 public class Room extends GameObject {
     /**Door object to represent door at the top of the room */
     private Door myDoorUp;
@@ -12,6 +14,7 @@ public class Room extends GameObject {
     /**PowerUp object that is contained in a room */
     private PowerUp myPowerUp;
     private Player myPlayer;
+    private Image myRoomIcon;
     /**Int value to indicate up door is selected */
     public final static int UP = 0;
     /**Int value to indicate left door is selected */
@@ -27,10 +30,42 @@ public class Room extends GameObject {
         myDoorRight = new Door();
         myDoorDown = new Door();
 
-        myPowerUp = new PowerUp();
+        //myPowerUp = new PowerUp();
         myPlayer = new Player();
 
         //setImage("src/resources/roomm.png");
+        // myRoomIcon = new ImageIcon("./resources/w.gif").getImage();
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Image getRoomIcon() {
+        return myRoomIcon;
+    }
+
+    /**
+     *
+     * @param theIcon
+     */
+    public void setRoomIcon(final Image theIcon) {
+        myRoomIcon = theIcon;
+    }
+
+    /**
+     *
+     * @return
+     */
+    public Player getPlayer() {
+        return myPlayer;
+    }
+
+    /**
+     *
+     */
+    public void setPlayer(final Player thePlayer) {
+        myPlayer = thePlayer;
     }
 
     /** Returns PowerUp object contained in the room
@@ -41,24 +76,53 @@ public class Room extends GameObject {
         return myPowerUp;
     }
 
+    /** Returns boolean if the two doors are the same
+     *
+     * @param theDir
+     * @param theDoor
+     * @return boolean theDoor.equals(getUserDoor(theDir))
+     */
+    public boolean isCorrectDoor(final int theDir, final Door theDoor) {
+        if (theDoor.equals(getUserDoor(theDir))) return true;
+        return false;
+    }
+
     /** Returns the door user is pointing at. Determined by input 0-3
      *
      * @param theDir
      * @return userDoor
      */
     public Door getUserDoor(final int theDir) {
+        Door userDoor = new Door();
+
         if (theDir == UP) {
-            return myDoorUp;
+            userDoor = myDoorUp;
         } else if (theDir == LEFT) {
-            System.out.println("Door left: " + myDoorLeft);
-            return myDoorLeft;
+            userDoor = myDoorLeft;
         } else if (theDir == DOWN) {
-            return myDoorDown;
+            userDoor = myDoorDown;
         } else if (theDir == RIGHT) {
-            return myDoorRight;
+            userDoor = myDoorRight;
         } else {
             throw new IllegalArgumentException("Error: Parameter must be an int value from 0 to 3");
         }
+
+        return userDoor;
+    }
+
+    public void setUserDoor(final int theDir, final Door theDoor) {
+        if (theDir == UP) {
+            myDoorUp = theDoor;
+        } else if (theDir == LEFT) {
+            myDoorLeft = theDoor;
+        } else if (theDir == DOWN) {
+            myDoorDown = theDoor;
+        } else if (theDir == RIGHT) {
+            myDoorRight = theDoor;
+        } else {
+            throw new IllegalArgumentException("Error: Parameter must be an int value from 0 to 3");
+        }
+
     }
 
     /** Returns current state of the lock on the door user is pointing at
@@ -68,17 +132,8 @@ public class Room extends GameObject {
      */
     public boolean getDoorLock(final int theDir) {
 
-        if (theDir == UP) {
-            return myDoorUp.isLocked();
-        } else if (theDir == LEFT) {
-            return myDoorLeft.isLocked();
-        } else if (theDir == DOWN) {
-            return myDoorDown.isLocked();
-        } else if (theDir == RIGHT) {
-            return myDoorRight.isLocked();
-        } else {
-            throw new IllegalArgumentException("Error: Parameter must be an int value from 0 to 3");
-        }
+        return getUserDoor(theDir).isLocked();
+
     }
 
      /** Returns current state of the permaLock on the door user is pointing at
@@ -88,41 +143,15 @@ public class Room extends GameObject {
      */
     public boolean getDoorPermaLock(final int theDir) {
         
-        if (theDir == UP) {
-            return myDoorUp.isPermaLocked();
-        } else if (theDir == LEFT) {
-            return myDoorLeft.isPermaLocked();
-        } else if (theDir == DOWN) {
-            return myDoorDown.isPermaLocked();
-        } else if (theDir == RIGHT) {
-            return myDoorRight.isPermaLocked();
-        } else {
-            throw new IllegalArgumentException("Error: Parameter must be an int value from 0 to 3");
-        }
+        return getUserDoor(theDir).isPermaLocked();
     }
 
     /** Sets room PowerUp to input PowerUp
      *
      * @param thePowerUp
      */
-    public void roomWithPowerUp(final PowerUp thePowerUp) {
+    public void setRoomWithPowerUp(final PowerUp thePowerUp) {
         myPowerUp = thePowerUp;
-    }
-
-    /** Returns boolean if PowerUp in the room is a PermaUnlock PowerUp
-     *
-     * @return myPowerUp.isPermaUnlock()
-     */
-    public boolean containsPermaUnlock() {
-        return myPowerUp.isPermaUnlock();
-    }
-
-    /**Returns boolean if PowerUp in the room is a FreeQuestion PowerUp
-     *
-     * @return myPowerUp.isPermaUnlock()
-     */
-    public boolean containsFreeQuestion() {
-        return myPowerUp.isPermaUnlock();
     }
 
     /** Unlocks door that has a PermaLock value of true
@@ -130,38 +159,15 @@ public class Room extends GameObject {
      * @param theDir
      */
     public void unlockPermaLock(final int theDir) {
-        getUserDoor(theDir).setPermaLock(false);
+        //getUserDoor(theDir).setPermaLock(false);
+        if (myPlayer.containsPermaUnlock()) {
+            getUserDoor(theDir).setPermaLock(false);
+
+        } else {
+            return;
+        }
     }
 
-    public Door getMyDoorUp() {
-        return myDoorUp;
-    }
 
-    public Door getMyDoorLeft() {
-        return myDoorLeft;
-    }
 
-    public Door getMyDoorRight() {
-        return myDoorRight;
-    }
-
-    public Door getMyDoorDown() {
-        return myDoorDown;
-    }
-
-    public void setMyDoorUp(Door myDoorUp) {
-        this.myDoorUp = myDoorUp;
-    }
-
-    public void setMyDoorLeft(Door myDoorLeft) {
-        this.myDoorLeft = myDoorLeft;
-    }
-
-    public void setMyDoorRight(Door myDoorRight) {
-        this.myDoorRight = myDoorRight;
-    }
-
-    public void setMyDoorDown(Door myDoorDown) {
-        this.myDoorDown = myDoorDown;
-    }
 }
