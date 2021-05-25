@@ -83,7 +83,7 @@ public class MazeTest {
         final PowerUp power = PowerUp.createPermaUnlock();
         
         theMaze.getPlayer().addPowerUp(power);
-        theMaze.usePowerUp(power, Room.DOWN);
+        theMaze.usePowerUp(power, Room.UP);
         
         //assertTrue(theMaze.getXCount() == x  && theMaze.getYCount() == y + 1);
         

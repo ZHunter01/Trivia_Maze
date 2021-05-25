@@ -70,7 +70,7 @@ public class MyMenuBar extends JMenuBar {
         myOptions = new JMenu("OPTIONS");
         final JMenuItem myCharacter = new JMenuItem("Character");
         final JMenuItem myColor = new JMenuItem("Color");
-        final JMenuItem myQuestionLevel = new JMenuItem("Questions type");
+        final JMenu myQuestionLevel = new QuestionMenu();
         final JMenuItem myAbout = new JMenuItem("About");
         final JMenuItem myRules = new JMenuItem("Rules");
 
