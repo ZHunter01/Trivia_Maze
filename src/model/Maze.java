@@ -221,8 +221,11 @@ public class Maze {
      * 
      * @param theSolution
      */
-    public void doorSolution(final String theSolution) {
+    public void doorSolution(final String theSolution, final int theDir) {
         myQuestionCounter ++;
+        userDir = theDir;
+       // myCorrectCounter++;
+        myCurrentDoor = this.getCurrentRoom().getUserDoor(theDir);
         myCurrentDoor.checkLock(theSolution);
             
         checkSolution();
@@ -238,8 +241,9 @@ public class Maze {
                 return;
             } else {
                 incrementMaze();
-                myPlayer.setLocation(myYCount, myXCount);
-                checkRoomPowerUp();
+                System.out.println(this.getYCount());
+                //myPlayer.setLocation(myYCount, myXCount);
+                //checkRoomPowerUp();
             }
         } else {
             if (checkLose() == true) {
@@ -290,6 +294,30 @@ public class Maze {
         }
         
         myPlayer.removePowerUp(thePowerUp);
+    }
+    
+    /** Sets the door opposite of the input to be PermaLocked
+     * 
+     */
+    public void reverseDoorPermaLock(final int theDir) {
+        //UP to DOWN
+        if (theDir == Room.UP) {
+            this.getCurrentRoom().getUserDoor(Room.DOWN).setPermaLock(true);
+          //LEFT to RIGHT
+        } else if (theDir == Room.LEFT) {
+            this.getCurrentRoom().getUserDoor(Room.RIGHT).setPermaLock(true);
+          //DOWN to UP
+        } else if (theDir == Room.DOWN) {
+            this.getCurrentRoom().getUserDoor(Room.UP).setPermaLock(true);
+          //RIGHT to LEFT
+        } else if (theDir == Room.RIGHT) {
+            this.getCurrentRoom().getUserDoor(Room.LEFT).setPermaLock(true);
+          //Value not within 0-3
+        } else {
+            throw new IllegalArgumentException("Error: Improper door directional value.");
+        }
+        
+        
     }
     
     /** Fills each location the 2-d array maze with Rooms
@@ -346,7 +374,7 @@ public class Maze {
         boolean right = currentRoom.getDoorPermaLock(Room.RIGHT);
 
         //If three of the four doors are permanently locked, game is over
-        if ((up ? 1:0) + (left ? 1:0) + (down ? 1:0) + (right ? 1:0) == 3 && myPlayer.containsPermaUnlock() == false) {
+        if ((up ? 1:0) + (left ? 1:0) + (down ? 1:0) + (right ? 1:0) == 4 && myPlayer.containsPermaUnlock() == false) {
             myLose = true;
         }
         
@@ -363,9 +391,9 @@ public class Maze {
         int randNumX;
         int randNumY;
 
-        final int maxX = myMaze.length;
-        final int min = 0;
-        final int maxY = myMaze[0].length;
+//        final int maxX = myMaze.length;
+//        final int min = 0;
+//        final int maxY = myMaze[0].length;
         
         PowerUp tempPower;
         
@@ -395,7 +423,7 @@ public class Maze {
     /** Checks if current room has a PowerUp and if it does the player picks it up
      * 
      */
-    private void checkRoomPowerUp() {
+    public void checkRoomPowerUp() {
         if (this.getCurrentRoom().getRoomPowerUp().isFreeQuestion() || this.getCurrentRoom().getRoomPowerUp().isPermaUnlock()) {
             myPlayer.addPowerUp(this.getCurrentRoom().getRoomPowerUp());
         }

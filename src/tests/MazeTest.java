@@ -94,18 +94,18 @@ public class MazeTest {
 //        assertTrue(theMaze.getCurrentDoor(Room.UP).equals(theMaze.getCurrentRoom().getUserDoor(Room.UP)));
 //    }
     
-//    @Test
-//    void testGetCorrectCount() {
-//        int count = 0;
-//        
-//        for (int n = 0; n < 4; n++) {
-//            theMaze.doorSolution(theMaze.getCurrentDoor(Room.UP).getQuestion().getSolution());
-//            System.out.println(theMaze.getCurrentDoor(Room.UP).getQuestion().getQuestion());
-//            System.out.println(theMaze.getCurrentDoor(Room.UP).getQuestion().getSolution());
-//
-//            count ++;
-//        }
-//        assertEquals(theMaze.getCorrectCount(), count);
-//    }
+    @Test
+    void testGetCorrectCount() {
+        int count = 0;
+        
+        for (int n = 0; n < 3; n++) {
+            theMaze.doorSolution(theMaze.getCurrentRoom().getUserDoor(Room.DOWN).getQuestion().getSolution(), Room.DOWN);
+            //System.out.println(theMaze.getCurrentRoom().getUserDoor(Room.DOWN).getQuestion().getSolution());
+            //System.out.println(theMaze.getCurrentRoom().getUserDoor(Room.DOWN).getQuestion().getSolution());
+
+            count ++;
+        }
+        assertEquals(theMaze.getCorrectCount(), count);
+    }
 }
 
