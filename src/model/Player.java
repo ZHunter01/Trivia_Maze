@@ -171,10 +171,14 @@ public class Player extends GameObject {
     }
 
 
-//    public void move(int x, int y) {
-//        setX(getX() + x);
-//        setY(getY() + y);
-//    }
+    public void move(int theDir) {
+        switch (theDir) {
+            case Room.UP -> move(0, -110);
+            case Room.DOWN -> move(0, 110);
+            case Room.LEFT -> move(-166, 0);
+            case Room.RIGHT -> move(166, 0);
+        }
+    }
 
     @Override
     public String toString() {
