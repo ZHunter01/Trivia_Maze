@@ -102,6 +102,13 @@ public class MazeTest {
 //    }
     
     @Test
+    void testCheckWin() {
+        theMaze.setRoom(3, 3);
+        //System.out.println(theMaze.getXLength() + " x length " + theMaze.getXCount() + "x count");
+        assertTrue(theMaze.checkWin());
+    }
+    
+    @Test
     void testGetCorrectCount() {
         int count = 0;
         
@@ -113,6 +120,14 @@ public class MazeTest {
             count ++;
         }
         assertEquals(theMaze.getCorrectCount(), count);
+    }
+    
+    @Test
+    void testCheckSolution_True() {
+      //  theMaze.setRoom(3, 3);
+        theMaze.doorSolution(theMaze.getCurrentRoom().getUserDoor(Room.DOWN).getQuestion().getSolution(), Room.DOWN);
+   
+        
     }
 }
 

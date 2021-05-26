@@ -252,6 +252,17 @@ public class Maze {
         }
     }
     
+    /** Set the current room in the maze to the room at the input coordinates.
+     * 
+     * @param theX
+     * @param theY
+     */
+    public void setRoom(final int theX, final int theY) {
+        myXCount = theX;
+        myYCount = theY;
+        //System.out.println(this.getRoom(theX,  theY));
+    }
+    
     /** Returns boolean of if the door being accessed leads to outside the array bounds
      * 
      * @param theDir
@@ -323,7 +334,7 @@ public class Maze {
     /** Fills each location the 2-d array maze with Rooms
      * 
      */
-    private void fillMaze() {
+    public void fillMaze() {
         for (int n = 0; n < myMaze.length; n++) {
             for (int i = 0; i < myMaze[0].length; i++) {
                 myMaze [n][i] = new Room();
@@ -335,7 +346,7 @@ public class Maze {
     /** Increments Maze array depending on current door
      * 
      */
-    private void incrementMaze() {
+    public void incrementMaze() {
         if (userDir == Room.UP) {
             myYCount --;
         } else if (userDir == Room.LEFT) {
@@ -354,8 +365,8 @@ public class Maze {
      * 
      * @return myWin
      */
-    private boolean checkWin() {
-        if (myXCount == myMaze[0].length && myYCount == myMaze.length) {
+    public boolean checkWin() {
+        if (myXCount == (myMaze.length - 1) && myYCount == (myMaze[0].length - 1)) {
             myWin = true;
         }
         return myWin;
@@ -365,7 +376,7 @@ public class Maze {
      * 
      * @return myLose
      */
-    private boolean checkLose() {
+    public boolean checkLose() {
         final Room currentRoom = myMaze [myXCount][myYCount];
         
         boolean up = currentRoom.getDoorPermaLock(Room.UP);
@@ -384,7 +395,7 @@ public class Maze {
     /** Generates 2 PowerUps in 2 random rooms in the maze
      * 
      */
-    private void generatePowerUps() {
+    public void generatePowerUps() {
         //ToDo
         Random randNum = new Random();
         
