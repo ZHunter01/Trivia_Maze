@@ -31,7 +31,7 @@ public class QuestionPanel extends JPanel {
         setBackground(Color.GREEN);
 
         myQuestion = new JLabel("This is where the question will show up");
-        myQuestion.setFont(new Font(Font.MONOSPACED, Font.BOLD, 18));
+        myQuestion.setFont(new Font(Font.MONOSPACED, Font.BOLD, 15));
         myQuestion.setHorizontalAlignment(JLabel.CENTER);
         myQuestion.setVerticalAlignment(JLabel.CENTER);
 

@@ -2,6 +2,8 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * @author Alik Balika
@@ -39,6 +41,16 @@ public class AnswerPanel extends JPanel {
         initAndAddAnswerPrompt();
         initAndAddAnswer();
         initAndAddSubmit();
+
+        mySubmit.addActionListener(e -> System.out.println(myAnswer.getText()));
+
+        myAnswer.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //maze.doorSolution(getMyAnswer().getText());
+            }
+        });
+
     }
 
 //    /**
@@ -47,6 +59,8 @@ public class AnswerPanel extends JPanel {
 //    public static AnswerPanel getInstance() {
 //        return answerPanel;
 //    }
+
+
 
     /**
      * initializes the submit button and adds it to the panel
@@ -83,6 +97,7 @@ public class AnswerPanel extends JPanel {
      * @return the answer that the user inputted
      */
     public JTextField getMyAnswer() {
+
         return myAnswer;
     }
 

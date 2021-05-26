@@ -1,14 +1,15 @@
 package view;
 
 import controller.Drawer;
+import model.Door;
 import model.Maze;
-import model.Question;
 import model.Room;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Scanner;
 
 /**
  * @author Alik Balika
@@ -33,19 +34,22 @@ public class MazePanel extends JPanel {
 //     */
 //    private static final MazePanel mazePanel = new MazePanel();
 
-//    private Timer timer;
-//
-//    public static int DELAY = 100;
+    private AnswerPanel myAnswerPanel;
+    private QuestionPanel myQuestionPanel;
+
 
     /**
      * initializes the maze and constructs the panel
      */
-    public MazePanel() {
+    public MazePanel(AnswerPanel theAnswerPanel, QuestionPanel theQuestionPanel) {
 
         myAdapter = new TAdapter();
         setFocusable(true);
         maze = new Maze();
         addKeyListener(myAdapter);
+
+        myAnswerPanel = theAnswerPanel;
+        myQuestionPanel = theQuestionPanel;
 
     }
 
@@ -59,6 +63,10 @@ public class MazePanel extends JPanel {
     //166 - width of the room
     //110 - height of the room
 
+
+    // height of panel: 440
+    // width of panel: 664
+
     /**
      * Draws all of the GameObjects onto the panel
      * @param g the Graphics drawer
@@ -68,28 +76,12 @@ public class MazePanel extends JPanel {
         super.paintComponent(g);
 
         int y = 0;
-//        int i = 0;
         for (Room[] rooms : maze.getMaze()) {
             int x = 0;
             for (Room room : rooms) {
                 room.setX(x);
                 room.setY(y);
-                if (x == 0) {
-                    room.setUserDoor(Room.LEFT, null);
-                }
-                if (y == 0) {
-                    room.setUserDoor(Room.UP, null);
-                }
-                if (x + 166 >= getWidth()) {
-                    room.setUserDoor(Room.RIGHT, null);
-                }
-                if (y + 110 >= getHeight()) {
-                    room.setUserDoor(Room.DOWN, null);
-                }
-//                System.out.println("room #" + i + ": \nLEFT: " + room.getMyDoorLeft()+"\nRIGHT: " + room.getMyDoorRight()
-//                + "\nUP: " + room.getMyDoorUp() + "\nDOWN: " + room.getMyDoorDown());
-//                i++;
-                //g.drawImage(room.getImage(), x, y, this);
+
                 Drawer.drawRoom(g, room);
                 x+= 166;
 
@@ -105,6 +97,14 @@ public class MazePanel extends JPanel {
     public TAdapter getMyAdapter() {
         return myAdapter;
     }
+
+    public Maze getMaze() {
+        return maze;
+    }
+
+//    private void showPane(String s) {
+//        JOptionPane.showMessageDialog(this, s);
+//    }
 
     /**
      * This class handles the movement of the player object
@@ -136,6 +136,7 @@ public class MazePanel extends JPanel {
          * @param key the code of the button that the user pressed
          */
         private void keySwitch(int key) {
+
             switch (key) {
 
                 case KeyEvent.VK_LEFT:
@@ -143,15 +144,12 @@ public class MazePanel extends JPanel {
                     if (!maze.isInBounds(Room.LEFT)) {
                         return;
                     }
-//                    if (maze.getPlayer().getX() - 166 < 0) {
-//                        return;
-//                    }
-                    //Question question = maze.doorQuestion(Room.LEFT);
-//                    if (question != null) {
-//                        QuestionPanel.getInstance().setMyQuestion(question.getQuestion());
-//                    }
 
-                    maze.getPlayer().move(-166, 0);
+                    retrieveQuestion(Room.LEFT);
+
+                    //maze.setXCount(maze.getXCount() - 1);
+
+                    //maze.getPlayer().move(-166, 0);
                     break;
 
                 case KeyEvent.VK_RIGHT:
@@ -159,15 +157,12 @@ public class MazePanel extends JPanel {
                     if (!maze.isInBounds(Room.RIGHT)) {
                         return;
                     }
-//                    if (maze.getPlayer().getX() + 166 > getWidth()) {
-//                        return;
-//                    }
 
-                    //Question question1 = maze.doorQuestion(Room.RIGHT);
-//                    if (question1 != null) {
-//                        QuestionPanel.getInstance().setMyQuestion(question1.getQuestion());
-//                    }
-                    maze.getPlayer().move(166, 0);
+                    retrieveQuestion(Room.RIGHT);
+
+                    //maze.setXCount(maze.getXCount() + 1);
+
+                    //maze.getPlayer().move(166, 0);
                     break;
 
                 case KeyEvent.VK_UP:
@@ -175,15 +170,12 @@ public class MazePanel extends JPanel {
                     if (!maze.isInBounds(Room.UP)) {
                         return;
                     }
-//                    if (maze.getPlayer().getY() - 110 <= 0) {
-//                        return;
-//                    }
 
-//                    Question question2 = maze.doorQuestion(Room.UP);
-//                    if (question2 != null) {
-//                        QuestionPanel.getInstance().setMyQuestion(question2.getQuestion());
-//                    }
-                    maze.getPlayer().move(0, -110);
+                    retrieveQuestion(Room.UP);
+
+                    //maze.setYCount(maze.getYCount() - 1);
+
+                    //maze.getPlayer().move(0, -110);
                     break;
 
                 case KeyEvent.VK_DOWN:
@@ -191,22 +183,34 @@ public class MazePanel extends JPanel {
                     if (!maze.isInBounds(Room.DOWN)) {
                         return;
                     }
-//                    if (maze.getPlayer().getY() + 110 >= getHeight()) {
-//                        return;
-//                    }
 
-//                    Question question3 = maze.doorQuestion(Room.DOWN);
-//                    if (question3 != null) {
-//                        QuestionPanel.getInstance().setMyQuestion(question3.getQuestion());
-//                    }
-                    maze.getPlayer().move(0, 110);
+                    retrieveQuestion(Room.DOWN);
+
+                    //maze.setYCount(maze.getYCount() + 1);
+
+                    //maze.getPlayer().move(0, 110);
                     break;
                 default:
                     break;
             }
+            System.out.println("(" + maze.getXCount() + "," + maze.getYCount() + ")");
             repaint();
         }
+
+        private void retrieveQuestion(int theDir) {
+            Room myRoom;
+            Door myDoor;
+            myRoom = maze.getCurrentRoom();
+            myDoor = myRoom.getUserDoor(theDir);
+            myQuestionPanel.setMyQuestion(myDoor.getQuestion().getQuestion());
+
+            System.out.println(myDoor.getQuestion().getSolution());
+
+            //showPane(myDoor.getQuestion().getQuestion());
+
+            maze.doorSolution(myAnswerPanel.getMyAnswer().getText());
+
+            //System.out.println(myAnswerPanel.getMyAnswer().getText());
+        }
     }
-
-
 }

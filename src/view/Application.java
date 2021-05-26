@@ -3,6 +3,7 @@ package view;
 import javax.swing.*;
 
 import db.SqliteDB;
+import model.Question;
 
 import java.awt.*;
 import java.io.IOException;
@@ -30,12 +31,15 @@ public class Application extends JFrame {
         setResizable(false);
         myDataBase.setIsUsedToDefault();
 
-        MazePanel panel = new MazePanel();
+        AnswerPanel answerPanel = new AnswerPanel();
+        QuestionPanel questionPanel = new QuestionPanel();
+
+        MazePanel panel = new MazePanel(answerPanel, questionPanel);
 
         setJMenuBar(MyMenuBar.getInstance());
         add(panel, BorderLayout.CENTER);
-        add(new AnswerPanel(), BorderLayout.EAST);
-        add(new QuestionPanel(), BorderLayout.NORTH);
+        add(answerPanel, BorderLayout.EAST);
+        add(questionPanel, BorderLayout.NORTH);
         add(new DirectionPanel(panel), BorderLayout.SOUTH);
     }
 }
