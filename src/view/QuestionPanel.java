@@ -1,3 +1,4 @@
+
 package view;
 
 import javax.swing.*;
@@ -24,7 +25,8 @@ public class QuestionPanel extends JPanel {
         return myQuestion;
     }
 
-    public void setMyQuestion(JLabel theQuestion) {
-        myQuestion = theQuestion;
+    public void setMyQuestion(String theQuestion) {
+        myQuestion.setText(theQuestion);
     }
 }
+

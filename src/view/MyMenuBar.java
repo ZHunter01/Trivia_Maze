@@ -6,33 +6,57 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
- * 
+ *
  * @author Alik Balika
  * @author Oleksandr Maistruk
  *
+ * Creates the menu bar of the program
+ *
+ * This is a Singleton class
  */
 public class MyMenuBar extends JMenuBar {
 
     /**
-     * A generated serial version UID for object Serialization.
+     * JMenu mySave allows the user to save the game
      */
-    private static final long serialVersionUID = 484580811856249148L;
-    
     private JMenu mySave;
+    /**
+     * JMenu myLoad allows the user to load a game
+     */
     private JMenu myLoad;
+    /**
+     * JMenu myHelp pops up a help window that explains how the game works
+     */
     private JMenu myHelp;
+    /**
+     * JMenu myCustomizePlayer allows the user to change the icon of their player
+     */
     private JMenu myCustomizePlayer;
+    /**
+     * JMenu myOptions displays JMenuItems which give different options for the user
+     */
     private JMenu myOptions;
-   
-    
-    // Constructor
+
+    private static String myDataBaseName = "SportQuestions";
 
     /**
-     * The constructor for MyMenuBar class.
+     * Create an instance of the DirectionPanel
      */
-    public MyMenuBar() {
+    private static final MyMenuBar myMenuBar = new MyMenuBar();
+
+    /**
+     * constructs the Menu Bar
+     */
+    MyMenuBar() {
         super();
         initAndAddJMenus();
+    }
+
+    /**
+     * @return the only instance of MenuBar
+     */
+    public static MyMenuBar getInstance() {
+        return myMenuBar;
     }
 
     /**
@@ -49,27 +73,26 @@ public class MyMenuBar extends JMenuBar {
         final JMenuItem myQuestionType = new QuestionMenu(); //"Questions type");
         final JMenuItem myAbout = new JMenuItem("About");
         final JMenuItem myRules = new JMenuItem("Rules");
-        
+
         add(mySave);
         add(myLoad);
+        add(myHelp);
         add(myCustomizePlayer);
         add(myOptions);
-        add(myHelp);
-        
+
         myCustomizePlayer.add(myCharacter);
         myCustomizePlayer.add(myColor);
         myCustomizePlayer.add(myQuestionType);
-        
+
         myHelp.add(myAbout);
         myHelp.add(myRules);
-        
+
         myAbout.addActionListener(new About());
         myRules.addActionListener(new Rules());
-//        myQuestionType.addActionListener(new QuestionMenu());
     }
 
     /**
-     * 
+     *
      * Action Listener to show message by clicking About button from Help menu.
      */
     private class About implements ActionListener {
@@ -94,9 +117,9 @@ public class MyMenuBar extends JMenuBar {
         }
 
     }
-    
+
     /**
-     * 
+     *
      * Action Listener to show message by clicking Rules button from Help menu.
      */
     private class Rules implements ActionListener {
@@ -106,7 +129,7 @@ public class MyMenuBar extends JMenuBar {
          */
         @Override
         public void actionPerformed(final ActionEvent theEvent) {
-            
+
             final String content1 = "<html>"
                     + "<body style='background-color: white; width: ";
             final String content2 = "'>"
@@ -126,8 +149,10 @@ public class MyMenuBar extends JMenuBar {
             SwingUtilities.invokeLater(r);
 
         }
-
     }
-    
+
+    public static String getDataBaseName() {
+        return myDataBaseName;
+    }
 
 }

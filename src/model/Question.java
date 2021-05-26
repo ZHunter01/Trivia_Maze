@@ -1,6 +1,3 @@
-/**
- * Trivia Maze TCSS 360 Spring 2021
- */
 
 package model;
 
@@ -8,7 +5,7 @@ import java.util.Objects;
 import java.util.Random;
 
 import db.SqliteDB;
-import view.QuestionMenu;
+import view.MyMenuBar;
 
 /**
  * 
@@ -24,8 +21,10 @@ public class Question {
     private final int myId;
     
     public Question() {
-        myDatabase = new SqliteDB(QuestionMenu.getDataBaseName());
+        myDatabase = new SqliteDB(MyMenuBar.getDataBaseName());
         myId = idHelper();
+        myQuestion = getQuestion();
+        mySolution = getSolution();
     }
     
     /**
@@ -36,12 +35,12 @@ public class Question {
     private int idHelper() {
         final Random rand = new Random();
         int random = rand.nextInt(myDatabase.getLastId())+1;
-//        System.out.println("random #: " + random);
-        while (myDatabase.getIsUsed(random)) {
-            random = rand.nextInt(myDatabase.getLastId())+1;
-        }
+       // System.out.println(random);
+      //  while (myDatabase.getIsUsed(random)) {
+         //  random = rand.nextInt(myDatabase.getLastId())+1;
+       // }
 
-//        myDatabase.updateIsUsed(random);
+        //myDatabase.updateIsUsed(random);
         
         return random;
     }
@@ -52,8 +51,8 @@ public class Question {
      * @return question by id
      */
     public String getQuestion() {
-        myQuestion = myDatabase.getQuestion(myId);
-        return myQuestion;
+        //System.out.println(myDatabase.getQuestion(myId));
+        return myDatabase.getQuestion(myId);
     }
     
     /**
@@ -61,8 +60,8 @@ public class Question {
      * @return answer by id
      */
     public String getSolution() {
-        mySolution = myDatabase.getAnswer(myId);
-        return mySolution;
+        //System.out.println(myDatabase.getAnswer(myId));
+        return myDatabase.getAnswer(myId);
     }
     
     /**
@@ -82,12 +81,21 @@ public class Question {
         return myDatabase.getIsMultipleChoice(myId);
     }
     
-//    public void setQuestionAndSolution(final String theQ, final String theSol) {
-//        myQuestion = theQ;
-//        mySolution = theSol;
-//    }
+    /** Manually set question and solution for question object
+     * 
+     * @param theQ
+     * @param theSol
+     */
+    public void setQuestionAndSolution(final String theQ, final String theSol) {
+        myQuestion = theQ;
+        mySolution = theSol;
+    }
     
      
+    public int getId() {
+        return myId;
+    }
+    
     /**
      * Determine if input is solution
      * 
