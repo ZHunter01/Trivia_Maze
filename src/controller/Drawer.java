@@ -46,22 +46,22 @@ public class Drawer {
         * @param room the room object
         */
         private static void drawDoors(Graphics g, Room room) {
-            if (room.getUserDoor(Room.RIGHT) != null) {
+            if (!(room.getX() + 166 >= 664)) {
                 room.getUserDoor(Room.RIGHT).setX(room.getX() + 161);
                 room.getUserDoor(Room.RIGHT).setY(room.getY() + 20);
                 g.fillRect(room.getX() + 161, room.getY() + 20, 5, 70);
             }
-            if (room.getUserDoor(Room.LEFT) != null) {
+            if (!(room.getX() == 0)) {
                 room.getUserDoor(Room.LEFT).setX(room.getX());
                 room.getUserDoor(Room.LEFT).setY(room.getY() + 20);
                 g.fillRect(room.getX(), room.getY() + 20, 5, 70);
             }
-            if (room.getUserDoor(Room.DOWN) != null) {
+            if (!(room.getY() + 110 >= 440)) {
                 room.getUserDoor(Room.DOWN).setX(room.getX() + 50);
                 room.getUserDoor(Room.DOWN).setY(room.getY() + 105);
                 g.fillRect(room.getX() + 50, room.getY() + 105, 70, 5);
             }
-            if (room.getUserDoor(Room.UP) != null) {
+            if (!(room.getY() == 0)) {
                 room.getUserDoor(Room.UP).setX(room.getX() + 50);
                 room.getUserDoor(Room.UP).setY(room.getY());
                 g.fillRect(room.getX() + 50, room.getY(), 70, 5);
