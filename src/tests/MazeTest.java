@@ -89,6 +89,13 @@ public class MazeTest {
         
         
     }
+    
+    @Test
+    void testReverseDoorPermaLock_Up() {
+        theMaze.reverseDoorPermaLock(Room.UP);
+        
+        assertTrue(theMaze.getCurrentRoom().getUserDoor(Room.DOWN).isPermaLocked());
+    }
 //    @Test
 //    void testGetCurrentDoor() {
 //        assertTrue(theMaze.getCurrentDoor(Room.UP).equals(theMaze.getCurrentRoom().getUserDoor(Room.UP)));
