@@ -98,14 +98,6 @@ public class MazePanel extends JPanel {
         return myAdapter;
     }
 
-    public Maze getMaze() {
-        return maze;
-    }
-
-//    private void showPane(String s) {
-//        JOptionPane.showMessageDialog(this, s);
-//    }
-
     /**
      * This class handles the movement of the player object
      */
@@ -146,10 +138,6 @@ public class MazePanel extends JPanel {
                     }
 
                     retrieveQuestion(Room.LEFT);
-
-                    //maze.setXCount(maze.getXCount() - 1);
-
-                    //maze.getPlayer().move(-166, 0);
                     break;
 
                 case KeyEvent.VK_RIGHT:
@@ -159,10 +147,6 @@ public class MazePanel extends JPanel {
                     }
 
                     retrieveQuestion(Room.RIGHT);
-
-                    //maze.setXCount(maze.getXCount() + 1);
-
-                    //maze.getPlayer().move(166, 0);
                     break;
 
                 case KeyEvent.VK_UP:
@@ -172,10 +156,6 @@ public class MazePanel extends JPanel {
                     }
 
                     retrieveQuestion(Room.UP);
-
-                    //maze.setYCount(maze.getYCount() - 1);
-
-                    //maze.getPlayer().move(0, -110);
                     break;
 
                 case KeyEvent.VK_DOWN:
@@ -185,11 +165,8 @@ public class MazePanel extends JPanel {
                     }
 
                     retrieveQuestion(Room.DOWN);
-
-                    //maze.setYCount(maze.getYCount() + 1);
-
-                    //maze.getPlayer().move(0, 110);
                     break;
+
                 default:
                     break;
             }
@@ -204,13 +181,13 @@ public class MazePanel extends JPanel {
             myDoor = myRoom.getUserDoor(theDir);
             myQuestionPanel.setMyQuestion(myDoor.getQuestion().getQuestion());
 
-            System.out.println(myDoor.getQuestion().getSolution());
+            System.out.println("in mazePanel: " + myDoor.getQuestion().getSolution());
 
-            //showPane(myDoor.getQuestion().getQuestion());
+            if (!myAnswerPanel.getMyAnswer().equalsIgnoreCase("")) {
+                System.out.println("Entered if statement");
+                maze.doorSolution(myAnswerPanel.getMyAnswer(), theDir);
+            }
 
-            maze.doorSolution(myAnswerPanel.getMyAnswer().getText());
-
-            //System.out.println(myAnswerPanel.getMyAnswer().getText());
         }
     }
 }

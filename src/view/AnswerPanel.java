@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
 /**
  * @author Alik Balika
@@ -20,11 +21,13 @@ public class AnswerPanel extends JPanel {
     /**
      * A JTextField object that the user can use to answer the question
      */
-    private JTextField myAnswer;
+    private JTextField myAnswerField;
     /**
      * A button that the user can use to submit their answer
      */
     private JButton mySubmit;
+
+    private String myAnswer;
 
 //    /**
 //     * Create an instance of the AnswerPanel
@@ -38,18 +41,17 @@ public class AnswerPanel extends JPanel {
         setPreferredSize(new Dimension(222, 0));
         setBackground(Color.RED);
 
+        myAnswer = "";
+
         initAndAddAnswerPrompt();
         initAndAddAnswer();
         initAndAddSubmit();
 
-        mySubmit.addActionListener(e -> System.out.println(myAnswer.getText()));
-
-        myAnswer.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //maze.doorSolution(getMyAnswer().getText());
-            }
+        mySubmit.addActionListener(e -> {
+            myAnswer = myAnswerField.getText();
+            myAnswerField.setText("");
         });
+        myAnswerField.addActionListener(e -> myAnswer = myAnswerField.getText());
 
     }
 
@@ -78,9 +80,9 @@ public class AnswerPanel extends JPanel {
      * initializes the JTextField and adds it to the panel
      */
     private void initAndAddAnswer() {
-        myAnswer = new JTextField(20);
+        myAnswerField = new JTextField(20);
 
-        add(myAnswer);
+        add(myAnswerField);
     }
 
     /**
@@ -93,11 +95,7 @@ public class AnswerPanel extends JPanel {
         add(myAnswerPrompt);
     }
 
-    /**
-     * @return the answer that the user inputted
-     */
-    public JTextField getMyAnswer() {
-
+    public String getMyAnswer() {
         return myAnswer;
     }
 
