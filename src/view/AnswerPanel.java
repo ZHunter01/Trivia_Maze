@@ -2,9 +2,6 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Objects;
 
 /**
  * @author Alik Balika
@@ -50,6 +47,7 @@ public class AnswerPanel extends JPanel {
         mySubmit.addActionListener(e -> {
             myAnswer = myAnswerField.getText();
             myAnswerField.setText("");
+            if (!myAnswer.equals("")) myAnswerField.setFocusable(false);
         });
         myAnswerField.addActionListener(e -> myAnswer = myAnswerField.getText());
 
@@ -97,6 +95,10 @@ public class AnswerPanel extends JPanel {
 
     public String getMyAnswer() {
         return myAnswer;
+    }
+
+    public JTextField getAnswerField() {
+        return myAnswerField;
     }
 
 }

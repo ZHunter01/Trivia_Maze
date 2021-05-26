@@ -175,16 +175,15 @@ public class MazePanel extends JPanel {
         }
 
         private void retrieveQuestion(int theDir) {
-            Room myRoom;
-            Door myDoor;
-            myRoom = maze.getCurrentRoom();
-            myDoor = myRoom.getUserDoor(theDir);
+            Room myRoom = maze.getCurrentRoom();
+            Door myDoor = myRoom.getUserDoor(theDir);
             myQuestionPanel.setMyQuestion(myDoor.getQuestion().getQuestion());
 
             System.out.println("in mazePanel: " + myDoor.getQuestion().getSolution());
 
             if (!myAnswerPanel.getMyAnswer().equalsIgnoreCase("")) {
                 System.out.println("Entered if statement");
+                myAnswerPanel.getAnswerField().setFocusable(true);
                 maze.doorSolution(myAnswerPanel.getMyAnswer(), theDir);
             }
 
