@@ -181,10 +181,25 @@ public class MazePanel extends JPanel {
 
             System.out.println("in mazePanel: " + myDoor.getQuestion().getSolution());
 
+            if (myDoor.isPermaLocked()) {
+                myQuestionPanel.setMyQuestion("That door is permanently locked!");
+                return;
+            }
+
+            myAnswerPanel.getAnswerField().setFocusable(true);
+
             if (!myAnswerPanel.getMyAnswer().equalsIgnoreCase("")) {
                 System.out.println("Entered if statement");
-                myAnswerPanel.getAnswerField().setFocusable(true);
+
                 maze.doorSolution(myAnswerPanel.getMyAnswer(), theDir);
+
+                myAnswerPanel.setMyAnswer("");
+                
+                if (myDoor.isPermaLocked()) {
+                    myQuestionPanel.setMyQuestion("Answer was incorrect! Door permanently locked!");
+                } else {
+                    myQuestionPanel.setMyQuestion("Answer was correct! Door unlocked!");
+                }
             }
 
         }

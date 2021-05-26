@@ -101,4 +101,7 @@ public class AnswerPanel extends JPanel {
         return myAnswerField;
     }
 
+    public void setMyAnswer(String myAnswer) {
+        this.myAnswer = myAnswer;
+    }
 }
