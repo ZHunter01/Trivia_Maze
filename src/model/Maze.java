@@ -100,13 +100,13 @@ public class Maze {
         generatePowerUps();
     }
     
-//    /** Returns current count of how many questions have been asked
-//     * 
-//     * @return myQuestionCounter
-//     */
-//    public int getQuestionCount() {
-//        return myQuestionCounter;
-//    }
+    /** Returns current count of how many questions have been asked
+     * 
+     * @return myQuestionCounter
+     */
+    public int getQuestionCount() {
+        return myQuestionCounter;
+    }
     
     /** Returns current count of correctly answered questions
      * 
@@ -197,24 +197,7 @@ public class Maze {
     public Player getPlayer() {
         return myPlayer;
     }
-    
-//    /** Gets question object from specified door
-//     * 
-//     * @param theDir
-//     * @return myCurrentDoor.getQuestion()
-//     */
-//    public Question doorQuestion(final int theDir) {
-//        
-//        myCurrentDoor = myMaze [myXCount][myYCount].getUserDoor(theDir);         
-//        userDir = theDir;
-//        
-//        return myCurrentDoor.getQuestion();
-//    }
-    
-//    public Door getCurrentDoor(final int theDir) {
-//        return myMaze [myXCount][myYCount].getUserDoor(theDir);
-//    }
-    
+
     /** Processes a user answer to question from a door.
      *  If answer is correct, check if user has won and increment maze
      *  Otherwise permanently lock the door and check if user has lost.

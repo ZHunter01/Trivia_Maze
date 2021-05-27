@@ -1,13 +1,12 @@
 package model;
 
-import java.awt.Color;
 import java.awt.Image;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 
 
-/**
+/** Player object class
  * 
  * @author Zach Hunter, Alik Balika
  *
@@ -15,8 +14,6 @@ import javax.swing.ImageIcon;
 public class Player extends GameObject {
     /** */
     private Image myPlayerImage;
-    /** */
-    private Color myPlayerColor;
     /** */
     private int myX;
     /** */
@@ -27,15 +24,7 @@ public class Player extends GameObject {
     private static final int MY_START_X = 68;
     /** */
     private static final int MY_START_Y = 40;
-    
-    //1 Perma locked door unlock key
-    //Method that checks if user has one
-    //Room will contain it and will give it to user upon entry
-    //1 free question answer
-    //Method that checks if user has it
-    
-    
-    
+   
     /** Creates a default player object with default black color
      * 
      */
@@ -70,6 +59,10 @@ public class Player extends GameObject {
         return myPlayerImage;   
     }
 
+    public ArrayList<PowerUp> getPowerUps() {
+        return myPowerUps;
+    }
+    
     /** Sets player ImageIcon to input ImageIcon
      * 
      * @param theImage
@@ -91,7 +84,7 @@ public class Player extends GameObject {
         myY = theY;
     }
     
-    /**
+    /** Adds PowerUp to player PowerUp array
      * 
      * @param thePowerUp
      */
@@ -99,7 +92,7 @@ public class Player extends GameObject {
         myPowerUps.add(thePowerUp);
     }
     
-    /**
+    /** Returns boolean if player has a PermaUnlock PowerUp
      * 
      * @return
      */
@@ -111,7 +104,7 @@ public class Player extends GameObject {
         return doesContain;
     }
     
-    /**
+    /** Returns boolean if player has a FreeQuestion PowerUp
      * 
      * @return
      */
@@ -132,12 +125,12 @@ public class Player extends GameObject {
         
     }
     
-    /** Updates x and y
+    /** Updates the x and y coordinates of the Player
      * 
      * @param x
      * @param y
      */
-    public void move(int theX, int theY) {
+    public void move(final int theX, final int theY) {
 //        if (theX < 0 || theY < 0) {
 //            throw new IllegalArgumentException("Input Error: Values must be greater than or equal to 0.");
 //        }
@@ -145,11 +138,11 @@ public class Player extends GameObject {
         setY(getY() + theY);
     }
     
-    /**
+    /** Updates the x and y coordinates of the Player 
      * 
      * @param theDir
      */
-    public void move(int theDir) {
+    public void move(final int theDir) {
         switch (theDir) {
             case Room.UP:
                 move(0, -110); break;

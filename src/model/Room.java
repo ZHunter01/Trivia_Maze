@@ -2,8 +2,6 @@ package model;
 
 import java.awt.Image;
 
-import javax.swing.ImageIcon;
-
 /**
  * 
  * @author Zach Hunter
@@ -20,7 +18,9 @@ public class Room extends GameObject{
     private Door myDoorDown;
     /**PowerUp object that is contained in a room */
     private PowerUp myPowerUp;
+    /**Player object of player in the room */
     private Player myPlayer;
+    /**Image object that represents the room */
     private Image myRoomIcon;
     /**Int value to indicate up door is selected */
     public final static int UP = 0;
@@ -40,16 +40,14 @@ public class Room extends GameObject{
         myDoorRight = new Door();
         myDoorDown = new Door();
                 
-        //myPowerUp = new PowerUp();
         myPlayer = new Player();
-       // myRoomIcon = new ImageIcon("./resources/w.gif").getImage();
     }
     
-    /**
+    /** Get current Room Image
      * 
      * @return
      */
-    public Image getRoomIcon() {
+    public Image getRoomImage() {
         return myRoomIcon;
     }
     
@@ -57,7 +55,7 @@ public class Room extends GameObject{
      * 
      * @param theIcon
      */
-    public void setRoomIcon(final Image theIcon) {
+    public void setRoomImage(final Image theIcon) {
         myRoomIcon = theIcon;
     }
     

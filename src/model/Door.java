@@ -19,7 +19,7 @@ public class Door extends GameObject{
         myQuestion = new Question();
     }
     
-    /**
+    /** Get current Door Question object
      * 
      * @return
      */
@@ -27,7 +27,7 @@ public class Door extends GameObject{
         return myQuestion;
     }
     
-    /**
+    /** Set Question object of the Door
      * 
      * @param theQ
      */
@@ -49,14 +49,6 @@ public class Door extends GameObject{
             myPermaLock = true;
         }
     }
-    
-//    /** Set door lock state to input boolean
-//     * 
-//     * @param theBoolean
-//     */
-//    private void setLock(boolean theBoolean) {
-//        myLock = theBoolean;
-//    }
     
     /** Set door permanent lock state to input boolean
      * 
@@ -81,15 +73,6 @@ public class Door extends GameObject{
     public boolean isPermaLocked() {
         return myPermaLock;
     }
-    
-//    @Override
-//    public boolean equals(final Object theObj) {
-//        return this.getQuestion().equals(theObj);
-//    }
-    
-//    protected void setId(final int theId) {
-//        myId = theId;
-//    }
     
     /** Returns int ID of Question object in the Door
      * 

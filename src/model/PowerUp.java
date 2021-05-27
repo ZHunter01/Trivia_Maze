@@ -20,34 +20,33 @@ public class PowerUp implements Serializable{
 //        myFreeQuestion = false;
 //    }
     
+    /**
+     * 
+     * @param theFreeQ
+     * @param thePermaUnlock
+     */
     private PowerUp(final boolean theFreeQ, final boolean thePermaUnlock) {
         
         myPermaUnlock = thePermaUnlock;
         myFreeQuestion = theFreeQ;
     }
         
+    /** Creates a PermaUnlock PowerUp
+     * 
+     * @return
+     */
     public static PowerUp createPermaUnlock() {
         PowerUp myPowerUp = new PowerUp(false, true);
         return myPowerUp;
-//        if (myFreeQuestion == true) {
-//            myFreeQuestion = false;
-//        }
-//        
-//        myPermaUnlock = true;
-//        
-//        return this;
     }
     
+    /** Creates a FreeQuestion PowerUp
+     * 
+     * @return
+     */
     public static PowerUp createFreeQuestion() {
         PowerUp myPowerUp = new PowerUp(true, false);
         return myPowerUp;
-//        if (myPermaUnlock == true) {
-//            myPermaUnlock = false;
-//        }
-//        
-//        myFreeQuestion = true;
-//        
-//        return this;
     }
     
     public boolean isPermaUnlock() {
