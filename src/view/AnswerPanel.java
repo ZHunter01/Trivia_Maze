@@ -4,6 +4,8 @@
 
 package view;
 
+import model.Maze;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -27,20 +29,29 @@ public class AnswerPanel extends JPanel {
     /**
      * A JLabel that prompts the user to answer the question
      */
-    JLabel myAnswerPrompt;
+    private JLabel myAnswerPrompt;
     /**
      * A JTextField object that the user can use to answer the question
      */
-    JTextField myAnswerField;
+    private JTextField myAnswerField;
+
     /**
      * A button that the user can use to submit their answer
      */
-    JButton mySubmit;
+    private JButton mySubmit;
 
     /**
      * The player's answer
      */
     private transient String myAnswer;
+
+    private Maze myMaze;
+
+    private int myDirection;
+
+    private MazePanel myMazePanel;
+
+    private QuestionPanel myQuestionPanel;
 
 //    /**
 //     * Create an instance of the AnswerPanel
@@ -78,18 +89,53 @@ public class AnswerPanel extends JPanel {
             mySubmit.setFocusable(false);
             mySubmit.setPreferredSize(new Dimension(205, 30));
             add(mySubmit);
+
+
             mySubmit.addActionListener(e -> {
                 myAnswer = myAnswerField.getText();
+
+                myMaze.doorSolution(myAnswer, myDirection);
+
+                if (myMaze.getCurrentRoom().getUserDoor(myDirection).isPermaLocked()) {
+                    myQuestionPanel.setMyQuestion("Answer was incorrect! Door permanently locked!");
+                } else {
+                    myQuestionPanel.setMyQuestion("Answer was correct! Door unlocked!");
+                }
+
+                myAnswerField.setVisible(false);
+                mySubmit.setVisible(false);
+                myAnswerPrompt.setVisible(false);
+
+                myMazePanel.repaint();
+
                 myAnswerField.setText("");
-                if (!myAnswer.equals("")) myAnswerField.setFocusable(false);
+                myAnswer = "";
+                //if (!myAnswer.equals("")) myAnswerField.setFocusable(false);
                 System.out.println("Answer: " + myAnswer);
             });
+
             myAnswerField.addActionListener(e -> myAnswer = myAnswerField.getText());
-//            mySubmit.addActionListener(new GrabText());
+
         } else {
             mySubmit.setVisible(true);
         }
 
+    }
+
+    public void setMaze(Maze theMaze) {
+        myMaze = theMaze;
+    }
+
+    public void setDirection(int theDirection) {
+        myDirection = theDirection;
+    }
+
+    public void setMazePanel(MazePanel theMazePanel) {
+        myMazePanel = theMazePanel;
+    }
+
+    public void setQuestionPanel(QuestionPanel theQuestionPanel) {
+        myQuestionPanel = theQuestionPanel;
     }
 
     /**
@@ -135,6 +181,14 @@ public class AnswerPanel extends JPanel {
 
     public JTextField getAnswerField() {
         return myAnswerField;
+    }
+
+    public JLabel getAnswerPrompt() {
+        return myAnswerPrompt;
+    }
+
+    public JButton getSubmit() {
+        return mySubmit;
     }
 
     public void setMyAnswer(String myAnswer) {
