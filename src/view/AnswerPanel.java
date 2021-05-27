@@ -27,15 +27,15 @@ public class AnswerPanel extends JPanel {
     /**
      * A JLabel that prompts the user to answer the question
      */
-    private JLabel myAnswerPrompt;
+    JLabel myAnswerPrompt;
     /**
      * A JTextField object that the user can use to answer the question
      */
-    private JTextField myAnswerField;
+    JTextField myAnswerField;
     /**
      * A button that the user can use to submit their answer
      */
-    private JButton mySubmit;
+    JButton mySubmit;
     
     /** The player's answer */
     private transient String myAnswer;
@@ -51,7 +51,7 @@ public class AnswerPanel extends JPanel {
     public AnswerPanel() {
         setPreferredSize(new Dimension(222, 0));
         setBackground(Color.RED);
-        myAnswer = "no answer";
+        myAnswer = "";
 //        initAndAddAnswerPrompt();
 //        initAndAddAnswer();
 //        initAndAddSubmit();
@@ -65,13 +65,6 @@ public class AnswerPanel extends JPanel {
     }
   
 
-//    /**
-//     * @return the only instance of AnswerPanel
-//     */
-//    public static AnswerPanel getInstance() {
-//        return answerPanel;
-//    }
-
     /**
      * initializes the submit button and adds it to the panel
      */
@@ -83,8 +76,17 @@ public class AnswerPanel extends JPanel {
             mySubmit.setFocusable(false);
             mySubmit.setPreferredSize(new Dimension(205, 30));
             add(mySubmit);
-            mySubmit.addActionListener(new GrabText());
-        } 
+            mySubmit.addActionListener(e -> {
+                myAnswer = myAnswerField.getText();
+                myAnswerField.setText("");
+                if (!myAnswer.equals("")) myAnswerField.setFocusable(false);
+                System.out.println("Answer: " + myAnswer);
+            });
+            myAnswerField.addActionListener(e -> myAnswer = myAnswerField.getText());
+//            mySubmit.addActionListener(new GrabText());
+        } else {
+            mySubmit.setVisible(true);
+        }
         
     }
 
@@ -97,10 +99,15 @@ public class AnswerPanel extends JPanel {
     
             add(myAnswerField);
             myAnswerField.setFocusable(true);
-            myAnswerField.addActionListener(new GrabText());
+//            myAnswerField.addActionListener(new GrabText());
         } else {
+            myAnswerField.setVisible(true);
+            myAnswerField.setFocusable(true);
             myAnswerField.setText("");
         }
+//        myAnswerField = new JTextField(20);
+//
+//        add(myAnswerField);
     }
 
     /**
@@ -112,6 +119,8 @@ public class AnswerPanel extends JPanel {
             myAnswerPrompt.setFont(new Font(Font.MONOSPACED, Font.BOLD, 13));
     
             add(myAnswerPrompt);
+        } else {
+            myAnswerPrompt.setVisible(true);
         }
     }
 
@@ -122,23 +131,31 @@ public class AnswerPanel extends JPanel {
         return myAnswer;
     }
     
-    /**
-     * 
-     * Action Listener to adopt text from myAnswerField text field
-     * if user presses the enter key or click the submit button
-     */
-   private class GrabText implements ActionListener {
+    public JTextField getAnswerField() {
+        return myAnswerField;
+    }
 
-       /**
-        * Grabs string from myAnswerField for processing
-        * 
-        */
-       @Override
-       public void actionPerformed(final ActionEvent theEvent) {
-           Objects.requireNonNull(theEvent, " must not be null");
-           myAnswer = new String(myAnswerField.getText());
-           System.out.println("Answer: " + myAnswer);
-       }
-   }
+    public void setMyAnswer(String myAnswer) {
+        this.myAnswer = myAnswer;
+    }
+    
+//    /**
+//     * 
+//     * Action Listener to adopt text from myAnswerField text field
+//     * if user presses the enter key or click the submit button
+//     */
+//   private class GrabText implements ActionListener {
+//
+//       /**
+//        * Grabs string from myAnswerField for processing
+//        * 
+//        */
+//       @Override
+//       public void actionPerformed(final ActionEvent theEvent) {
+//           Objects.requireNonNull(theEvent, " must not be null");
+//           myAnswer = new String(myAnswerField.getText());
+//           System.out.println("Answer: " + myAnswer);
+//       }
+//   }
 
 }

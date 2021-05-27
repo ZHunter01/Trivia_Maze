@@ -31,13 +31,14 @@ public class Player extends GameObject{
      * 
      */
     public Player() {
-       myPlayerImage = new ImageIcon("./resources/player.png").getImage();
+        myPlayerImage = new ImageIcon("./resources/player.png").getImage();
+//        setImage("./resources/player.png"));
         myPowerUps = new ArrayList<>();
         //Set default color to black
         myPlayerColor = new Color(0, 0, 0);
         myPlayerColor = Color.BLACK;
         
-        
+        myPlayerColor = Color.BLACK;
         setX(68);
         setY(40);
     }
@@ -50,7 +51,7 @@ public class Player extends GameObject{
         myPlayerImage = theIcon;
         //myPowerUp = new PowerUp();
 
-        myPlayerColor = new Color(0, 0, 0);
+//        myPlayerColor = new Color(0, 0, 0);
         myPlayerColor = Color.BLACK;
          
         setX(68);
@@ -85,21 +86,6 @@ public class Player extends GameObject{
         return myPlayerColor;
     }
     
-//    /** Returns current X coordinate position of player
-//     * 
-//     * @return
-//     */
-//    public int getX() {
-//        return myX;
-//    }
-//    
-//    /** Returns current Y coordinate position of player
-//     * 
-//     * @return
-//     */
-//    public int getY() {
-//        return myY;
-//    }
     
     /** Sets player ImageIcon to input ImageIcon
      * 
@@ -127,8 +113,8 @@ public class Player extends GameObject{
         if (theX < 0 || theY < 0) {
             throw new IllegalArgumentException("Input Error: Values must be greater than or equal to 0.");
         }
-        myX = theX;
-        myY = theY;
+        setX(theX);
+        setY(theY);
     }
     
     public void addPowerUp(final PowerUp thePowerUp) {
@@ -180,6 +166,14 @@ public class Player extends GameObject{
         setY(getY() + theY);
     }
     
+    public void move(int theDir) {
+        switch (theDir) {
+            case Room.UP -> move(0, -110);
+            case Room.DOWN -> move(0, 110);
+            case Room.LEFT -> move(-166, 0);
+            case Room.RIGHT -> move(166, 0);
+        }
+    }
     
     @Override 
     public String toString() {
