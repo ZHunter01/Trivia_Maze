@@ -180,6 +180,28 @@ public class Player extends GameObject{
         setY(getY() + theY);
     }
     
+    public void move(int theDir) {
+        switch (theDir) {
+            case Room.UP:
+                move(0, -110); break;
+            case Room.DOWN: 
+                move(0, 110); break;
+            case Room.LEFT: 
+                move(-166, 0);break;
+            case Room.RIGHT:
+                move(166, 0); break;
+        }
+    }
+    
+//       
+//    public void move(int theDir) {
+//        switch (theDir) {
+//            case Room.UP -> move(0, -110);
+//            case Room.DOWN -> move(0, 110);
+//            case Room.LEFT -> move(-166, 0);
+//            case Room.RIGHT -> move(166, 0);
+//        }
+//    }
     
     @Override 
     public String toString() {

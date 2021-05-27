@@ -62,7 +62,7 @@ public class Door extends GameObject{
      * 
      * @param theBoolean
      */
-    protected void setPermaLock(boolean theBoolean) {
+    void setPermaLock(boolean theBoolean) {
         myPermaLock = theBoolean;
     }
     

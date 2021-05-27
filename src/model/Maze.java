@@ -228,20 +228,22 @@ public class Maze {
         myCurrentDoor = this.getCurrentRoom().getUserDoor(theDir);
         myCurrentDoor.checkLock(theSolution);
             
-        checkSolution();
+        checkSolution(theDir);
     }
     
     /** Checks how solution effected the door. Changes Maze state based on this.
+     * @param theDir 
      * 
      */
-    private void checkSolution() {
+    private void checkSolution(final int theDir) {
         if (myCurrentDoor.isLocked() == false) {
             myCorrectCounter ++;
             if (checkWin() == true) {
                 return;
             } else {
                 incrementMaze();
-                System.out.println(this.getYCount());
+               //myPlayer.move(userDir); 
+               // System.out.println(this.getYCount());
                 //myPlayer.setLocation(myYCount, myXCount);
                 //checkRoomPowerUp();
             }
@@ -358,7 +360,7 @@ public class Maze {
         } else {
             throw new IllegalArgumentException("Error: Improper door directional value.");
         }
-    
+        myPlayer.move(userDir);
     }
         
     /** If x count and y count match the max size of the 2-d array return myWin as true

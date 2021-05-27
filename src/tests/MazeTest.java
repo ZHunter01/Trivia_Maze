@@ -127,7 +127,15 @@ public class MazeTest {
       //  theMaze.setRoom(3, 3);
         theMaze.doorSolution(theMaze.getCurrentRoom().getUserDoor(Room.DOWN).getQuestion().getSolution(), Room.DOWN);
    
-        
+        assertEquals(theMaze.getYCount(), 1);
+    }
+    
+    @Test
+    void testCheckSolution_CheckWinTrue() {
+        theMaze.setRoom(3, 3);
+        theMaze.doorSolution(theMaze.getCurrentRoom().getUserDoor(Room.DOWN).getQuestion().getSolution(), Room.DOWN);
+
+        assertTrue(theMaze.checkWin() == true);
     }
 }
 
