@@ -6,10 +6,12 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 
+import view.PlayerMenu;
+
 
 /**
  * 
- * @author Zach Hunter, Alik Balika
+ * @author Zach Hunter, Alik Balika, Oleksandr Maistruk
  *
  */
 public class Player extends GameObject{
@@ -18,6 +20,8 @@ public class Player extends GameObject{
     private int myX;
     private int myY;
     private ArrayList<PowerUp> myPowerUps;
+    
+    private PlayerMenu myPlayer;
     
     //1 Perma locked door unlock key
     //Method that checks if user has one
@@ -31,7 +35,12 @@ public class Player extends GameObject{
      * 
      */
     public Player() {
-        myPlayerImage = new ImageIcon("./resources/player.png").getImage();
+        myPlayer = new PlayerMenu();
+        final String imageFilename = "./resources/" + myPlayer.getPlayerName() + ".gif";
+        myPlayerImage = new ImageIcon(imageFilename).getImage();
+        
+        //final String imageFilename = v.getImageFileName();
+
 //        setImage("./resources/player.png"));
         myPowerUps = new ArrayList<>();
         //Set default color to black

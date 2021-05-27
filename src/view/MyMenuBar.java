@@ -68,9 +68,9 @@ public class MyMenuBar extends JMenuBar {
         myHelp = new JMenu("HELP");
         myCustomizePlayer = new JMenu("CUSTOMIZE PLAYER");
         myOptions = new JMenu("OPTIONS");
-        final JMenuItem myCharacter = new JMenuItem("Character");
+        final JMenu myCharacter = new PlayerMenu();
         final JMenuItem myColor = new JMenuItem("Color");
-        final JMenuItem myQuestionType = new QuestionMenu(); //"Questions type");
+        final JMenuItem myQuestionType = new QuestionMenu();
         final JMenuItem myAbout = new JMenuItem("About");
         final JMenuItem myRules = new JMenuItem("Rules");
 
