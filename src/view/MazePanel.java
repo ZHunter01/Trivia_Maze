@@ -175,33 +175,39 @@ public class MazePanel extends JPanel {
         }
 
         private void retrieveQuestion(int theDir) {
-            Room myRoom = maze.getCurrentRoom();
-            Door myDoor = myRoom.getUserDoor(theDir);
+            Room myRoom;
+            Door myDoor;
+            myRoom = maze.getCurrentRoom();
+            myDoor = myRoom.getUserDoor(theDir);
             myQuestionPanel.setMyQuestion(myDoor.getQuestion().getQuestion());
-
-            System.out.println("in mazePanel: " + myDoor.getQuestion().getSolution());
+            myAnswerPanel.setAnswerPanel();
 
             if (myDoor.isPermaLocked()) {
                 myQuestionPanel.setMyQuestion("That door is permanently locked!");
+                myAnswerPanel.myAnswerField.setVisible(false);
+                myAnswerPanel.mySubmit.setVisible(false);
+                myAnswerPanel.myAnswerPrompt.setVisible(false);
                 return;
             }
 
             myAnswerPanel.getAnswerField().setFocusable(true);
-
+            System.out.println("in mazePanel: " + myDoor.getQuestion().getSolution());
             if (!myAnswerPanel.getMyAnswer().equalsIgnoreCase("")) {
                 System.out.println("Entered if statement");
 
                 maze.doorSolution(myAnswerPanel.getMyAnswer(), theDir);
 
                 myAnswerPanel.setMyAnswer("");
-                
+
                 if (myDoor.isPermaLocked()) {
                     myQuestionPanel.setMyQuestion("Answer was incorrect! Door permanently locked!");
                 } else {
                     myQuestionPanel.setMyQuestion("Answer was correct! Door unlocked!");
                 }
+                myAnswerPanel.myAnswerField.setVisible(false);
+                myAnswerPanel.mySubmit.setVisible(false);
+                myAnswerPanel.myAnswerPrompt.setVisible(false);
             }
-
         }
     }
 }
