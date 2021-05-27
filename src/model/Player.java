@@ -12,12 +12,21 @@ import javax.swing.ImageIcon;
  * @author Zach Hunter, Alik Balika
  *
  */
-public class Player extends GameObject{
+public class Player extends GameObject {
+    /** */
     private Image myPlayerImage;
+    /** */
     private Color myPlayerColor;
+    /** */
     private int myX;
+    /** */
     private int myY;
+    /** */
     private ArrayList<PowerUp> myPowerUps;
+    /** */
+    private static final int MY_START_X = 68;
+    /** */
+    private static final int MY_START_Y = 40;
     
     //1 Perma locked door unlock key
     //Method that checks if user has one
@@ -32,14 +41,11 @@ public class Player extends GameObject{
      */
     public Player() {
        myPlayerImage = new ImageIcon("./resources/player.png").getImage();
-        myPowerUps = new ArrayList<>();
-        //Set default color to black
-        myPlayerColor = new Color(0, 0, 0);
-        myPlayerColor = Color.BLACK;
+        myPowerUps = new ArrayList<>();     
         
-        
-        setX(68);
-        setY(40);
+        //Set start point
+        setX(MY_START_X);
+        setY(MY_START_Y);
     }
     
     /** Creates player object with specified ImageIcon as the object's icon
@@ -48,26 +54,13 @@ public class Player extends GameObject{
      */
     public Player(final Image theIcon) {
         myPlayerImage = theIcon;
-        //myPowerUp = new PowerUp();
-
-        myPlayerColor = new Color(0, 0, 0);
-        myPlayerColor = Color.BLACK;
-         
-        setX(68);
-        setY(40);
+        myPowerUps = new ArrayList<>();
+            
+        //Sets start point
+        setX(MY_START_X);
+        setY(MY_START_Y);
     }
     
-    /** Creates player object with specified Color as the object's color
-     * 
-     * @param theColor
-     */
-    public Player(final Color theColor) {
-        myPlayerColor = theColor;
-        //myPowerUp = new PowerUp();
-
-        setX(68);
-        setY(40);
-    }
     
     /** Returns current ImageIcon of the player
      * 
@@ -76,47 +69,14 @@ public class Player extends GameObject{
     public Image getIcon() {
         return myPlayerImage;   
     }
-    
-    /** Returns current color of the player 
-     * 
-     * @return
-     */
-    public Color getColor() {
-        return myPlayerColor;
-    }
-    
-//    /** Returns current X coordinate position of player
-//     * 
-//     * @return
-//     */
-//    public int getX() {
-//        return myX;
-//    }
-//    
-//    /** Returns current Y coordinate position of player
-//     * 
-//     * @return
-//     */
-//    public int getY() {
-//        return myY;
-//    }
-    
+
     /** Sets player ImageIcon to input ImageIcon
      * 
      * @param theImage
      */
     public void setImage(final Image theImage) {
         myPlayerImage = theImage;
-    }
-    
-    /** Sets player Color to input Color
-     * 
-     * @param theColor
-     */
-    public void setColor(final Color theColor) {
-        myPlayerColor = theColor;
-    }
-    
+    }  
     
     /** Sets the x and y location of the player object
      * 
@@ -131,10 +91,18 @@ public class Player extends GameObject{
         myY = theY;
     }
     
+    /**
+     * 
+     * @param thePowerUp
+     */
     public void addPowerUp(final PowerUp thePowerUp) {
         myPowerUps.add(thePowerUp);
     }
     
+    /**
+     * 
+     * @return
+     */
     public boolean containsPermaUnlock() {
         boolean doesContain = false;
         for (int n = 0; n < myPowerUps.size(); n++) {
@@ -143,6 +111,10 @@ public class Player extends GameObject{
         return doesContain;
     }
     
+    /**
+     * 
+     * @return
+     */
     public boolean containsFreeQuestion() {
         boolean doesContain = false;
         for (int n = 0; n < myPowerUps.size(); n++) {
@@ -157,13 +129,6 @@ public class Player extends GameObject{
      */
     public void removePowerUp(final PowerUp thePowerUp) {
         myPowerUps.remove(thePowerUp);
-//        if (thePowerUp.isFreeQuestion()) {
-//            myPowerUps.remove(thePowerUp);
-//        } else if (thePowerUp.isPermaUnlock()){
-//            myPowerUps.remove(thePowerUp);
-//        } 
-        //
-        //myPowerUp = null;
         
     }
     
@@ -179,6 +144,33 @@ public class Player extends GameObject{
         setX(getX() + theX);
         setY(getY() + theY);
     }
+    
+    /**
+     * 
+     * @param theDir
+     */
+    public void move(int theDir) {
+        switch (theDir) {
+            case Room.UP:
+                move(0, -110); break;
+            case Room.DOWN: 
+                move(0, 110); break;
+            case Room.LEFT: 
+                move(-166, 0);break;
+            case Room.RIGHT:
+                move(166, 0); break;
+        }
+    }
+    
+//       
+//    public void move(int theDir) {
+//        switch (theDir) {
+//            case Room.UP -> move(0, -110);
+//            case Room.DOWN -> move(0, 110);
+//            case Room.LEFT -> move(-166, 0);
+//            case Room.RIGHT -> move(166, 0);
+//        }
+//    }
     
     
     @Override 

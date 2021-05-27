@@ -84,7 +84,7 @@ public class QuestionMenu extends JMenu implements ActionListener {
             mySport.setSelected(true);
             myGeography.setSelected(false);
             myDataBaseName = "SportQuestions";
-            myMazePanel = new MazePanel();
+            //myMazePanel = new MazePanel();
 
         }
     }
@@ -103,7 +103,7 @@ public class QuestionMenu extends JMenu implements ActionListener {
             mySport.setSelected(false);
             myGeography.setSelected(true);
             myDataBaseName = "GeographyQuestions";
-            myMazePanel = new MazePanel();
+            //myMazePanel = new MazePanel();
 
         }
     }
