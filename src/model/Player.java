@@ -136,17 +136,21 @@ public class Player extends GameObject{
     }
     
     public boolean containsPermaUnlock() {
-        boolean doesContain = false;
-        for (int n = 0; n < myPowerUps.size(); n++) {
-            if (myPowerUps.get(n).isPermaUnlock()) doesContain = true;
+        boolean doesContain = false;     
+        if (!myPowerUps.isEmpty()) {
+            for (int n = 0; n < myPowerUps.size(); n++) {
+                if (myPowerUps.get(n).isPermaUnlock()) doesContain = true;
+            }
         }
         return doesContain;
     }
     
     public boolean containsFreeQuestion() {
-        boolean doesContain = false;
-        for (int n = 0; n < myPowerUps.size(); n++) {
-            if (myPowerUps.get(n).isFreeQuestion()) doesContain = true;
+        boolean doesContain = false;     
+        if (!myPowerUps.isEmpty()) {
+            for (int n = 0; n < myPowerUps.size(); n++) {
+                if (myPowerUps.get(n).isFreeQuestion()) doesContain = true;
+            }
         }
         return doesContain;
     }

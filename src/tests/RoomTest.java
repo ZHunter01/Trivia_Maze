@@ -22,10 +22,10 @@ import model.Room;
  *
  */
 public class RoomTest {
-    private Room myRoom;
-    private PowerUp myPowerUp;
-    private Door myDoor;
-    private Player myPlayer;
+    public Room myRoom;
+    public PowerUp myPowerUp;
+    public Door myDoor;
+    public Player myPlayer;
 
     @BeforeEach
     void setUp() {

@@ -160,6 +160,14 @@ public class MazeTest {
         assertTrue(theMaze.hasWon());
     }
     
+    
+    @Test
+    void testGetWin() {
+        theMaze.setRoom(3, 3);
+        theMaze.hasWon();
+        assertTrue(theMaze.getWin());
+    }
+    
     @Test
     void testHasWon_False_OneRoomCorrect() {
         theMaze.setRoom(3, 2);
@@ -169,6 +177,8 @@ public class MazeTest {
     @Test
     void testGetCorrectCount() {
         int count = 0;
+        
+        theMaze.userDir = Room.DOWN;
         
         for (int n = 0; n < 3; n++) {
             theMaze.doorSolution(theMaze.getCurrentRoom().getUserDoor(Room.DOWN).getQuestion().getSolution(), Room.DOWN);
@@ -181,6 +191,8 @@ public class MazeTest {
     @Test
     void testCheckSolution_True() {
       //  theMaze.setRoom(3, 3);
+        theMaze.userDir = Room.DOWN;
+        
         theMaze.doorSolution(theMaze.getCurrentRoom().getUserDoor(Room.DOWN).getQuestion().getSolution(), Room.DOWN);
    
         assertEquals(theMaze.getYCount(), 1);
@@ -199,6 +211,70 @@ public class MazeTest {
         
         assertTrue(theMaze.hasLost());
     }
+    
+    @Test
+    void testGetLose() {
+        theMaze.getCurrentRoom().getUserDoor(Room.UP).getQuestion();
+        theMaze.getCurrentRoom().getUserDoor(Room.UP).checkLock("NO");
+        theMaze.getCurrentRoom().getUserDoor(Room.LEFT).getQuestion();
+        theMaze.getCurrentRoom().getUserDoor(Room.LEFT).checkLock("NO");
+        theMaze.getCurrentRoom().getUserDoor(Room.DOWN).getQuestion();
+        theMaze.getCurrentRoom().getUserDoor(Room.DOWN).checkLock("NO");
+        theMaze.getCurrentRoom().getUserDoor(Room.RIGHT).getQuestion();
+        theMaze.getCurrentRoom().getUserDoor(Room.RIGHT).checkLock("NO");
+        
+        theMaze.hasLost();
+        
+        assertTrue(theMaze.getLose());
+    }
 
+    @Test
+    void testCheckSolution_HasWon() {
+        theMaze.setRoom(3, 2);
+        theMaze.doorSolution(theMaze.getCurrentRoom().getUserDoor(Room.DOWN).getQuestion().getSolution(), Room.DOWN);
+   
+        assertTrue(theMaze.getWin());
+    }
+    
+    @Test
+    void testCheckSolution_HasLost() {
+        theMaze.setRoom(2, 2);
+   
+        theMaze.getCurrentRoom().getUserDoor(Room.UP).getQuestion();
+        theMaze.getCurrentRoom().getUserDoor(Room.UP).checkLock("NO");
+        theMaze.getCurrentRoom().getUserDoor(Room.LEFT).getQuestion();
+        theMaze.getCurrentRoom().getUserDoor(Room.LEFT).checkLock("NO");
+        theMaze.getCurrentRoom().getUserDoor(Room.DOWN).getQuestion();
+        theMaze.getCurrentRoom().getUserDoor(Room.DOWN).checkLock("NO");
+        
+        theMaze.doorSolution("No", Room.RIGHT);
+
+        
+        assertTrue(theMaze.getLose());
+    }
+    
+    @Test
+    void testCheckSolution_False() {
+        theMaze.doorSolution("No", Room.RIGHT);
+        
+        assertTrue(theMaze.myCurrentDoor.isPermaLocked());
+    }
+    
+    @Test
+    void testCheckRoomWithPowerUp() {
+        PowerUp power = PowerUp.createFreeQuestion();
+        
+        theMaze.setRoom(2, 2);
+        theMaze.getCurrentRoom().setRoomWithPowerUp(power);
+        theMaze.checkRoomPowerUp();
+        
+        assertTrue(theMaze.myPlayer.containsFreeQuestion());
+    }
+    
+    @Test
+    void testCheckRoomWithPowerUp_False() {
+        theMaze.checkRoomPowerUp();
+        assertFalse(theMaze.myPlayer.containsFreeQuestion() || theMaze.myPlayer.containsPermaUnlock());
+    }
 }
 

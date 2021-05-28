@@ -38,32 +38,7 @@ public class Maze {
      */
     public Maze() {
         //2-d array of default size
-        myMaze = new Room [DEFAULT_SIZE][DEFAULT_SIZE];
-        //Fill maze with Rooms
-        fillMaze();
-        
-        myWin = false;
-        
-        myPlayer = new Player();
-        
-        //How many questions have been asked
-        myQuestionCounter = 0;
-        //How many question have been answered correctly
-        myCorrectCounter = 0;
-        
-        //Counters for the location in the 2-d array Maze
-        myXCount = 0;
-        myYCount = 0;
-        //Add Player to initial Room
-        myMaze [myXCount][myYCount].setPlayer(myPlayer);
-        
-        //current door object initialized
-        myCurrentDoor = new Door();
-        //default directions is up
-        userDir = 0;
-                
-        //Generate PowerUps in the Maze
-        generatePowerUps();
+        this(DEFAULT_SIZE, DEFAULT_SIZE);
     }
     
     /** Creates a 2-d array maze with specified dimensions
@@ -236,19 +211,14 @@ public class Maze {
      * 
      */
     public void checkSolution(final int theDir) {
-        if (myCurrentDoor.isLocked() == false) {
+        if (!myCurrentDoor.isLocked()) {
             myCorrectCounter ++;
-            if (hasWon() == true) {
+            incrementMaze();
+            if (hasWon()) {
                 return;
-            } else {
-                incrementMaze();
-               //myPlayer.move(userDir); 
-               // System.out.println(this.getYCount());
-                //myPlayer.setLocation(myYCount, myXCount);
-                //checkRoomPowerUp();
-            }
+            }    
         } else {
-            if (hasLost() == true) {
+            if (hasLost()) {
                 return;
             }
         }
