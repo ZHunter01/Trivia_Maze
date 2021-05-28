@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import model.Door;
+import model.Maze;
 import model.Player;
 import model.PowerUp;
 import model.Room;
@@ -25,17 +26,19 @@ public class RoomTest {
     public Room myRoom;
     public PowerUp myPowerUp;
     public Door myDoor;
-    public Player myPlayer;
+    public Maze myMaze;
 
     @BeforeEach
     void setUp() {
-        myRoom = new Room(myPlayer);
-       // myPowerUp = new PowerUp();
+        myRoom = new Room();
+        myPowerUp = PowerUp.createEmptyPowerUp();
         myDoor = new Door();
     }
     
     @Test
-    void testGetRoomIcon() {
+    void testGetRoomImage() {
+        myRoom.setRoomImage(new ImageIcon("./resources/w.gif").getImage());
+        
         assertEquals(myRoom.getRoomImage(), new ImageIcon("./resources/w.gif").getImage());
     }
     
@@ -55,28 +58,25 @@ public class RoomTest {
     
     @Test
     void testUnlockPermaLock() {
-        myPowerUp = PowerUp.createPermaUnlock();
-        myRoom.setRoomWithPowerUp(myPowerUp);
-        myRoom.getPlayer().addPowerUp(myPowerUp);
-        //Should set door to be perma locked
-        myRoom.getUserDoor(0).checkLock("Not the solution");
-               
-        myRoom.unlockPermaLock(0);
+        myRoom.getUserDoor(Room.DOWN).getQuestion().setQuestionAndSolution("Question", "Solution");;
+        myRoom.getUserDoor(Room.DOWN).checkLock("No");
         
-        assertFalse(myRoom.getUserDoor(0).isPermaLocked());
-    }
-    
-    @Test
-    void testUnlockPermaLock_PlayerHasNoPowerUp() {
-        myPowerUp = PowerUp.createPermaUnlock();
-        myRoom.setRoomWithPowerUp(myPowerUp);
-        //Should set door to be perma locked
-        myRoom.getUserDoor(0).checkLock("Not the solution");
-               
-        myRoom.unlockPermaLock(0);
+        myRoom.unlockPermaLock(Room.DOWN);
         
-        assertTrue(myRoom.getUserDoor(0).isPermaLocked());
+        assertFalse(myRoom.getUserDoor(Room.DOWN).isPermaLocked());
     }
+//    
+//    @Test
+//    void testUnlockPermaLock_PlayerHasNoPowerUp() {
+//        myPowerUp = PowerUp.createEmptyPowerUp();
+//        myRoom.setRoomWithPowerUp(myPowerUp);
+//        //Should set door to be perma locked
+//        myRoom.getUserDoor(0).checkLock("Not the solution");
+//               
+//        myRoom.unlockPermaLock(0);
+//        
+//        assertTrue(myRoom.getUserDoor(0).isPermaLocked());
+//    }
     
     @Test
     void testIsCorrectDoor() {

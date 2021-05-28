@@ -2,8 +2,6 @@ package tests;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.awt.Color;
-
 import javax.swing.ImageIcon;
 
 import static org.junit.Assert.assertEquals;
@@ -33,40 +31,28 @@ public class PlayerTest {
     
     @Test
     void testGetIconDefault() {        
-        assertTrue(myPlayer.getIcon().equals(new ImageIcon("./resources/w.gif").getImage()));
+        assertTrue(myPlayer.getIcon().equals(new ImageIcon("./resources/player.png").getImage()));
     }
     
-    @Test
-    void testGetColorDefault() {
-        assertTrue(myPlayer.getColor().equals(Color.BLACK));
-    }
-    
-    @Test
-    void testGetX() {
-        myPlayer.setLocation(10, 0);
-        
-        assertEquals(10, myPlayer.getX());
-    }
-    
-    @Test
-    void testGetY() {
-        myPlayer.setLocation(0, 10);
-        
-        assertEquals(10, myPlayer.getY());
-    }
+//    @Test
+//    void testGetX() {
+//        myPlayer.setLocation(10, 0);
+//        
+//        assertEquals(10, myPlayer.getX());
+//    }
+//    
+//    @Test
+//    void testGetY() {
+//        myPlayer.setLocation(0, 10);
+//        
+//        assertEquals(10, myPlayer.getY());
+//    }
     
     @Test
     void testSetImage() {
         myPlayer.setImage(new ImageIcon("./resources/ellipse.gif").getImage());
         
         assertEquals(myPlayer.getIcon(), (new ImageIcon("./resources/ellipse.gif").getImage()));
-    }
-    
-    @Test
-    void testSetColor() {
-        myPlayer.setColor(Color.BLUE);
-        
-        assertEquals(myPlayer.getColor(), Color.BLUE);
     }
     
     @Test
@@ -134,11 +120,5 @@ public class PlayerTest {
         
         assertTrue(myPlayer.getIcon().equals(new ImageIcon("./resources/ellipse.gif").getImage()));
     }
- 
-    @Test
-    void testPlayerWithColor() {
-        myPlayer = new Player(Color.CYAN);
-        
-        assertTrue(myPlayer.getColor().equals(Color.CYAN));
-    }
+
 }

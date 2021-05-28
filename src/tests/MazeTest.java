@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 
 import model.Maze;
 import model.PowerUp;
-import model.Question;
 import model.Room;
 
 public class MazeTest {
@@ -62,7 +61,7 @@ public class MazeTest {
     
     @Test
     void testGetMyPlayer() {
-        assertTrue(theMaze.getPlayer().equals(theMaze.getCurrentRoom().getPlayer()));
+        assertTrue(theMaze.getPlayer().equals(theMaze.myPlayer));
     }
     
     @Test
@@ -230,6 +229,7 @@ public class MazeTest {
 
     @Test
     void testCheckSolution_HasWon() {
+        theMaze.userDir = Room.DOWN;
         theMaze.setRoom(3, 2);
         theMaze.doorSolution(theMaze.getCurrentRoom().getUserDoor(Room.DOWN).getQuestion().getSolution(), Room.DOWN);
    
@@ -275,6 +275,41 @@ public class MazeTest {
     void testCheckRoomWithPowerUp_False() {
         theMaze.checkRoomPowerUp();
         assertFalse(theMaze.myPlayer.containsFreeQuestion() || theMaze.myPlayer.containsPermaUnlock());
+    }
+    
+    @Test
+    void testIsInBounds_True() {
+        theMaze.setRoom(2, 2);
+        
+        assertTrue(theMaze.isInBounds(Room.UP));
+    }
+    
+    @Test
+    void testIsInBounds_False_Up() {
+        theMaze.setRoom(0, 0);
+        
+        assertFalse(theMaze.isInBounds(Room.UP));
+    }
+    
+    @Test
+    void testIsInBounds_False_Left() {
+        theMaze.setRoom(0, 0);
+        
+        assertFalse(theMaze.isInBounds(Room.LEFT));
+    }
+    
+    @Test
+    void testIsInBounds_False_Down() {
+        theMaze.setRoom(2, 3);
+        
+        assertFalse(theMaze.isInBounds(Room.DOWN));
+    }
+    
+    @Test
+    void testIsInBounds_False_Right() {
+        theMaze.setRoom(3, 0);
+        
+        assertFalse(theMaze.isInBounds(Room.RIGHT));
     }
 }
 

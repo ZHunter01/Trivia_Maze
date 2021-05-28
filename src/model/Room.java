@@ -19,7 +19,7 @@ public class Room extends GameObject{
     /**PowerUp object that is contained in a room */
     private PowerUp myPowerUp;
     /**Player object of player in the room */
-    private Player myPlayer;
+   // private Player myPlayer;
     /**Image object that represents the room */
     private Image myRoomIcon;
     /**Int value to indicate up door is selected */
@@ -34,7 +34,7 @@ public class Room extends GameObject{
     /** Creates default Room object
      * 
      */
-    public Room(final Player thePlayer) {
+    public Room() {
         myDoorUp = new Door();
         myDoorLeft = new Door();
         myDoorRight = new Door();
@@ -42,7 +42,7 @@ public class Room extends GameObject{
                 
         myPowerUp = PowerUp.createEmptyPowerUp();
         
-        myPlayer = thePlayer;
+        //myPlayer = thePlayer;
     }
     
     /** Get current Room Image
@@ -61,20 +61,20 @@ public class Room extends GameObject{
         myRoomIcon = theIcon;
     }
     
-    /**
-     * 
-     * @return
-     */
-    public Player getPlayer() {
-        return myPlayer;
-    }
-    
-    /**
-     * 
-     */
-    public void setPlayer(final Player thePlayer) {
-        myPlayer = thePlayer;
-    }
+//    /**
+//     * 
+//     * @return
+//     */
+//    public Player getPlayer() {
+//        return myPlayer;
+//    }
+//    
+//    /**
+//     * 
+//     */
+//    public void setPlayer(final Player thePlayer) {
+//        myPlayer = thePlayer;
+//    }
     
     /** Returns PowerUp object contained in the room
      * 
@@ -161,16 +161,17 @@ public class Room extends GameObject{
     }
     
     /** Unlocks door that has a PermaLock value of true
+     *  User must have contain a PermaUnlock PowerUp
      * 
      * @param theDir
      */
     public void unlockPermaLock(final int theDir) {
         //getUserDoor(theDir).setPermaLock(false);
-        if (myPlayer.containsPermaUnlock()) {
-            getUserDoor(theDir).setPermaLock(false);
+       // if (myPlayer.containsPermaUnlock()) {
+          getUserDoor(theDir).setPermaLock(false);
 
-        } else {
-            return;
-        }
+        //} else {
+          //  return;
+        //}
     }
 }   

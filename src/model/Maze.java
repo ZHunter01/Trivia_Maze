@@ -65,8 +65,7 @@ public class Maze {
         myXCount = 0;
         myYCount = 0;
         //Add Player to initial Room
-        myMaze [myXCount][myYCount].setPlayer(myPlayer);
-        
+       
         myCurrentDoor = new Door();
         //default directions is up
         userDir = 0;
@@ -307,7 +306,7 @@ public class Maze {
     public void fillMaze() {
         for (int n = 0; n < myMaze.length; n++) {
             for (int i = 0; i < myMaze[0].length; i++) {
-                myMaze [n][i] = new Room(myPlayer);
+                myMaze [n][i] = new Room();
             }
         }
     }
@@ -370,15 +369,8 @@ public class Maze {
         
         int randNumX;
         int randNumY;
-
-//        final int maxX = myMaze.length;
-//        final int min = 0;
-//        final int maxY = myMaze[0].length;
         
         PowerUp tempPower;
-        
-        //randNumX = (int) Math.floor(Math.random() * (maxX + 1)) - 1;
-       // randNumY = (int) Math.floor(Math.random() * (maxY + 1)) - 1;
         
         //Generate 2 PowerUps
         randNumX = randNum.nextInt(myMaze.length );
@@ -386,11 +378,7 @@ public class Maze {
         
         tempPower = PowerUp.createFreeQuestion();
         getRoom(randNumX, randNumY).setRoomWithPowerUp(tempPower);
-       
-        
-       // randNumX = (int) Math.floor(Math.random() * (maxX + 1));
-        //randNumY = (int) Math.floor(Math.random() * (maxY + 1));
-        
+      
         randNumX = randNum.nextInt(myMaze.length);
         randNumY = randNum.nextInt(myMaze[0].length);
         

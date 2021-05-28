@@ -1,6 +1,5 @@
 package model;
 
-import java.awt.Color;
 import java.awt.Image;
 import java.util.ArrayList;
 
@@ -14,7 +13,7 @@ import javax.swing.ImageIcon;
  */
 public class Player extends GameObject{
     private Image myPlayerImage;
-    private Color myPlayerColor;
+    //private Color myPlayerColor;
     private int myX;
     private int myY;
     private ArrayList<PowerUp> myPowerUps;
@@ -34,8 +33,8 @@ public class Player extends GameObject{
        myPlayerImage = new ImageIcon("./resources/player.png").getImage();
         myPowerUps = new ArrayList<>();
         //Set default color to black
-        myPlayerColor = new Color(0, 0, 0);
-        myPlayerColor = Color.BLACK;
+        //myPlayerColor = new Color(0, 0, 0);
+        //myPlayerColor = Color.BLACK;
         
         
         setX(68);
@@ -50,21 +49,9 @@ public class Player extends GameObject{
         myPlayerImage = theIcon;
         //myPowerUp = new PowerUp();
 
-        myPlayerColor = new Color(0, 0, 0);
-        myPlayerColor = Color.BLACK;
+       // myPlayerColor = new Color(0, 0, 0);
+     //   myPlayerColor = Color.BLACK;
          
-        setX(68);
-        setY(40);
-    }
-    
-    /** Creates player object with specified Color as the object's color
-     * 
-     * @param theColor
-     */
-    public Player(final Color theColor) {
-        myPlayerColor = theColor;
-        //myPowerUp = new PowerUp();
-
         setX(68);
         setY(40);
     }
@@ -75,14 +62,6 @@ public class Player extends GameObject{
      */
     public Image getIcon() {
         return myPlayerImage;   
-    }
-    
-    /** Returns current color of the player 
-     * 
-     * @return
-     */
-    public Color getColor() {
-        return myPlayerColor;
     }
     
 //    /** Returns current X coordinate position of player
@@ -108,15 +87,6 @@ public class Player extends GameObject{
     public void setImage(final Image theImage) {
         myPlayerImage = theImage;
     }
-    
-    /** Sets player Color to input Color
-     * 
-     * @param theColor
-     */
-    public void setColor(final Color theColor) {
-        myPlayerColor = theColor;
-    }
-    
     
     /** Sets the x and y location of the player object
      * 

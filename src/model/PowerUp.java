@@ -32,7 +32,7 @@ public class PowerUp implements Serializable{
     }
     
     public static PowerUp createEmptyPowerUp() {
-        PowerUp myPowerUp = new PowerUp(false, true);
+        PowerUp myPowerUp = new PowerUp(false, false);
         return myPowerUp;
     }
     
