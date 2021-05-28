@@ -28,14 +28,21 @@ public class MazeTest {
         assertEquals(theMaze.getXLength(), 4);
     }
     
-//    @Test
-//    void testQuestionCount() {
-//        theMaze.doorSolution((theMaze.getCurrentRoom().getUserDoor(0).getQuestion()).getSolution());
-//        final int count = 1;
-//        
-//        
-//        assertTrue(count == theMaze.getQuestionCount());
-//    }
+    @Test
+    void testQuestionCount() {
+        int count = 0;
+        
+        theMaze.userDir = Room.DOWN;
+        
+        for (int n = 0; n < 3; n++) {
+            theMaze.doorSolution(theMaze.getCurrentRoom().getUserDoor(Room.DOWN).getQuestion().getSolution(), Room.DOWN);
+            //System.out.println(theMaze.getCurrentRoom().getUserDoor(Room.DOWN).getQuestion().getSolution());
+            //System.out.println(theMaze.getCurrentRoom().getUserDoor(Room.DOWN).getQuestion().getSolution());
+
+            count ++;
+        }
+        assertEquals(theMaze.getQuestionCount(), count);
+    }
     
     @Test
     void testCustomMazeConstructor() {        
@@ -76,7 +83,6 @@ public class MazeTest {
     @Test
     void testUsePowerUpPermaUnlock_DoorIsPermaLocked() {
         theMaze.getCurrentRoom().getUserDoor(Room.UP).getQuestion().setQuestionAndSolution("Does this work?", "Yes");
-        //theMaze.getCurrentRoom().getUserDoor(Room.UP).setQuestion(myQ);
         theMaze.getCurrentRoom().getUserDoor(Room.UP).checkLock("NO");
         
         
@@ -85,27 +91,79 @@ public class MazeTest {
         theMaze.getPlayer().addPowerUp(power);
         theMaze.usePowerUp(power, Room.UP);
         
-        //assertTrue(theMaze.getXCount() == x  && theMaze.getYCount() == y + 1);
         
-        
+        assertFalse(theMaze.getCurrentRoom().getUserDoor(Room.UP).isPermaLocked());  
     }
     
     @Test
-    void testReverseDoorPermaLock_Up() {
-        theMaze.reverseDoorPermaLock(Room.UP);
+    void testUsePowerUpPermaUnlock_DoorIsNotPermaLocked() {
+        final PowerUp power = PowerUp.createPermaUnlock();
         
-        assertTrue(theMaze.getCurrentRoom().getUserDoor(Room.DOWN).isPermaLocked());
+        theMaze.getPlayer().addPowerUp(power);
+        theMaze.usePowerUp(power, Room.UP);
+        
+        
+        assertTrue(theMaze.getCurrentRoom().getUserDoor(Room.UP).isLocked());  
     }
+    
+    @Test
+    void testIncrementMaze_Up() {
+        theMaze.userDir = Room.UP;
+        
+        theMaze.incrementMaze();
+        
+        assertEquals(theMaze.getYCount(), -1);
+    }
+    
+    @Test
+    void testIncrementMaze_Down() {
+        theMaze.userDir = Room.DOWN;
+        
+        theMaze.incrementMaze();
+        
+        assertEquals(theMaze.getYCount(), 1);
+    }
+    
+    @Test
+    void testIncrementMaze_Left() {
+        theMaze.userDir = Room.LEFT;
+        
+        theMaze.incrementMaze();
+        
+        assertEquals(theMaze.getXCount(), -1);
+    }
+    
+    @Test
+    void testIncrementMaze_Right() {
+        theMaze.userDir = Room.RIGHT;
+        
+        theMaze.incrementMaze();
+        
+        assertEquals(theMaze.getXCount(), 1);
+    }
+    
+    @Test
+    void testHasWon_False() {
+        assertFalse(theMaze.hasWon());
+    }
+    
 //    @Test
-//    void testGetCurrentDoor() {
-//        assertTrue(theMaze.getCurrentDoor(Room.UP).equals(theMaze.getCurrentRoom().getUserDoor(Room.UP)));
+//    void testReverseDoorPermaLock_Up() {
+//        theMaze.reverseDoorPermaLock(Room.UP);
+//        
+//        assertTrue(theMaze.getCurrentRoom().getUserDoor(Room.DOWN).isPermaLocked());
 //    }
     
     @Test
-    void testCheckWin() {
+    void testHasWon() {
         theMaze.setRoom(3, 3);
-        //System.out.println(theMaze.getXLength() + " x length " + theMaze.getXCount() + "x count");
-        assertTrue(theMaze.checkWin());
+        assertTrue(theMaze.hasWon());
+    }
+    
+    @Test
+    void testHasWon_False_OneRoomCorrect() {
+        theMaze.setRoom(3, 2);
+        assertFalse(theMaze.hasWon());
     }
     
     @Test
@@ -114,8 +172,6 @@ public class MazeTest {
         
         for (int n = 0; n < 3; n++) {
             theMaze.doorSolution(theMaze.getCurrentRoom().getUserDoor(Room.DOWN).getQuestion().getSolution(), Room.DOWN);
-            //System.out.println(theMaze.getCurrentRoom().getUserDoor(Room.DOWN).getQuestion().getSolution());
-            //System.out.println(theMaze.getCurrentRoom().getUserDoor(Room.DOWN).getQuestion().getSolution());
 
             count ++;
         }
@@ -131,11 +187,18 @@ public class MazeTest {
     }
     
     @Test
-    void testCheckSolution_CheckWinTrue() {
-        theMaze.setRoom(3, 3);
-        theMaze.doorSolution(theMaze.getCurrentRoom().getUserDoor(Room.DOWN).getQuestion().getSolution(), Room.DOWN);
-
-        assertTrue(theMaze.checkWin() == true);
+    void testHasLost() {
+        theMaze.getCurrentRoom().getUserDoor(Room.UP).getQuestion();
+        theMaze.getCurrentRoom().getUserDoor(Room.UP).checkLock("NO");
+        theMaze.getCurrentRoom().getUserDoor(Room.LEFT).getQuestion();
+        theMaze.getCurrentRoom().getUserDoor(Room.LEFT).checkLock("NO");
+        theMaze.getCurrentRoom().getUserDoor(Room.DOWN).getQuestion();
+        theMaze.getCurrentRoom().getUserDoor(Room.DOWN).checkLock("NO");
+        theMaze.getCurrentRoom().getUserDoor(Room.RIGHT).getQuestion();
+        theMaze.getCurrentRoom().getUserDoor(Room.RIGHT).checkLock("NO");
+        
+        assertTrue(theMaze.hasLost());
     }
+
 }
 

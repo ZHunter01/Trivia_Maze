@@ -10,27 +10,27 @@ import java.util.Random;
  */
 public class Maze {
     /**Player object */
-    private Player myPlayer;
+    public Player myPlayer;
     /**2-d array of room representing the maze */
-    private Room [][] myMaze;
+    public Room [][] myMaze;
     /**Default width and length of maze */
-    private final static int DEFAULT_SIZE = 4;
+    public final static int DEFAULT_SIZE = 4;
     /**Boolean for if user has reached the final room */
-    private boolean myWin;
+    public boolean myWin;
     /**Boolean for if all door in a room are permanently locked and the user loses */
-    private boolean myLose;
+    public boolean myLose;
     /**Int counter for how many questions have been asked */
-    private int myQuestionCounter;
+    public int myQuestionCounter;
     /**Int counter for how many question have been answered correctly*/
-    private int myCorrectCounter; 
+    public int myCorrectCounter; 
     /**Int value for current x position in maze */
-    private int myXCount;
+    public int myXCount;
     /**Int value for current y position in maze */
-    private int myYCount;
+    public int myYCount;
     /**Door object for current selected door*/
-    private Door myCurrentDoor;
+    public Door myCurrentDoor;
     /**Int value to keep track of what direction door is being accessed */
-    private int userDir;
+    public int userDir;
      
     
     /* Creates default 2-d array maze with 4x4 dimensions
@@ -100,13 +100,13 @@ public class Maze {
         generatePowerUps();
     }
     
-//    /** Returns current count of how many questions have been asked
-//     * 
-//     * @return myQuestionCounter
-//     */
-//    public int getQuestionCount() {
-//        return myQuestionCounter;
-//    }
+    /** Returns current count of how many questions have been asked
+     * 
+     * @return myQuestionCounter
+     */
+    public int getQuestionCount() {
+        return myQuestionCounter;
+    }
     
     /** Returns current count of correctly answered questions
      * 
@@ -235,10 +235,10 @@ public class Maze {
      * @param theDir 
      * 
      */
-    private void checkSolution(final int theDir) {
+    public void checkSolution(final int theDir) {
         if (myCurrentDoor.isLocked() == false) {
             myCorrectCounter ++;
-            if (checkWin() == true) {
+            if (hasWon() == true) {
                 return;
             } else {
                 incrementMaze();
@@ -248,7 +248,7 @@ public class Maze {
                 //checkRoomPowerUp();
             }
         } else {
-            if (checkLose() == true) {
+            if (hasLost() == true) {
                 return;
             }
         }
@@ -302,36 +302,34 @@ public class Maze {
             } else {
                 getCurrentRoom().unlockPermaLock(theDir);
             }
-        } else {
-            return;
         }
         
         myPlayer.removePowerUp(thePowerUp);
     }
     
-    /** Sets the door opposite of the input to be PermaLocked
-     * 
-     */
-    public void reverseDoorPermaLock(final int theDir) {
-        //UP to DOWN
-        if (theDir == Room.UP) {
-            this.getCurrentRoom().getUserDoor(Room.DOWN).setPermaLock(true);
-          //LEFT to RIGHT
-        } else if (theDir == Room.LEFT) {
-            this.getCurrentRoom().getUserDoor(Room.RIGHT).setPermaLock(true);
-          //DOWN to UP
-        } else if (theDir == Room.DOWN) {
-            this.getCurrentRoom().getUserDoor(Room.UP).setPermaLock(true);
-          //RIGHT to LEFT
-        } else if (theDir == Room.RIGHT) {
-            this.getCurrentRoom().getUserDoor(Room.LEFT).setPermaLock(true);
-          //Value not within 0-3
-        } else {
-            throw new IllegalArgumentException("Error: Improper door directional value.");
-        }
-        
-        
-    }
+//    /** Sets the door opposite of the input to be PermaLocked
+//     * 
+//     */
+//    public void reverseDoorPermaLock(final int theDir) {
+//        //UP to DOWN
+//        if (theDir == Room.UP) {
+//            this.getCurrentRoom().getUserDoor(Room.DOWN).setPermaLock(true);
+//          //LEFT to RIGHT
+//        } else if (theDir == Room.LEFT) {
+//            this.getCurrentRoom().getUserDoor(Room.RIGHT).setPermaLock(true);
+//          //DOWN to UP
+//        } else if (theDir == Room.DOWN) {
+//            this.getCurrentRoom().getUserDoor(Room.UP).setPermaLock(true);
+//          //RIGHT to LEFT
+//        } else if (theDir == Room.RIGHT) {
+//            this.getCurrentRoom().getUserDoor(Room.LEFT).setPermaLock(true);
+//          //Value not within 0-3
+//        } else {
+//            throw new IllegalArgumentException("Error: Improper door directional value.");
+//        }
+//        
+//        
+//    }
     
     /** Fills each location the 2-d array maze with Rooms
      * 
@@ -339,7 +337,7 @@ public class Maze {
     public void fillMaze() {
         for (int n = 0; n < myMaze.length; n++) {
             for (int i = 0; i < myMaze[0].length; i++) {
-                myMaze [n][i] = new Room();
+                myMaze [n][i] = new Room(myPlayer);
             }
         }
     }
@@ -357,9 +355,8 @@ public class Maze {
             myYCount ++;
         } else if (userDir == Room.RIGHT) {
             myXCount ++;
-        } else {
-            throw new IllegalArgumentException("Error: Improper door directional value.");
         }
+        
         myPlayer.move(userDir);
     }
         
@@ -367,7 +364,7 @@ public class Maze {
      * 
      * @return myWin
      */
-    public boolean checkWin() {
+    public boolean hasWon() {
         if (myXCount == (myMaze.length - 1) && myYCount == (myMaze[0].length - 1)) {
             myWin = true;
         }
@@ -378,7 +375,7 @@ public class Maze {
      * 
      * @return myLose
      */
-    public boolean checkLose() {
+    public boolean hasLost() {
         final Room currentRoom = myMaze [myXCount][myYCount];
         
         boolean up = currentRoom.getDoorPermaLock(Room.UP);
