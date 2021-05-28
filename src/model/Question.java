@@ -19,6 +19,7 @@ public class Question {
     private String myMultiAnswer;
     private SqliteDB myDatabase;
     private final int myId;
+    private static final Random RAND = new Random();
     
     public Question() {
         myDatabase = new SqliteDB(MyMenuBar.getDataBaseName());
@@ -33,15 +34,15 @@ public class Question {
      * @return question id
      */
     private int idHelper() {
-        final Random rand = new Random();
-        int random = rand.nextInt(myDatabase.getLastId())+1;
+       //final Random rand = new Random();
+        int random = RAND.nextInt(myDatabase.getLastId())+1;
        // System.out.println(random);
-      //  while (myDatabase.getIsUsed(random)) {
-         //  random = rand.nextInt(myDatabase.getLastId())+1;
-       // }
-
-        //myDatabase.updateIsUsed(random);
-        
+//        while (myDatabase.getIsUsed(random)) {
+//           random = RAND.nextInt(myDatabase.getLastId())+1;
+//        }
+//
+//        myDatabase.updateIsUsed(random);
+//        
         return random;
     }
 

@@ -7,7 +7,7 @@ import java.awt.Image;
  * @author Zach Hunter
  *
  */
-public class Room extends GameObject{
+public class Room extends GameObject {
     /**Door object to represent door at the top of the room */
     private Door myDoorUp;
     /**Door object to represent door at the left side of the room */
@@ -34,13 +34,13 @@ public class Room extends GameObject{
     /** Creates default Room object
      * 
      */
-    public Room() {
+    public Room(final Player thePlayer) {
         myDoorUp = new Door();
         myDoorLeft = new Door();
         myDoorRight = new Door();
         myDoorDown = new Door();
                 
-        myPlayer = new Player();
+        myPlayer = thePlayer;
     }
     
     /** Get current Room Image
@@ -99,7 +99,7 @@ public class Room extends GameObject{
      * @return userDoor
      */
     public Door getUserDoor(final int theDir) {
-        Door userDoor = new Door();
+        Door userDoor;
         
         if (theDir == UP) {
             userDoor = myDoorUp; 
@@ -166,10 +166,7 @@ public class Room extends GameObject{
         //getUserDoor(theDir).setPermaLock(false);
         if (myPlayer.containsPermaUnlock()) {
             getUserDoor(theDir).setPermaLock(false);
-
-        } else {
-            return;
-        }
+        } 
     }
     
 }

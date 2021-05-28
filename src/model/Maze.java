@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Random;
 
 
@@ -8,7 +9,11 @@ import java.util.Random;
  * @author Zach Hunter
  *
  */
-public class Maze {
+public class Maze implements Serializable{
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 8788743892671639398L;
     /**Player object */
     private Player myPlayer;
     /**2-d array of room representing the maze */
@@ -37,33 +42,7 @@ public class Maze {
      * 
      */
     public Maze() {
-        //2-d array of default size
-        myMaze = new Room [DEFAULT_SIZE][DEFAULT_SIZE];
-        //Fill maze with Rooms
-        fillMaze();
-        
-        myWin = false;
-        
-        myPlayer = new Player();
-        
-        //How many questions have been asked
-        myQuestionCounter = 0;
-        //How many question have been answered correctly
-        myCorrectCounter = 0;
-        
-        //Counters for the location in the 2-d array Maze
-        myXCount = 0;
-        myYCount = 0;
-        //Add Player to initial Room
-        myMaze [myXCount][myYCount].setPlayer(myPlayer);
-        
-        //current door object initialized
-        myCurrentDoor = new Door();
-        //default directions is up
-        userDir = 0;
-                
-        //Generate PowerUps in the Maze
-        generatePowerUps();
+        this(DEFAULT_SIZE, DEFAULT_SIZE);
     }
     
     /** Creates a 2-d array maze with specified dimensions
@@ -219,10 +198,10 @@ public class Maze {
      */
     private void checkSolution() {
         //If answer was correct door should be unlocked
-        if (myCurrentDoor.isLocked() == false) {
+        if (!myCurrentDoor.isLocked()) {
             myCorrectCounter ++;
             //Check for if the user has won the game
-            if (checkWin() == true) {
+            if (hasWon()) {
                 return;
             } else {
                 incrementMaze();
@@ -230,7 +209,7 @@ public class Maze {
           //If answer was incorrect
         } else {
             //Check if user has lost
-            if (checkLose() == true) {
+            if (hasLost()) {
                 return;
             }
         }
@@ -317,7 +296,7 @@ public class Maze {
     private void fillMaze() {
         for (int n = 0; n < myMaze.length; n++) {
             for (int i = 0; i < myMaze[0].length; i++) {
-                myMaze [n][i] = new Room();
+                myMaze [n][i] = new Room(myPlayer);
             }
         }
     }
@@ -345,7 +324,7 @@ public class Maze {
      * 
      * @return myWin
      */
-    private boolean checkWin() {
+    private boolean hasWon() {
         if (myXCount == myMaze[0].length && myYCount == myMaze.length) {
             myWin = true;
         }
@@ -356,7 +335,7 @@ public class Maze {
      * 
      * @return myLose
      */
-    private boolean checkLose() {
+    private boolean hasLost() {
         final Room currentRoom = myMaze [myXCount][myYCount];
         
         boolean up = currentRoom.getDoorPermaLock(Room.UP);

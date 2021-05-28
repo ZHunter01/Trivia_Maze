@@ -12,6 +12,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import model.Door;
+import model.Player;
 import model.PowerUp;
 import model.Room;
 
@@ -24,10 +25,11 @@ public class RoomTest {
     private Room myRoom;
     private PowerUp myPowerUp;
     private Door myDoor;
+    private Player myPlayer;
 
     @BeforeEach
     void setUp() {
-        myRoom = new Room();
+        myRoom = new Room(myPlayer);
        // myPowerUp = new PowerUp();
         myDoor = new Door();
     }

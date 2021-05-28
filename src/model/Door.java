@@ -6,6 +6,7 @@ package model;
  *
  */
 public class Door extends GameObject{
+    
     private boolean myLock;
     private boolean myPermaLock;
     private Question myQuestion;

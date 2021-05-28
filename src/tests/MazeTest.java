@@ -2,15 +2,11 @@ package tests;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import model.Maze;
 import model.PowerUp;
-import model.Question;
 import model.Room;
 
 public class MazeTest {
