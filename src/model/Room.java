@@ -18,8 +18,6 @@ public class Room extends GameObject {
     private Door myDoorDown;
     /**PowerUp object that is contained in a room */
     private PowerUp myPowerUp;
-    /**Player object of player in the room */
-    private Player myPlayer;
     /**Image object that represents the room */
     private Image myRoomIcon;
     /**Int value to indicate up door is selected */
@@ -34,13 +32,12 @@ public class Room extends GameObject {
     /** Creates default Room object
      * 
      */
-    public Room(final Player thePlayer) {
+    public Room() {
         myDoorUp = new Door();
         myDoorLeft = new Door();
         myDoorRight = new Door();
         myDoorDown = new Door();
                 
-        myPlayer = thePlayer;
     }
     
     /** Get current Room Image
@@ -57,21 +54,6 @@ public class Room extends GameObject {
      */
     public void setRoomImage(final Image theIcon) {
         myRoomIcon = theIcon;
-    }
-    
-    /**
-     * 
-     * @return
-     */
-    public Player getPlayer() {
-        return myPlayer;
-    }
-    
-    /**
-     * 
-     */
-    public void setPlayer(final Player thePlayer) {
-        myPlayer = thePlayer;
     }
     
     /** Returns PowerUp object contained in the room
@@ -156,17 +138,15 @@ public class Room extends GameObject {
      */
     public void setRoomWithPowerUp(final PowerUp thePowerUp) {
         myPowerUp = thePowerUp;
-    }
-    
+    }   
+        
     /** Unlocks door that has a PermaLock value of true
-     * 
+     *  
      * @param theDir
      */
     public void unlockPermaLock(final int theDir) {
-        //getUserDoor(theDir).setPermaLock(false);
-        if (myPlayer.containsPermaUnlock()) {
-            getUserDoor(theDir).setPermaLock(false);
-        } 
+        getUserDoor(theDir).setPermaLock(false);
+         
     }
     
 }

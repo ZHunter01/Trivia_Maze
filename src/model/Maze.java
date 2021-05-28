@@ -69,7 +69,7 @@ public class Maze implements Serializable{
         myXCount = 0;
         myYCount = 0;
         //Add Player to initial Room
-        myMaze [myXCount][myYCount].setPlayer(myPlayer);
+        //myMaze [myXCount][myYCount].setPlayer(myPlayer);
         
         myCurrentDoor = new Door();
         //default directions is up
@@ -296,7 +296,7 @@ public class Maze implements Serializable{
     private void fillMaze() {
         for (int n = 0; n < myMaze.length; n++) {
             for (int i = 0; i < myMaze[0].length; i++) {
-                myMaze [n][i] = new Room(myPlayer);
+                myMaze [n][i] = new Room();
             }
         }
     }
