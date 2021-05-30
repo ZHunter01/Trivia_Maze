@@ -134,14 +134,15 @@ public class MyMenuBar extends JMenuBar {
                     + "<body style='background-color: white; width: ";
             final String content2 = "'>"
                     + "<h1>Game Rules:</h1>"
-                    + "<p>Here we need to describe ";
+                    + "<p>OBJECTIVE: Get to the exit of the maze located at the bottom right. ";
             final String content3
-                    = "ruls of the TriviaMaze game.  "
-                    + "ruls of the TriviaMaze game. "
-                    + "ruls of the TriviaMaze game. "
-                    + " ruls of the TriviaMaze game.</p>";
+                    = "HOW TO: Use navigation buttons to move. "
+                    + "Answer trivia question correctly to move to the next spot. "
+                    + "If you answer incorrectly, that way will become blocked. "
+                    + "If all routes to the exit are blocked, you lose. " 
+                    + "If you reach the exit located at the bottom right, you win the trivia maze!</p>";
             final String content = content1 + 300 + "px"
-                    + content2 +  content3;
+                    + content2 + "\n" + content3;
             final Runnable r = () -> {
                 JLabel label = new JLabel(content);
                 JOptionPane.showMessageDialog(null, label);
