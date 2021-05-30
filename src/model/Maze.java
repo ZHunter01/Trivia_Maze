@@ -200,11 +200,10 @@ public class Maze implements Serializable{
         //If answer was correct door should be unlocked
         if (!myCurrentDoor.isLocked()) {
             myCorrectCounter ++;
+            incrementMaze();
             //Check for if the user has won the game
             if (hasWon()) {
                 return;
-            } else {
-                incrementMaze();
             }
           //If answer was incorrect
         } else {
@@ -325,7 +324,7 @@ public class Maze implements Serializable{
      * @return myWin
      */
     private boolean hasWon() {
-        if (myXCount == myMaze[0].length && myYCount == myMaze.length) {
+        if (myXCount == myMaze[0].length - 1 && myYCount == myMaze.length - 1) {
             myWin = true;
         }
         return myWin;
