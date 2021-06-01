@@ -67,7 +67,7 @@ public class AnswerPanel extends JPanel {
      */
     public AnswerPanel() {
         setPreferredSize(new Dimension(222, 0));
-        setBackground(Color.RED);
+        setBackground(new Color(98, 0, 134));
         myAnswer = "";
 //        initAndAddAnswerPrompt();
 //        initAndAddAnswer();

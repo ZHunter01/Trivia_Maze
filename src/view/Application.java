@@ -3,8 +3,6 @@ package view;
 import javax.swing.*;
 
 import db.SqliteDB;
-import model.Question;
-
 import java.awt.*;
 import java.io.IOException;
 
@@ -23,6 +21,9 @@ public class Application extends JFrame {
         init();
     }
 
+    /**
+     * 
+     */
     private void init() {
         setSize(WIDTH, HEIGHT);
         setTitle("Trivia Maze");
@@ -36,9 +37,12 @@ public class Application extends JFrame {
 
         MazePanel panel = new MazePanel(answerPanel, questionPanel);
 
+        JPanel panelHolder = new JPanel();
+        panelHolder.add(new AnswerPanel());
+        
         setJMenuBar(MyMenuBar.getInstance());
         add(panel, BorderLayout.CENTER);
-        add(answerPanel, BorderLayout.EAST);
+        add(panelHolder, BorderLayout.EAST);
         add(questionPanel, BorderLayout.NORTH);
         add(new DirectionPanel(panel), BorderLayout.SOUTH);
     }
