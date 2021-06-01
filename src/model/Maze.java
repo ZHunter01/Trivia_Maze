@@ -295,6 +295,18 @@ public class Maze implements Serializable{
     private void fillMaze() {
         for (int n = 0; n < myMaze.length; n++) {
             for (int i = 0; i < myMaze[0].length; i++) {
+                if (n == 0) {
+                    
+                }
+                if (i == 0) {
+                    
+                }
+                if (n == myMaze.length - 1) {
+                    
+                }
+                if (i == myMaze[0].length - 1) {
+                    
+                }
                 myMaze [n][i] = new Room();
             }
         }

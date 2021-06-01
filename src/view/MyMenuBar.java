@@ -69,7 +69,7 @@ public class MyMenuBar extends JMenuBar {
         myCustomizePlayer = new JMenu("CUSTOMIZE PLAYER");
         myOptions = new JMenu("OPTIONS");
         final JMenuItem myCharacter = new JMenuItem("Character");
-        final JMenuItem myColor = new JMenuItem("Color");
+//        final JMenuItem myColor = new JMenuItem("Color");
         final JMenu myQuestionLevel = new QuestionMenu();
         final JMenuItem myAbout = new JMenuItem("About");
         final JMenuItem myRules = new JMenuItem("Rules");
@@ -81,7 +81,7 @@ public class MyMenuBar extends JMenuBar {
         add(myOptions);
 
         myCustomizePlayer.add(myCharacter);
-        myCustomizePlayer.add(myColor);
+        //myCustomizePlayer.add(myColor);
         myCustomizePlayer.add(myQuestionLevel);
 
         myHelp.add(myAbout);
