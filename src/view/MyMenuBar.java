@@ -36,9 +36,9 @@ public class MyMenuBar extends JMenuBar {
      * JMenu myOptions displays JMenuItems which give different options for the user
      */
     private JMenu myOptions;
-
+    /** The Database name by default */
     private static String myDataBaseName = "SportQuestions";
-
+    
     /**
      * Create an instance of the DirectionPanel
      */
@@ -47,7 +47,7 @@ public class MyMenuBar extends JMenuBar {
     /**
      * constructs the Menu Bar
      */
-    MyMenuBar() {
+    private MyMenuBar() {
         super();
         initAndAddJMenus();
     }
@@ -68,9 +68,9 @@ public class MyMenuBar extends JMenuBar {
         myHelp = new JMenu("HELP");
         myCustomizePlayer = new JMenu("CUSTOMIZE PLAYER");
         myOptions = new JMenu("OPTIONS");
-        final JMenu myCharacter = new PlayerMenu();
-        final JMenuItem myColor = new JMenuItem("Color");
-        final JMenuItem myQuestionType = new QuestionMenu();
+        final JMenuItem myCharacter = new JMenuItem("Character");
+//        final JMenuItem myColor = new JMenuItem("Color");
+        final JMenu myQuestionLevel = new QuestionMenu();
         final JMenuItem myAbout = new JMenuItem("About");
         final JMenuItem myRules = new JMenuItem("Rules");
 
@@ -81,8 +81,8 @@ public class MyMenuBar extends JMenuBar {
         add(myOptions);
 
         myCustomizePlayer.add(myCharacter);
-        myCustomizePlayer.add(myColor);
-        myCustomizePlayer.add(myQuestionType);
+        //myCustomizePlayer.add(myColor);
+        myCustomizePlayer.add(myQuestionLevel);
 
         myHelp.add(myAbout);
         myHelp.add(myRules);
@@ -134,14 +134,15 @@ public class MyMenuBar extends JMenuBar {
                     + "<body style='background-color: white; width: ";
             final String content2 = "'>"
                     + "<h1>Game Rules:</h1>"
-                    + "<p>Here we need to describe ";
+                    + "<p>OBJECTIVE: Get to the exit of the maze located at the bottom right. ";
             final String content3
-                    = "ruls of the TriviaMaze game.  "
-                    + "ruls of the TriviaMaze game. "
-                    + "ruls of the TriviaMaze game. "
-                    + " ruls of the TriviaMaze game.</p>";
+                    = "HOW TO: Use navigation buttons to move. "
+                    + "Answer trivia question correctly to move to the next spot. "
+                    + "If you answer incorrectly, that way will become blocked. "
+                    + "If all routes to the exit are blocked, you lose. " 
+                    + "If you reach the exit located at the bottom right, you win the trivia maze!</p>";
             final String content = content1 + 300 + "px"
-                    + content2 +  content3;
+                    + content2 + "\n" + content3;
             final Runnable r = () -> {
                 JLabel label = new JLabel(content);
                 JOptionPane.showMessageDialog(null, label);
@@ -149,10 +150,10 @@ public class MyMenuBar extends JMenuBar {
             SwingUtilities.invokeLater(r);
 
         }
-    }
 
+    }
+    
     public static String getDataBaseName() {
         return myDataBaseName;
     }
-
 }

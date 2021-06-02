@@ -5,7 +5,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -67,7 +66,6 @@ public class DoorTest {
         
         assertTrue(myDoor.isPermaLocked());
     }
-
     
     @Test
     void checkGetQuestion() {
@@ -97,5 +95,4 @@ public class DoorTest {
     void testGetId() {
         assertEquals(myDoor.getQuestion().getId(), myDoor.getId());
     }
-
 }

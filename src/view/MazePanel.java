@@ -1,3 +1,5 @@
+
+
 package view;
 
 import controller.Drawer;
@@ -179,7 +181,7 @@ public class MazePanel extends JPanel {
         private void retrieveQuestion(int theDir) {
             Room myRoom = maze.getCurrentRoom();
             Door myDoor = myRoom.getUserDoor(theDir);
-            myQuestionPanel.setMyQuestion(myDoor.getQuestion().getQuestion());
+            myQuestionPanel.setMyQuestion(myDoor.getQuestion());
             myAnswerPanel.setAnswerPanel();
 
             if (myDoor.isPermaLocked()) {
@@ -193,7 +195,7 @@ public class MazePanel extends JPanel {
             myAnswerPanel.getAnswerField().setFocusable(true);
             myAnswerPanel.setDirection(theDir);
 
-            System.out.println("in mazePanel: " + myDoor.getQuestion().getSolution());
+            System.out.println("in mazePanel: " + myDoor.getQuestion());
             if (!myAnswerPanel.getMyAnswer().equalsIgnoreCase("")) {
                 System.out.println("Entered if statement");
 

@@ -2,14 +2,12 @@ package model;
 
 import java.awt.Image;
 
-import javax.swing.ImageIcon;
-
 /**
  * 
  * @author Zach Hunter
  *
  */
-public class Room extends GameObject{
+public class Room extends GameObject {
     /**Door object to represent door at the top of the room */
     private Door myDoorUp;
     /**Door object to represent door at the left side of the room */
@@ -20,7 +18,7 @@ public class Room extends GameObject{
     private Door myDoorDown;
     /**PowerUp object that is contained in a room */
     private PowerUp myPowerUp;
-    private Player myPlayer;
+    /**Image object that represents the room */
     private Image myRoomIcon;
     /**Int value to indicate up door is selected */
     public final static int UP = 0;
@@ -40,16 +38,13 @@ public class Room extends GameObject{
         myDoorRight = new Door();
         myDoorDown = new Door();
                 
-        //myPowerUp = new PowerUp();
-        myPlayer = new Player();
-       // myRoomIcon = new ImageIcon("./resources/w.gif").getImage();
     }
     
-    /**
+    /** Get current Room Image
      * 
      * @return
      */
-    public Image getRoomIcon() {
+    public Image getRoomImage() {
         return myRoomIcon;
     }
     
@@ -57,23 +52,8 @@ public class Room extends GameObject{
      * 
      * @param theIcon
      */
-    public void setRoomIcon(final Image theIcon) {
+    public void setRoomImage(final Image theIcon) {
         myRoomIcon = theIcon;
-    }
-    
-    /**
-     * 
-     * @return
-     */
-    public Player getPlayer() {
-        return myPlayer;
-    }
-    
-    /**
-     * 
-     */
-    public void setPlayer(final Player thePlayer) {
-        myPlayer = thePlayer;
     }
     
     /** Returns PowerUp object contained in the room
@@ -101,7 +81,7 @@ public class Room extends GameObject{
      * @return userDoor
      */
     public Door getUserDoor(final int theDir) {
-        Door userDoor = new Door();
+        Door userDoor;
         
         if (theDir == UP) {
             userDoor = myDoorUp; 
@@ -158,20 +138,15 @@ public class Room extends GameObject{
      */
     public void setRoomWithPowerUp(final PowerUp thePowerUp) {
         myPowerUp = thePowerUp;
-    }
-    
+    }   
+        
     /** Unlocks door that has a PermaLock value of true
-     * 
+     *  
      * @param theDir
      */
     public void unlockPermaLock(final int theDir) {
-        //getUserDoor(theDir).setPermaLock(false);
-        if (myPlayer.containsPermaUnlock()) {
-            getUserDoor(theDir).setPermaLock(false);
-
-        } else {
-            return;
-        }
+        getUserDoor(theDir).setPermaLock(false);
+         
     }
     
 }

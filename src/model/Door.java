@@ -6,9 +6,10 @@ package model;
  *
  */
 public class Door extends GameObject{
+    
     private boolean myLock;
     private boolean myPermaLock;
-    private Question myQuestion;
+    private int myQuestionID;
     
     /** Creates a default door object
      * 
@@ -16,24 +17,25 @@ public class Door extends GameObject{
     public Door() { 
         myLock = true;
         myPermaLock = false;
-        myQuestion = new Question();
+        myQuestionID = Question.getQuestionInstance().getId();
     }
     
-    /**
+    /** Get current Door Question object
      * 
      * @return
      */
-    public Question getQuestion() {
-        return myQuestion;
+    public String getQuestion() {
+        System.out.println("Answer: " + Question.getQuestionInstance().getSolution(myQuestionID));
+        return Question.getQuestionInstance().getQuestion(myQuestionID);
     }
     
-    /**
-     * 
-     * @param theQ
-     */
-    public void setQuestion(final Question theQ) {
-        myQuestion = theQ;
-    }
+//    /** Set Question id of the Door
+//     * 
+//     * @param theQ
+//     */
+//    public void setQuestion(final Question theQ) {
+//        myQuestion = theQ;
+//    }
     
     /** Checks the input string to see if it matches Question's solution
      * 
@@ -41,22 +43,17 @@ public class Door extends GameObject{
      */
     public void checkLock(final String theSolution) {
        // if (myQuestion.isSolution(theSolution)) {
-        System.out.println(getQuestion().getSolution());
-        if (myQuestion.getSolution().toLowerCase().equals(theSolution.toLowerCase().trim())) {
+        System.out.println(Question.getQuestionInstance().getSolution(myQuestionID));
+        if (Question.getQuestionInstance().isSolution(theSolution, myQuestionID)) {
+                        //Question.getQuestionInstance().getSolution(myQuestionID).
+                        //toLowerCase().equals(theSolution.toLowerCase().trim())
+                
             myLock = false;
         }
         else {
             myPermaLock = true;
         }
     }
-    
-//    /** Set door lock state to input boolean
-//     * 
-//     * @param theBoolean
-//     */
-//    private void setLock(boolean theBoolean) {
-//        myLock = theBoolean;
-//    }
     
     /** Set door permanent lock state to input boolean
      * 
@@ -82,21 +79,12 @@ public class Door extends GameObject{
         return myPermaLock;
     }
     
-//    @Override
-//    public boolean equals(final Object theObj) {
-//        return this.getQuestion().equals(theObj);
-//    }
-    
-//    protected void setId(final int theId) {
-//        myId = theId;
-//    }
-    
     /** Returns int ID of Question object in the Door
      * 
      * @return
      */
     public int getId() {
-        return myQuestion.getId();
+        return myQuestionID;
     }
 
 }

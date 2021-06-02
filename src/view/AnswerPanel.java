@@ -1,3 +1,5 @@
+
+
 /**
  * Trivia Maze TCSS 360 Spring 2021
  */
@@ -20,7 +22,9 @@ import java.util.Objects;
  * @author Oleksandr Maistruk
  */
 public class AnswerPanel extends JPanel {
-
+    private final static String WIN_MESSAGE = "You have won the Trivia Maze!";
+    private final static String LOSE_MESSAGE = "GAME OVER. All routes blocked.";
+    
     /**
      * The serial number
      */
@@ -63,7 +67,7 @@ public class AnswerPanel extends JPanel {
      */
     public AnswerPanel() {
         setPreferredSize(new Dimension(222, 0));
-        setBackground(Color.RED);
+        setBackground(new Color(98, 0, 134));
         myAnswer = "";
 //        initAndAddAnswerPrompt();
 //        initAndAddAnswer();
@@ -102,6 +106,12 @@ public class AnswerPanel extends JPanel {
                     myQuestionPanel.setMyQuestion("Answer was correct! Door unlocked!");
                 }
 
+//                if (myMaze.getWin()) {
+//                    this.displayWin();
+//                } else if (myMaze.getLose()) {
+//                    this.displayLose();
+//                }
+                
                 myAnswerField.setVisible(false);
                 mySubmit.setVisible(false);
                 myAnswerPrompt.setVisible(false);
@@ -110,6 +120,13 @@ public class AnswerPanel extends JPanel {
 
                 myAnswerField.setText("");
                 myAnswer = "";
+
+                if (myMaze.getWin()) {
+                    this.displayWin();
+                } else if (myMaze.getLose()) {
+                    this.displayLose();
+                }
+                
                 //if (!myAnswer.equals("")) myAnswerField.setFocusable(false);
                 System.out.println("Answer: " + myAnswer);
             });
@@ -122,19 +139,19 @@ public class AnswerPanel extends JPanel {
 
     }
 
-    public void setMaze(Maze theMaze) {
+    public void setMaze(final Maze theMaze) {
         myMaze = theMaze;
     }
 
-    public void setDirection(int theDirection) {
+    public void setDirection(final int theDirection) {
         myDirection = theDirection;
     }
 
-    public void setMazePanel(MazePanel theMazePanel) {
+    public void setMazePanel(final MazePanel theMazePanel) {
         myMazePanel = theMazePanel;
     }
 
-    public void setQuestionPanel(QuestionPanel theQuestionPanel) {
+    public void setQuestionPanel(final QuestionPanel theQuestionPanel) {
         myQuestionPanel = theQuestionPanel;
     }
 
@@ -191,7 +208,25 @@ public class AnswerPanel extends JPanel {
         return mySubmit;
     }
 
-    public void setMyAnswer(String myAnswer) {
+    public void setMyAnswer(final String myAnswer) {
         this.myAnswer = myAnswer;
+    }
+    
+    /** Displays a JOptionPane with a win message
+     * 
+     */
+    private void displayWin() {
+        int result = JOptionPane.showConfirmDialog(null,
+                WIN_MESSAGE, "Exit", JOptionPane.DEFAULT_OPTION);
+        if (result == JOptionPane.YES_OPTION) System.exit(0);
+    }
+    
+    /** Displays a JOptionPane with a lose message
+     * 
+     */
+    private void displayLose() {
+        int result = JOptionPane.showConfirmDialog(null,
+                LOSE_MESSAGE, "Exit", JOptionPane.DEFAULT_OPTION);
+        if (result == JOptionPane.YES_OPTION) System.exit(0);
     }
 }

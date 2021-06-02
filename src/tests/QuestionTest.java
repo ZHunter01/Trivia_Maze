@@ -47,7 +47,7 @@ public class QuestionTest {
     @Test
     void testEqualsSameSolAndQ() {
         Question newQ = new Question();
-        newQ.setQuestionAndSolution("What color is the sky?", "blue");
+        newQ.setQuestionAndSolution(QUESTION, SOLUTION);
         
         
         assertTrue(myQ.equals(newQ));
@@ -76,7 +76,7 @@ public class QuestionTest {
     @Test
     void testEqualsFalseWrongSolution() {
         Question newQ = new Question();
-        newQ.setQuestionAndSolution("What color is the sky?", "green");
+        newQ.setQuestionAndSolution(QUESTION, "green");
         
         
         assertFalse(myQ.equals(newQ));
@@ -84,7 +84,7 @@ public class QuestionTest {
     @Test
     void testEqualsFalseWrongQuestion() {
         Question newQ = new Question();
-        newQ.setQuestionAndSolution("Will this test fail?", "blue");
+        newQ.setQuestionAndSolution("Will this test fail?", SOLUTION);
         
         
         assertFalse(myQ.equals(newQ));

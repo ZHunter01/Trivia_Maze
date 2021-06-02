@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenu;
 import javax.swing.JRadioButtonMenuItem;
 
+import model.Question;
+
 /**
  * This class is to allow users to choose different types of questions.
  * 
@@ -35,9 +37,6 @@ public class QuestionMenu extends JMenu implements ActionListener {
     /** The button to chose geography questions */
     private transient final JRadioButtonMenuItem myGeography;
     
-    /** The field is to repaint maze with new questions type */
-    private MazePanel myMazePanel;
-    
 
     /**
      * The constructor is to create menu item.
@@ -61,14 +60,14 @@ public class QuestionMenu extends JMenu implements ActionListener {
         
     }
     
-    /**
-     * The method to return database name to work with needed type of questions.
-     * 
-     * @return name of database.
-     */
-    public static String getDataBaseName() {
-        return myDataBaseName;
-    }
+//    /**
+//     * The method to return database name to work with needed type of questions.
+//     * 
+//     * @return name of database.
+//     */
+//    public static String getDataBaseName() {
+//        return myDataBaseName;
+//    }
     
     /**
      * 
@@ -84,8 +83,7 @@ public class QuestionMenu extends JMenu implements ActionListener {
             mySport.setSelected(true);
             myGeography.setSelected(false);
             myDataBaseName = "SportQuestions";
-//            myMazePanel = new MazePanel();
-
+            Question.getQuestionInstance().setDataBaseName(myDataBaseName);
         }
     }
     
@@ -103,8 +101,7 @@ public class QuestionMenu extends JMenu implements ActionListener {
             mySport.setSelected(false);
             myGeography.setSelected(true);
             myDataBaseName = "GeographyQuestions";
-//            myMazePanel = new MazePanel();
-
+            Question.getQuestionInstance().setDataBaseName(myDataBaseName);
         }
     }
 

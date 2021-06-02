@@ -146,7 +146,7 @@ public class PlayerMenu extends JMenu implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent theEvent) {
             myPlayerName = mySpecificPlayerName;
-            Player.setPlayerIcon(myPlayerName);
+//            Player.setPlayerIcon(myPlayerName);
             
             putValue(Action.SMALL_ICON, icon);
         }
