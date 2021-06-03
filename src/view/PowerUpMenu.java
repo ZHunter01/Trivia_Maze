@@ -78,7 +78,7 @@ public class PowerUpMenu extends JMenu implements ActionListener {
 
         @Override
         public void actionPerformed(final ActionEvent theEvent) {
-            int currentDir = myMaze.getCurrentRoom().getUserDir();
+            int currentDir = myMaze.getDirection();
             Door theDoor = myMaze.getCurrentRoom().getUserDoor(currentDir);
             String solution = Question.getQuestionInstance().getSolution(theDoor.getId());
             

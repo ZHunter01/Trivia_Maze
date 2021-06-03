@@ -5,6 +5,8 @@
 package view;
 
 
+import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -17,6 +19,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JMenu;
+import javax.swing.JRadioButton;
 import javax.swing.JRadioButtonMenuItem;
 
 import model.Player;
@@ -50,7 +53,9 @@ public class PlayerMenu extends JMenu implements ActionListener {
     
 //    private final MyMenuBar myMenuBar;
     
-//    private Player myPlayer;
+    private Player myPlayer;
+    
+    private MazePanel myMazePane;
     
     /**
      * The constructor is to create player menu item.
@@ -69,8 +74,13 @@ public class PlayerMenu extends JMenu implements ActionListener {
     private void setupPlayers() {
         myPlayerActions = new ArrayList<PlayerAction>();
 
-        myPlayerActions.add(new PlayerAction("Oldman", new ImageIcon("./resources/images/Oldman.gif")));
-        myPlayerActions.add(new PlayerAction("player", new ImageIcon("./resources/images/player.gif")));
+        myPlayerActions.add(new PlayerAction("Oldman", new ImageIcon("./resources/Oldman.gif")));
+        myPlayerActions.add(new PlayerAction("Oldwoman", new ImageIcon("./resources/Oldwoman.gif")));
+        myPlayerActions.add(new PlayerAction("Girl", new ImageIcon("./resources/Girl.gif")));
+        myPlayerActions.add(new PlayerAction("Boy", new ImageIcon("./resources/Boy.gif")));
+        myPlayerActions.add(new PlayerAction("Guy", new ImageIcon("./resources/Guy.gif")));
+        myPlayerActions.add(new PlayerAction("Girl2", new ImageIcon("./resources/Girl2.gif")));
+        
         createPlayerMenu();
     }
 
@@ -87,14 +97,15 @@ public class PlayerMenu extends JMenu implements ActionListener {
 
         /** local variable to create player menu items. */
         final ButtonGroup btngrp = new ButtonGroup();
+        setLayout(new GridLayout(3, 2));
 
         for (final PlayerAction ca : myPlayerActions) {
             final JRadioButtonMenuItem btn = new JRadioButtonMenuItem(ca);
             btngrp.add(btn);
             add(btn);
-            setIcon(ca.icon);
-            if (btn.getText().equals("Oldman"))
+            if (btn.getText().equals("Oldman")) {
                 btn.setSelected(true);
+            }
         }
         return btngrp; //playerMenu;
     }
@@ -111,11 +122,11 @@ public class PlayerMenu extends JMenu implements ActionListener {
         /** The player to use. */
         private final String mySpecificPlayerName;
         
-        /** The player to use. */
-        private final Icon mySpecificPlayerIcon;
-        
-        /** Icon for a button. */
-        private Icon icon;
+//        /** The player to use. */
+//        private final Icon mySpecificPlayerIcon;
+//        
+//        /** Icon for a button. */
+//        private Icon icon;
 
         /**
          * Sets up a player and assign name and icon for it.
@@ -125,30 +136,35 @@ public class PlayerMenu extends JMenu implements ActionListener {
          */
         PlayerAction(final String theName, final Icon theIcon) {
             super(theName);
-            Objects.requireNonNull(theName, "Tool Name must not be null");
-            Objects.requireNonNull(theIcon, "Tool Icon must not be null");
+            Objects.requireNonNull(theName, "Player Name must not be null");
+            Objects.requireNonNull(theIcon, "Player Icon must not be null");
+            
+            putValue(Action.SMALL_ICON, theIcon);
             mySpecificPlayerName = theName;
-            mySpecificPlayerIcon = theIcon;
+//            mySpecificPlayerIcon = theIcon;
 
-            putValue(Action.SMALL_ICON, mySpecificPlayerIcon);
-            setIcon(mySpecificPlayerIcon);
+            setLayout(new GridLayout(3, 2));
+            
+            // coordinate button selection
+            putValue(Action.SELECTED_KEY, true);
+            
+            putValue(Action.NAME, "");
 
-            if (theName.equals("Oldman")) {
-                myPlayerName = mySpecificPlayerName;
-            }
+//            myPlayerName = mySpecificPlayerName;
+
 
         }
 
         /**
-         * Sets specific player as icon for game
+         * Sets specific player icon for game
          * 
          */
         @Override
         public void actionPerformed(ActionEvent theEvent) {
             myPlayerName = mySpecificPlayerName;
-//            Player.setPlayerIcon(myPlayerName);
-            
-            putValue(Action.SMALL_ICON, icon);
+//            myPlayer.setPlayerIcon(myPlayerName);
+//            myMazePane.repaint();
+
         }
     }
     

@@ -57,7 +57,7 @@ public class MyMenuBar extends JMenuBar {
     //private JMenuItem myExit;
     /** The Database name by default */
     private static String myDataBaseName = "SportQuestions";
-    
+    private QuestionMenu myQuestionMenu;
     /**
      * Create an instance of the DirectionPanel
      */
@@ -94,11 +94,12 @@ public class MyMenuBar extends JMenuBar {
         //myCustomizePlayer = new JMenu("CUSTOMIZE PLAYER");
         myOptions = new JMenu("OPTIONS");
         
+        myQuestionMenu = new QuestionMenu();
+        
         myPowerUps = new PowerUpMenu("PowerUps", myMaze);
         final JMenu myCharacter = new PlayerMenu();
         final JMenuItem exit =  new JMenuItem("Exit");
-//        final JMenuItem myColor = new JMenuItem("Color");
-        final JMenu myQuestionLevel = new QuestionMenu();
+        //final JMenu myQuestionLevel = new QuestionMenu();
         final JMenuItem myAbout = new JMenuItem("About");
         final JMenuItem myRules = new JMenuItem("Rules");
         final JMenuItem mySave = new JMenuItem("Save");
@@ -111,10 +112,10 @@ public class MyMenuBar extends JMenuBar {
         myFile.add(exit);
         
         add(myHelp);
-                add(myOptions);
+        add(myOptions);
 
         myOptions.add(myCharacter);
-        myOptions.add(myQuestionLevel);
+        myOptions.add(myQuestionMenu);
 
         myOptions.add(myPowerUps);
         
@@ -127,6 +128,16 @@ public class MyMenuBar extends JMenuBar {
         mySave.addActionListener(new Save());
         myLoad.addActionListener(new Load());
     }
+    
+    /**
+     * 
+     * @param theMazePanel
+     */
+    public void setQuestionMenuMazePanel(MazePanel theMazePanel) {
+        myQuestionMenu.setMazePanel(theMazePanel);
+        System.out.println(myMazePanel);
+    }
+
     
     /**
      * 
@@ -167,6 +178,7 @@ public class MyMenuBar extends JMenuBar {
             if (m != null) {
                 myMaze = m;
                 System.out.println("Load successful!");
+                //myMazePanel.setMaz(myMaze);
                 myMazePanel.setMaze(myMaze);
                 System.out.println("("+myMaze.getXCount()+","+myMaze.getYCount()+")");
                 //myMaze.getPlayer().setImage(new ImageIcon("player.png").getImage());

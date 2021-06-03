@@ -36,8 +36,7 @@ public class QuestionMenu extends JMenu implements ActionListener {
     
     /** The button to chose geography questions */
     private transient final JRadioButtonMenuItem myGeography;
-    
-    /** The field is to repaint maze with new questions type */
+
     private MazePanel myMazePanel;
     
 
@@ -63,14 +62,14 @@ public class QuestionMenu extends JMenu implements ActionListener {
         
     }
     
-    /**
-     * The method to return database name to work with needed type of questions.
-     * 
-     * @return name of database.
-     */
-    public static String getDataBaseName() {
-        return myDataBaseName;
-    }
+//    /**
+//     * The method to return database name to work with needed type of questions.
+//     * 
+//     * @return name of database.
+//     */
+//    public static String getDataBaseName() {
+//        return myDataBaseName;
+//    }
     
     /**
      * 
@@ -87,8 +86,8 @@ public class QuestionMenu extends JMenu implements ActionListener {
             myGeography.setSelected(false);
             myDataBaseName = "SportQuestions";
             Question.getQuestionInstance().setDataBaseName(myDataBaseName);
-            //myMazePanel = new MazePanel();
-
+            myMazePanel.setBackgroundImage(MazePanel.SPORT_BACKGROUND);
+            myMazePanel.repaint();
         }
     }
     
@@ -106,8 +105,9 @@ public class QuestionMenu extends JMenu implements ActionListener {
             mySport.setSelected(false);
             myGeography.setSelected(true);
             myDataBaseName = "GeographyQuestions";
-            //myMazePanel = new MazePanel();
-
+            Question.getQuestionInstance().setDataBaseName(myDataBaseName);
+            myMazePanel.setBackgroundImage(MazePanel.WORLD_BACKGROUND);
+            myMazePanel.repaint();
         }
     }
 
@@ -115,6 +115,10 @@ public class QuestionMenu extends JMenu implements ActionListener {
     public void actionPerformed(final ActionEvent theEvent) {
         // TODO Auto-generated method stub
         
+    }
+
+    public void setMazePanel(final MazePanel theMazePanel) {
+        myMazePanel = theMazePanel;       
     }
 
 }

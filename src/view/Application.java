@@ -20,7 +20,7 @@ public class Application extends JFrame {
     private static final int WIDTH = 900;
     private static final int HEIGHT = 600;
 
-    //rivate SqliteDB myDataBase = new SqliteDB(QuestionMenu.getDataBaseName());
+    //private SqliteDB myDataBase = new SqliteDB(QuestionMenu.getDataBaseName());
 
     public Application() throws IOException {
         init();
@@ -44,9 +44,10 @@ public class Application extends JFrame {
         MazePanel panel = new MazePanel(answerPanel, questionPanel);
 
         //Menu Bar
-        //MyMenuBar.getInstance().setMaze(panel.getMaze());
         MyMenuBar.getInstance().setMazePanel(panel);
         setJMenuBar(MyMenuBar.getInstance());
+        MyMenuBar.getInstance().setQuestionMenuMazePanel(panel);
+        
         //Add panels to the frame
         add(panel, BorderLayout.CENTER);
         add(answerPanel, BorderLayout.EAST);

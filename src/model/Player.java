@@ -16,9 +16,9 @@ public class Player extends GameObject implements Serializable{
     /**
      * 
      */
-    private static final long serialVersionUID = 359929099477029157L;
+    private static final long serialVersionUID = 3311504575818535717L;
     /** */
-    private static transient Image myPlayerImage;
+    private Image myPlayerImage;
     /** */
     private int myX;
     /** */
@@ -34,7 +34,7 @@ public class Player extends GameObject implements Serializable{
      * 
      */
     public Player() {
-       myPlayerImage = new ImageIcon("./resources/player.png").getImage();
+       myPlayerImage = new ImageIcon("./resources/Oldman.gif").getImage();
         myPowerUps = new ArrayList<>();     
         
         //Set start point
@@ -87,12 +87,6 @@ public class Player extends GameObject implements Serializable{
         }
         myX = theX;
         myY = theY;
-    }
-    
-    
-    public static void setPlayerImage(final String theName) {
-        final String imageFilename = "./resources/" + theName + ".gif";
-        myPlayerImage = new ImageIcon(imageFilename).getImage();
     }
     
     /** Adds PowerUp to player PowerUp array
@@ -176,6 +170,9 @@ public class Player extends GameObject implements Serializable{
 //        }
 //    }
     
+    public void setPlayerIcon(final String theName) {
+        myPlayerImage = new ImageIcon("./resources/" + theName + ".gif").getImage();
+    }
     
     @Override 
     public String toString() {

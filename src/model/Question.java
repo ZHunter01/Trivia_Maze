@@ -168,7 +168,7 @@ public class Question implements Serializable{
      
     public int getId() {
         int x = myId;
-        if(myId < mySportQuestions.size()) {
+        if(myId < mySportQuestions.size() - 1) {
            myId++; 
         } else {
             myId = 0;
