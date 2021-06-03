@@ -113,12 +113,12 @@ public class AnswerPanel extends JPanel {
     /**
      * initializes the submit button and adds it to the panel
      */
-    private void initAndAddSubmit(final boolean theVicible) {
+    private void initAndAddSubmit(final boolean theVisibility) {
         if (mySubmit == null) {
             mySubmit = new JButton("SUBMIT");
             mySubmit.setBackground(Color.BLACK);
             mySubmit.setForeground(Color.WHITE);
-            mySubmit.setFocusable(theVicible);
+            mySubmit.setFocusable(theVisibility);
             mySubmit.setPreferredSize(new Dimension(205, 30));
             add(mySubmit);
 
@@ -168,7 +168,7 @@ public class AnswerPanel extends JPanel {
             myAnswerField.addActionListener(e -> myAnswer = myAnswerField.getText());
 
         } else {
-            mySubmit.setVisible(theVicible);
+            mySubmit.setVisible(theVisibility);
         }
 
     }
@@ -207,7 +207,7 @@ public class AnswerPanel extends JPanel {
     /**
      * initializes the JTextField and adds it to the panel
      */
-    private void initAndAddAnswer(final boolean theVicible) {
+    private void initAndAddAnswer(final boolean theVisiblity) {
         if (myAnswerField == null) {
             myAnswerField = new JTextField(20);
 
@@ -224,12 +224,13 @@ public class AnswerPanel extends JPanel {
 
         }
         if(!Question.getQuestionInstance().isMultiple(myQuestionPanel.getMyQuestionId())) {
-            myAnswerField.setVisible(theVicible);
-            myAnswerField.setFocusable(theVicible);
+            myMultiAnswer.setVisible(false);
+            myAnswerField.setVisible(theVisiblity);
+            myAnswerField.setFocusable(theVisiblity);
             myAnswerField.setText("");
 
         } else {
-
+            myAnswerField.setVisible(false);
             myMultiAnswer.removeAll();
             Box box = Box.createVerticalBox();
             String multi = Question.getQuestionInstance()
@@ -246,8 +247,8 @@ public class AnswerPanel extends JPanel {
 
             }
 //            box.setLayout(new GridLayout(9, 1));
-            myMultiAnswer.setVisible(theVicible);
-            myMultiAnswer.setFocusable(theVicible);
+            myMultiAnswer.setVisible(theVisiblity);
+            myMultiAnswer.setFocusable(theVisiblity);
         }
 
     }
@@ -255,14 +256,14 @@ public class AnswerPanel extends JPanel {
     /**
      * initializes the JLabel prompt and adds it to the panel
      */
-    private void initAndAddAnswerPrompt(final boolean theVicible) {
+    private void initAndAddAnswerPrompt(final boolean theVisibility) {
         if (myAnswerPrompt == null) {
             myAnswerPrompt = new JLabel("Please enter your answer: ");
             myAnswerPrompt.setFont(new Font(Font.MONOSPACED, Font.BOLD, 13));
 
             add(myAnswerPrompt);
         } else {
-            myAnswerPrompt.setVisible(theVicible);
+            myAnswerPrompt.setVisible(theVisibility);
         }
     }
 
