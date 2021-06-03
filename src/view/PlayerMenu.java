@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 
->>>>>>> zach_branch
 /**
  * Trivia Maze TCSS 360 Spring 2021
  */
@@ -30,11 +27,7 @@ import model.Player;
 
 /**
  * This class is to allow users to choose different types of questions.
-<<<<<<< HEAD
- * 
-=======
  *
->>>>>>> zach_branch
  * @author Oleksandr Maistruk
  *
  */
@@ -44,11 +37,7 @@ public class PlayerMenu extends JMenu implements ActionListener {
      * Serial number
      */
     private static final long serialVersionUID = 4885009744733200311L;
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> zach_branch
     /** Width for player bar icons. */
     private static final int TOOL_FOR_BAR_ICON_WIDTH = 5;
 
@@ -60,28 +49,6 @@ public class PlayerMenu extends JMenu implements ActionListener {
 
     /** A list of players actions. */
     private List<PlayerAction> myPlayerActions;
-<<<<<<< HEAD
-    
-    private String myPlayerName;
-    
-//    private final MyMenuBar myMenuBar;
-    
-    private Player myPlayer;
-    
-    private MazePanel myMazePane;
-    
-    /**
-     * The constructor is to create player menu item.
-     */
-    public PlayerMenu() {  
-        super(myMenuName);
-        
-//        myMenuBar = theMenuBar;
-        
-        setupPlayers();
-    }
-    
-=======
 
     private String myPlayerName;
 
@@ -102,22 +69,12 @@ public class PlayerMenu extends JMenu implements ActionListener {
         setupPlayers();
     }
 
->>>>>>> zach_branch
     /**
      * Sets up all the Tools for menu and menu bar.
      */
     private void setupPlayers() {
         myPlayerActions = new ArrayList<PlayerAction>();
 
-<<<<<<< HEAD
-        myPlayerActions.add(new PlayerAction("Oldman", new ImageIcon("./resources/Oldman.gif")));
-        myPlayerActions.add(new PlayerAction("Oldwoman", new ImageIcon("./resources/Oldwoman.gif")));
-        myPlayerActions.add(new PlayerAction("Girl", new ImageIcon("./resources/Girl.gif")));
-        myPlayerActions.add(new PlayerAction("Boy", new ImageIcon("./resources/Boy.gif")));
-        myPlayerActions.add(new PlayerAction("Guy", new ImageIcon("./resources/Guy.gif")));
-        myPlayerActions.add(new PlayerAction("Girl2", new ImageIcon("./resources/Girl2.gif")));
-        
-=======
         myPlayerActions.add(new PlayerAction("Oldman", new ImageIcon("src/resources/Oldman.gif")));
         myPlayerActions.add(new PlayerAction("Oldwoman", new ImageIcon("src/resources/Oldwoman.gif")));
         myPlayerActions.add(new PlayerAction("Girl", new ImageIcon("src/resources/Girl.gif")));
@@ -125,26 +82,17 @@ public class PlayerMenu extends JMenu implements ActionListener {
         myPlayerActions.add(new PlayerAction("Guy", new ImageIcon("src/resources/Guy.gif")));
         myPlayerActions.add(new PlayerAction("Girl2", new ImageIcon("src/resources/Girl2.gif")));
 
->>>>>>> zach_branch
         createPlayerMenu();
     }
 
 
     /**
      * This method creates player menu.
-<<<<<<< HEAD
-     * 
-     * @return a fully-stocked player menu bar.
-     */
-    private ButtonGroup createPlayerMenu() {
-        
-=======
      *
      * @return a fully-stocked player menu bar.
      */
     private ButtonGroup createPlayerMenu() {
 
->>>>>>> zach_branch
 //        /** The player menu for player items. */
 //        final JMenuItem playerMenu = new JMenuItem(myMenuName);
 
@@ -174,11 +122,7 @@ public class PlayerMenu extends JMenu implements ActionListener {
 
         /** The player to use. */
         private final String mySpecificPlayerName;
-<<<<<<< HEAD
-        
-=======
 
->>>>>>> zach_branch
 //        /** The player to use. */
 //        private final Icon mySpecificPlayerIcon;
 //        
@@ -187,11 +131,7 @@ public class PlayerMenu extends JMenu implements ActionListener {
 
         /**
          * Sets up a player and assign name and icon for it.
-<<<<<<< HEAD
-         * 
-=======
          *
->>>>>>> zach_branch
          * @param theName player Name
          * @param theIcon player Icon
          */
@@ -199,27 +139,16 @@ public class PlayerMenu extends JMenu implements ActionListener {
             super(theName);
             Objects.requireNonNull(theName, "Player Name must not be null");
             Objects.requireNonNull(theIcon, "Player Icon must not be null");
-<<<<<<< HEAD
-            
-=======
 
->>>>>>> zach_branch
             putValue(Action.SMALL_ICON, theIcon);
             mySpecificPlayerName = theName;
 //            mySpecificPlayerIcon = theIcon;
 
             setLayout(new GridLayout(3, 2));
-<<<<<<< HEAD
-            
-            // coordinate button selection
-            putValue(Action.SELECTED_KEY, true);
-            
-=======
 
             // coordinate button selection
             putValue(Action.SELECTED_KEY, true);
 
->>>>>>> zach_branch
             putValue(Action.NAME, "");
 
 //            myPlayerName = mySpecificPlayerName;
@@ -229,11 +158,7 @@ public class PlayerMenu extends JMenu implements ActionListener {
 
         /**
          * Sets specific player icon for game
-<<<<<<< HEAD
-         * 
-=======
          *
->>>>>>> zach_branch
          */
         @Override
         public void actionPerformed(ActionEvent theEvent) {
@@ -243,35 +168,17 @@ public class PlayerMenu extends JMenu implements ActionListener {
 
         }
     }
-<<<<<<< HEAD
-    
-=======
 
->>>>>>> zach_branch
 
 
     /**
      * Method to get current players name
-<<<<<<< HEAD
-     * 
-=======
      *
->>>>>>> zach_branch
      * @return current player name
      */
     public String getPlayerName() {
         return myPlayerName;
     }
-<<<<<<< HEAD
-    
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-        
-    }
-
-}
-=======
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -280,4 +187,3 @@ public class PlayerMenu extends JMenu implements ActionListener {
     }
 
 }
->>>>>>> zach_branch

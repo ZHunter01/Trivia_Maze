@@ -18,11 +18,7 @@ public class Player extends GameObject implements Serializable{
      */
     private static final long serialVersionUID = 3311504575818535717L;
     /** */
-<<<<<<< HEAD
-    private Image myPlayerImage;
-=======
     private transient Image myPlayerImage;
->>>>>>> zach_branch
     /** */
     private int myX;
     /** */
