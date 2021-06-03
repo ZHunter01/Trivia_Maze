@@ -54,6 +54,7 @@ public class Door extends GameObject{
         else {
             myPermaLock = true;
         }
+        
     }
     
     /** Set door permanent lock state to input boolean

@@ -163,7 +163,7 @@ public class Question {
      
     public int getId() {
         int x = myId;
-        if(myId < mySportQuestions.size()) {
+        if(myId < mySportQuestions.size()-1) {
            myId++; 
         } else {
             myId = 0;
@@ -190,7 +190,7 @@ public class Question {
 //        Question question = (Question) theObj;
 //        return Objects.equals(myQuestion, question.myQuestion) && Objects.equals(mySolution, question.mySolution);
 //    }
-    
+//    
     public void setDataBaseName(final String theName) {
         myDataBaseName = theName;
     }

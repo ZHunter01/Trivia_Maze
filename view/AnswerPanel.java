@@ -49,6 +49,11 @@ public class AnswerPanel extends JPanel {
     
     /** The menu for multichoice answers. */
     private JMenuBar myMultiAnswer;
+    
+    private final static String LOCK_MESSAGE = "Answer was incorrect! Door permanently locked!";
+    /**String message for when a question is answered correctly */
+    
+    private final static String CORRECT_MESSAGE = "Answer was correct! Door unlocked!";
 
     /**
      * A button that the user can use to submit their answer
@@ -94,8 +99,22 @@ public class AnswerPanel extends JPanel {
         initAndAddAnswer(theVisibility);
         initAndAddSubmit(theVisibility);
     }
-
-
+    
+//    /**
+//     * 
+//     */
+//    private void checkForPowerUps() {
+//        if (myMaze.getCurrentRoom().getRoomPowerUp().isFreeQuestion()) {
+//            myQuestionPanel.setMyQuestion(FREE_QUESTION);
+//            myPowerUpMenu.enableFreeQuestion();
+//
+//        } else if (myMaze.getCurrentRoom().getRoomPowerUp().isPermaUnlock()) {
+//            myQuestionPanel.setMyQuestion(PERMA_UNLOCK);
+//            myPowerUpMenu.enablePermaUnlock();
+//        }
+//
+//    }
+    
     /**
      * initializes the submit button and adds it to the panel
      */
@@ -123,15 +142,6 @@ public class AnswerPanel extends JPanel {
                     myQuestionPanel.setMyQuestion("Answer was correct! Door unlocked!");
                 }
 
-//                if (myMaze.getWin()) {
-//                    this.displayWin();
-//                } else if (myMaze.getLose()) {
-//                    this.displayLose();
-//                }
-                
-//                myAnswerField.setVisible(false);
-//                mySubmit.setVisible(false);
-//                myAnswerPrompt.setVisible(false);
                 setAnswerPanel(false);
 
                 myMazePanel.repaint();
@@ -144,6 +154,8 @@ public class AnswerPanel extends JPanel {
                 } else if (myMaze.getLose()) {
                     this.displayLose();
                 }
+                
+//                checkForPowerUps();
                 
                 //if (!myAnswer.equals("")) myAnswerField.setFocusable(false);
                 System.out.println("Answer23: " + myAnswer);
@@ -205,7 +217,7 @@ public class AnswerPanel extends JPanel {
                     .getMultiAnswer(myQuestionPanel.getMyQuestionId());
             
             for (String word : multi.split(",")){
-                final JRadioButton btn = new JRadioButton(word);
+                final JRadioButton btn = new JRadioButton(word.strip());
 //                btn.setBackground(new Color(98, 0, 134));
                 btn.addActionListener(e -> myAnswerField.setText(btn.getText()));
                 box.add(btn);
