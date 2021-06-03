@@ -18,6 +18,7 @@ public class Door extends GameObject{
         myLock = true;
         myPermaLock = false;
         myQuestionID = Question.getQuestionInstance().getId();
+//System.out.println("Door class, ID: " + myQuestionID);
     }
     
     /** Get current Door Question object
@@ -25,7 +26,7 @@ public class Door extends GameObject{
      * @return
      */
     public String getQuestion() {
-        System.out.println("Answer: " + Question.getQuestionInstance().getSolution(myQuestionID));
+        System.out.println("Id: " + myQuestionID + " Answer87: " + Question.getQuestionInstance().getSolution(myQuestionID));
         return Question.getQuestionInstance().getQuestion(myQuestionID);
     }
     

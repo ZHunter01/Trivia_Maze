@@ -21,6 +21,11 @@ import java.awt.event.KeyEvent;
 public class MazePanel extends JPanel {
 
     /**
+     * 
+     */
+    private static final long serialVersionUID = -4675791810380683974L;
+
+    /**
      * The maze object that contains all of the data
      */
     private final Maze maze;
@@ -182,17 +187,19 @@ public class MazePanel extends JPanel {
             Room myRoom = maze.getCurrentRoom();
             Door myDoor = myRoom.getUserDoor(theDir);
             myQuestionPanel.setMyQuestion(myDoor.getQuestion());
-            myAnswerPanel.setAnswerPanel();
+            myQuestionPanel.setMyQuestionId(myDoor.getId());
+            myAnswerPanel.setAnswerPanel(true);
 
             if (myDoor.isPermaLocked()) {
                 myQuestionPanel.setMyQuestion("That door is permanently locked!");
-                myAnswerPanel.getAnswerField().setVisible(false);
-                myAnswerPanel.getSubmit().setVisible(false);
-                myAnswerPanel.getAnswerPrompt().setVisible(false);
+//                myAnswerPanel.getAnswerField().setVisible(false);
+//                myAnswerPanel.getSubmit().setVisible(false);
+//                myAnswerPanel.getAnswerPrompt().setVisible(false);
+                myAnswerPanel.setAnswerPanel(false);
                 return;
             }
 
-            myAnswerPanel.getAnswerField().setFocusable(true);
+//            myAnswerPanel.getAnswerField().setFocusable(true);
             myAnswerPanel.setDirection(theDir);
 
             System.out.println("in mazePanel: " + myDoor.getQuestion());

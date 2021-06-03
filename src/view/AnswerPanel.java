@@ -6,13 +6,21 @@
 
 package view;
 
-import model.Maze;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.Objects;
+import javax.swing.Box;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
+
+import model.Maze;
+import model.Question;
 
 /**
  * This class is a panel where the user can enter their answer
@@ -38,6 +46,9 @@ public class AnswerPanel extends JPanel {
      * A JTextField object that the user can use to answer the question
      */
     private JTextField myAnswerField;
+    
+    /** The menu for multichoice answers. */
+    private JMenuBar myMultiAnswer;
 
     /**
      * A button that the user can use to submit their answer
@@ -74,30 +85,36 @@ public class AnswerPanel extends JPanel {
 //        initAndAddSubmit();
     }
 
-    public void setAnswerPanel() {
+    public void setAnswerPanel(final boolean theVisibility) {
 
-        initAndAddAnswerPrompt();
-        initAndAddAnswer();
-        initAndAddSubmit();
+        initAndAddAnswerPrompt(theVisibility);
+//        if(Question.getQuestionInstance().isMultiple(myQuestionPanel.getMyQuestionId())) {
+//            
+//        }
+        initAndAddAnswer(theVisibility);
+        initAndAddSubmit(theVisibility);
     }
 
 
     /**
      * initializes the submit button and adds it to the panel
      */
-    private void initAndAddSubmit() {
+    private void initAndAddSubmit(final boolean theVicible) {
         if (mySubmit == null) {
             mySubmit = new JButton("SUBMIT");
             mySubmit.setBackground(Color.BLACK);
             mySubmit.setForeground(Color.WHITE);
-            mySubmit.setFocusable(false);
+            mySubmit.setFocusable(theVicible);
             mySubmit.setPreferredSize(new Dimension(205, 30));
             add(mySubmit);
 
 
             mySubmit.addActionListener(e -> {
-                myAnswer = myAnswerField.getText();
-
+//                if(!Question.getQuestionInstance().isMultiple(myQuestionPanel.getMyQuestionId())) {
+                    myAnswer = myAnswerField.getText();
+//                } else {
+                    
+//                }
                 myMaze.doorSolution(myAnswer, myDirection);
 
                 if (myMaze.getCurrentRoom().getUserDoor(myDirection).isPermaLocked()) {
@@ -112,9 +129,10 @@ public class AnswerPanel extends JPanel {
 //                    this.displayLose();
 //                }
                 
-                myAnswerField.setVisible(false);
-                mySubmit.setVisible(false);
-                myAnswerPrompt.setVisible(false);
+//                myAnswerField.setVisible(false);
+//                mySubmit.setVisible(false);
+//                myAnswerPrompt.setVisible(false);
+                setAnswerPanel(false);
 
                 myMazePanel.repaint();
 
@@ -128,13 +146,13 @@ public class AnswerPanel extends JPanel {
                 }
                 
                 //if (!myAnswer.equals("")) myAnswerField.setFocusable(false);
-                System.out.println("Answer: " + myAnswer);
+                System.out.println("Answer23: " + myAnswer);
             });
 
             myAnswerField.addActionListener(e -> myAnswer = myAnswerField.getText());
 
         } else {
-            mySubmit.setVisible(true);
+            mySubmit.setVisible(theVicible);
         }
 
     }
@@ -158,34 +176,61 @@ public class AnswerPanel extends JPanel {
     /**
      * initializes the JTextField and adds it to the panel
      */
-    private void initAndAddAnswer() {
+    private void initAndAddAnswer(final boolean theVicible) {
         if (myAnswerField == null) {
             myAnswerField = new JTextField(20);
 
             add(myAnswerField);
-            myAnswerField.setFocusable(true);
-//            myAnswerField.addActionListener(new GrabText());
-        } else {
-            myAnswerField.setVisible(true);
-            myAnswerField.setFocusable(true);
+            myAnswerField.setFocusable(false);
+            myAnswerField.setVisible(false);
             myAnswerField.setText("");
         }
-//        myAnswerField = new JTextField(20);
-//
-//        add(myAnswerField);
+        if (myMultiAnswer == null) {
+            myMultiAnswer = new JMenuBar();
+            add(myMultiAnswer);
+            myMultiAnswer.setVisible(false);
+//            myMultiAnswer.setBackground(new Color(98, 0, 134));
+            
+        }
+        if(!Question.getQuestionInstance().isMultiple(myQuestionPanel.getMyQuestionId())) {
+            myAnswerField.setVisible(theVicible);
+            myAnswerField.setFocusable(theVicible);
+            myAnswerField.setText("");
+
+        } else {
+            
+            myMultiAnswer.removeAll();
+            Box box = Box.createVerticalBox();
+            String multi = Question.getQuestionInstance()
+                    .getMultiAnswer(myQuestionPanel.getMyQuestionId());
+            
+            for (String word : multi.split(",")){
+                final JRadioButton btn = new JRadioButton(word);
+//                btn.setBackground(new Color(98, 0, 134));
+                btn.addActionListener(e -> myAnswerField.setText(btn.getText()));
+                box.add(btn);
+//                btngrp.add(btn);
+                myMultiAnswer.add(box);
+                
+            }
+//            box.setLayout(new GridLayout(9, 1));
+            myMultiAnswer.setVisible(theVicible);
+            myMultiAnswer.setFocusable(theVicible);
+        }
+        
     }
 
     /**
      * initializes the JLabel prompt and adds it to the panel
      */
-    private void initAndAddAnswerPrompt() {
+    private void initAndAddAnswerPrompt(final boolean theVicible) {
         if (myAnswerPrompt == null) {
             myAnswerPrompt = new JLabel("Please enter your answer: ");
             myAnswerPrompt.setFont(new Font(Font.MONOSPACED, Font.BOLD, 13));
 
             add(myAnswerPrompt);
         } else {
-            myAnswerPrompt.setVisible(true);
+            myAnswerPrompt.setVisible(theVicible);
         }
     }
 
