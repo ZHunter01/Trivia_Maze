@@ -28,23 +28,9 @@ public class MyMenuBar extends JMenuBar {
      */
     private static final long serialVersionUID = -8886354497933935360L;
     /**
-     * JMenu mySave allows the user to save the game
-     */
-    //private JMenuItem mySave;
-    /**
-     * JMenu myLoad allows the user to load a game
-     */
-    //private JMenuItem myLoad;
-    /**
      * JMenu myHelp pops up a help window that explains how the game works
      */
     private JMenu myHelp;
-    /**
-     * JMenu myCustomizePlayer allows the user to change the icon of their player
-     */
-    //private JMenuItem myCustomizePlayer;
-    
-    //private JMenu myPowerUps;
     /**
      * JMenu myOptions displays JMenuItems which give different options for the user
      */
@@ -61,7 +47,7 @@ public class MyMenuBar extends JMenuBar {
     /**
      * Create an instance of the DirectionPanel
      */
-    private static final MyMenuBar myMenuBar = new MyMenuBar();
+    private static final MyMenuBar MY_MENUBAR = new MyMenuBar();
 
     /**
      * constructs the Menu Bar
@@ -75,9 +61,12 @@ public class MyMenuBar extends JMenuBar {
      * @return the only instance of MenuBar
      */
     public static MyMenuBar getInstance() {
-        return myMenuBar;
+        return MY_MENUBAR;
     }
 
+    /**
+     * 
+     */
     private void setMaze() {
         myMaze = myMazePanel.getMaze();
     }

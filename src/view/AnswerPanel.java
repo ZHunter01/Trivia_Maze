@@ -60,7 +60,7 @@ public class AnswerPanel extends JPanel {
     private JButton mySubmit;
 
     /**
-     * The player's answer
+     * The player's answer string
      */
     private transient String myAnswer;
 
@@ -124,12 +124,13 @@ public class AnswerPanel extends JPanel {
  /**
   * initializes the submit button and adds it to the panel
   */
- private void initAndAddSubmit(final boolean theVicible) {
-     if (mySubmit == null) {
+ private void initAndAddSubmit(final boolean theVisiblity) {
+     //boolean theVicible;
+    if (mySubmit == null) {
          mySubmit = new JButton("SUBMIT");
          mySubmit.setBackground(Color.BLACK);
          mySubmit.setForeground(Color.WHITE);
-         mySubmit.setFocusable(theVicible);
+         mySubmit.setFocusable(theVisiblity);
          mySubmit.setPreferredSize(new Dimension(205, 30));
          add(mySubmit);
 
@@ -166,7 +167,7 @@ public class AnswerPanel extends JPanel {
          myAnswerField.addActionListener(e -> myAnswer = myAnswerField.getText());
 
      } else {
-         mySubmit.setVisible(theVicible);
+         mySubmit.setVisible(theVisiblity);
      }
 
  }
@@ -189,7 +190,7 @@ public class AnswerPanel extends JPanel {
  /**
   * initializes the JTextField and adds it to the panel
   */
- private void initAndAddAnswer(final boolean theVicible) {
+ private void initAndAddAnswer(final boolean theVisiblity) {
      if (myAnswerField == null) {
          myAnswerField = new JTextField(20);
 
@@ -205,9 +206,9 @@ public class AnswerPanel extends JPanel {
 //         myMultiAnswer.setBackground(new Color(98, 0, 134));
          
      }
-     if(!Question.getQuestionInstance().isMultiple(myQuestionPanel.getMyQuestionId())) {
-         myAnswerField.setVisible(theVicible);
-         myAnswerField.setFocusable(theVicible);
+     if(!Question.getQuestionInstance().isMultiple(myMaze.getCurrentRoom().getUserDoor(myMaze.getDirection()).getId())) {
+         myAnswerField.setVisible(theVisiblity);
+         myAnswerField.setFocusable(theVisiblity);
          myAnswerField.setText("");
 
      } else {
@@ -215,8 +216,9 @@ public class AnswerPanel extends JPanel {
          myMultiAnswer.removeAll();
          Box box = Box.createVerticalBox();
          String multi = Question.getQuestionInstance()
-                 .getMultiAnswer(myQuestionPanel.getMyQuestionId());
-         
+                 .getMultiAnswer(myMaze.getCurrentRoom().getUserDoor(myMaze.getDirection()).getId());
+         System.out.println("the id is " + myMaze.getCurrentRoom().getUserDoor(myMaze.getDirection()).getId());
+         System.out.println("the id is " + myQuestionPanel.getMyQuestionId());
          for (String word : multi.split(",")){
              final JRadioButton btn = new JRadioButton(word);
 //             btn.setBackground(new Color(98, 0, 134));
@@ -226,8 +228,8 @@ public class AnswerPanel extends JPanel {
             
          }
 //         box.setLayout(new GridLayout(9, 1));
-         myMultiAnswer.setVisible(theVicible);
-         myMultiAnswer.setFocusable(theVicible);
+         myMultiAnswer.setVisible(theVisiblity);
+         myMultiAnswer.setFocusable(theVisiblity);
      }
      
  }
@@ -235,14 +237,14 @@ public class AnswerPanel extends JPanel {
  /**
   * initializes the JLabel prompt and adds it to the panel
   */
- private void initAndAddAnswerPrompt(final boolean theVicible) {
+ private void initAndAddAnswerPrompt(final boolean theVisiblity) {
      if (myAnswerPrompt == null) {
          myAnswerPrompt = new JLabel("Please enter your answer: ");
          myAnswerPrompt.setFont(new Font(Font.MONOSPACED, Font.BOLD, 13));
 
          add(myAnswerPrompt);
      } else {
-         myAnswerPrompt.setVisible(theVicible);
+         myAnswerPrompt.setVisible(theVisiblity);
      }
  }
 
