@@ -19,7 +19,6 @@ public class Drawer {
      */
     public static void drawPlayer(final Graphics g, final Player player, final MazePanel mazePanel) {
         g.setColor(Color.PINK);
-        //g.fillRect(player.getX(), player.getY(), 30, 30);
         g.drawImage(player.getImage(), player.getX(), player.getY(), mazePanel);
     }
 
@@ -30,10 +29,10 @@ public class Drawer {
      */
     public static void drawRoom(final Graphics g, final Room room) {
         g.setColor(Color.DARK_GRAY);
-        g.fillRect(room.getX(), room.getY(), 166, 110);
+        //g.fillRect(room.getX(), room.getY(), 166, 110);
         g.setColor(Color.gray);
         g.drawRect(room.getX(), room.getY(), 166, 110);
-        g.drawOval((room.getX() + room.getX() + 166) / 2 - 15, (room.getY() + room.getY() + 110) / 2 - 15, 30, 30);
+        //g.drawOval((room.getX() + room.getX() + 166) / 2 - 15, (room.getY() + room.getY() + 110) / 2 - 15, 30, 30);
 
         g.setColor(new Color(165, 42, 42));
 

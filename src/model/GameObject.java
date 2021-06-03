@@ -65,7 +65,7 @@ public abstract class GameObject implements Serializable {
      * Sets the image of the object from the file path passed in
      * @param imageName the file path to the image
      */
-    protected void setImage(String imageName) {
+    public void setImage(String imageName) {
         ImageIcon ii = new ImageIcon(imageName);
         image = ii.getImage();
     }

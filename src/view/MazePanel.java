@@ -28,6 +28,14 @@ public class MazePanel extends JPanel {
      */
     private final TAdapter myAdapter;
 
+    /**
+     * background images
+     */
+    public final static String SPORT_BACKGROUND = "src/resources/seaStadium.jpg";
+    public final static String WORLD_BACKGROUND = "src/resources/world.png";
+
+    private String myBackgroundImage;
+
 //    /**
 //     * Create an instance of the MazePanel
 //     */
@@ -53,6 +61,8 @@ public class MazePanel extends JPanel {
         myAnswerPanel.setMazePanel(this);
         myAnswerPanel.setQuestionPanel(myQuestionPanel);
 
+        myBackgroundImage = SPORT_BACKGROUND;
+
     }
 
 //    /**
@@ -69,6 +79,10 @@ public class MazePanel extends JPanel {
     // height of panel: 440
     // width of panel: 664
 
+    public void setBackgroundImage(String path) {
+        myBackgroundImage = path;
+    }
+
     /**
      * Draws all of the GameObjects onto the panel
      * @param g the Graphics drawer
@@ -77,6 +91,8 @@ public class MazePanel extends JPanel {
     protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
 
+        Image ii = Toolkit.getDefaultToolkit().getImage(myBackgroundImage);
+        g.drawImage(ii, 0, 0, this);
         int y = 0;
         for (Room[] rooms : maze.getMaze()) {
             int x = 0;

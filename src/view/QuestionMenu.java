@@ -70,6 +70,10 @@ public class QuestionMenu extends JMenu implements ActionListener {
         return myDataBaseName;
     }
 
+    public void setMazePanel(MazePanel theMazePanel) {
+        myMazePanel = theMazePanel;
+    }
+
     /**
      *
      * Action Listener to change question type by clicking Sport button.
@@ -84,6 +88,10 @@ public class QuestionMenu extends JMenu implements ActionListener {
             mySport.setSelected(true);
             myGeography.setSelected(false);
             myDataBaseName = "SportQuestions";
+
+            myMazePanel.setBackgroundImage(MazePanel.SPORT_BACKGROUND);
+            myMazePanel.repaint();
+
             //myMazePanel = new MazePanel();
 
         }
@@ -103,6 +111,9 @@ public class QuestionMenu extends JMenu implements ActionListener {
             mySport.setSelected(false);
             myGeography.setSelected(true);
             myDataBaseName = "GeographyQuestions";
+
+            myMazePanel.setBackgroundImage(MazePanel.WORLD_BACKGROUND);
+            myMazePanel.repaint();
             //myMazePanel = new MazePanel();
 
         }

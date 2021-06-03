@@ -1,7 +1,6 @@
 package model;
 
 import java.awt.Image;
-import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -9,11 +8,11 @@ import java.io.Serializable;
  * @author Zach Hunter
  *
  */
-public class Room extends GameObject implements Serializable {
-
-    @Serial
-    private static final long serialVersionUID = -1291773616455932192L;
-
+public class Room extends GameObject implements Serializable{
+    /**
+     *
+     */
+    private static final long serialVersionUID = -4667756480655907185L;
     /**Door object to represent door at the top of the room */
     private Door myDoorUp;
     /**Door object to represent door at the left side of the room */
@@ -34,6 +33,9 @@ public class Room extends GameObject implements Serializable {
     public final static int DOWN = 2;
     /**Int value to indicate right door is selected */
     public final static int RIGHT = 3;
+    /**Int value to keep track of what direction door is being accessed */
+    static int userDir;
+
 
     /** Creates default Room object
      *
@@ -44,6 +46,7 @@ public class Room extends GameObject implements Serializable {
         myDoorRight = new Door();
         myDoorDown = new Door();
 
+        myPowerUp = PowerUp.createEmptyPowerUp();
     }
 
     /** Get current Room Image
@@ -60,6 +63,14 @@ public class Room extends GameObject implements Serializable {
      */
     public void setRoomImage(final Image theIcon) {
         myRoomIcon = theIcon;
+    }
+
+    /** Returns current direction user is pointing in
+     *
+     * @return userDir
+     */
+    public int getUserDir() {
+        return userDir;
     }
 
     /** Returns PowerUp object contained in the room

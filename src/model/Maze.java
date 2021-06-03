@@ -34,8 +34,8 @@ public class Maze implements Serializable{
     private int myYCount;
     /**Door object for current selected door*/
     private Door myCurrentDoor;
-    /**Int value to keep track of what direction door is being accessed */
-    private int userDir;
+//    /**Int value to keep track of what direction door is being accessed */
+//    private int userDir;
 
 
     /* Creates default 2-d array maze with 4x4 dimensions
@@ -73,7 +73,7 @@ public class Maze implements Serializable{
 
         myCurrentDoor = new Door();
         //default directions is up
-        userDir = 0;
+        Room.userDir = 0;
 
         //Generate PowerUps in the Maze
         generatePowerUps();
@@ -143,6 +143,8 @@ public class Maze implements Serializable{
         return myLose;
     }
 
+
+
     /** Returns current room
      *
      * @return myMaze [myXCount][myYCount]
@@ -185,7 +187,7 @@ public class Maze implements Serializable{
      */
     public void doorSolution(final String theSolution, final int theDir) {
         myQuestionCounter ++;
-        userDir = theDir;
+        Room.userDir = theDir;
         // myCorrectCounter++;
         myCurrentDoor = this.getCurrentRoom().getUserDoor(theDir);
         myCurrentDoor.checkLock(theSolution);
@@ -241,7 +243,7 @@ public class Maze implements Serializable{
      * @param thePowerUp
      */
     public void usePowerUp(final PowerUp thePowerUp, final int theDir) {
-        userDir = theDir;
+        Room.userDir = theDir;
 
         if (thePowerUp.isFreeQuestion()) {
             incrementMaze();
@@ -258,27 +260,27 @@ public class Maze implements Serializable{
         myPlayer.removePowerUp(thePowerUp);
     }
 
-//    /** Sets the door opposite of the input to be PermaLocked
-//     *
-//     */
-//    public void reverseDoorPermaLock(final int theDir) {
-//        //UP to DOWN
-//        if (theDir == Room.UP) {
-//            this.getCurrentRoom().getUserDoor(Room.DOWN).setPermaLock(true);
-//          //LEFT to RIGHT
-//        } else if (theDir == Room.LEFT) {
-//            this.getCurrentRoom().getUserDoor(Room.RIGHT).setPermaLock(true);
-//          //DOWN to UP
-//        } else if (theDir == Room.DOWN) {
-//            this.getCurrentRoom().getUserDoor(Room.UP).setPermaLock(true);
-//          //RIGHT to LEFT
-//        } else if (theDir == Room.RIGHT) {
-//            this.getCurrentRoom().getUserDoor(Room.LEFT).setPermaLock(true);
-//          //Value not within 0-3
-//        } else {
-//            throw new IllegalArgumentException("Error: Improper door directional value.");
-//        }
-//    }
+    /** Sets the door opposite of the input to be PermaLocked
+     *
+     */
+    public void reverseDoorPermaLock(final int theDir) {
+        //UP to DOWN
+        if (theDir == Room.UP) {
+            this.getCurrentRoom().getUserDoor(Room.DOWN).setPermaLock(true);
+            //LEFT to RIGHT
+        } else if (theDir == Room.LEFT) {
+            this.getCurrentRoom().getUserDoor(Room.RIGHT).setPermaLock(true);
+            //DOWN to UP
+        } else if (theDir == Room.DOWN) {
+            this.getCurrentRoom().getUserDoor(Room.UP).setPermaLock(true);
+            //RIGHT to LEFT
+        } else if (theDir == Room.RIGHT) {
+            this.getCurrentRoom().getUserDoor(Room.LEFT).setPermaLock(true);
+            //Value not within 0-3
+        } else {
+            throw new IllegalArgumentException("Error: Improper door directional value.");
+        }
+    }
 
     /** Checks if current room has a PowerUp and if it does the player picks it up
      *
@@ -296,6 +298,18 @@ public class Maze implements Serializable{
         for (int n = 0; n < myMaze.length; n++) {
             for (int i = 0; i < myMaze[0].length; i++) {
                 myMaze [n][i] = new Room();
+                if (n == 0) {
+                    myMaze [n][i].getUserDoor(Room.LEFT).setPermaLock(true);
+                }
+                if (i == 0) {
+                    myMaze [n][i].getUserDoor(Room.UP).setPermaLock(true);
+                }
+                if (n == myMaze.length - 1) {
+                    myMaze [n][i].getUserDoor(Room.RIGHT).setPermaLock(true);
+                }
+                if (i == myMaze[0].length - 1) {
+                    myMaze [n][i].getUserDoor(Room.DOWN).setPermaLock(true);
+                }
             }
         }
     }
@@ -305,18 +319,18 @@ public class Maze implements Serializable{
      *
      */
     private void incrementMaze() {
-        if (userDir == Room.UP) {
+        if (Room.userDir == Room.UP) {
             myYCount --;
-        } else if (userDir == Room.LEFT) {
+        } else if (Room.userDir == Room.LEFT) {
             myXCount --;
-        } else if (userDir == Room.DOWN) {
+        } else if (Room.userDir == Room.DOWN) {
             myYCount ++;
-        } else if (userDir == Room.RIGHT) {
+        } else if (Room.userDir == Room.RIGHT) {
             myXCount ++;
         } else {
             throw new IllegalArgumentException("Error: Improper door directional value.");
         }
-        myPlayer.move(userDir);
+        myPlayer.move(Room.userDir);
     }
 
     /** If x count and y count match the max size of the 2-d array return myWin as true
@@ -343,7 +357,7 @@ public class Maze implements Serializable{
         boolean right = currentRoom.getDoorPermaLock(Room.RIGHT);
 
         //If three of the four doors are permanently locked, game is over
-        if ((up ? 1:0) + (left ? 1:0) + (down ? 1:0) + (right ? 1:0) == 4 && myPlayer.containsPermaUnlock() == false) {
+        if ((up ? 1:0) + (left ? 1:0) + (down ? 1:0) + (right ? 1:0) == 4 && !myPlayer.containsPermaUnlock()) {
             myLose = true;
         }
 

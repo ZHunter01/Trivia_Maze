@@ -1,6 +1,5 @@
 package model;
 
-import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -8,54 +7,63 @@ import java.io.Serializable;
  * @author Zach Hunter
  *
  */
-public class PowerUp implements Serializable {
+public class PowerUp implements Serializable{
 
-    @Serial
     private static final long serialVersionUID = 6950740297210484269L;
     //private static PowerUp myPowerUp;
     private boolean myPermaUnlock;
     private boolean myFreeQuestion;
 
-
-//    private PowerUp() {
-//        myPermaUnlock = false;
-//        myFreeQuestion = false;
-//    }
-
+    /**
+     *
+     * @param theFreeQ
+     * @param thePermaUnlock
+     */
     private PowerUp(final boolean theFreeQ, final boolean thePermaUnlock) {
 
         myPermaUnlock = thePermaUnlock;
         myFreeQuestion = theFreeQ;
     }
 
+    /** Creates a PermaUnlock PowerUp
+     *
+     * @return myPowerUp
+     */
     public static PowerUp createPermaUnlock() {
         PowerUp myPowerUp = new PowerUp(false, true);
         return myPowerUp;
-//        if (myFreeQuestion == true) {
-//            myFreeQuestion = false;
-//        }
-//
-//        myPermaUnlock = true;
-//
-//        return this;
     }
 
+    /** Creates a FreeQuestion PowerUp
+     *
+     * @return myPowerUp
+     */
     public static PowerUp createFreeQuestion() {
         PowerUp myPowerUp = new PowerUp(true, false);
         return myPowerUp;
-//        if (myPermaUnlock == true) {
-//            myPermaUnlock = false;
-//        }
-//
-//        myFreeQuestion = true;
-//
-//        return this;
     }
 
+    /** Creates an empty PowerUp
+     *
+     * @return myPowerUp
+     */
+    public static PowerUp createEmptyPowerUp() {
+        PowerUp myPowerUp = new PowerUp(false, false);
+        return myPowerUp;
+    }
+
+    /** Returns if PowerUp is a PermaUnlock
+     *
+     * @return myPermaUnlock
+     */
     public boolean isPermaUnlock() {
         return myPermaUnlock;
     }
 
+    /** Returns if PowerUp is a Free Question
+     *
+     * @return myFreeQuestion
+     */
     public boolean isFreeQuestion() {
         return myFreeQuestion;
     }
@@ -64,25 +72,28 @@ public class PowerUp implements Serializable {
      *
      */
     public void removePermaUnlock() {
-//        if (!this.isPermaUnlock()) {
-//            return;
-//        }
-
         this.setPermaUnlock(false);
     }
 
+    /** Sets boolean of Free Question to false
+     *
+     */
     public void removeFreeQuestion() {
-//        if (!this.isFreeQuestion()) {
-//            return;
-//        }
-
         this.setFreeQuestion(false);
     }
 
+    /** Sets PermaUnlock to boolean input
+     *
+     * @param theBoolean
+     */
     private void setPermaUnlock(final boolean theBoolean) {
         myPermaUnlock = theBoolean;
     }
 
+    /** Sets FreeQuestion to boolean input
+     *
+     * @param theBoolean
+     */
     private void setFreeQuestion(final boolean theBoolean) {
         myFreeQuestion = theBoolean;
     }

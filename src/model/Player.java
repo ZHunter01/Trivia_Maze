@@ -43,7 +43,7 @@ public class Player extends GameObject implements Serializable {
      *
      */
     public Player() {
-        setImage("src/resources/player.png");
+        setImage("src/resources/Oldman.gif");
         myPowerUps = new ArrayList<>();
 
         //Set start point

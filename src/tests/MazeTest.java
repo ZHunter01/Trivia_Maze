@@ -83,7 +83,7 @@ public class MazeTest {
 //
 //        theMaze.getPlayer().addPowerUp(power);
 //        theMaze.usePowerUp(power, Room.DOWN);
-//        
+//
 //        //assertTrue(theMaze.getXCount() == x  && theMaze.getYCount() == y + 1);
 //
 //
