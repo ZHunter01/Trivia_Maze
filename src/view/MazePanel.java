@@ -21,7 +21,7 @@ public class MazePanel extends JPanel {
     /**
      * The maze object that contains all of the data
      */
-    private final Maze maze;
+    private Maze maze;
 
     /**
      * The adapter controls the movement of the player
@@ -40,7 +40,7 @@ public class MazePanel extends JPanel {
     /**
      * initializes the maze and constructs the panel
      */
-    public MazePanel(AnswerPanel theAnswerPanel, QuestionPanel theQuestionPanel) {
+    public MazePanel(final AnswerPanel theAnswerPanel, final QuestionPanel theQuestionPanel) {
 
         myAdapter = new TAdapter();
         setFocusable(true);
@@ -74,7 +74,7 @@ public class MazePanel extends JPanel {
      * @param g the Graphics drawer
      */
     @Override
-    protected void paintComponent(Graphics g) {
+    protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
 
         int y = 0;
@@ -100,6 +100,14 @@ public class MazePanel extends JPanel {
         return myAdapter;
     }
 
+    public Maze getMaze() {
+        return maze;
+    }
+
+    public void setMaze(Maze theMaze) {
+        maze = theMaze;
+    }
+
     /**
      * This class handles the movement of the player object
      */
@@ -110,7 +118,7 @@ public class MazePanel extends JPanel {
          * @param e the KeyEvent
          */
         @Override
-        public void keyPressed(KeyEvent e) {
+        public void keyPressed(final KeyEvent e) {
             int key = e.getKeyCode();
 
             keySwitch(key);
@@ -120,7 +128,7 @@ public class MazePanel extends JPanel {
          * handles the button that the user pressed. Used for the button actionListeners in DirectionPanel
          * @param theKey the KeyEvent
          */
-        public void keyPressed(int theKey) {
+        public void keyPressed(final int theKey) {
             keySwitch(theKey);
         }
 
@@ -129,7 +137,7 @@ public class MazePanel extends JPanel {
          * out of bounds
          * @param key the code of the button that the user pressed
          */
-        private void keySwitch(int key) {
+        private void keySwitch(final int key) {
 
             switch (key) {
 
@@ -173,13 +181,20 @@ public class MazePanel extends JPanel {
                     break;
             }
             System.out.println("(" + maze.getXCount() + "," + maze.getYCount() + ")");
+            System.out.println(maze.getWin());
             repaint();
         }
 
-        private void retrieveQuestion(int theDir) {
+        /**
+         * gets the questions and updates the gui to display the question as well as the AnswerPanel. Checks if
+         * the user is correct or incorrect.
+         *
+         * @param theDir
+         */
+        private void retrieveQuestion(final int theDir) {
             Room myRoom = maze.getCurrentRoom();
             Door myDoor = myRoom.getUserDoor(theDir);
-            myQuestionPanel.setMyQuestion(myDoor.getQuestion().getQuestion());
+            myQuestionPanel.setMyQuestion(myDoor.getQuestion());
             myAnswerPanel.setAnswerPanel();
 
             if (myDoor.isPermaLocked()) {
@@ -193,24 +208,7 @@ public class MazePanel extends JPanel {
             myAnswerPanel.getAnswerField().setFocusable(true);
             myAnswerPanel.setDirection(theDir);
 
-            System.out.println("in mazePanel: " + myDoor.getQuestion().getSolution());
-            if (!myAnswerPanel.getMyAnswer().equalsIgnoreCase("")) {
-                System.out.println("Entered if statement");
-
-                //maze.doorSolution(myAnswerPanel.getMyAnswer(), theDir);
-
-                //myAnswerPanel.setMyAnswer("");
-
-//                if (myDoor.isPermaLocked()) {
-//                    myQuestionPanel.setMyQuestion("Answer was incorrect! Door permanently locked!");
-//                } else {
-//                    myQuestionPanel.setMyQuestion("Answer was correct! Door unlocked!");
-//                }
-
-//                myAnswerPanel.myAnswerField.setVisible(false);
-//                myAnswerPanel.mySubmit.setVisible(false);
-//                myAnswerPanel.myAnswerPrompt.setVisible(false);
-            }
+            System.out.println("in mazePanel: " + myDoor.getQuestion());
         }
     }
 }

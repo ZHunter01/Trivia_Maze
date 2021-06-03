@@ -34,14 +34,14 @@ public class RoomTest {
     
     @Test
     void testGetRoomIcon() {
-        assertEquals(myRoom.getRoomIcon(), new ImageIcon("./resources/w.gif").getImage());
+        assertEquals(myRoom.getRoomImage(), new ImageIcon("./resources/w.gif").getImage());
     }
-    
+
     @Test
     void testSetRoomIcon() {
-        myRoom.setRoomIcon(new ImageIcon("./resources/ellipse.gif").getImage());
-    
-        assertEquals(myRoom.getRoomIcon(), new ImageIcon("./resources/ellipse.gif").getImage());
+        myRoom.setRoomImage(new ImageIcon("./resources/ellipse.gif").getImage());
+
+        assertEquals(myRoom.getRoomImage(), new ImageIcon("./resources/ellipse.gif").getImage());
     }
 
     @Test
@@ -55,7 +55,6 @@ public class RoomTest {
     void testUnlockPermaLock() {
         myPowerUp = PowerUp.createPermaUnlock();
         myRoom.setRoomWithPowerUp(myPowerUp);
-        myRoom.getPlayer().addPowerUp(myPowerUp);
         //Should set door to be perma locked
         myRoom.getUserDoor(0).checkLock("Not the solution");
                

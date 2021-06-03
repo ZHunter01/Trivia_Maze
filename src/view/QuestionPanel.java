@@ -28,12 +28,13 @@ public class QuestionPanel extends JPanel {
     public QuestionPanel() {
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(50, 50));
-        setBackground(Color.GREEN);
+        setBackground(Color.BLACK);
 
         myQuestion = new JLabel("This is where the question will show up");
         myQuestion.setFont(new Font(Font.MONOSPACED, Font.BOLD, 15));
         myQuestion.setHorizontalAlignment(JLabel.CENTER);
         myQuestion.setVerticalAlignment(JLabel.CENTER);
+        myQuestion.setForeground(Color.WHITE);
 
         add(myQuestion);
     }
@@ -59,7 +60,7 @@ public class QuestionPanel extends JPanel {
      * Sets the question to a new question
      * @param theQuestion the new question to be displayed
      */
-    public void setMyQuestion(String theQuestion) {
+    public void setMyQuestion(final String theQuestion) {
         myQuestion.setText(theQuestion);
     }
 

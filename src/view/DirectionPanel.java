@@ -82,7 +82,7 @@ public class DirectionPanel extends JPanel {
      * @param theName The name of the button
      * @return a JButton object
      */
-    private JButton createButton(String theName) {
+    private JButton createButton(final String theName) {
         JButton button = new JButton(theName);
         button.setBackground(Color.BLACK);
         button.setForeground(Color.WHITE);

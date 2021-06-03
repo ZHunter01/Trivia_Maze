@@ -37,11 +37,6 @@ public class PlayerTest {
     }
     
     @Test
-    void testGetColorDefault() {
-        assertTrue(myPlayer.getColor().equals(Color.BLACK));
-    }
-    
-    @Test
     void testGetX() {
         myPlayer.setLocation(10, 0);
         
@@ -60,13 +55,6 @@ public class PlayerTest {
         myPlayer.setImage(new ImageIcon("./resources/ellipse.gif").getImage());
         
         assertEquals(myPlayer.getIcon(), (new ImageIcon("./resources/ellipse.gif").getImage()));
-    }
-    
-    @Test
-    void testSetColor() {
-        myPlayer.setColor(Color.BLUE);
-        
-        assertEquals(myPlayer.getColor(), Color.BLUE);
     }
     
     @Test
@@ -133,12 +121,5 @@ public class PlayerTest {
         myPlayer = new Player(new ImageIcon("./resources/ellipse.gif").getImage());
         
         assertTrue(myPlayer.getIcon().equals(new ImageIcon("./resources/ellipse.gif").getImage()));
-    }
- 
-    @Test
-    void testPlayerWithColor() {
-        myPlayer = new Player(Color.CYAN);
-        
-        assertTrue(myPlayer.getColor().equals(Color.CYAN));
     }
 }

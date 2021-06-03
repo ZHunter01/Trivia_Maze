@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -7,8 +8,9 @@ import java.io.Serializable;
  * @author Zach Hunter
  *
  */
-public class PowerUp implements Serializable{
+public class PowerUp implements Serializable {
 
+    @Serial
     private static final long serialVersionUID = 6950740297210484269L;
     //private static PowerUp myPowerUp;
     private boolean myPermaUnlock;

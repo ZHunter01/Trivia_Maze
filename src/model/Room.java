@@ -1,8 +1,19 @@
 package model;
 
-import java.awt.*;
+import java.awt.Image;
+import java.io.Serial;
+import java.io.Serializable;
 
-public class Room extends GameObject {
+/**
+ *
+ * @author Zach Hunter
+ *
+ */
+public class Room extends GameObject implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = -1291773616455932192L;
+
     /**Door object to represent door at the top of the room */
     private Door myDoorUp;
     /**Door object to represent door at the left side of the room */
@@ -13,8 +24,8 @@ public class Room extends GameObject {
     private Door myDoorDown;
     /**PowerUp object that is contained in a room */
     private PowerUp myPowerUp;
-    private Player myPlayer;
-    private Image myRoomIcon;
+    /**Image object that represents the room */
+    private transient Image myRoomIcon;
     /**Int value to indicate up door is selected */
     public final static int UP = 0;
     /**Int value to indicate left door is selected */
@@ -23,25 +34,23 @@ public class Room extends GameObject {
     public final static int DOWN = 2;
     /**Int value to indicate right door is selected */
     public final static int RIGHT = 3;
-    
+
+    /** Creates default Room object
+     *
+     */
     public Room() {
         myDoorUp = new Door();
         myDoorLeft = new Door();
         myDoorRight = new Door();
         myDoorDown = new Door();
 
-        //myPowerUp = new PowerUp();
-        myPlayer = new Player();
-
-        //setImage("src/resources/roomm.png");
-        // myRoomIcon = new ImageIcon("./resources/w.gif").getImage();
     }
 
-    /**
+    /** Get current Room Image
      *
      * @return
      */
-    public Image getRoomIcon() {
+    public Image getRoomImage() {
         return myRoomIcon;
     }
 
@@ -49,23 +58,8 @@ public class Room extends GameObject {
      *
      * @param theIcon
      */
-    public void setRoomIcon(final Image theIcon) {
+    public void setRoomImage(final Image theIcon) {
         myRoomIcon = theIcon;
-    }
-
-    /**
-     *
-     * @return
-     */
-    public Player getPlayer() {
-        return myPlayer;
-    }
-
-    /**
-     *
-     */
-    public void setPlayer(final Player thePlayer) {
-        myPlayer = thePlayer;
     }
 
     /** Returns PowerUp object contained in the room
@@ -93,7 +87,7 @@ public class Room extends GameObject {
      * @return userDoor
      */
     public Door getUserDoor(final int theDir) {
-        Door userDoor = new Door();
+        Door userDoor;
 
         if (theDir == UP) {
             userDoor = myDoorUp;
@@ -131,18 +125,16 @@ public class Room extends GameObject {
      * @return userLock
      */
     public boolean getDoorLock(final int theDir) {
-
         return getUserDoor(theDir).isLocked();
 
     }
 
-     /** Returns current state of the permaLock on the door user is pointing at
+    /** Returns current state of the permaLock on the door user is pointing at
      *
      * @param theDir
      * @return userLock
      */
     public boolean getDoorPermaLock(final int theDir) {
-        
         return getUserDoor(theDir).isPermaLocked();
     }
 
@@ -159,15 +151,8 @@ public class Room extends GameObject {
      * @param theDir
      */
     public void unlockPermaLock(final int theDir) {
-        //getUserDoor(theDir).setPermaLock(false);
-        if (myPlayer.containsPermaUnlock()) {
-            getUserDoor(theDir).setPermaLock(false);
+        getUserDoor(theDir).setPermaLock(false);
 
-        } else {
-            return;
-        }
     }
-
-
 
 }

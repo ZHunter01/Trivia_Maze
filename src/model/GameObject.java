@@ -2,13 +2,19 @@ package model;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.Serial;
+import java.io.Serializable;
 
 /**
  * @author Alik Balika
  *
  * This class is the parent class for all the objects inside the game that will be displayed on screen
  */
-public abstract class GameObject {
+public abstract class GameObject implements Serializable {
+
+
+    @Serial
+    private static final long serialVersionUID = 3588155796279251981L;
 
     /**
      * The x-coordinate of the object
@@ -23,7 +29,7 @@ public abstract class GameObject {
     /**
      * The icon of the object
      */
-    private Image image;
+    private transient Image image;
 
     /**
      * @return the x-coordinate of the object

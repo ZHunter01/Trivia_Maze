@@ -1,9 +1,12 @@
 package view;
 
+import model.Maze;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.*;
 
 /**
  *
@@ -16,14 +19,17 @@ import java.awt.event.ActionListener;
  */
 public class MyMenuBar extends JMenuBar {
 
-    /**
-     * JMenu mySave allows the user to save the game
-     */
-    private JMenu mySave;
-    /**
-     * JMenu myLoad allows the user to load a game
-     */
-    private JMenu myLoad;
+//    /**
+//     * JMenu mySave allows the user to save the game
+//     */
+//    private JMenu mySave;
+//    /**
+//     * JMenu myLoad allows the user to load a game
+//     */
+//    private JMenu myLoad;
+
+    private JMenu myFile;
+
     /**
      * JMenu myHelp pops up a help window that explains how the game works
      */
@@ -38,6 +44,10 @@ public class MyMenuBar extends JMenuBar {
     private JMenu myOptions;
 
     private static String myDataBaseName = "SportQuestions";
+
+    private Maze myMaze;
+
+    private MazePanel myMazePanel;
 
     /**
      * Create an instance of the DirectionPanel
@@ -63,25 +73,27 @@ public class MyMenuBar extends JMenuBar {
      * initialize fields and add then to the menu bar
      */
     private void initAndAddJMenus() {
-        mySave = new JMenu("SAVE");
-        myLoad = new JMenu("LOAD");
+        myFile = new JMenu("FILE");
         myHelp = new JMenu("HELP");
         myCustomizePlayer = new JMenu("CUSTOMIZE PLAYER");
         myOptions = new JMenu("OPTIONS");
         final JMenuItem myCharacter = new JMenuItem("Character");
-        final JMenuItem myColor = new JMenuItem("Color");
         final JMenuItem myQuestionType = new QuestionMenu(); //"Questions type");
         final JMenuItem myAbout = new JMenuItem("About");
         final JMenuItem myRules = new JMenuItem("Rules");
 
-        add(mySave);
-        add(myLoad);
+        final JMenuItem mySave = new JMenuItem("SAVE");
+        final JMenuItem myLoad = new JMenuItem("LOAD");
+
+        add(myFile);
         add(myHelp);
         add(myCustomizePlayer);
         add(myOptions);
 
+        myFile.add(mySave);
+        myFile.add(myLoad);
+
         myCustomizePlayer.add(myCharacter);
-        myCustomizePlayer.add(myColor);
         myCustomizePlayer.add(myQuestionType);
 
         myHelp.add(myAbout);
@@ -89,6 +101,84 @@ public class MyMenuBar extends JMenuBar {
 
         myAbout.addActionListener(new About());
         myRules.addActionListener(new Rules());
+        mySave.addActionListener(new Save());
+        myLoad.addActionListener(new Load());
+    }
+
+    public void setMaze(final Maze theMaze) {
+        myMaze = theMaze;
+    }
+
+    public void setMazePanel(final MazePanel theMazePanel) {
+        myMazePanel = theMazePanel;
+    }
+
+    private class Load implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            System.out.println("Loading... ");
+
+            Maze m = null;
+            try {
+                System.out.println("In try");
+                FileInputStream fileIn = new FileInputStream("maze.ser");
+                ObjectInputStream in = new ObjectInputStream(fileIn);
+                m = (Maze) in.readObject();
+                //System.out.println(m);
+                in.close();
+                fileIn.close();
+            } catch (IOException i) {
+                i.printStackTrace();
+            } catch (ClassNotFoundException c) {
+                System.out.println("Maze class not found");
+                c.printStackTrace();
+            }
+
+            if (m != null) {
+                myMaze = m;
+                System.out.println("Load successful!");
+                myMazePanel.setMaze(myMaze);
+                System.out.println("("+myMaze.getXCount()+","+myMaze.getYCount()+")");
+                //myMaze.getPlayer().setImage(new ImageIcon("player.png").getImage());
+                myMazePanel.repaint();
+            }
+
+            System.out.println("end of action listener");
+
+        }
+    }
+
+    private class Save implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Saving... ");
+            try {
+
+//                //Create a file chooser
+//                final JFileChooser fc = new JFileChooser();
+//
+//                //In response to a button click:
+//                int returnVal = fc.showOpenDialog();
+
+                //Saving of object in a file
+                FileOutputStream fos = new FileOutputStream("maze.ser");
+                ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+                // Method for serialization of B's class object
+                oos.writeObject(myMaze);
+
+                // closing streams
+                oos.close();
+                fos.close();
+
+                System.out.println("Object has been serialized");
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -101,7 +191,7 @@ public class MyMenuBar extends JMenuBar {
          * Opens Message Dialog window with About program information Sets up logo.
          */
         @Override
-        public void actionPerformed(ActionEvent theEvent) {
+        public void actionPerformed(final ActionEvent theEvent) {
             JPanel labelPanel = new JPanel(new GridBagLayout());
             JPanel textPanel = new JPanel(new GridLayout(3, 1, 5, 7));
 //            labelPanel.add(new JLabel("Game Name: "));
@@ -134,14 +224,15 @@ public class MyMenuBar extends JMenuBar {
                     + "<body style='background-color: white; width: ";
             final String content2 = "'>"
                     + "<h1>Game Rules:</h1>"
-                    + "<p>Here we need to describe ";
+                    + "<p>OBJECTIVE: Get to the exit of the maze located at the bottom right. ";
             final String content3
-                    = "ruls of the TriviaMaze game.  "
-                    + "ruls of the TriviaMaze game. "
-                    + "ruls of the TriviaMaze game. "
-                    + " ruls of the TriviaMaze game.</p>";
+                    = "HOW TO: Use navigation buttons to move. "
+                    + "Answer trivia question correctly to move to the next spot. "
+                    + "If you answer incorrectly, that way will become blocked. "
+                    + "If all routes to the exit are blocked, you lose. "
+                    + "If you reach the exit located at the bottom right, you win the trivia maze!</p>";
             final String content = content1 + 300 + "px"
-                    + content2 +  content3;
+                    + content2 + "\n" + content3;
             final Runnable r = () -> {
                 JLabel label = new JLabel(content);
                 JOptionPane.showMessageDialog(null, label);
@@ -149,6 +240,7 @@ public class MyMenuBar extends JMenuBar {
             SwingUtilities.invokeLater(r);
 
         }
+
     }
 
     public static String getDataBaseName() {
