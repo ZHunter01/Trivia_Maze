@@ -34,8 +34,8 @@ public class Maze implements Serializable{
     private int myYCount;
     /**Door object for current selected door*/
     private Door myCurrentDoor;
-    /**Int value to keep track of what direction door is being accessed */
-    private int userDir;
+//    /**Int value to keep track of what direction door is being accessed */
+//    private int userDir;
      
     
     /* Creates default 2-d array maze with 4x4 dimensions
@@ -73,7 +73,7 @@ public class Maze implements Serializable{
         
         myCurrentDoor = new Door();
         //default directions is up
-        userDir = 0;
+        Room.userDir = 0;
           
         //Generate PowerUps in the Maze
         generatePowerUps();
@@ -143,6 +143,8 @@ public class Maze implements Serializable{
         return myLose;
     }
     
+
+    
     /** Returns current room
      * 
      * @return myMaze [myXCount][myYCount]
@@ -185,7 +187,7 @@ public class Maze implements Serializable{
      */
     public void doorSolution(final String theSolution, final int theDir) {
         myQuestionCounter ++;
-        userDir = theDir;
+        Room.userDir = theDir;
        // myCorrectCounter++;
         myCurrentDoor = this.getCurrentRoom().getUserDoor(theDir);
         myCurrentDoor.checkLock(theSolution);
@@ -241,7 +243,7 @@ public class Maze implements Serializable{
      * @param thePowerUp
      */
     public void usePowerUp(final PowerUp thePowerUp, final int theDir) {
-        userDir = theDir;
+        Room.userDir = theDir;
         
         if (thePowerUp.isFreeQuestion()) {
             incrementMaze();
@@ -317,18 +319,18 @@ public class Maze implements Serializable{
      * 
      */
     private void incrementMaze() {
-        if (userDir == Room.UP) {
+        if (Room.userDir == Room.UP) {
             myYCount --;
-        } else if (userDir == Room.LEFT) {
+        } else if (Room.userDir == Room.LEFT) {
             myXCount --;
-        } else if (userDir == Room.DOWN) {
+        } else if (Room.userDir == Room.DOWN) {
             myYCount ++;
-        } else if (userDir == Room.RIGHT) {
+        } else if (Room.userDir == Room.RIGHT) {
             myXCount ++;
         } else {
             throw new IllegalArgumentException("Error: Improper door directional value.");
         }
-        myPlayer.move(userDir);
+        myPlayer.move(Room.userDir);
     }
         
     /** If x count and y count match the max size of the 2-d array return myWin as true

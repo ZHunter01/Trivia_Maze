@@ -1,12 +1,18 @@
 package model;
 
+import java.io.Serializable;
+
 /**
  * 
  * @author Zach Hunter
  *
  */
-public class Door extends GameObject{
+public class Door extends GameObject implements Serializable{
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 9083255698953696708L;
     private boolean myLock;
     private boolean myPermaLock;
     private int myQuestionID;
@@ -20,9 +26,18 @@ public class Door extends GameObject{
         myQuestionID = Question.getQuestionInstance().getId();
     }
     
+//    /** Get current Door Question object
+//     * 
+//     * @return
+//     */
+//    public Question getQuestion() {
+//        System.out.println("Answer: " + Question.getQuestionInstance().getSolution(myQuestionID));
+//        return Question.getQuestionInstance();
+//    }
+    
     /** Get current Door Question object
      * 
-     * @return
+     * @return Question.getQuestionInstance().getQuestion(myQuestionID)
      */
     public String getQuestion() {
         System.out.println("Answer: " + Question.getQuestionInstance().getSolution(myQuestionID));

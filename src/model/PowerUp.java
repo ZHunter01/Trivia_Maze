@@ -27,7 +27,7 @@ public class PowerUp implements Serializable{
         
     /** Creates a PermaUnlock PowerUp
      * 
-     * @return
+     * @return myPowerUp
      */
     public static PowerUp createPermaUnlock() {
         PowerUp myPowerUp = new PowerUp(false, true);
@@ -36,7 +36,7 @@ public class PowerUp implements Serializable{
     
     /** Creates a FreeQuestion PowerUp
      * 
-     * @return
+     * @return myPowerUp
      */
     public static PowerUp createFreeQuestion() {
         PowerUp myPowerUp = new PowerUp(true, false);
@@ -52,17 +52,17 @@ public class PowerUp implements Serializable{
         return myPowerUp;
     }
     
-    /**
+    /** Returns if PowerUp is a PermaUnlock
      * 
-     * @return
+     * @return myPermaUnlock
      */
     public boolean isPermaUnlock() {
         return myPermaUnlock;
     }
     
-    /**
+    /** Returns if PowerUp is a Free Question
      * 
-     * @return
+     * @return myFreeQuestion
      */
     public boolean isFreeQuestion() {
         return myFreeQuestion;
@@ -75,14 +75,14 @@ public class PowerUp implements Serializable{
         this.setPermaUnlock(false);
     }
     
-    /**
+    /** Sets boolean of Free Question to false
      * 
      */
     public void removeFreeQuestion() {
         this.setFreeQuestion(false);
     }
 
-    /**
+    /** Sets PermaUnlock to boolean input
      * 
      * @param theBoolean
      */
@@ -90,7 +90,7 @@ public class PowerUp implements Serializable{
         myPermaUnlock = theBoolean;
     }
     
-    /**
+    /** Sets FreeQuestion to boolean input
      * 
      * @param theBoolean
      */

@@ -3,15 +3,23 @@ package view;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.ButtonGroup;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JRadioButtonMenuItem;
 
-public class PowerUpMenu extends JMenu implements ActionListener{
+import model.Door;
+import model.Maze;
+import model.Question;
+
+/**
+ * 
+ * @author Zach Hunter
+ *
+ */
+public class PowerUpMenu extends JMenu implements ActionListener {
+    /**String name for PowerUp Perma-Unlock */
     private static final String PERMA_UNLOCK = "PermaUnlock";
+    /**String name for PowerUp Free Question */
     private static final String FREE_QUESTION = "FreeQuestion";
-   // private static final String NO_POWERUP = "You don't have any PowerUps";
    
     /**
      * 
@@ -19,27 +27,18 @@ public class PowerUpMenu extends JMenu implements ActionListener{
     private static final long serialVersionUID = 2859544975052134927L;
     private JMenuItem myPerma;
     private JMenuItem myFree;
+    private Maze myMaze;
         
     /**
      * 
      * @param theMaze
      */
-    public PowerUpMenu(final String theName) {
-        //setPreferredSize(new Dimension(0, 5));
-        //setBackground(new Color(200, 150, 0));
+    public PowerUpMenu(final String theName, final Maze theMaze) {
         super(theName);
-        //myMaze = theMaze;
+        
+        myMaze = theMaze; 
         
         setUpPowerUps();
-        
-        //JLabel unlockLabel = new JLabel(PERMA_UNLOCK);
-       // JLabel freeLabel = new JLabel(FREE_QUESTION);
-       // new JLabel(NO_POWERUP);
-        
-        //unlockLabel.setVisible(false);
-        //freeLabel.setVisible(false);
-        
-        //addLabels();
     }
     
     public void enablePermaUnlock() {
@@ -79,8 +78,13 @@ public class PowerUpMenu extends JMenu implements ActionListener{
 
         @Override
         public void actionPerformed(final ActionEvent theEvent) {
-            // TODO Auto-generated method stub
+            int currentDir = myMaze.getCurrentRoom().getUserDir();
+            Door theDoor = myMaze.getCurrentRoom().getUserDoor(currentDir);
+            String solution = Question.getQuestionInstance().getSolution(theDoor.getId());
             
+            myMaze.doorSolution(solution, currentDir);
+            
+            myFree.setEnabled(false);
         }
         
     }

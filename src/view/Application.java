@@ -2,10 +2,15 @@ package view;
 
 import javax.swing.*;
 
-import db.SqliteDB;
 import java.awt.*;
 import java.io.IOException;
 
+
+/**
+ * 
+ * @author Alik Balika, Oleksandr Maistruk, Zach Hunter
+ *
+ */
 public class Application extends JFrame {
 
     /**
@@ -33,28 +38,22 @@ public class Application extends JFrame {
         //myDataBase.setIsUsedToDefault();
 
         AnswerPanel answerPanel = new AnswerPanel();
-        //answerPanel.setPowerUpMenu();
         
         QuestionPanel questionPanel = new QuestionPanel();
-//
-//        PowerUpPanel powerPanel = new PowerUpPanel();
-        
+      
         MazePanel panel = new MazePanel(answerPanel, questionPanel);
-//
-//        JPanel panelHolder = new JPanel();
-//        panelHolder.setLayout(new GridLayout(2, 1));
-//        panelHolder.add(new AnswerPanel(), BorderLayout.NORTH);
-//        panelHolder.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-//        panelHolder.add(new PowerUpPanel(), BorderLayout.SOUTH);
-        
-        
+
+        //Menu Bar
+        //MyMenuBar.getInstance().setMaze(panel.getMaze());
+        MyMenuBar.getInstance().setMazePanel(panel);
         setJMenuBar(MyMenuBar.getInstance());
+        //Add panels to the frame
         add(panel, BorderLayout.CENTER);
         add(answerPanel, BorderLayout.EAST);
-        //add(powerPanel, BorderLayout.EAST);
         add(questionPanel, BorderLayout.NORTH);
         add(new DirectionPanel(panel), BorderLayout.SOUTH);
   
+        //Pass PowerUpMenu to the answer panel
         answerPanel.setPowerUpMenu(MyMenuBar.getInstance().getPowerUpMenu());
     }
 }

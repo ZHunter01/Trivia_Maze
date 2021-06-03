@@ -1,6 +1,7 @@
 package model;
 
 import java.awt.Image;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
@@ -11,9 +12,13 @@ import javax.swing.ImageIcon;
  * @author Zach Hunter, Alik Balika
  *
  */
-public class Player extends GameObject {
+public class Player extends GameObject implements Serializable{
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 359929099477029157L;
     /** */
-    private static Image myPlayerImage;
+    private static transient Image myPlayerImage;
     /** */
     private int myX;
     /** */

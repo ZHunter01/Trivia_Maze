@@ -21,9 +21,14 @@ import java.awt.event.KeyEvent;
 public class MazePanel extends JPanel {
 
     /**
+     * 
+     */
+    private static final long serialVersionUID = -4675791810380683974L;
+
+    /**
      * The maze object that contains all of the data
      */
-    private final Maze maze;
+    private Maze myMaze;
 
     /**
      * The adapter controls the movement of the player
@@ -46,17 +51,25 @@ public class MazePanel extends JPanel {
 
         myAdapter = new TAdapter();
         setFocusable(true);
-        maze = new Maze();
+        myMaze = new Maze();
         addKeyListener(myAdapter);
 
         myAnswerPanel = theAnswerPanel;
         myQuestionPanel = theQuestionPanel;
-        myAnswerPanel.setMaze(maze);
+        myAnswerPanel.setMaze(myMaze);
         myAnswerPanel.setMazePanel(this);
         myAnswerPanel.setQuestionPanel(myQuestionPanel);
 
     }
 
+    /** Get MazePanel's current Maze object
+     * 
+     * @return
+     */
+    Maze getMaze() {
+        return myMaze;
+    }
+    
 //    /**
 //     * @return the only instance of mazePanel
 //     */
@@ -80,7 +93,7 @@ public class MazePanel extends JPanel {
         super.paintComponent(g);
 
         int y = 0;
-        for (Room[] rooms : maze.getMaze()) {
+        for (Room[] rooms : myMaze.getMaze()) {
             int x = 0;
             for (Room room : rooms) {
                 room.setX(x);
@@ -92,7 +105,7 @@ public class MazePanel extends JPanel {
             }
             y += 110;
         }
-        Drawer.drawPlayer(g, maze.getPlayer(), this);
+        Drawer.drawPlayer(g, myMaze.getPlayer(), this);
     }
 
     /**
@@ -137,7 +150,7 @@ public class MazePanel extends JPanel {
 
                 case KeyEvent.VK_LEFT:
                 case KeyEvent.VK_A:
-                    if (!maze.isInBounds(Room.LEFT)) {
+                    if (!myMaze.isInBounds(Room.LEFT)) {
                         return;
                     }
 
@@ -146,7 +159,7 @@ public class MazePanel extends JPanel {
 
                 case KeyEvent.VK_RIGHT:
                 case KeyEvent.VK_D:
-                    if (!maze.isInBounds(Room.RIGHT)) {
+                    if (!myMaze.isInBounds(Room.RIGHT)) {
                         return;
                     }
 
@@ -155,7 +168,7 @@ public class MazePanel extends JPanel {
 
                 case KeyEvent.VK_UP:
                 case KeyEvent.VK_W:
-                    if (!maze.isInBounds(Room.UP)) {
+                    if (!myMaze.isInBounds(Room.UP)) {
                         return;
                     }
 
@@ -164,7 +177,7 @@ public class MazePanel extends JPanel {
 
                 case KeyEvent.VK_DOWN:
                 case KeyEvent.VK_S:
-                    if (!maze.isInBounds(Room.DOWN)) {
+                    if (!myMaze.isInBounds(Room.DOWN)) {
                         return;
                     }
 
@@ -174,12 +187,12 @@ public class MazePanel extends JPanel {
                 default:
                     break;
             }
-            System.out.println("(" + maze.getXCount() + "," + maze.getYCount() + ")");
+            System.out.println("(" + myMaze.getXCount() + "," + myMaze.getYCount() + ")");
             repaint();
         }
 
         private void retrieveQuestion(final int theDir) {
-            Room myRoom = maze.getCurrentRoom();
+            Room myRoom = myMaze.getCurrentRoom();
             Door myDoor = myRoom.getUserDoor(theDir);
             myQuestionPanel.setMyQuestion(myDoor.getQuestion());
             myAnswerPanel.setAnswerPanel();
@@ -214,5 +227,9 @@ public class MazePanel extends JPanel {
 //                myAnswerPanel.myAnswerPrompt.setVisible(false);
             }
         }
+    }
+
+    public void setMaze(final Maze theMaze) {
+        myMaze = theMaze;
     }
 }

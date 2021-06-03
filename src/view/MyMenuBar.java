@@ -1,14 +1,21 @@
 package view;
 
 import javax.swing.*;
+
+import model.Maze;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 /**
  *
- * @author Alik Balika
- * @author Oleksandr Maistruk
+ * @author Alik Balika, Oleksandr Maistruk, Zach Hunter
  *
  * Creates the menu bar of the program
  *
@@ -45,6 +52,8 @@ public class MyMenuBar extends JMenuBar {
     /** */
     private JMenu myFile;
     private PowerUpMenu myPowerUps;
+    private Maze myMaze;
+    private MazePanel myMazePanel;
     //private JMenuItem myExit;
     /** The Database name by default */
     private static String myDataBaseName = "SportQuestions";
@@ -69,6 +78,10 @@ public class MyMenuBar extends JMenuBar {
         return myMenuBar;
     }
 
+    private void setMaze() {
+        myMaze = myMazePanel.getMaze();
+    }
+    
     /**
      * initialize fields and add then to the menu bar
      */
@@ -81,7 +94,7 @@ public class MyMenuBar extends JMenuBar {
         //myCustomizePlayer = new JMenu("CUSTOMIZE PLAYER");
         myOptions = new JMenu("OPTIONS");
         
-        myPowerUps = new PowerUpMenu("PowerUps");
+        myPowerUps = new PowerUpMenu("PowerUps", myMaze);
         final JMenu myCharacter = new PlayerMenu();
         final JMenuItem exit =  new JMenuItem("Exit");
 //        final JMenuItem myColor = new JMenuItem("Color");
@@ -90,7 +103,7 @@ public class MyMenuBar extends JMenuBar {
         final JMenuItem myRules = new JMenuItem("Rules");
         final JMenuItem mySave = new JMenuItem("Save");
         final JMenuItem myLoad = new JMenuItem("Load");
-        final JMenuItem myCustomizePlayer = new JMenuItem("Customize Player");
+       // final JMenuItem myCustomizePlayer = new JMenuItem("Customize Player");
         
         add(myFile);
         myFile.add(mySave);
@@ -98,13 +111,11 @@ public class MyMenuBar extends JMenuBar {
         myFile.add(exit);
         
         add(myHelp);
-        //add(myCustomizePlayer);
-        add(myOptions);
+                add(myOptions);
 
         myOptions.add(myCharacter);
         myOptions.add(myQuestionLevel);
-        //myCustomizePlayer.add(myColor);
-        //myCustomizePlayer.add(myQuestionLevel);
+
         myOptions.add(myPowerUps);
         
         myHelp.add(myAbout);
@@ -113,6 +124,8 @@ public class MyMenuBar extends JMenuBar {
         myAbout.addActionListener(new About());
         myRules.addActionListener(new Rules());
         exit.addActionListener(new Exit());
+        mySave.addActionListener(new Save());
+        myLoad.addActionListener(new Load());
     }
     
     /**
@@ -122,7 +135,81 @@ public class MyMenuBar extends JMenuBar {
     public PowerUpMenu getPowerUpMenu() {
         return myPowerUps;
     }
+    
+    public void setMazePanel(final MazePanel theMazePanel) {
+        myMazePanel = theMazePanel;
+        setMaze();
+    }
 
+    private class Load implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            System.out.println("Loading... ");
+
+            Maze m = null;
+            try {
+                System.out.println("In try");
+                FileInputStream fileIn = new FileInputStream("maze.ser");
+                ObjectInputStream in = new ObjectInputStream(fileIn);
+                m = (Maze) in.readObject();
+                //System.out.println(m);
+                in.close();
+                fileIn.close();
+            } catch (IOException i) {
+                i.printStackTrace();
+            } catch (ClassNotFoundException c) {
+                System.out.println("Maze class not found");
+                c.printStackTrace();
+            }
+
+            if (m != null) {
+                myMaze = m;
+                System.out.println("Load successful!");
+                myMazePanel.setMaze(myMaze);
+                System.out.println("("+myMaze.getXCount()+","+myMaze.getYCount()+")");
+                //myMaze.getPlayer().setImage(new ImageIcon("player.png").getImage());
+                myMazePanel.repaint();
+            }
+
+            System.out.println("end of action listener");
+
+        }
+    }
+
+    private class Save implements ActionListener {
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("Saving... ");
+            try {
+
+//                //Create a file chooser
+//                final JFileChooser fc = new JFileChooser();
+//
+//                //In response to a button click:
+//                int returnVal = fc.showOpenDialog();
+
+                //Saving of object in a file
+                FileOutputStream fos = new FileOutputStream("maze.ser");
+                ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+                // Method for serialization of B's class object
+                oos.writeObject(myMaze);
+
+                // closing streams
+                oos.close();
+                fos.close();
+
+                System.out.println("Object has been serialized");
+            } catch (IOException exception) {
+                exception.printStackTrace();
+            }
+        }
+    }
+
+    
     /**
      *
      * Action Listener to show message by clicking About button from Help menu.

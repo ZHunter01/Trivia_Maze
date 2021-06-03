@@ -4,6 +4,7 @@
 
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,8 +18,13 @@ import view.MyMenuBar;
  * @author Oleksandr Maistruk
  *
  */
-public class Question {
+public class Question implements Serializable{
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1721924346865745075L;
+
     /** static variable single_instance of type Singleton */
     private static Question questionInstance = null;
     
@@ -190,10 +196,19 @@ public class Question {
 //        return Objects.equals(myQuestion, question.myQuestion) && Objects.equals(mySolution, question.mySolution);
 //    }
     
+    /**
+     * 
+     * @param theName
+     */
     public void setDataBaseName(final String theName) {
         myDataBaseName = theName;
     }
     
+    /**
+     * 
+     * @param theId
+     * @return
+     */
     public QuestionQuery getMySpecificQuestion(final int theId) {
         if(myDataBaseName.equals("SportQuestions")) {
             mySpecificQuestion = mySportQuestions.get(theId);

@@ -1,5 +1,4 @@
 
-
 package view;
 
 import javax.swing.*;
@@ -13,10 +12,14 @@ import java.awt.*;
  */
 public class QuestionPanel extends JPanel {
 
-    /**
-     * The JLabel will hold the question
-     */
+    /** Serial number. */
+    private static final long serialVersionUID = -5110775593606022630L;
+    
+    /** The JLabel will hold the question */
     private JLabel myQuestion;
+    
+    /** The id of the question */
+    private int myIdForQuestion;
 
 //    /**
 //     * Create an instance of the QuestionPanel
@@ -61,9 +64,26 @@ public class QuestionPanel extends JPanel {
      * Sets the question to a new question
      * @param theQuestion the new question to be displayed
      */
-    public void setMyQuestion(String theQuestion) {
+    public void setMyQuestion(final String theQuestion) {
         myQuestion.setText(theQuestion);
     }
+    
+    /**
+     * Sets the question id to a new question
+     * @param theId the question id
+     */
+    public void setMyQuestionId(final int theId) {
+        myIdForQuestion = theId;
+    }
+    
+    /**
+    * Return question id for question which is used right now in the question panel.
+    * 
+    * @return myIdForQuestion the question id which is used in the question panel
+    */
+   public int getMyQuestionId() {
+       return myIdForQuestion;
+   }
 
     /**
      * clears myQuestion
