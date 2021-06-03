@@ -94,6 +94,7 @@ public class PowerUpMenu extends JMenu implements ActionListener {
         // TODO Auto-generated method stub
         
     }
+<<<<<<< HEAD
     
 //    private ButtonGroup createPowerUpMenu() {
 //        final ButtonGroup btngrp = new ButtonGroup();
@@ -143,4 +144,6 @@ public class PowerUpMenu extends JMenu implements ActionListener {
     
     
     
+=======
+>>>>>>> zach_branch
 }

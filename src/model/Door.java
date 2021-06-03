@@ -1,12 +1,26 @@
 package model;
 
+<<<<<<< HEAD
+=======
+import java.io.Serializable;
+
+>>>>>>> zach_branch
 /**
  * 
  * @author Zach Hunter
  *
  */
+<<<<<<< HEAD
 public class Door extends GameObject{
     
+=======
+public class Door extends GameObject implements Serializable{
+    
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -930527126932044388L;
+>>>>>>> zach_branch
     private boolean myLock;
     private boolean myPermaLock;
     private int myQuestionID;

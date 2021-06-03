@@ -29,7 +29,11 @@ public abstract class GameObject implements Serializable{
     /**
      * The icon of the object
      */
+<<<<<<< HEAD
     private Image image;
+=======
+    private transient Image image;
+>>>>>>> zach_branch
 
     /**
      * @return the x-coordinate of the object
