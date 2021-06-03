@@ -43,7 +43,9 @@ public class Door extends GameObject{
      */
     public void checkLock(final String theSolution) {
         // if (myQuestion.isSolution(theSolution)) {
-        System.out.println(Question.getQuestionInstance().getSolution(myQuestionID));
+        //System.out.println(Question.getQuestionInstance().getSolution(myQuestionID));
+        System.out.println("checkLock: \nQ: " + Question.getQuestionInstance().getQuestion(myQuestionID) + "\nA: " +
+                Question.getQuestionInstance().getSolution(myQuestionID));
         if (Question.getQuestionInstance().isSolution(theSolution, myQuestionID)) {
             //Question.getQuestionInstance().getSolution(myQuestionID).
             //toLowerCase().equals(theSolution.toLowerCase().trim())

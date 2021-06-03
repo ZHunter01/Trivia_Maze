@@ -16,6 +16,9 @@ public class QuestionPanel extends JPanel {
      */
     private JLabel myQuestion;
 
+    /** The id of the question */
+    private int myIdForQuestion;
+
 //    /**
 //     * Create an instance of the QuestionPanel
 //     */
@@ -56,6 +59,8 @@ public class QuestionPanel extends JPanel {
         return myQuestion;
     }
 
+
+
     /**
      * Sets the question to a new question
      * @param theQuestion the new question to be displayed
@@ -63,6 +68,24 @@ public class QuestionPanel extends JPanel {
     public void setMyQuestion(final String theQuestion) {
         myQuestion.setText(theQuestion);
     }
+
+    /**
+     * Sets the question id to a new question
+     * @param theId the question id
+     */
+    public void setMyQuestionId(final int theId) {
+        myIdForQuestion = theId;
+    }
+
+    /**
+     * Return question id for question which is used right now in the question panel.
+     *
+     * @return myIdForQuestion the question id which is used in the question panel
+     */
+    public int getMyQuestionId() {
+        return myIdForQuestion;
+    }
+
 
     /**
      * clears myQuestion

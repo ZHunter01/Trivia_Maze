@@ -85,6 +85,7 @@ public class MazePanel extends JPanel {
 
     /**
      * Draws all of the GameObjects onto the panel
+     *
      * @param g the Graphics drawer
      */
     @Override
@@ -101,7 +102,7 @@ public class MazePanel extends JPanel {
                 room.setY(y);
 
                 Drawer.drawRoom(g, room);
-                x+= 166;
+                x += 166;
 
             }
             y += 110;
@@ -131,6 +132,7 @@ public class MazePanel extends JPanel {
 
         /**
          * handles the button that the user pressed
+         *
          * @param e the KeyEvent
          */
         @Override
@@ -142,6 +144,7 @@ public class MazePanel extends JPanel {
 
         /**
          * handles the button that the user pressed. Used for the button actionListeners in DirectionPanel
+         *
          * @param theKey the KeyEvent
          */
         public void keyPressed(final int theKey) {
@@ -151,6 +154,7 @@ public class MazePanel extends JPanel {
         /**
          * Chooses the direction that the player object will move in as well as does not allow user to go
          * out of bounds
+         *
          * @param key the code of the button that the user pressed
          */
         private void keySwitch(final int key) {
@@ -207,24 +211,51 @@ public class MazePanel extends JPanel {
          *
          * @param theDir
          */
-        private void retrieveQuestion(final int theDir) {
+        private void retrieveQuestion(int theDir) {
             Room myRoom = maze.getCurrentRoom();
             Door myDoor = myRoom.getUserDoor(theDir);
             myQuestionPanel.setMyQuestion(myDoor.getQuestion());
-            myAnswerPanel.setAnswerPanel();
+            myQuestionPanel.setMyQuestionId(myDoor.getId());
+            myAnswerPanel.setAnswerPanel(true);
 
             if (myDoor.isPermaLocked()) {
                 myQuestionPanel.setMyQuestion("That door is permanently locked!");
-                myAnswerPanel.getAnswerField().setVisible(false);
-                myAnswerPanel.getSubmit().setVisible(false);
-                myAnswerPanel.getAnswerPrompt().setVisible(false);
+//                myAnswerPanel.getAnswerField().setVisible(false);
+//                myAnswerPanel.getSubmit().setVisible(false);
+//                myAnswerPanel.getAnswerPrompt().setVisible(false);
+                myAnswerPanel.setAnswerPanel(false);
                 return;
             }
 
-            myAnswerPanel.getAnswerField().setFocusable(true);
+//            myAnswerPanel.getAnswerField().setFocusable(true);
             myAnswerPanel.setDirection(theDir);
 
             System.out.println("in mazePanel: " + myDoor.getQuestion());
+            if (!myAnswerPanel.getMyAnswer().equalsIgnoreCase("")) {
+                System.out.println("Entered if statement");
+
+            }
+
+//        private void retrieveQuestion(final int theDir) {
+//            Room myRoom = maze.getCurrentRoom();
+//            Door myDoor = myRoom.getUserDoor(theDir);
+//            myQuestionPanel.setMyQuestion(myDoor.getQuestion());
+//            myQuestionPanel.setMyQuestionId(myDoor.getId());
+//            myAnswerPanel.setAnswerPanel(true);
+//
+//            if (myDoor.isPermaLocked()) {
+//                myQuestionPanel.setMyQuestion("That door is permanently locked!");
+//                myAnswerPanel.getAnswerField().setVisible(false);
+//                myAnswerPanel.getSubmit().setVisible(false);
+//                myAnswerPanel.getAnswerPrompt().setVisible(false);
+//                return;
+//            }
+//
+//            myAnswerPanel.getAnswerField().setFocusable(true);
+//            myAnswerPanel.setDirection(theDir);
+//
+//            System.out.println("in mazePanel: " + myDoor.getQuestion());
+//        }
         }
     }
 }

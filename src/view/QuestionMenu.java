@@ -4,6 +4,8 @@
 
 package view;
 
+import model.Question;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -61,14 +63,14 @@ public class QuestionMenu extends JMenu implements ActionListener {
 
     }
 
-    /**
-     * The method to return database name to work with needed type of questions.
-     *
-     * @return name of database.
-     */
-    public static String getDataBaseName() {
-        return myDataBaseName;
-    }
+//    /**
+//     * The method to return database name to work with needed type of questions.
+//     *
+//     * @return name of database.
+//     */
+//    public static String getDataBaseName() {
+//        return myDataBaseName;
+//    }
 
     public void setMazePanel(MazePanel theMazePanel) {
         myMazePanel = theMazePanel;
@@ -88,6 +90,8 @@ public class QuestionMenu extends JMenu implements ActionListener {
             mySport.setSelected(true);
             myGeography.setSelected(false);
             myDataBaseName = "SportQuestions";
+
+            Question.getQuestionInstance().setDataBaseName(myDataBaseName);
 
             myMazePanel.setBackgroundImage(MazePanel.SPORT_BACKGROUND);
             myMazePanel.repaint();
@@ -111,6 +115,8 @@ public class QuestionMenu extends JMenu implements ActionListener {
             mySport.setSelected(false);
             myGeography.setSelected(true);
             myDataBaseName = "GeographyQuestions";
+
+            Question.getQuestionInstance().setDataBaseName(myDataBaseName);
 
             myMazePanel.setBackgroundImage(MazePanel.WORLD_BACKGROUND);
             myMazePanel.repaint();

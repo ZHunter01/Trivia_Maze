@@ -74,12 +74,12 @@ public class PlayerMenu extends JMenu implements ActionListener {
     private void setupPlayers() {
         myPlayerActions = new ArrayList<PlayerAction>();
 
-        myPlayerActions.add(new PlayerAction("Oldman", new ImageIcon("./resources/Oldman.gif")));
-        myPlayerActions.add(new PlayerAction("Oldwoman", new ImageIcon("./resources/Oldwoman.gif")));
-        myPlayerActions.add(new PlayerAction("Girl", new ImageIcon("./resources/Girl.gif")));
-        myPlayerActions.add(new PlayerAction("Boy", new ImageIcon("./resources/Boy.gif")));
-        myPlayerActions.add(new PlayerAction("Guy", new ImageIcon("./resources/Guy.gif")));
-        myPlayerActions.add(new PlayerAction("Girl2", new ImageIcon("./resources/Girl2.gif")));
+        myPlayerActions.add(new PlayerAction("Oldman", new ImageIcon("src/resources/Oldman.gif")));
+        myPlayerActions.add(new PlayerAction("Oldwoman", new ImageIcon("src/resources/Oldwoman.gif")));
+        myPlayerActions.add(new PlayerAction("Girl", new ImageIcon("src/resources/Girl.gif")));
+        myPlayerActions.add(new PlayerAction("Boy", new ImageIcon("src/resources/Boy.gif")));
+        myPlayerActions.add(new PlayerAction("Guy", new ImageIcon("src/resources/Guy.gif")));
+        myPlayerActions.add(new PlayerAction("Girl2", new ImageIcon("src/resources/Girl2.gif")));
 
         createPlayerMenu();
     }
