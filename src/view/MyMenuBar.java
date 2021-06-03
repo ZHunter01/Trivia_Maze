@@ -3,6 +3,7 @@ package view;
 import javax.swing.*;
 
 import model.Maze;
+import model.Question;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -24,13 +25,27 @@ import java.io.ObjectOutputStream;
 public class MyMenuBar extends JMenuBar {
 
     /**
-     * 
+     *
      */
     private static final long serialVersionUID = -8886354497933935360L;
+    /**
+     * JMenu mySave allows the user to save the game
+     */
+    //private JMenuItem mySave;
+    /**
+     * JMenu myLoad allows the user to load a game
+     */
+    //private JMenuItem myLoad;
     /**
      * JMenu myHelp pops up a help window that explains how the game works
      */
     private JMenu myHelp;
+    /**
+     * JMenu myCustomizePlayer allows the user to change the icon of their player
+     */
+    //private JMenuItem myCustomizePlayer;
+
+    //private JMenu myPowerUps;
     /**
      * JMenu myOptions displays JMenuItems which give different options for the user
      */
@@ -43,11 +58,13 @@ public class MyMenuBar extends JMenuBar {
     //private JMenuItem myExit;
     /** The Database name by default */
     private static String myDataBaseName = "SportQuestions";
+
     private QuestionMenu myQuestionMenu;
+
     /**
      * Create an instance of the DirectionPanel
      */
-    private static final MyMenuBar MY_MENUBAR = new MyMenuBar();
+    private static final MyMenuBar myMenuBar = new MyMenuBar();
 
     /**
      * constructs the Menu Bar
@@ -61,16 +78,13 @@ public class MyMenuBar extends JMenuBar {
      * @return the only instance of MenuBar
      */
     public static MyMenuBar getInstance() {
-        return MY_MENUBAR;
+        return myMenuBar;
     }
 
-    /**
-     * 
-     */
     private void setMaze() {
         myMaze = myMazePanel.getMaze();
     }
-    
+
     /**
      * initialize fields and add then to the menu bar
      */
@@ -82,24 +96,29 @@ public class MyMenuBar extends JMenuBar {
         //myPowerUps = new JMenu("PowerUps");
         //myCustomizePlayer = new JMenu("CUSTOMIZE PLAYER");
         myOptions = new JMenu("OPTIONS");
-        
-        myQuestionMenu = new QuestionMenu();
-        
+
         myPowerUps = new PowerUpMenu("PowerUps", myMaze);
         final JMenu myCharacter = new PlayerMenu();
         final JMenuItem exit =  new JMenuItem("Exit");
-        //final JMenu myQuestionLevel = new QuestionMenu();
+//        final JMenuItem myColor = new JMenuItem("Color");
+
+
+        myQuestionMenu = new QuestionMenu();
+//        myQuestionMenu.setMazePanel(myMazePanel);
+//        System.out.println("mymenubar: " + myMazePanel);
+
+
         final JMenuItem myAbout = new JMenuItem("About");
         final JMenuItem myRules = new JMenuItem("Rules");
         final JMenuItem mySave = new JMenuItem("Save");
         final JMenuItem myLoad = new JMenuItem("Load");
-       // final JMenuItem myCustomizePlayer = new JMenuItem("Customize Player");
-        
+        // final JMenuItem myCustomizePlayer = new JMenuItem("Customize Player");
+
         add(myFile);
         myFile.add(mySave);
         myFile.add(myLoad);
         myFile.add(exit);
-        
+
         add(myHelp);
         add(myOptions);
 
@@ -107,7 +126,7 @@ public class MyMenuBar extends JMenuBar {
         myOptions.add(myQuestionMenu);
 
         myOptions.add(myPowerUps);
-        
+
         myHelp.add(myAbout);
         myHelp.add(myRules);
 
@@ -117,25 +136,20 @@ public class MyMenuBar extends JMenuBar {
         mySave.addActionListener(new Save());
         myLoad.addActionListener(new Load());
     }
-    
-    /**
-     * 
-     * @param theMazePanel
-     */
+
     public void setQuestionMenuMazePanel(MazePanel theMazePanel) {
         myQuestionMenu.setMazePanel(theMazePanel);
         System.out.println(myMazePanel);
     }
 
-    
     /**
-     * 
+     *
      * @return
      */
     public PowerUpMenu getPowerUpMenu() {
         return myPowerUps;
     }
-    
+
     public void setMazePanel(final MazePanel theMazePanel) {
         myMazePanel = theMazePanel;
         setMaze();
@@ -167,10 +181,9 @@ public class MyMenuBar extends JMenuBar {
             if (m != null) {
                 myMaze = m;
                 System.out.println("Load successful!");
-                //myMazePanel.setMaz(myMaze);
                 myMazePanel.setMaze(myMaze);
                 System.out.println("("+myMaze.getXCount()+","+myMaze.getYCount()+")");
-                //myMaze.getPlayer().setImage(new ImageIcon("player.png").getImage());
+                //myMaze.getPlayer().setImage(new ImageIcon("Oldman.gif").getImage());
                 myMazePanel.repaint();
             }
 
@@ -210,7 +223,7 @@ public class MyMenuBar extends JMenuBar {
         }
     }
 
-    
+
     /**
      *
      * Action Listener to show message by clicking About button from Help menu.
@@ -259,7 +272,7 @@ public class MyMenuBar extends JMenuBar {
                     = "HOW TO: Use navigation buttons to move. "
                     + "Answer trivia question correctly to move to the next spot. "
                     + "If you answer incorrectly, that way will become blocked. "
-                    + "If all routes to the exit are blocked, you lose. " 
+                    + "If all routes to the exit are blocked, you lose. "
                     + "If you reach the exit located at the bottom right, you win the trivia maze!</p>";
             final String content = content1 + 300 + "px"
                     + content2 + "\n" + content3;
@@ -279,9 +292,9 @@ public class MyMenuBar extends JMenuBar {
         public void actionPerformed(final ActionEvent theEvent) {
             System.exit(0);
         }
-        
+
     }
-    
+
     public static String getDataBaseName() {
         return myDataBaseName;
     }
