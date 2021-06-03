@@ -295,19 +295,19 @@ public class Maze implements Serializable{
     private void fillMaze() {
         for (int n = 0; n < myMaze.length; n++) {
             for (int i = 0; i < myMaze[0].length; i++) {
+                myMaze [n][i] = new Room();
                 if (n == 0) {
-                    
+                    myMaze [n][i].getUserDoor(Room.LEFT).setPermaLock(true);
                 }
                 if (i == 0) {
-                    
+                    myMaze [n][i].getUserDoor(Room.UP).setPermaLock(true);
                 }
                 if (n == myMaze.length - 1) {
-                    
+                    myMaze [n][i].getUserDoor(Room.RIGHT).setPermaLock(true);
                 }
                 if (i == myMaze[0].length - 1) {
-                    
+                    myMaze [n][i].getUserDoor(Room.DOWN).setPermaLock(true);
                 }
-                myMaze [n][i] = new Room();
             }
         }
     }

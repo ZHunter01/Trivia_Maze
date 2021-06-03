@@ -22,6 +22,9 @@ public class Main {
      * 
      * @param args
      */
+    /**
+     * @param args
+     */
     public static void main(final String[] args) {
         EventQueue.invokeLater(() -> {
             Application execute = null;

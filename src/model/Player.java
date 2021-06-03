@@ -13,7 +13,7 @@ import javax.swing.ImageIcon;
  */
 public class Player extends GameObject {
     /** */
-    private Image myPlayerImage;
+    private static Image myPlayerImage;
     /** */
     private int myX;
     /** */
@@ -82,6 +82,12 @@ public class Player extends GameObject {
         }
         myX = theX;
         myY = theY;
+    }
+    
+    
+    public static void setPlayerImage(final String theName) {
+        final String imageFilename = "./resources/" + theName + ".gif";
+        myPlayerImage = new ImageIcon(imageFilename).getImage();
     }
     
     /** Adds PowerUp to player PowerUp array

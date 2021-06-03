@@ -22,8 +22,19 @@ import java.util.Objects;
  * @author Oleksandr Maistruk
  */
 public class AnswerPanel extends JPanel {
+    /**String message for when game is won */
     private final static String WIN_MESSAGE = "You have won the Trivia Maze!";
+    /**String message for when game is lost */
     private final static String LOSE_MESSAGE = "GAME OVER. All routes blocked.";
+    /**String message for when a question is answered incorrectly */
+    private final static String LOCK_MESSAGE = "Answer was incorrect! Door permanently locked!";
+    /**String message for when a question is answered correctly */
+    private final static String CORRECT_MESSAGE = "Answer was correct! Door unlocked!";
+    /**String message for if a room contains a free question */
+    private final static String FREE_QUESTION = "You have been awarded a FREE QUESTION PowerUp!" 
+                                                + " Use it to skip ay quesiton into the next room!"; 
+    private final static String PERMA_UNLOCK = "You have been awarded a PERMA UNLOCK PowerUp!" 
+                                                + " Use it to unlock doors that have been Perma-Locked!";
     
     /**
      * The serial number
@@ -57,6 +68,8 @@ public class AnswerPanel extends JPanel {
 
     private QuestionPanel myQuestionPanel;
 
+    private PowerUpMenu myPowerUpMenu;
+    
 //    /**
 //     * Create an instance of the AnswerPanel
 //     */
@@ -81,6 +94,9 @@ public class AnswerPanel extends JPanel {
         initAndAddSubmit();
     }
 
+    public void setPowerUpMenu(final PowerUpMenu theMenu) {
+        myPowerUpMenu = theMenu;
+    }
 
     /**
      * initializes the submit button and adds it to the panel
@@ -101,16 +117,10 @@ public class AnswerPanel extends JPanel {
                 myMaze.doorSolution(myAnswer, myDirection);
 
                 if (myMaze.getCurrentRoom().getUserDoor(myDirection).isPermaLocked()) {
-                    myQuestionPanel.setMyQuestion("Answer was incorrect! Door permanently locked!");
+                    myQuestionPanel.setMyQuestion(LOCK_MESSAGE);
                 } else {
-                    myQuestionPanel.setMyQuestion("Answer was correct! Door unlocked!");
+                    myQuestionPanel.setMyQuestion(CORRECT_MESSAGE);
                 }
-
-//                if (myMaze.getWin()) {
-//                    this.displayWin();
-//                } else if (myMaze.getLose()) {
-//                    this.displayLose();
-//                }
                 
                 myAnswerField.setVisible(false);
                 mySubmit.setVisible(false);
@@ -127,7 +137,8 @@ public class AnswerPanel extends JPanel {
                     this.displayLose();
                 }
                 
-                //if (!myAnswer.equals("")) myAnswerField.setFocusable(false);
+                checkForPowerUps();
+                
                 System.out.println("Answer: " + myAnswer);
             });
 
@@ -142,6 +153,10 @@ public class AnswerPanel extends JPanel {
     public void setMaze(final Maze theMaze) {
         myMaze = theMaze;
     }
+    
+    public Maze getMaze() {
+        return myMaze;
+    }
 
     public void setDirection(final int theDirection) {
         myDirection = theDirection;
@@ -155,6 +170,19 @@ public class AnswerPanel extends JPanel {
         myQuestionPanel = theQuestionPanel;
     }
 
+    private void checkForPowerUps() {
+        if (myMaze.getCurrentRoom().getRoomPowerUp().isFreeQuestion()) {
+            myQuestionPanel.setMyQuestion(FREE_QUESTION);
+            myPowerUpMenu.enableFreeQuestion();
+            
+        } else if (myMaze.getCurrentRoom().getRoomPowerUp().isPermaUnlock()) {
+            myQuestionPanel.setMyQuestion(PERMA_UNLOCK);   
+            myPowerUpMenu.enablePermaUnlock();
+        }
+        
+    }
+    
+    
     /**
      * initializes the JTextField and adds it to the panel
      */

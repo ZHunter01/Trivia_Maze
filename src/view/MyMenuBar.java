@@ -17,13 +17,17 @@ import java.awt.event.ActionListener;
 public class MyMenuBar extends JMenuBar {
 
     /**
+     * 
+     */
+    private static final long serialVersionUID = -8886354497933935360L;
+    /**
      * JMenu mySave allows the user to save the game
      */
-    private JMenu mySave;
+    //private JMenuItem mySave;
     /**
      * JMenu myLoad allows the user to load a game
      */
-    private JMenu myLoad;
+    //private JMenuItem myLoad;
     /**
      * JMenu myHelp pops up a help window that explains how the game works
      */
@@ -31,11 +35,17 @@ public class MyMenuBar extends JMenuBar {
     /**
      * JMenu myCustomizePlayer allows the user to change the icon of their player
      */
-    private JMenu myCustomizePlayer;
+    //private JMenuItem myCustomizePlayer;
+    
+    //private JMenu myPowerUps;
     /**
      * JMenu myOptions displays JMenuItems which give different options for the user
      */
     private JMenu myOptions;
+    /** */
+    private JMenu myFile;
+    private PowerUpMenu myPowerUps;
+    //private JMenuItem myExit;
     /** The Database name by default */
     private static String myDataBaseName = "SportQuestions";
     
@@ -63,32 +73,54 @@ public class MyMenuBar extends JMenuBar {
      * initialize fields and add then to the menu bar
      */
     private void initAndAddJMenus() {
-        mySave = new JMenu("SAVE");
-        myLoad = new JMenu("LOAD");
+        myFile = new JMenu("File");
+        //mySave = new JMenu("SAVE");
+        //myLoad = new JMenu("LOAD");
         myHelp = new JMenu("HELP");
-        myCustomizePlayer = new JMenu("CUSTOMIZE PLAYER");
+        //myPowerUps = new JMenu("PowerUps");
+        //myCustomizePlayer = new JMenu("CUSTOMIZE PLAYER");
         myOptions = new JMenu("OPTIONS");
-        final JMenuItem myCharacter = new JMenuItem("Character");
+        
+        myPowerUps = new PowerUpMenu("PowerUps");
+        final JMenu myCharacter = new PlayerMenu();
+        final JMenuItem exit =  new JMenuItem("Exit");
 //        final JMenuItem myColor = new JMenuItem("Color");
         final JMenu myQuestionLevel = new QuestionMenu();
         final JMenuItem myAbout = new JMenuItem("About");
         final JMenuItem myRules = new JMenuItem("Rules");
-
-        add(mySave);
-        add(myLoad);
+        final JMenuItem mySave = new JMenuItem("Save");
+        final JMenuItem myLoad = new JMenuItem("Load");
+        final JMenuItem myCustomizePlayer = new JMenuItem("Customize Player");
+        
+        add(myFile);
+        myFile.add(mySave);
+        myFile.add(myLoad);
+        myFile.add(exit);
+        
         add(myHelp);
-        add(myCustomizePlayer);
+        //add(myCustomizePlayer);
         add(myOptions);
 
-        myCustomizePlayer.add(myCharacter);
+        myOptions.add(myCharacter);
+        myOptions.add(myQuestionLevel);
         //myCustomizePlayer.add(myColor);
-        myCustomizePlayer.add(myQuestionLevel);
-
+        //myCustomizePlayer.add(myQuestionLevel);
+        myOptions.add(myPowerUps);
+        
         myHelp.add(myAbout);
         myHelp.add(myRules);
 
         myAbout.addActionListener(new About());
         myRules.addActionListener(new Rules());
+        exit.addActionListener(new Exit());
+    }
+    
+    /**
+     * 
+     * @return
+     */
+    public PowerUpMenu getPowerUpMenu() {
+        return myPowerUps;
     }
 
     /**
@@ -151,6 +183,15 @@ public class MyMenuBar extends JMenuBar {
 
         }
 
+    }
+
+    private class Exit implements ActionListener {
+
+        @Override
+        public void actionPerformed(final ActionEvent theEvent) {
+            System.exit(0);
+        }
+        
     }
     
     public static String getDataBaseName() {

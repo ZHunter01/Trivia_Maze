@@ -9,7 +9,7 @@ public class Door extends GameObject{
     
     private boolean myLock;
     private boolean myPermaLock;
-    private Question myQuestion;
+    private int myQuestionID;
     
     /** Creates a default door object
      * 
@@ -17,24 +17,25 @@ public class Door extends GameObject{
     public Door() { 
         myLock = true;
         myPermaLock = false;
-        myQuestion = new Question();
+        myQuestionID = Question.getQuestionInstance().getId();
     }
     
     /** Get current Door Question object
      * 
      * @return
      */
-    public Question getQuestion() {
-        return myQuestion;
+    public String getQuestion() {
+        System.out.println("Answer: " + Question.getQuestionInstance().getSolution(myQuestionID));
+        return Question.getQuestionInstance().getQuestion(myQuestionID);
     }
     
-    /** Set Question object of the Door
-     * 
-     * @param theQ
-     */
-    public void setQuestion(final Question theQ) {
-        myQuestion = theQ;
-    }
+//    /** Set Question id of the Door
+//     * 
+//     * @param theQ
+//     */
+//    public void setQuestion(final Question theQ) {
+//        myQuestion = theQ;
+//    }
     
     /** Checks the input string to see if it matches Question's solution
      * 
@@ -42,8 +43,11 @@ public class Door extends GameObject{
      */
     public void checkLock(final String theSolution) {
        // if (myQuestion.isSolution(theSolution)) {
-        System.out.println(getQuestion().getSolution());
-        if (myQuestion.getSolution().toLowerCase().equals(theSolution.toLowerCase().trim())) {
+        System.out.println(Question.getQuestionInstance().getSolution(myQuestionID));
+        if (Question.getQuestionInstance().isSolution(theSolution, myQuestionID)) {
+                        //Question.getQuestionInstance().getSolution(myQuestionID).
+                        //toLowerCase().equals(theSolution.toLowerCase().trim())
+                
             myLock = false;
         }
         else {
@@ -80,7 +84,7 @@ public class Door extends GameObject{
      * @return
      */
     public int getId() {
-        return myQuestion.getId();
+        return myQuestionID;
     }
 
 }

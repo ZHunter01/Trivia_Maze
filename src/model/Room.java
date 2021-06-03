@@ -38,6 +38,7 @@ public class Room extends GameObject {
         myDoorRight = new Door();
         myDoorDown = new Door();
                 
+        myPowerUp = PowerUp.createEmptyPowerUp();
     }
     
     /** Get current Room Image

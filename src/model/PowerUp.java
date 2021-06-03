@@ -43,6 +43,15 @@ public class PowerUp implements Serializable{
         return myPowerUp;
     }
     
+    /** Creates an empty PowerUp
+     * 
+     * @return myPowerUp
+     */
+    public static PowerUp createEmptyPowerUp() {
+        PowerUp myPowerUp = new PowerUp(false, false);
+        return myPowerUp;
+    }
+    
     /**
      * 
      * @return

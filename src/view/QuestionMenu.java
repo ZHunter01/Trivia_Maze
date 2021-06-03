@@ -10,6 +10,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JMenu;
 import javax.swing.JRadioButtonMenuItem;
 
+import model.Question;
+
 /**
  * This class is to allow users to choose different types of questions.
  * 
@@ -84,6 +86,7 @@ public class QuestionMenu extends JMenu implements ActionListener {
             mySport.setSelected(true);
             myGeography.setSelected(false);
             myDataBaseName = "SportQuestions";
+            Question.getQuestionInstance().setDataBaseName(myDataBaseName);
             //myMazePanel = new MazePanel();
 
         }
