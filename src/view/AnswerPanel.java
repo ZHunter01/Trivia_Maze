@@ -89,7 +89,7 @@ public class AnswerPanel extends JPanel {
      */
     public AnswerPanel() {
         setPreferredSize(new Dimension(222, 0));
-        setBackground(new Color(98, 0, 134));
+        setBackground(Color.BLACK);
         myAnswer = "";
 //        initAndAddAnswerPrompt();
 //        initAndAddAnswer();
@@ -250,6 +250,7 @@ public class AnswerPanel extends JPanel {
         if (myAnswerPrompt == null) {
             myAnswerPrompt = new JLabel("Please enter your answer: ");
             myAnswerPrompt.setFont(new Font(Font.MONOSPACED, Font.BOLD, 13));
+            myAnswerPrompt.setForeground(Color.WHITE);
 
             add(myAnswerPrompt);
         } else {

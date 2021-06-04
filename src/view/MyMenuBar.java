@@ -184,7 +184,8 @@ public class MyMenuBar extends JMenuBar {
                 System.out.println("Load successful!");
                 myMazePanel.setMaze(myMaze);
                 System.out.println("("+myMaze.getXCount()+","+myMaze.getYCount()+")");
-                //myMaze.getPlayer().setImage(new ImageIcon("Oldman.gif").getImage());
+                //System.out.println(myMaze);
+                myMaze.getPlayer().setImage(PlayerMenu.OLD_MAN);
                 myMazePanel.repaint();
             }
 
