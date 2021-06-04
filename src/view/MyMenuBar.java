@@ -61,6 +61,8 @@ public class MyMenuBar extends JMenuBar {
 
     private QuestionMenu myQuestionMenu;
 
+    private PlayerMenu myPlayerMenu;
+
     /**
      * Create an instance of the DirectionPanel
      */
@@ -98,15 +100,11 @@ public class MyMenuBar extends JMenuBar {
         myOptions = new JMenu("OPTIONS");
 
         myPowerUps = new PowerUpMenu("PowerUps", myMaze);
-        final JMenu myCharacter = new PlayerMenu();
         final JMenuItem exit =  new JMenuItem("Exit");
 //        final JMenuItem myColor = new JMenuItem("Color");
 
-
         myQuestionMenu = new QuestionMenu();
-//        myQuestionMenu.setMazePanel(myMazePanel);
-//        System.out.println("mymenubar: " + myMazePanel);
-
+        myPlayerMenu = new PlayerMenu();
 
         final JMenuItem myAbout = new JMenuItem("About");
         final JMenuItem myRules = new JMenuItem("Rules");
@@ -122,7 +120,7 @@ public class MyMenuBar extends JMenuBar {
         add(myHelp);
         add(myOptions);
 
-        myOptions.add(myCharacter);
+        myOptions.add(myPlayerMenu);
         myOptions.add(myQuestionMenu);
 
         myOptions.add(myPowerUps);
@@ -137,10 +135,12 @@ public class MyMenuBar extends JMenuBar {
         myLoad.addActionListener(new Load());
     }
 
-    public void setQuestionMenuMazePanel(MazePanel theMazePanel) {
+    public void setQuestionPlayerMenuMazePanel(MazePanel theMazePanel) {
         myQuestionMenu.setMazePanel(theMazePanel);
-        System.out.println(myMazePanel);
+        myPlayerMenu.setMazePanel(theMazePanel);
     }
+
+//    public void setPlayerMenuMazePanel(PlayerMen)
 
     /**
      *
@@ -151,6 +151,7 @@ public class MyMenuBar extends JMenuBar {
     }
 
     public void setMazePanel(final MazePanel theMazePanel) {
+        System.out.println("called");
         myMazePanel = theMazePanel;
         setMaze();
     }
