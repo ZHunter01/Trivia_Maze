@@ -93,21 +93,23 @@ public class AnswerPanel extends JPanel {
 //        if(Question.getQuestionInstance().isMultiple(myQuestionPanel.getMyQuestionId())) {
 //
 //        }
-        initAndAddAnswer(theVisibility);
         initAndAddSubmit(theVisibility);
+        initAndAddAnswer(theVisibility);
+
     }
 
     public void setPowerUpMenu(final PowerUpMenu theMenu) {
         myPowerUpMenu = theMenu;
     }
 
-    public void submitAndTextfieldListener() {
+    public void buttonListener() {
         myAnswer = myAnswerField.getText();
 
         myMaze.doorSolution(myAnswer, myDirection);
 
         if (myMaze.getCurrentRoom().getUserDoor(myDirection).isPermaLocked()) {
             myQuestionPanel.setMyQuestion("Answer was incorrect! Door permanently locked!");
+            mySubmit.setVisible(false);
         } else {
             myQuestionPanel.setMyQuestion("Answer was correct! Door unlocked!");
         }
@@ -143,9 +145,9 @@ public class AnswerPanel extends JPanel {
             add(mySubmit);
 
 
-            mySubmit.addActionListener(e -> submitAndTextfieldListener());
+            mySubmit.addActionListener(e -> buttonListener());
 
-            myAnswerField.addActionListener(e -> myAnswer = myAnswerField.getText());
+            //myAnswerField.addActionListener(e -> myAnswer = myAnswerField.getText());
 
         } else {
             mySubmit.setVisible(theVicible);
@@ -195,7 +197,7 @@ public class AnswerPanel extends JPanel {
             myAnswerField.setFocusable(false);
             myAnswerField.setVisible(false);
             myAnswerField.setText("");
-            myAnswerField.addActionListener(e -> submitAndTextfieldListener());
+            myAnswerField.addActionListener(e -> buttonListener());
         }
         if (myMultiAnswer == null) {
             myMultiAnswer = new JMenuBar();
@@ -241,7 +243,7 @@ public class AnswerPanel extends JPanel {
 
                 btn.addActionListener(e -> {
                     myAnswerField.setText(btn.getText());
-                    submitAndTextfieldListener();
+                    buttonListener();
                 });
                 box.add(btn);
                 i++;
