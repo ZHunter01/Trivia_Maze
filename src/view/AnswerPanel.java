@@ -205,11 +205,20 @@ public class AnswerPanel extends JPanel {
 
         }
         if(!Question.getQuestionInstance().isMultiple(myQuestionPanel.getMyQuestionId())) {
+            System.out.println("in if");
             myAnswerField.setVisible(theVicible);
             myAnswerField.setFocusable(theVicible);
             myAnswerField.setText("");
             myMultiAnswer.setVisible(false);
+
+            if (mySubmit != null) {
+                add(mySubmit);
+            }
         } else {
+            System.out.println("in else");
+            if (mySubmit != null) {
+                remove(mySubmit);
+            }
 
             myAnswerField.setVisible(false);
             myMultiAnswer.removeAll();
@@ -252,6 +261,7 @@ public class AnswerPanel extends JPanel {
 //            box.setLayout(new GridLayout(9, 1));
             myMultiAnswer.setVisible(theVicible);
             myMultiAnswer.setFocusable(theVicible);
+
         }
 
     }
