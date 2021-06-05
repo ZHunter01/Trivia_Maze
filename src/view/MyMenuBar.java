@@ -91,7 +91,7 @@ public class MyMenuBar extends JMenuBar {
      * initialize fields and add then to the menu bar
      */
     private void initAndAddJMenus() {
-        myFile = new JMenu("File");
+        myFile = new JMenu("FILE");
         //mySave = new JMenu("SAVE");
         //myLoad = new JMenu("LOAD");
         myHelp = new JMenu("HELP");
