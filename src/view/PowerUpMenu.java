@@ -29,6 +29,7 @@ public class PowerUpMenu extends JMenu implements ActionListener {
     private JMenuItem myPerma;
     private JMenuItem myFree;
     private MazePanel myMazePanel;
+    private AnswerPanel myAnswerPanel;
     
     /**
      * 
@@ -38,6 +39,11 @@ public class PowerUpMenu extends JMenu implements ActionListener {
         super(theName);
                 
         setUpPowerUps();
+    }
+    
+    public void setPanels(final MazePanel theMazePanel) {
+        myMazePanel = theMazePanel;
+        myAnswerPanel = theMazePanel.getAnswerPanel();
     }
     
     /**
@@ -107,14 +113,16 @@ public class PowerUpMenu extends JMenu implements ActionListener {
         public void actionPerformed(final ActionEvent theEvent) {
             final int currentDir = myMazePanel.getMaze().getDirection();
             //int currentDir = 2;
-            Door theDoor = myMazePanel.getMaze().getCurrentRoom().getUserDoor(currentDir);
-            String solution = Question.getQuestionInstance().getSolution(theDoor.getId());
-            
+            final Door theDoor = myMazePanel.getMaze().getCurrentRoom().getUserDoor(currentDir);
+            final String solution = Question.getQuestionInstance().getSolution(theDoor.getId());
+            System.out.println("solution is" + solution);
 //            MazePanel.getMaze();
             
-            myMazePanel.getMaze().doorSolution(solution, currentDir);
-            myMazePanel.repaint();
+            //myMazePanel.getMaze().doorSolution(solution, currentDir);
             
+            myAnswerPanel.getAnswerField().setText(solution);
+            myAnswerPanel.buttonListener();
+                        
             myMazePanel.getMaze().getPlayer().removePowerUp(PowerUp.createFreeQuestion());
             
             myFree.setEnabled(false);
@@ -128,7 +136,5 @@ public class PowerUpMenu extends JMenu implements ActionListener {
         
     }
 
-    public void setMazePanel(MazePanel theMazePanel) {
-        myMazePanel = theMazePanel;
-    }
+
 }

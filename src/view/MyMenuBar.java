@@ -141,7 +141,7 @@ public class MyMenuBar extends JMenuBar {
     public void setQuestionPlayerMenuMazePanel(MazePanel theMazePanel) {
         myQuestionMenu.setMazePanel(theMazePanel);
         myPlayerMenu.setMazePanel(theMazePanel);
-        myPowerUps.setMazePanel(theMazePanel);
+        myPowerUps.setPanels(theMazePanel);
     }
 
 //    public void setPlayerMenuMazePanel(PlayerMen)

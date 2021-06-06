@@ -236,10 +236,14 @@ public class MazePanel extends JPanel {
             myAnswerPanel.setDirection(theDir);
 
             System.out.println("in mazePanel: " + myDoor.getQuestion());
-            if (!myAnswerPanel.getMyAnswer().equalsIgnoreCase("")) {
+            if (!myAnswerPanel.getAnswer().equalsIgnoreCase("")) {
                 System.out.println("Entered if statement");
 
             }
         }
+    }
+
+    public AnswerPanel getAnswerPanel() {
+        return myAnswerPanel;
     }
 }

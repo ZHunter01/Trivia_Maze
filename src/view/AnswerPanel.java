@@ -8,6 +8,7 @@ package view;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridLayout;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -40,7 +41,7 @@ public class AnswerPanel extends JPanel {
     private final static String CORRECT_MESSAGE = "Answer was correct! Door unlocked!";
     /**String message for if a room contains a free question */
     private final static String FREE_QUESTION = "You have been awarded a FREE QUESTION PowerUp!"
-            + " Use it to skip ay quesiton into the next room!";
+            + " Use it to skip any quesiton into the next room!";
     private final static String PERMA_UNLOCK = "You have been awarded a PERMA UNLOCK PowerUp!"
             + " Use it to unlock doors that have been Perma-Locked!";
     /**
@@ -68,7 +69,7 @@ public class AnswerPanel extends JPanel {
     /**
      * The player's answer
      */
-    private transient String myAnswer;
+    private transient static String myAnswer;
 
     private Maze myMaze;
 
@@ -97,14 +98,37 @@ public class AnswerPanel extends JPanel {
 //        initAndAddSubmit();
     }
 
+    /**
+     * @return the answer that the user inputed
+     */
+    public String getAnswer() {
+        return myAnswer;
+    }
+
+    public JTextField getAnswerField() {
+        return myAnswerField;
+    }
+
+    public JLabel getAnswerPrompt() {
+        return myAnswerPrompt;
+    }
+
+    public JButton getSubmit() {
+        return mySubmit;
+    }
+
+    public void setAnswer(String theAnswer) {
+        myAnswer = theAnswer;
+    }
+    
     public void setAnswerPanel(final boolean theVisibility) {
 
         initAndAddAnswerPrompt(theVisibility);
 //        if(Question.getQuestionInstance().isMultiple(myQuestionPanel.getMyQuestionId())) {
 //
 //        }
-        initAndAddAnswer(theVisibility);
         initAndAddSubmit(theVisibility);
+        initAndAddAnswer(theVisibility);
     }
 
     public void setMaze(final Maze theMaze) {
@@ -126,17 +150,17 @@ public class AnswerPanel extends JPanel {
     public void setPowerUpMenu(final PowerUpMenu theMenu) {
         myPowerUpMenu = theMenu;
     }
-
-    public void submitAndTextfieldListener() {
+    
+    public void buttonListener() {
         myAnswer = myAnswerField.getText();
 
         myMaze.doorSolution(myAnswer, myDirection);
 
         if (myMaze.getCurrentRoom().getUserDoor(myDirection).isPermaLocked() && myMaze.getIncorrect()) {
-            myQuestionPanel.setMyQuestion(LOCK_MESSAGE);
+            myQuestionPanel.setMyQuestion("Answer was incorrect! Door permanently locked!");
+            mySubmit.setVisible(false);
         } else {
-            myQuestionPanel.setMyQuestion(CORRECT_MESSAGE);
-            //myMaze.reverseDoorPermaLock(myDirection);
+            myQuestionPanel.setMyQuestion("Answer was correct! Door unlocked!");
         }
 
         setAnswerPanel(false);
@@ -160,22 +184,22 @@ public class AnswerPanel extends JPanel {
     /**
      * initializes the submit button and adds it to the panel
      */
-    private void initAndAddSubmit(final boolean theVicible) {
+    private void initAndAddSubmit(final boolean theVisibility) {
         if (mySubmit == null) {
             mySubmit = new JButton("SUBMIT");
             mySubmit.setBackground(Color.BLACK);
             mySubmit.setForeground(Color.WHITE);
-            mySubmit.setFocusable(theVicible);
+            mySubmit.setFocusable(theVisibility);
             mySubmit.setPreferredSize(new Dimension(205, 30));
             add(mySubmit);
 
 
-            mySubmit.addActionListener(e -> submitAndTextfieldListener());
+            mySubmit.addActionListener(e -> buttonListener());
 
-            myAnswerField.addActionListener(e -> myAnswer = myAnswerField.getText());
+            //myAnswerField.addActionListener(e -> myAnswer = myAnswerField.getText());
 
         } else {
-            mySubmit.setVisible(theVicible);
+            mySubmit.setVisible(theVisibility);
         }
 
     }
@@ -198,7 +222,7 @@ public class AnswerPanel extends JPanel {
     /**
      * initializes the JTextField and adds it to the panel
      */
-    private void initAndAddAnswer(final boolean theVicible) {
+    private void initAndAddAnswer(final boolean theVisibility) {
         if (myAnswerField == null) {
             myAnswerField = new JTextField(20);
 
@@ -206,7 +230,7 @@ public class AnswerPanel extends JPanel {
             myAnswerField.setFocusable(false);
             myAnswerField.setVisible(false);
             myAnswerField.setText("");
-            myAnswerField.addActionListener(e -> submitAndTextfieldListener());
+            myAnswerField.addActionListener(e -> buttonListener());
         }
         if (myMultiAnswer == null) {
             myMultiAnswer = new JMenuBar();
@@ -216,31 +240,63 @@ public class AnswerPanel extends JPanel {
 
         }
         if(!Question.getQuestionInstance().isMultiple(myQuestionPanel.getMyQuestionId())) {
-            myAnswerField.setVisible(theVicible);
-            myAnswerField.setFocusable(theVicible);
+            System.out.println("in if");
+            myAnswerField.setVisible(theVisibility);
+            myAnswerField.setFocusable(theVisibility);
             myAnswerField.setText("");
             myMultiAnswer.setVisible(false);
+
+            if (mySubmit != null) {
+                add(mySubmit);
+            }
         } else {
+            System.out.println("in else");
+            if (mySubmit != null) {
+                remove(mySubmit);
+            }
 
             myAnswerField.setVisible(false);
             myMultiAnswer.removeAll();
-            Box box = Box.createVerticalBox();
+            JPanel box = new JPanel();
+
+            box.setPreferredSize(new Dimension(200, 200));
+
+            box.setBackground(Color.BLACK);
+            box.setForeground(Color.BLACK);
+            //box.setLayout(new BoxLayout(box, BoxLayout.Y_AXIS));
+            //box.setLayout(new GridLayout(4, 0));
             String multi = Question.getQuestionInstance()
                     .getMultiAnswer(myQuestionPanel.getMyQuestionId());
-
+            int i = 0;
             for (String word : multi.split(",")){
-                final JRadioButton btn = new JRadioButton(word.strip());
-//                btn.setBackground(new Color(98, 0, 134));
+
+                final JButton btn = new JButton(word.strip());
+                btn.setBackground(Color.BLACK);
+                btn.setForeground(Color.WHITE);
+
                 btn.addActionListener(e -> {
                     myAnswerField.setText(btn.getText());
+                    buttonListener();
                 });
                 box.add(btn);
-                myMultiAnswer.add(box);
+                i++;
+                //box.add(Box.createRigidArea(new Dimension(0,5)));
+
+//                final JRadioButton btn = new JRadioButton(word.strip());
+////                btn.setBackground(new Color(98, 0, 134));
+//                btn.addActionListener(e -> {
+//                    myAnswerField.setText(btn.getText());
+//                });
+//                box.add(btn);
+//                myMultiAnswer.add(box);
 
             }
+            box.setLayout(new GridLayout(i, 0));
+            myMultiAnswer.add(box);
 //            box.setLayout(new GridLayout(9, 1));
-            myMultiAnswer.setVisible(theVicible);
-            myMultiAnswer.setFocusable(theVicible);
+            myMultiAnswer.setVisible(theVisibility);
+            myMultiAnswer.setFocusable(theVisibility);
+
         }
 
     }
@@ -248,7 +304,7 @@ public class AnswerPanel extends JPanel {
     /**
      * initializes the JLabel prompt and adds it to the panel
      */
-    private void initAndAddAnswerPrompt(final boolean theVicible) {
+    private void initAndAddAnswerPrompt(final boolean theVisibility) {
         if (myAnswerPrompt == null) {
             myAnswerPrompt = new JLabel("Please enter your answer: ");
             myAnswerPrompt.setFont(new Font(Font.MONOSPACED, Font.BOLD, 13));
@@ -256,31 +312,8 @@ public class AnswerPanel extends JPanel {
 
             add(myAnswerPrompt);
         } else {
-            myAnswerPrompt.setVisible(theVicible);
+            myAnswerPrompt.setVisible(theVisibility);
         }
-    }
-
-    /**
-     * @return the answer that the user inputed
-     */
-    public String getMyAnswer() {
-        return myAnswer;
-    }
-
-    public JTextField getAnswerField() {
-        return myAnswerField;
-    }
-
-    public JLabel getAnswerPrompt() {
-        return myAnswerPrompt;
-    }
-
-    public JButton getSubmit() {
-        return mySubmit;
-    }
-
-    public void setMyAnswer(final String myAnswer) {
-        this.myAnswer = myAnswer;
     }
 
 
