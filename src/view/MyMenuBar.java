@@ -2,8 +2,11 @@ package view;
 
 import javax.swing.*;
 
+import model.Door;
 import model.Maze;
+import model.PowerUp;
 import model.Question;
+
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -53,13 +56,15 @@ public class MyMenuBar extends JMenuBar {
     /** */
     private JMenu myFile;
     private PowerUpMenu myPowerUps;
-    private Maze myMaze;
+    public Maze myMaze;
     private MazePanel myMazePanel;
     //private JMenuItem myExit;
     /** The Database name by default */
     private static String myDataBaseName = "SportQuestions";
 
     private QuestionMenu myQuestionMenu;
+
+    private PlayerMenu myPlayerMenu;
 
     /**
      * Create an instance of the DirectionPanel
@@ -89,7 +94,7 @@ public class MyMenuBar extends JMenuBar {
      * initialize fields and add then to the menu bar
      */
     private void initAndAddJMenus() {
-        myFile = new JMenu("File");
+        myFile = new JMenu("FILE");
         //mySave = new JMenu("SAVE");
         //myLoad = new JMenu("LOAD");
         myHelp = new JMenu("HELP");
@@ -97,16 +102,12 @@ public class MyMenuBar extends JMenuBar {
         //myCustomizePlayer = new JMenu("CUSTOMIZE PLAYER");
         myOptions = new JMenu("OPTIONS");
 
-        myPowerUps = new PowerUpMenu("PowerUps", myMaze);
-        final JMenu myCharacter = new PlayerMenu();
+        myPowerUps = new PowerUpMenu("PowerUps");
         final JMenuItem exit =  new JMenuItem("Exit");
 //        final JMenuItem myColor = new JMenuItem("Color");
 
-
         myQuestionMenu = new QuestionMenu();
-//        myQuestionMenu.setMazePanel(myMazePanel);
-//        System.out.println("mymenubar: " + myMazePanel);
-
+        myPlayerMenu = new PlayerMenu();
 
         final JMenuItem myAbout = new JMenuItem("About");
         final JMenuItem myRules = new JMenuItem("Rules");
@@ -122,7 +123,7 @@ public class MyMenuBar extends JMenuBar {
         add(myHelp);
         add(myOptions);
 
-        myOptions.add(myCharacter);
+        myOptions.add(myPlayerMenu);
         myOptions.add(myQuestionMenu);
 
         myOptions.add(myPowerUps);
@@ -137,10 +138,13 @@ public class MyMenuBar extends JMenuBar {
         myLoad.addActionListener(new Load());
     }
 
-    public void setQuestionMenuMazePanel(MazePanel theMazePanel) {
+    public void setQuestionPlayerMenuMazePanel(MazePanel theMazePanel) {
         myQuestionMenu.setMazePanel(theMazePanel);
-        System.out.println(myMazePanel);
+        myPlayerMenu.setMazePanel(theMazePanel);
+        myPowerUps.setMazePanel(theMazePanel);
     }
+
+//    public void setPlayerMenuMazePanel(PlayerMen)
 
     /**
      *
@@ -151,6 +155,7 @@ public class MyMenuBar extends JMenuBar {
     }
 
     public void setMazePanel(final MazePanel theMazePanel) {
+        System.out.println("called");
         myMazePanel = theMazePanel;
         setMaze();
     }
@@ -183,7 +188,8 @@ public class MyMenuBar extends JMenuBar {
                 System.out.println("Load successful!");
                 myMazePanel.setMaze(myMaze);
                 System.out.println("("+myMaze.getXCount()+","+myMaze.getYCount()+")");
-                //myMaze.getPlayer().setImage(new ImageIcon("Oldman.gif").getImage());
+                //System.out.println(myMaze);
+                myMaze.getPlayer().setImage(PlayerMenu.OLD_MAN);
                 myMazePanel.repaint();
             }
 
@@ -251,40 +257,49 @@ public class MyMenuBar extends JMenuBar {
 
     }
 
-    /**
-     *
-     * Action Listener to show message by clicking Rules button from Help menu.
-     */
-    private class Rules implements ActionListener {
-
-        /**
-         * Opens Message Dialog window with rules for this game.
-         */
-        @Override
-        public void actionPerformed(final ActionEvent theEvent) {
-
-            final String content1 = "<html>"
-                    + "<body style='background-color: white; width: ";
-            final String content2 = "'>"
-                    + "<h1>Game Rules:</h1>"
-                    + "<p>OBJECTIVE: Get to the exit of the maze located at the bottom right. ";
-            final String content3
-                    = "HOW TO: Use navigation buttons to move. "
-                    + "Answer trivia question correctly to move to the next spot. "
-                    + "If you answer incorrectly, that way will become blocked. "
-                    + "If all routes to the exit are blocked, you lose. "
-                    + "If you reach the exit located at the bottom right, you win the trivia maze!</p>";
-            final String content = content1 + 300 + "px"
-                    + content2 + "\n" + content3;
-            final Runnable r = () -> {
-                JLabel label = new JLabel(content);
-                JOptionPane.showMessageDialog(null, label);
-            };
-            SwingUtilities.invokeLater(r);
-
-        }
-
-    }
+  /**
+  *
+  * Action Listener to show message by clicking Rules button from Help menu.
+  */
+  private class Rules implements ActionListener {
+  
+     /**
+      * Opens Message Dialog window with rules for this game.
+      */
+     @Override
+     public void actionPerformed(final ActionEvent theEvent) {
+  
+         final String content1 = "<html>"
+                 + "<body style='background-color: white; width: ";
+         final String content2 = "'>"
+                 + "<h1>Game Rules:</h1>"
+                 + "<p>OBJECTIVE: Get to the exit of the maze located at the bottom right. ";
+         final String content3
+                 = "HOW TO: Use navigation buttons to move. "
+                 + "Answer trivia question correctly to move to the next spot. "
+                 + "If you answer incorrectly, that way will become blocked. "
+                 + "If all routes to the exit are blocked, you lose. "
+                 + "If you reach the exit located at the bottom right, you win the trivia maze!</p>"
+                 + "PowerUps: While going through the Trivia Maze you will encounter PowerUps. "
+                 + "When you get a PowerUp, a message will tell you which one you got. "
+                 + "You can access your PowerUps from the \"Options\" menu under \"PowerUp\""
+                 + "There are two PowerUps you can get, FreeQuestion and PermaUnlock. "
+                 + "<br />FreeQuestion: The FreeQuestion PowerUp allows you to skip a question and move"
+                 + " into the next room\nPermaUnlock: The PermaUnlock PowerUp allows you to retry a question" 
+                 + " that you had previously answered incorrectly.";
+         final String content = content1 + 300 + "px"
+                 + content2 + "\n" + content3;
+         final Runnable r = () -> {
+             UIManager.put("OptionPane.minimumSize",new Dimension(500,500)); 
+             JLabel label = new JLabel(content);
+             label.setPreferredSize(new Dimension(500,500));
+             JOptionPane.showMessageDialog(null, label);
+         };
+         SwingUtilities.invokeLater(r);
+  
+     }
+  
+  }
 
     private class Exit implements ActionListener {
 
@@ -298,4 +313,176 @@ public class MyMenuBar extends JMenuBar {
     public static String getDataBaseName() {
         return myDataBaseName;
     }
+//
+//    /**
+//     * 
+//     *   @author Zach Hunter
+//     *
+//     */
+//    class PowerUpMenu extends JMenu implements ActionListener {
+//    /**String name for PowerUp Perma-Unlock */
+//    private static final String PERMA_UNLOCK = "PermaUnlock";
+//    /**String name for PowerUp Free Question */
+//    private static final String FREE_QUESTION = "FreeQuestion";
+//   
+//    /**
+//     * 
+//     */
+//    private static final long serialVersionUID = 2859544975052134927L;
+//    private JMenuItem myPerma;
+//    private JMenuItem myFree;
+//    
+//    
+//    
+//    /**
+//     * 
+//     * @param theMaze
+//     */
+//    public PowerUpMenu(final String theName) {
+//        super(theName);
+//        
+//        setUpPowerUps();
+//    }
+//    
+//    /**
+//     * 
+//     */
+//    public void enablePermaUnlock() {
+//        myPerma.setEnabled(true);
+//    }
+//    
+//
+//    /**
+//     * 
+//     */
+//    public void enableFreeQuestion() {
+//        myFree.setEnabled(true);
+//    }
+//    
+//    /**
+//     * 
+//     */
+//    private void setUpPowerUps() {
+//        myPerma = new JMenuItem(PERMA_UNLOCK);
+//        myFree = new JMenuItem(FREE_QUESTION);
+//        
+//        myPerma.addActionListener(new PermaUnlock());
+//        myFree.addActionListener(new FreeQuestion());
+//        
+//        myPerma.setEnabled(false);
+//        myFree.setEnabled(false);
+//        
+//        add(myPerma);
+//        add(myFree);
+//    }
+//    
+//    /**
+//     * 
+//     * @author Zach Hunter
+//     *
+//     */
+//    private class PermaUnlock implements ActionListener {
+//
+//        @Override
+//        public void actionPerformed(final ActionEvent theEvent) {
+//            final int currentDir = myMaze.getDirection();
+//            //int currentDir = 4;
+//            if (!myMaze.getCurrentRoom().getUserDoor(currentDir).isPermaLocked()) {
+//                return;
+//            } else {
+//                myMaze.getCurrentRoom().getUserDoor(currentDir).setPermaLock(false);
+//                myMaze.getPlayer().removePowerUp(PowerUp.createPermaUnlock());
+//                
+//                myPerma.setEnabled(false);
+//            }
+//            
+//        }
+//        
+//    }
+//    
+//    /**
+//     * 
+//     * @author Zach Hunter
+//     *
+//     */
+//    private class FreeQuestion implements ActionListener {
+//
+//        @Override
+//        public void actionPerformed(final ActionEvent theEvent) {
+//            final int currentDir = myMaze.getDirection();
+//            //int currentDir = 2;
+//            Door theDoor = myMaze.getCurrentRoom().getUserDoor(currentDir);
+//            String solution = Question.getQuestionInstance().getSolution(theDoor.getId());
+//            
+////            MazePanel.getMaze();
+//            
+//            myMaze.doorSolution(solution, currentDir);
+//         
+//            myMaze.getPlayer().removePowerUp(PowerUp.createFreeQuestion());
+//            
+//            myFree.setEnabled(false);
+//        }
+//        
+//    }
+//
+//    @Override
+//    public void actionPerformed(ActionEvent e) {
+//        // TODO Auto-generated method stub
+//        
+//    }
+//}
+
+
+
+
+
 }
+
+
+
+
+
+
+///**
+//*
+//* Action Listener to show message by clicking Rules button from Help menu.
+//*/
+//private class Rules implements ActionListener {
+//
+//   /**
+//    * Opens Message Dialog window with rules for this game.
+//    */
+//   @Override
+//   public void actionPerformed(final ActionEvent theEvent) {
+//
+//       final String content1 = "<html>"
+//               + "<body style='background-color: white; width: ";
+//       final String content2 = "'>"
+//               + "<h1>Game Rules:</h1>"
+//               + "<p>OBJECTIVE: Get to the exit of the maze located at the bottom right. ";
+//       final String content3
+//               = "HOW TO: Use navigation buttons to move. "
+//               + "Answer trivia question correctly to move to the next spot. "
+//               + "If you answer incorrectly, that way will become blocked. "
+//               + "If all routes to the exit are blocked, you lose. "
+//               + "If you reach the exit located at the bottom right, you win the trivia maze!</p>"
+//               + "PowerUps: While going through the Trivia Maze you will encounter PowerUps. "
+//               + "When you get a PowerUp, a message will tell you which one you got. "
+//               + "You can access your PowerUps from the \"Options\" menu under \"PowerUp\""
+//               + "There are two PowerUps you can get, FreeQuestion and PermaUnlock. "
+//               + "<br />FreeQuestion: The FreeQuestion PowerUp allows you to skip a question and move"
+//               + " into the next room\nPermaUnlock: The PermaUnlock PowerUp allows you to retry a question" 
+//               + " that you had previously answered incorrectly.";
+//       final String content = content1 + 300 + "px"
+//               + content2 + "\n" + content3;
+//       final Runnable r = () -> {
+//           UIManager.put("OptionPane.minimumSize",new Dimension(500,500)); 
+//           JLabel label = new JLabel(content);
+//           label.setPreferredSize(new Dimension(500,500));
+//           JOptionPane.showMessageDialog(null, label);
+//       };
+//       SwingUtilities.invokeLater(r);
+//
+//   }
+//
+//}

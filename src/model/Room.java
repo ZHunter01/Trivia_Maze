@@ -166,4 +166,12 @@ public class Room extends GameObject implements Serializable{
          
     }
     
+    public void removePowerUp() {
+        if (this.getRoomPowerUp() == PowerUp.createEmptyPowerUp()) {
+            return;
+        } else {
+            myPowerUp = PowerUp.createEmptyPowerUp();
+        }
+    }
+    
 }

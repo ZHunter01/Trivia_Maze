@@ -48,7 +48,7 @@ public class Application extends JFrame {
 
         MyMenuBar.getInstance().setMazePanel(panel);
         setJMenuBar(MyMenuBar.getInstance());
-        MyMenuBar.getInstance().setQuestionMenuMazePanel(panel);
+        MyMenuBar.getInstance().setQuestionPlayerMenuMazePanel(panel);
 
         //Add panels to the frame
         add(panel, BorderLayout.CENTER);

@@ -1,3 +1,4 @@
+
 /**
  * Trivia Maze TCSS 360 Spring 2021
  */
@@ -26,6 +27,7 @@ import model.Question;
  *
  * @author Alik Balika
  * @author Oleksandr Maistruk
+ * @author Zach Hunter
  */
 public class AnswerPanel extends JPanel {
     /**String message for when game is won */
@@ -88,7 +90,7 @@ public class AnswerPanel extends JPanel {
      */
     public AnswerPanel() {
         setPreferredSize(new Dimension(222, 0));
-        setBackground(new Color(98, 0, 134));
+        setBackground(Color.BLACK);
         myAnswer = "";
 //        initAndAddAnswerPrompt();
 //        initAndAddAnswer();
@@ -103,74 +105,6 @@ public class AnswerPanel extends JPanel {
 //        }
         initAndAddAnswer(theVisibility);
         initAndAddSubmit(theVisibility);
-    }
-
-    public void setPowerUpMenu(final PowerUpMenu theMenu) {
-        myPowerUpMenu = theMenu;
-    }
-
-
-    /**
-     * initializes the submit button and adds it to the panel
-     */
-    private void initAndAddSubmit(final boolean theVisibility) {
-        if (mySubmit == null) {
-            mySubmit = new JButton("SUBMIT");
-            mySubmit.setBackground(Color.BLACK);
-            mySubmit.setForeground(Color.WHITE);
-            mySubmit.setFocusable(theVisibility);
-            mySubmit.setPreferredSize(new Dimension(205, 30));
-            add(mySubmit);
-
-
-            mySubmit.addActionListener(e -> {
-//                if(!Question.getQuestionInstance().isMultiple(myQuestionPanel.getMyQuestionId())) {
-                myAnswer = myAnswerField.getText();
-//                } else {
-
-//                }
-                myMaze.doorSolution(myAnswer, myDirection);
-
-                if (myMaze.getCurrentRoom().getUserDoor(myDirection).isPermaLocked()) {
-                    myQuestionPanel.setMyQuestion("Answer was incorrect! Door permanently locked!");
-                } else {
-                    myQuestionPanel.setMyQuestion("Answer was correct! Door unlocked!");
-                }
-
-//                if (myMaze.getWin()) {
-//                    this.displayWin();
-//                } else if (myMaze.getLose()) {
-//                    this.displayLose();
-//                }
-
-//                myAnswerField.setVisible(false);
-//                mySubmit.setVisible(false);
-//                myAnswerPrompt.setVisible(false);
-                setAnswerPanel(false);
-
-                myMazePanel.repaint();
-
-                myAnswerField.setText("");
-                myAnswer = "";
-
-                if (myMaze.getWin()) {
-                    this.displayWin();
-                } else if (myMaze.getLose()) {
-                    this.displayLose();
-                }
-                
-                checkForPowerUps();
-                
-                //if (!myAnswer.equals("")) myAnswerField.setFocusable(false);
-                System.out.println("Answer23: " + myAnswer);
-            });
-
-            myAnswerField.addActionListener(e -> myAnswer = myAnswerField.getText());
-
-        } else {
-            mySubmit.setVisible(theVisibility);
-        }
-
     }
 
     public void setMaze(final Maze theMaze) {
@@ -188,6 +122,63 @@ public class AnswerPanel extends JPanel {
     public void setQuestionPanel(final QuestionPanel theQuestionPanel) {
         myQuestionPanel = theQuestionPanel;
     }
+    
+    public void setPowerUpMenu(final PowerUpMenu theMenu) {
+        myPowerUpMenu = theMenu;
+    }
+
+    public void submitAndTextfieldListener() {
+        myAnswer = myAnswerField.getText();
+
+        myMaze.doorSolution(myAnswer, myDirection);
+
+        if (myMaze.getCurrentRoom().getUserDoor(myDirection).isPermaLocked() && myMaze.getIncorrect()) {
+            myQuestionPanel.setMyQuestion(LOCK_MESSAGE);
+        } else {
+            myQuestionPanel.setMyQuestion(CORRECT_MESSAGE);
+            //myMaze.reverseDoorPermaLock(myDirection);
+        }
+
+        setAnswerPanel(false);
+
+        myMazePanel.repaint();
+
+        myAnswerField.setText("");
+        myAnswer = "";
+
+        if (myMaze.getWin()) {
+            this.displayWin();
+        } else if (myMaze.getLose()) {
+            this.displayLose();
+        }
+
+        checkForPowerUps();
+        System.out.println("Answer23: " + myAnswer);
+    }
+
+
+    /**
+     * initializes the submit button and adds it to the panel
+     */
+    private void initAndAddSubmit(final boolean theVicible) {
+        if (mySubmit == null) {
+            mySubmit = new JButton("SUBMIT");
+            mySubmit.setBackground(Color.BLACK);
+            mySubmit.setForeground(Color.WHITE);
+            mySubmit.setFocusable(theVicible);
+            mySubmit.setPreferredSize(new Dimension(205, 30));
+            add(mySubmit);
+
+
+            mySubmit.addActionListener(e -> submitAndTextfieldListener());
+
+            myAnswerField.addActionListener(e -> myAnswer = myAnswerField.getText());
+
+        } else {
+            mySubmit.setVisible(theVicible);
+        }
+
+    }
 
     /**
      *
@@ -196,18 +187,18 @@ public class AnswerPanel extends JPanel {
         if (myMaze.getCurrentRoom().getRoomPowerUp().isFreeQuestion()) {
             myQuestionPanel.setMyQuestion(FREE_QUESTION);
             myPowerUpMenu.enableFreeQuestion();
-
+            
         } else if (myMaze.getCurrentRoom().getRoomPowerUp().isPermaUnlock()) {
             myQuestionPanel.setMyQuestion(PERMA_UNLOCK);
             myPowerUpMenu.enablePermaUnlock();
         }
-
+        myMaze.getCurrentRoom().removePowerUp();
     }
 
     /**
      * initializes the JTextField and adds it to the panel
      */
-    private void initAndAddAnswer(final boolean theVisiblity) {
+    private void initAndAddAnswer(final boolean theVicible) {
         if (myAnswerField == null) {
             myAnswerField = new JTextField(20);
 
@@ -215,6 +206,7 @@ public class AnswerPanel extends JPanel {
             myAnswerField.setFocusable(false);
             myAnswerField.setVisible(false);
             myAnswerField.setText("");
+            myAnswerField.addActionListener(e -> submitAndTextfieldListener());
         }
         if (myMultiAnswer == null) {
             myMultiAnswer = new JMenuBar();
@@ -224,12 +216,12 @@ public class AnswerPanel extends JPanel {
 
         }
         if(!Question.getQuestionInstance().isMultiple(myQuestionPanel.getMyQuestionId())) {
-            myMultiAnswer.setVisible(false);
-            myAnswerField.setVisible(theVisiblity);
-            myAnswerField.setFocusable(theVisiblity);
+            myAnswerField.setVisible(theVicible);
+            myAnswerField.setFocusable(theVicible);
             myAnswerField.setText("");
-
+            myMultiAnswer.setVisible(false);
         } else {
+
             myAnswerField.setVisible(false);
             myMultiAnswer.removeAll();
             Box box = Box.createVerticalBox();
@@ -247,8 +239,8 @@ public class AnswerPanel extends JPanel {
 
             }
 //            box.setLayout(new GridLayout(9, 1));
-            myMultiAnswer.setVisible(theVisiblity);
-            myMultiAnswer.setFocusable(theVisiblity);
+            myMultiAnswer.setVisible(theVicible);
+            myMultiAnswer.setFocusable(theVicible);
         }
 
     }
@@ -256,14 +248,15 @@ public class AnswerPanel extends JPanel {
     /**
      * initializes the JLabel prompt and adds it to the panel
      */
-    private void initAndAddAnswerPrompt(final boolean theVisibility) {
+    private void initAndAddAnswerPrompt(final boolean theVicible) {
         if (myAnswerPrompt == null) {
             myAnswerPrompt = new JLabel("Please enter your answer: ");
             myAnswerPrompt.setFont(new Font(Font.MONOSPACED, Font.BOLD, 13));
+            myAnswerPrompt.setForeground(Color.WHITE);
 
             add(myAnswerPrompt);
         } else {
-            myAnswerPrompt.setVisible(theVisibility);
+            myAnswerPrompt.setVisible(theVicible);
         }
     }
 
@@ -289,6 +282,7 @@ public class AnswerPanel extends JPanel {
     public void setMyAnswer(final String myAnswer) {
         this.myAnswer = myAnswer;
     }
+
 
     /** Displays a JOptionPane with a win message
      *

@@ -36,7 +36,7 @@ public class Maze implements Serializable{
     private Door myCurrentDoor;
     /**Int value to keep track of what direction door is being accessed */
     private int userDir;
-     
+    private boolean myIncorrect;
     
     /* Creates default 2-d array maze with 4x4 dimensions
      * 
@@ -57,6 +57,7 @@ public class Maze implements Serializable{
         fillMaze();
         
         myWin = false;
+        myIncorrect = false;
         
         myPlayer = new Player();
         
@@ -93,6 +94,10 @@ public class Maze implements Serializable{
      */
     public int getCorrectCount() {
         return myCorrectCounter;
+    }
+    
+    public boolean getIncorrect() {
+        return myIncorrect;
     }
     
     /** Returns current X count of the Maze
@@ -181,6 +186,10 @@ public class Maze implements Serializable{
         return userDir;
     }
     
+    public void setDirection(final int theDir) {
+        userDir = theDir;
+    }
+    
     /** Processes a user answer to question from a door.
      *  If answer is correct, check if user has won and increment maze
      *  Otherwise permanently lock the door and check if user has lost.
@@ -203,14 +212,17 @@ public class Maze implements Serializable{
     private void checkSolution() {
         //If answer was correct door should be unlocked
         if (!myCurrentDoor.isLocked()) {
+            myIncorrect = false;
             myCorrectCounter ++;
-            incrementMaze();
+            this.incrementMaze();
+            this.reverseDoorPermaLock(userDir);
             //Check for if the user has won the game
             if (hasWon()) {
                 return;
             }
           //If answer was incorrect
         } else {
+            myIncorrect = true;
             //Check if user has lost
             if (hasLost()) {
                 return;

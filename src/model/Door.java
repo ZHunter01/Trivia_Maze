@@ -66,7 +66,7 @@ public class Door extends GameObject implements Serializable{
      * 
      * @param theBoolean
      */
-    protected void setPermaLock(boolean theBoolean) {
+    public void setPermaLock(boolean theBoolean) {
         myPermaLock = theBoolean;
     }
     

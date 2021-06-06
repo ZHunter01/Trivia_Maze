@@ -8,6 +8,7 @@ import javax.swing.JMenuItem;
 
 import model.Door;
 import model.Maze;
+import model.PowerUp;
 import model.Question;
 
 /**
@@ -27,29 +28,36 @@ public class PowerUpMenu extends JMenu implements ActionListener {
     private static final long serialVersionUID = 2859544975052134927L;
     private JMenuItem myPerma;
     private JMenuItem myFree;
-    private Maze myMaze;
-        
+    private MazePanel myMazePanel;
+    
     /**
      * 
      * @param theMaze
      */
-    public PowerUpMenu(final String theName, final Maze theMaze) {
+    public PowerUpMenu(final String theName) {
         super(theName);
-        
-        myMaze = theMaze; 
-        
+                
         setUpPowerUps();
     }
     
+    /**
+     * 
+     */
     public void enablePermaUnlock() {
         myPerma.setEnabled(true);
     }
     
 
+    /**
+     * 
+     */
     public void enableFreeQuestion() {
         myFree.setEnabled(true);
     }
     
+    /**
+     * 
+     */
     private void setUpPowerUps() {
         myPerma = new JMenuItem(PERMA_UNLOCK);
         myFree = new JMenuItem(FREE_QUESTION);
@@ -64,25 +72,50 @@ public class PowerUpMenu extends JMenu implements ActionListener {
         add(myFree);
     }
     
+    /**
+     * 
+     * @author Zach Hunter
+     *
+     */
     private class PermaUnlock implements ActionListener {
 
         @Override
         public void actionPerformed(final ActionEvent theEvent) {
-            
+            final int currentDir = myMazePanel.getMaze().getDirection();
+            //int currentDir = 4;
+            if (!myMazePanel.getMaze().getCurrentRoom().getUserDoor(currentDir).isPermaLocked()) {
+                return;
+            } else {
+                myMazePanel.getMaze().getCurrentRoom().getUserDoor(currentDir).setPermaLock(false);
+                myMazePanel.getMaze().getPlayer().removePowerUp(PowerUp.createPermaUnlock());
+                
+                myPerma.setEnabled(false);
+            }
             
         }
         
     }
     
+    /**
+     * 
+     * @author Zach Hunter
+     *
+     */
     private class FreeQuestion implements ActionListener {
 
         @Override
         public void actionPerformed(final ActionEvent theEvent) {
-            int currentDir = myMaze.getDirection();
-            Door theDoor = myMaze.getCurrentRoom().getUserDoor(currentDir);
+            final int currentDir = myMazePanel.getMaze().getDirection();
+            //int currentDir = 2;
+            Door theDoor = myMazePanel.getMaze().getCurrentRoom().getUserDoor(currentDir);
             String solution = Question.getQuestionInstance().getSolution(theDoor.getId());
             
-            myMaze.doorSolution(solution, currentDir);
+//            MazePanel.getMaze();
+            
+            myMazePanel.getMaze().doorSolution(solution, currentDir);
+            myMazePanel.repaint();
+            
+            myMazePanel.getMaze().getPlayer().removePowerUp(PowerUp.createFreeQuestion());
             
             myFree.setEnabled(false);
         }
@@ -93,5 +126,9 @@ public class PowerUpMenu extends JMenu implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         // TODO Auto-generated method stub
         
+    }
+
+    public void setMazePanel(MazePanel theMazePanel) {
+        myMazePanel = theMazePanel;
     }
 }
