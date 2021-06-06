@@ -20,7 +20,7 @@ public class Drawer {
     public static void drawPlayer(final Graphics g, final Player player, final MazePanel mazePanel) {
         g.setColor(Color.PINK);
         //g.fillRect(player.getX(), player.getY(), 30, 30);
-        g.drawImage(player.getIcon(), player.getX(), player.getY(), mazePanel);
+        g.drawImage(player.getImage(), player.getX(), player.getY(), mazePanel);
     }
 
     /**

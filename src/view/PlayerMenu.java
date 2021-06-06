@@ -36,7 +36,7 @@ public class PlayerMenu extends JMenu implements ActionListener {
     public final static String BOY1 = "resources/Boy.gif";
     public final static String GIRL1 = "resources/Girl.gif";
     public final static String GUY = "resources/Guy.gif";
-    public final static String GIRL2 = "reources/Girl2.gif";
+    public final static String GIRL2 = "resources/Girl2.gif";
 
     /**
      * Serial number
@@ -95,7 +95,7 @@ public class PlayerMenu extends JMenu implements ActionListener {
         createPlayerMenu();
     }
 
-    public void setMazePanel(MazePanel theMazePanel) {
+    public void setMazePanel(final MazePanel theMazePanel) {
         myMazePanel = theMazePanel;
         myPlayer = myMazePanel.getMaze().getPlayer();
     }
@@ -131,12 +131,12 @@ public class PlayerMenu extends JMenu implements ActionListener {
 
         String myIconPath;
 
-        public ChangeIcon(String theIconPath) {
+        public ChangeIcon(final String theIconPath) {
             myIconPath = theIconPath;
         }
 
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(final ActionEvent e) {
             myPlayer.setImage(myIconPath);
             myMazePanel.repaint();
         }

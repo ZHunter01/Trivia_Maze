@@ -31,50 +31,24 @@ public class Player extends GameObject implements Serializable{
     private static final int MY_START_Y = 40;
    
     /** Creates a default player object with default black color
-     * 
-     */
-    public Player() {
-       myPlayerImage = new ImageIcon("./resources/Oldman.gif").getImage();
-        myPowerUps = new ArrayList<>();     
-        
-        //Set start point
-        setX(MY_START_X);
-        setY(MY_START_Y);
-    }
-    
-    /** Creates player object with specified ImageIcon as the object's icon
-     * 
-     * @param theIcon
-     */
-    public Player(final Image theIcon) {
-        myPlayerImage = theIcon;
-        myPowerUps = new ArrayList<>();
-            
-        //Sets start point
-        setX(MY_START_X);
-        setY(MY_START_Y);
-    }
-    
-    
-    /** Returns current ImageIcon of the player
-     * 
-     * @return
-     */
-    public Image getIcon() {
-        return myPlayerImage;   
-    }
+    *
+    */
+   public Player() {
+       setImage("resources/Oldman.gif");
+       myPowerUps = new ArrayList<>();
 
+       //Set start point
+       setX(MY_START_X);
+       setY(MY_START_Y);
+   }
+    
+   /**
+    * 
+    * @return
+    */
     public ArrayList<PowerUp> getPowerUps() {
         return myPowerUps;
     }
-    
-    /** Sets player ImageIcon to input ImageIcon
-     * 
-     * @param theImage
-     */
-    public void setImage(final Image theImage) {
-        myPlayerImage = theImage;
-    }  
     
     /** Sets the x and y location of the player object
      * 
@@ -126,8 +100,7 @@ public class Player extends GameObject implements Serializable{
      * @param thePowerUp
      */
     public void removePowerUp(final PowerUp thePowerUp) {
-        myPowerUps.remove(thePowerUp);
-        
+        myPowerUps.remove(thePowerUp);        
     }
     
     /** Updates the x and y coordinates of the Player
@@ -136,9 +109,6 @@ public class Player extends GameObject implements Serializable{
      * @param y
      */
     public void move(final int theX, final int theY) {
-//        if (theX < 0 || theY < 0) {
-//            throw new IllegalArgumentException("Input Error: Values must be greater than or equal to 0.");
-//        }
         setX(getX() + theX);
         setY(getY() + theY);
     }
@@ -160,18 +130,8 @@ public class Player extends GameObject implements Serializable{
         }
     }
     
-//       
-//    public void move(int theDir) {
-//        switch (theDir) {
-//            case Room.UP -> move(0, -110);
-//            case Room.DOWN -> move(0, 110);
-//            case Room.LEFT -> move(-166, 0);
-//            case Room.RIGHT -> move(166, 0);
-//        }
-//    }
-    
     public void setPlayerIcon(final String theName) {
-        myPlayerImage = new ImageIcon("./resources/" + theName + ".gif").getImage();
+        myPlayerImage = new ImageIcon("resources/" + theName + ".gif").getImage();
     }
     
     @Override 

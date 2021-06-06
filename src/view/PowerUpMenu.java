@@ -116,9 +116,6 @@ public class PowerUpMenu extends JMenu implements ActionListener {
             final Door theDoor = myMazePanel.getMaze().getCurrentRoom().getUserDoor(currentDir);
             final String solution = Question.getQuestionInstance().getSolution(theDoor.getId());
             System.out.println("solution is" + solution);
-//            MazePanel.getMaze();
-            
-            //myMazePanel.getMaze().doorSolution(solution, currentDir);
             
             myAnswerPanel.getAnswerField().setText(solution);
             myAnswerPanel.buttonListener();
