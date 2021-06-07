@@ -1,12 +1,18 @@
 package model;
 
+import java.io.Serializable;
+
 /**
  * 
  * @author Zach Hunter
  *
  */
-public class Door extends GameObject{
+public class Door extends GameObject implements Serializable{
     
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -930527126932044388L;
     private boolean myLock;
     private boolean myPermaLock;
     private int myQuestionID;
@@ -60,7 +66,7 @@ public class Door extends GameObject{
      * 
      * @param theBoolean
      */
-    protected void setPermaLock(boolean theBoolean) {
+    public void setPermaLock(boolean theBoolean) {
         myPermaLock = theBoolean;
     }
     

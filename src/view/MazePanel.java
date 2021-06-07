@@ -1,5 +1,3 @@
-
-
 package view;
 
 import controller.Drawer;
@@ -23,17 +21,25 @@ public class MazePanel extends JPanel {
     /**
      * 
      */
-    private static final long serialVersionUID = -4675791810380683974L;
+    private static final long serialVersionUID = -2890387412303301149L;
 
     /**
      * The maze object that contains all of the data
      */
-    private final Maze maze;
+    private Maze maze;
 
     /**
      * The adapter controls the movement of the player
      */
     private final TAdapter myAdapter;
+
+    /**
+     * background images
+     */
+    public final static String SPORT_BACKGROUND = "resources/seaStadium.jpg";
+    public final static String WORLD_BACKGROUND = "resources/world.png";
+
+    private String myBackgroundImage;
 
 //    /**
 //     * Create an instance of the MazePanel
@@ -47,7 +53,7 @@ public class MazePanel extends JPanel {
     /**
      * initializes the maze and constructs the panel
      */
-    public MazePanel(AnswerPanel theAnswerPanel, QuestionPanel theQuestionPanel) {
+    public MazePanel(final AnswerPanel theAnswerPanel, final QuestionPanel theQuestionPanel) {
 
         myAdapter = new TAdapter();
         setFocusable(true);
@@ -56,9 +62,10 @@ public class MazePanel extends JPanel {
 
         myAnswerPanel = theAnswerPanel;
         myQuestionPanel = theQuestionPanel;
-        myAnswerPanel.setMaze(maze);
         myAnswerPanel.setMazePanel(this);
         myAnswerPanel.setQuestionPanel(myQuestionPanel);
+
+        myBackgroundImage = SPORT_BACKGROUND;
 
     }
 
@@ -76,14 +83,21 @@ public class MazePanel extends JPanel {
     // height of panel: 440
     // width of panel: 664
 
+    public void setBackgroundImage(String path) {
+        myBackgroundImage = path;
+    }
+
     /**
      * Draws all of the GameObjects onto the panel
+     *
      * @param g the Graphics drawer
      */
     @Override
-    protected void paintComponent(Graphics g) {
+    protected void paintComponent(final Graphics g) {
         super.paintComponent(g);
 
+        Image ii = Toolkit.getDefaultToolkit().getImage(myBackgroundImage);
+        g.drawImage(ii, 0, 0, this);
         int y = 0;
         for (Room[] rooms : maze.getMaze()) {
             int x = 0;
@@ -92,7 +106,7 @@ public class MazePanel extends JPanel {
                 room.setY(y);
 
                 Drawer.drawRoom(g, room);
-                x+= 166;
+                x += 166;
 
             }
             y += 110;
@@ -107,6 +121,14 @@ public class MazePanel extends JPanel {
         return myAdapter;
     }
 
+    public Maze getMaze() {
+        return maze;
+    }
+
+    public void setMaze(Maze theMaze) {
+        maze = theMaze;
+    }
+
     /**
      * This class handles the movement of the player object
      */
@@ -114,10 +136,11 @@ public class MazePanel extends JPanel {
 
         /**
          * handles the button that the user pressed
+         *
          * @param e the KeyEvent
          */
         @Override
-        public void keyPressed(KeyEvent e) {
+        public void keyPressed(final KeyEvent e) {
             int key = e.getKeyCode();
 
             keySwitch(key);
@@ -125,18 +148,20 @@ public class MazePanel extends JPanel {
 
         /**
          * handles the button that the user pressed. Used for the button actionListeners in DirectionPanel
+         *
          * @param theKey the KeyEvent
          */
-        public void keyPressed(int theKey) {
+        public void keyPressed(final int theKey) {
             keySwitch(theKey);
         }
 
         /**
          * Chooses the direction that the player object will move in as well as does not allow user to go
          * out of bounds
+         *
          * @param key the code of the button that the user pressed
          */
-        private void keySwitch(int key) {
+        private void keySwitch(final int key) {
 
             switch (key) {
 
@@ -145,7 +170,8 @@ public class MazePanel extends JPanel {
                     if (!maze.isInBounds(Room.LEFT)) {
                         return;
                     }
-
+                    
+                    maze.setDirection(Room.LEFT);
                     retrieveQuestion(Room.LEFT);
                     break;
 
@@ -155,6 +181,7 @@ public class MazePanel extends JPanel {
                         return;
                     }
 
+                    maze.setDirection(Room.RIGHT);
                     retrieveQuestion(Room.RIGHT);
                     break;
 
@@ -164,6 +191,7 @@ public class MazePanel extends JPanel {
                         return;
                     }
 
+                    maze.setDirection(Room.UP);
                     retrieveQuestion(Room.UP);
                     break;
 
@@ -173,6 +201,7 @@ public class MazePanel extends JPanel {
                         return;
                     }
 
+                    maze.setDirection(Room.DOWN);
                     retrieveQuestion(Room.DOWN);
                     break;
 
@@ -180,9 +209,16 @@ public class MazePanel extends JPanel {
                     break;
             }
             System.out.println("(" + maze.getXCount() + "," + maze.getYCount() + ")");
+            System.out.println(maze.getWin());
             repaint();
         }
 
+        /**
+         * gets the questions and updates the gui to display the question as well as the AnswerPanel. Checks if
+         * the user is correct or incorrect.
+         *
+         * @param theDir
+         */
         private void retrieveQuestion(int theDir) {
             Room myRoom = maze.getCurrentRoom();
             Door myDoor = myRoom.getUserDoor(theDir);
@@ -192,34 +228,21 @@ public class MazePanel extends JPanel {
 
             if (myDoor.isPermaLocked()) {
                 myQuestionPanel.setMyQuestion("That door is permanently locked!");
-//                myAnswerPanel.getAnswerField().setVisible(false);
-//                myAnswerPanel.getSubmit().setVisible(false);
-//                myAnswerPanel.getAnswerPrompt().setVisible(false);
                 myAnswerPanel.setAnswerPanel(false);
                 return;
             }
 
-//            myAnswerPanel.getAnswerField().setFocusable(true);
             myAnswerPanel.setDirection(theDir);
 
             System.out.println("in mazePanel: " + myDoor.getQuestion());
-            if (!myAnswerPanel.getMyAnswer().equalsIgnoreCase("")) {
+            if (!myAnswerPanel.getAnswer().equalsIgnoreCase("")) {
                 System.out.println("Entered if statement");
 
-                //maze.doorSolution(myAnswerPanel.getMyAnswer(), theDir);
-
-                //myAnswerPanel.setMyAnswer("");
-
-//                if (myDoor.isPermaLocked()) {
-//                    myQuestionPanel.setMyQuestion("Answer was incorrect! Door permanently locked!");
-//                } else {
-//                    myQuestionPanel.setMyQuestion("Answer was correct! Door unlocked!");
-//                }
-
-//                myAnswerPanel.myAnswerField.setVisible(false);
-//                myAnswerPanel.mySubmit.setVisible(false);
-//                myAnswerPanel.myAnswerPrompt.setVisible(false);
             }
         }
+    }
+
+    public AnswerPanel getAnswerPanel() {
+        return myAnswerPanel;
     }
 }

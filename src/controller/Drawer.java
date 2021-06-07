@@ -1,10 +1,13 @@
 package controller;
 
+import java.awt.Color;
+import java.awt.Graphics;
+
 import model.Player;
 import model.Room;
 import view.MazePanel;
 
-import java.awt.*;
+
 
 /**
  * @author Alik Balika
@@ -17,10 +20,10 @@ public class Drawer {
      * @param player the player object
      * @param mazePanel the observer
      */
-    public static void drawPlayer(Graphics g, Player player, MazePanel mazePanel) {
+    public static void drawPlayer(final Graphics g, final Player player, final MazePanel mazePanel) {
         g.setColor(Color.PINK);
         //g.fillRect(player.getX(), player.getY(), 30, 30);
-        g.drawImage(player.getIcon(), player.getX(), player.getY(), mazePanel);
+        g.drawImage(player.getImage(), player.getX(), player.getY(), mazePanel);
     }
 
     /**
@@ -28,12 +31,12 @@ public class Drawer {
      * @param g the Graphics drawer
      * @param room the room object
      */
-    public static void drawRoom(Graphics g, Room room) {
+    public static void drawRoom(final Graphics g, final Room room) {
         g.setColor(Color.BLACK);
-        g.fillRect(room.getX(), room.getY(), 166, 110);
+        //g.fillRect(room.getX(), room.getY(), 166, 110);
         g.setColor(Color.gray);
         g.drawRect(room.getX(), room.getY(), 166, 110);
-        g.drawOval((room.getX() + room.getX() + 166) / 2 - 15, (room.getY() + room.getY() + 110) / 2 - 15, 30, 30);
+        //g.drawOval((room.getX() + room.getX() + 166) / 2 - 15, (room.getY() + room.getY() + 110) / 2 - 15, 30, 30);
 
         g.setColor(new Color(165, 42, 42));
 
@@ -45,7 +48,7 @@ public class Drawer {
      * @param g the Graphics drawer
      * @param room the room object
      */
-    private static void drawDoors(Graphics g, Room room) {
+    private static void drawDoors(final Graphics g, final Room room) {
 
         // height of panel: 440
         // width of panel: 664
