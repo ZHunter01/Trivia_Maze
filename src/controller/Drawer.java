@@ -1,4 +1,3 @@
-
 package controller;
 
 import model.Player;
@@ -31,16 +30,16 @@ public class Drawer {
      */
     public static void drawRoom(final Graphics g, final Room room) {
         g.setColor(Color.BLACK);
-        g.fillRect(room.getX(), room.getY(), 166, 110);
+        //g.fillRect(room.getX(), room.getY(), 166, 110);
         g.setColor(Color.gray);
         g.drawRect(room.getX(), room.getY(), 166, 110);
-        g.drawOval((room.getX() + room.getX() + 166) / 2 - 15, (room.getY() + room.getY() + 110) / 2 - 15, 30, 30);
+        //g.drawOval((room.getX() + room.getX() + 166) / 2 - 15, (room.getY() + room.getY() + 110) / 2 - 15, 30, 30);
 
         g.setColor(new Color(165, 42, 42));
 
         drawDoors(g, room);
     }
-
+  
     /**
      * Draws the doors to each room as well as sets their coordinates
      * @param g the Graphics drawer

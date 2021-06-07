@@ -37,7 +37,7 @@ public class DirectionPanel extends JPanel {
 //    /**
 //     * Create an instance of the DirectionPanel
 //     */
-//    private static final DirectionPanel directionPanel ;
+//    private static final DirectionPanel directionPanel = new DirectionPanel();
 
     /**
      * Constructs the panel and initializes buttons
@@ -52,11 +52,11 @@ public class DirectionPanel extends JPanel {
 
         initAndAddButtons();
     }
-
+//
 //    /**
 //     * @return the only instance of DirectionPanel
 //     */
-//    public static DirectionPanel getInstance(final MazePanel thePanel) {
+//    public static DirectionPanel getInstance() {
 //        return directionPanel;
 //    }
 
@@ -82,7 +82,7 @@ public class DirectionPanel extends JPanel {
      * @param theName The name of the button
      * @return a JButton object
      */
-    private JButton createButton(String theName) {
+    private JButton createButton(final String theName) {
         JButton button = new JButton(theName);
         button.setBackground(Color.BLACK);
         button.setForeground(Color.WHITE);

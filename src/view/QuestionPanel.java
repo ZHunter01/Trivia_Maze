@@ -1,4 +1,3 @@
-
 package view;
 
 import javax.swing.*;
@@ -13,9 +12,17 @@ import java.awt.*;
 public class QuestionPanel extends JPanel {
 
     /**
+     * 
+     */
+    private static final long serialVersionUID = -3204259222406958633L;
+
+    /**
      * The JLabel will hold the question
      */
     private JLabel myQuestion;
+
+    /** The id of the question */
+    private int myIdForQuestion;
 
 //    /**
 //     * Create an instance of the QuestionPanel
@@ -29,12 +36,13 @@ public class QuestionPanel extends JPanel {
     public QuestionPanel() {
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(50, 50));
-        setBackground(Color.GREEN);
+        setBackground(Color.BLACK);
 
         myQuestion = new JLabel("This is where the question will show up");
         myQuestion.setFont(new Font(Font.MONOSPACED, Font.BOLD, 15));
         myQuestion.setHorizontalAlignment(JLabel.CENTER);
         myQuestion.setVerticalAlignment(JLabel.CENTER);
+        myQuestion.setForeground(Color.WHITE);
 
         add(myQuestion);
     }
@@ -56,13 +64,33 @@ public class QuestionPanel extends JPanel {
         return myQuestion;
     }
 
+
+
     /**
      * Sets the question to a new question
      * @param theQuestion the new question to be displayed
      */
-    public void setMyQuestion(String theQuestion) {
+    public void setMyQuestion(final String theQuestion) {
         myQuestion.setText(theQuestion);
     }
+
+    /**
+     * Sets the question id to a new question
+     * @param theId the question id
+     */
+    public void setMyQuestionId(final int theId) {
+        myIdForQuestion = theId;
+    }
+
+    /**
+     * Return question id for question which is used right now in the question panel.
+     *
+     * @return myIdForQuestion the question id which is used in the question panel
+     */
+    public int getMyQuestionId() {
+        return myIdForQuestion;
+    }
+
 
     /**
      * clears myQuestion

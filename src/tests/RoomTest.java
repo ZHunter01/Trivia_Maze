@@ -27,6 +27,8 @@ public class RoomTest {
     public PowerUp myPowerUp;
     public Door myDoor;
     public Maze myMaze;
+    //NO12123 is not an answer for any question in the database
+    static final String MY_INCORRECT = "NO12123";
 
     @BeforeEach
     void setUp() {
@@ -58,25 +60,12 @@ public class RoomTest {
     
     @Test
     void testUnlockPermaLock() {
-        myRoom.getUserDoor(Room.DOWN).getQuestion().setQuestionAndSolution("Question", "Solution");;
-        myRoom.getUserDoor(Room.DOWN).checkLock("No");
+        myRoom.getUserDoor(Room.DOWN).checkLock(MY_INCORRECT);
         
         myRoom.unlockPermaLock(Room.DOWN);
         
         assertFalse(myRoom.getUserDoor(Room.DOWN).isPermaLocked());
     }
-//    
-//    @Test
-//    void testUnlockPermaLock_PlayerHasNoPowerUp() {
-//        myPowerUp = PowerUp.createEmptyPowerUp();
-//        myRoom.setRoomWithPowerUp(myPowerUp);
-//        //Should set door to be perma locked
-//        myRoom.getUserDoor(0).checkLock("Not the solution");
-//               
-//        myRoom.unlockPermaLock(0);
-//        
-//        assertTrue(myRoom.getUserDoor(0).isPermaLocked());
-//    }
     
     @Test
     void testIsCorrectDoor() {
@@ -138,5 +127,11 @@ public class RoomTest {
         myRoom.setRoomWithPowerUp(myPowerUp);
         
         assertEquals(myRoom.getRoomPowerUp(), myPowerUp);
+    }
+    
+    @Test
+    void testRemovePowerUp_NoPowerUp() {
+        myRoom.removePowerUp();
+        assertTrue(myRoom.getRoomPowerUp().equals(PowerUp.createEmptyPowerUp()));
     }
 }

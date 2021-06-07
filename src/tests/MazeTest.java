@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import model.Door;
 import model.Maze;
 import model.PowerUp;
 import model.Room;
@@ -15,6 +16,8 @@ import model.Room;
 public class MazeTest {
     private Maze theMaze;
     private Maze customMaze;
+    //NO12123 is not an answer for any question in the database
+    static final String MY_INCORRECT = "NO12123";
     
     @BeforeEach
     void setUp() {
@@ -34,9 +37,8 @@ public class MazeTest {
         theMaze.userDir = Room.DOWN;
         
         for (int n = 0; n < 3; n++) {
-            theMaze.doorSolution(theMaze.getCurrentRoom().getUserDoor(Room.DOWN).getQuestion().getSolution(), Room.DOWN);
-            //System.out.println(theMaze.getCurrentRoom().getUserDoor(Room.DOWN).getQuestion().getSolution());
-            //System.out.println(theMaze.getCurrentRoom().getUserDoor(Room.DOWN).getQuestion().getSolution());
+            Door userDoor = theMaze.getCurrentRoom().getUserDoor(Room.DOWN);
+            theMaze.doorSolution(userDoor.getQuestionInstance().getSolution(userDoor.getId()), Room.DOWN);
 
             count ++;
         }
@@ -47,12 +49,7 @@ public class MazeTest {
     void testCustomMazeConstructor() {        
         assertTrue(customMaze.getXLength() == 6 && customMaze.getYLength() == 6);
     }
-//    
-//    @Test
-//    void testDoorQuestion() {
-//        assertEquals(theMaze.doorQuestion(Room.UP), theMaze.getCurrentRoom().getUserDoor(Room.UP).getQuestion());
-//    }
-    
+
     @Test
     void testGetMyMaze() {
         final Room[][] testRoom = theMaze.getMaze();
@@ -80,9 +77,20 @@ public class MazeTest {
     }
     
     @Test
+    void testGetDirection() {
+        assertTrue(theMaze.getDirection() == 0);
+    }
+    
+    @Test
+    void testSetDirection() {
+        theMaze.setDirection(Room.LEFT);
+        assertTrue(theMaze.userDir == 1);
+    }
+    
+    @Test
     void testUsePowerUpPermaUnlock_DoorIsPermaLocked() {
-        theMaze.getCurrentRoom().getUserDoor(Room.UP).getQuestion().setQuestionAndSolution("Does this work?", "Yes");
-        theMaze.getCurrentRoom().getUserDoor(Room.UP).checkLock("NO");
+        //theMaze.getCurrentRoom().getUserDoor(Room.UP).getQuestion().setQuestionAndSolution("Does this work?", "Yes");
+        theMaze.getCurrentRoom().getUserDoor(Room.UP).checkLock(MY_INCORRECT);
         
         
         final PowerUp power = PowerUp.createPermaUnlock();
@@ -146,12 +154,12 @@ public class MazeTest {
         assertFalse(theMaze.hasWon());
     }
     
-//    @Test
-//    void testReverseDoorPermaLock_Up() {
-//        theMaze.reverseDoorPermaLock(Room.UP);
-//        
-//        assertTrue(theMaze.getCurrentRoom().getUserDoor(Room.DOWN).isPermaLocked());
-//    }
+    @Test
+    void testReverseDoorPermaLock_Up() {
+        theMaze.reverseDoorPermaLock(Room.UP);
+        
+        assertTrue(theMaze.getCurrentRoom().getUserDoor(Room.DOWN).isPermaLocked());
+    }
     
     @Test
     void testHasWon() {
@@ -180,7 +188,8 @@ public class MazeTest {
         theMaze.userDir = Room.DOWN;
         
         for (int n = 0; n < 3; n++) {
-            theMaze.doorSolution(theMaze.getCurrentRoom().getUserDoor(Room.DOWN).getQuestion().getSolution(), Room.DOWN);
+            Door userDoor = theMaze.getCurrentRoom().getUserDoor(Room.DOWN);
+            theMaze.doorSolution(userDoor.getQuestionInstance().getSolution(userDoor.getId()), Room.DOWN);
 
             count ++;
         }
@@ -192,8 +201,9 @@ public class MazeTest {
       //  theMaze.setRoom(3, 3);
         theMaze.userDir = Room.DOWN;
         
-        theMaze.doorSolution(theMaze.getCurrentRoom().getUserDoor(Room.DOWN).getQuestion().getSolution(), Room.DOWN);
-   
+        Door userDoor = theMaze.getCurrentRoom().getUserDoor(Room.DOWN);
+        theMaze.doorSolution(userDoor.getQuestionInstance().getSolution(userDoor.getId()), Room.DOWN);
+           
         assertEquals(theMaze.getYCount(), 1);
     }
     
@@ -231,8 +241,8 @@ public class MazeTest {
     void testCheckSolution_HasWon() {
         theMaze.userDir = Room.DOWN;
         theMaze.setRoom(3, 2);
-        theMaze.doorSolution(theMaze.getCurrentRoom().getUserDoor(Room.DOWN).getQuestion().getSolution(), Room.DOWN);
-   
+        Door userDoor = theMaze.getCurrentRoom().getUserDoor(Room.DOWN);
+        theMaze.doorSolution(userDoor.getQuestionInstance().getSolution(userDoor.getId()), Room.DOWN);   
         assertTrue(theMaze.getWin());
     }
     
@@ -273,6 +283,7 @@ public class MazeTest {
     
     @Test
     void testCheckRoomWithPowerUp_False() {
+        theMaze.getCurrentRoom().removePowerUp();
         theMaze.checkRoomPowerUp();
         assertFalse(theMaze.myPlayer.containsFreeQuestion() || theMaze.myPlayer.containsPermaUnlock());
     }

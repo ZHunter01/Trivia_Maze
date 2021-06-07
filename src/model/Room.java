@@ -1,13 +1,18 @@
 package model;
 
 import java.awt.Image;
+import java.io.Serializable;
 
 /**
  * 
  * @author Zach Hunter
  *
  */
-public class Room extends GameObject{
+public class Room extends GameObject implements Serializable{
+    /**
+     * 
+     */
+    private static final long serialVersionUID = -4667756480655907185L;
     /**Door object to represent door at the top of the room */
     private Door myDoorUp;
     /**Door object to represent door at the left side of the room */
@@ -18,10 +23,8 @@ public class Room extends GameObject{
     private Door myDoorDown;
     /**PowerUp object that is contained in a room */
     private PowerUp myPowerUp;
-    /**Player object of player in the room */
-   // private Player myPlayer;
     /**Image object that represents the room */
-    private Image myRoomIcon;
+    private transient Image myRoomIcon;
     /**Int value to indicate up door is selected */
     public final static int UP = 0;
     /**Int value to indicate left door is selected */
@@ -30,6 +33,9 @@ public class Room extends GameObject{
     public final static int DOWN = 2;
     /**Int value to indicate right door is selected */
     public final static int RIGHT = 3;
+    /**Int value to keep track of what direction door is being accessed */
+    //static int userDir;
+    
     
     /** Creates default Room object
      * 
@@ -41,8 +47,6 @@ public class Room extends GameObject{
         myDoorDown = new Door();
                 
         myPowerUp = PowerUp.createEmptyPowerUp();
-        
-        //myPlayer = thePlayer;
     }
     
     /** Get current Room Image
@@ -61,19 +65,12 @@ public class Room extends GameObject{
         myRoomIcon = theIcon;
     }
     
-//    /**
+//    /** Returns current direction user is pointing in
 //     * 
-//     * @return
+//     * @return userDir
 //     */
-//    public Player getPlayer() {
-//        return myPlayer;
-//    }
-//    
-//    /**
-//     * 
-//     */
-//    public void setPlayer(final Player thePlayer) {
-//        myPlayer = thePlayer;
+//    public int getUserDir() {
+//        return userDir;
 //    }
     
     /** Returns PowerUp object contained in the room
@@ -101,7 +98,7 @@ public class Room extends GameObject{
      * @return userDoor
      */
     public Door getUserDoor(final int theDir) {
-        Door userDoor = new Door();
+        Door userDoor;
         
         if (theDir == UP) {
             userDoor = myDoorUp; 
@@ -158,20 +155,23 @@ public class Room extends GameObject{
      */
     public void setRoomWithPowerUp(final PowerUp thePowerUp) {
         myPowerUp = thePowerUp;
-    }
-    
+    }   
+        
     /** Unlocks door that has a PermaLock value of true
-     *  User must have contain a PermaUnlock PowerUp
-     * 
+     *  
      * @param theDir
      */
     public void unlockPermaLock(final int theDir) {
-        //getUserDoor(theDir).setPermaLock(false);
-       // if (myPlayer.containsPermaUnlock()) {
-          getUserDoor(theDir).setPermaLock(false);
-
-        //} else {
-          //  return;
-        //}
+        getUserDoor(theDir).setPermaLock(false);
+         
     }
-}   
+    
+    public void removePowerUp() {
+        if (this.getRoomPowerUp() == PowerUp.createEmptyPowerUp()) {
+            return;
+        } else {
+            myPowerUp = PowerUp.createEmptyPowerUp();
+        }
+    }
+    
+}

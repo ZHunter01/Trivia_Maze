@@ -18,69 +18,56 @@ import model.Question;
  */
 public class DoorTest {
     Door myDoor;
-    Question myQ;
-    
+    //NO12123 is not an answer for any question in the database
+    static final String MY_INCORRECT = "NO12123";
     
     @BeforeEach
     void setUp() {
         myDoor = new Door();
-        myQ = new Question();        
+    }
+    
+    @Test
+    void testGetQuestionInstance() {
+        assertEquals(myDoor.getQuestionInstance(), Question.getQuestionInstance());
     }
     
     @Test
     void checkLockFalse() {
-        myDoor.checkLock(myDoor.getQuestion().getSolution());
+        myDoor.checkLock(Question.getQuestionInstance().getSolution(myDoor.getId()));
         
         assertFalse(myDoor.isLocked());
     }
     
     @Test
     void checkLockTrue() {
-        myQ.setQuestionAndSolution("Does this work?", "Yes");
-        myDoor.setQuestion(myQ);
-        myDoor.checkLock("NO");
+        myDoor.checkLock(MY_INCORRECT);
         
         assertTrue(myDoor.isLocked());
     }
-    
-    @Test
-    void checkPermaLockNoSolution() {
-        myQ.setQuestionAndSolution("Does this work?", "Yes");
-        myDoor.setQuestion(myQ);
-        
-        assertFalse(myDoor.isPermaLocked());
-    }
+
     
     @Test
     void checkPermaLockFalseWithCorrectSolution() {
-        myDoor.checkLock(myDoor.getQuestion().getSolution());
+        myDoor.checkLock(Question.getQuestionInstance().getSolution(myDoor.getId()));
         
         assertFalse(myDoor.isPermaLocked());
     }
     
     @Test
     void checkPermaLockTrue() {
-        myQ.setQuestionAndSolution("Does this work?", "Yes");
-        myDoor.setQuestion(myQ);
-        myDoor.checkLock("NO");
+        myDoor.checkLock(MY_INCORRECT);
         
         assertTrue(myDoor.isPermaLocked());
     }
     
     @Test
     void checkGetQuestion() {
-        myQ.setQuestionAndSolution("Does this work?", "Yes");
-        myDoor.setQuestion(myQ);
-        
-        assertEquals(myDoor.getQuestion(), myQ);
+        assertEquals(myDoor.getQuestion(), Question.getQuestionInstance().getQuestion(myDoor.getId()));
     }
     
     @Test
     void checkGetQuestionFalse() {
-        myQ.setQuestionAndSolution("Does this work?", "Yes");
-        myDoor.setQuestion(myQ);
-        
-        assert(!myDoor.getQuestion().equals(new Question()));
+        assert(!myDoor.getQuestion().equals(Question.getQuestionInstance().getQuestion(myDoor.getId() + 1)));
     }
     
     @Test
@@ -92,7 +79,14 @@ public class DoorTest {
     }
     
     @Test
+    void testSetPermaLock() {
+        myDoor.setPermaLock(true);
+        
+        assertTrue(myDoor.isPermaLocked());
+    }
+    
+    @Test
     void testGetId() {
-        assertEquals(myDoor.getQuestion().getId(), myDoor.getId());
+        assertEquals(Question.getQuestionInstance().getId(), myDoor.getQuestionInstance().getId());
     }
 }
