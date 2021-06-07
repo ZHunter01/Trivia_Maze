@@ -34,7 +34,7 @@ public class Room extends GameObject implements Serializable{
     /**Int value to indicate right door is selected */
     public final static int RIGHT = 3;
     /**Int value to keep track of what direction door is being accessed */
-    static int userDir;
+    //static int userDir;
 
 
     /** Creates default Room object
@@ -65,13 +65,13 @@ public class Room extends GameObject implements Serializable{
         myRoomIcon = theIcon;
     }
 
-    /** Returns current direction user is pointing in
-     *
-     * @return userDir
-     */
-    public int getUserDir() {
-        return userDir;
-    }
+//    /** Returns current direction user is pointing in
+//     *
+//     * @return userDir
+//     */
+//    public int getUserDir() {
+//        return userDir;
+//    }
 
     /** Returns PowerUp object contained in the room
      *
@@ -164,6 +164,14 @@ public class Room extends GameObject implements Serializable{
     public void unlockPermaLock(final int theDir) {
         getUserDoor(theDir).setPermaLock(false);
 
+    }
+
+    public void removePowerUp() {
+        if (this.getRoomPowerUp() == PowerUp.createEmptyPowerUp()) {
+            return;
+        } else {
+            myPowerUp = PowerUp.createEmptyPowerUp();
+        }
     }
 
 }

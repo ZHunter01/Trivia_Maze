@@ -53,7 +53,7 @@ public class PlayerTest {
     @Test
     void testSetImage() {
         myPlayer.setImage(new ImageIcon("./resources/ellipse.gif").getImage());
-        
+
         assertEquals(myPlayer.getIcon(), (new ImageIcon("./resources/ellipse.gif").getImage()));
     }
     
@@ -116,10 +116,10 @@ public class PlayerTest {
         assertTrue(myPlayer.toString().equals(expected));
     }
     
-    @Test
-    void testPlayerWithImage() {
-        myPlayer = new Player(new ImageIcon("./resources/ellipse.gif").getImage());
-        
-        assertTrue(myPlayer.getIcon().equals(new ImageIcon("./resources/ellipse.gif").getImage()));
-    }
+//    @Test
+//    void testPlayerWithImage() {
+//        myPlayer = new Player(new ImageIcon("./resources/ellipse.gif").getImage());
+//
+//        assertTrue(myPlayer.getIcon().equals(new ImageIcon("./resources/ellipse.gif").getImage()));
+//    }
 }

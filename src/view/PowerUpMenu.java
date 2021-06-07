@@ -8,6 +8,7 @@ import javax.swing.JMenuItem;
 
 import model.Door;
 import model.Maze;
+import model.PowerUp;
 import model.Question;
 
 /**
@@ -27,29 +28,41 @@ public class PowerUpMenu extends JMenu implements ActionListener {
     private static final long serialVersionUID = 2859544975052134927L;
     private JMenuItem myPerma;
     private JMenuItem myFree;
-    private Maze myMaze;
+    private MazePanel myMazePanel;
+    private AnswerPanel myAnswerPanel;
 
     /**
      *
-     * @param theMaze
      */
-    public PowerUpMenu(final String theName, final Maze theMaze) {
+    public PowerUpMenu(final String theName) {
         super(theName);
-
-        myMaze = theMaze;
 
         setUpPowerUps();
     }
 
+    public void setPanels(final MazePanel theMazePanel) {
+        myMazePanel = theMazePanel;
+        myAnswerPanel = theMazePanel.getAnswerPanel();
+    }
+
+    /**
+     *
+     */
     public void enablePermaUnlock() {
         myPerma.setEnabled(true);
     }
 
 
+    /**
+     *
+     */
     public void enableFreeQuestion() {
         myFree.setEnabled(true);
     }
 
+    /**
+     *
+     */
     private void setUpPowerUps() {
         myPerma = new JMenuItem(PERMA_UNLOCK);
         myFree = new JMenuItem(FREE_QUESTION);
@@ -64,25 +77,49 @@ public class PowerUpMenu extends JMenu implements ActionListener {
         add(myFree);
     }
 
+    /**
+     *
+     * @author Zach Hunter
+     *
+     */
     private class PermaUnlock implements ActionListener {
 
         @Override
         public void actionPerformed(final ActionEvent theEvent) {
+            final int currentDir = myMazePanel.getMaze().getDirection();
+            //int currentDir = 4;
+            if (!myMazePanel.getMaze().getCurrentRoom().getUserDoor(currentDir).isPermaLocked()) {
+                return;
+            } else {
+                myMazePanel.getMaze().getCurrentRoom().getUserDoor(currentDir).setPermaLock(false);
+                myMazePanel.getMaze().getPlayer().removePowerUp(PowerUp.createPermaUnlock());
 
+                myPerma.setEnabled(false);
+            }
 
         }
 
     }
 
+    /**
+     *
+     * @author Zach Hunter
+     *
+     */
     private class FreeQuestion implements ActionListener {
 
         @Override
         public void actionPerformed(final ActionEvent theEvent) {
-            int currentDir = myMaze.getCurrentRoom().getUserDir();
-            Door theDoor = myMaze.getCurrentRoom().getUserDoor(currentDir);
-            String solution = Question.getQuestionInstance().getSolution(theDoor.getId());
+            final int currentDir = myMazePanel.getMaze().getDirection();
+            //int currentDir = 2;
+            final Door theDoor = myMazePanel.getMaze().getCurrentRoom().getUserDoor(currentDir);
+            final String solution = Question.getQuestionInstance().getSolution(theDoor.getId());
+            System.out.println("solution is" + solution);
 
-            myMaze.doorSolution(solution, currentDir);
+            myAnswerPanel.getAnswerField().setText(solution);
+            myAnswerPanel.buttonListener();
+
+            myMazePanel.getMaze().getPlayer().removePowerUp(PowerUp.createFreeQuestion());
 
             myFree.setEnabled(false);
         }
@@ -95,47 +132,5 @@ public class PowerUpMenu extends JMenu implements ActionListener {
 
     }
 
-//    private ButtonGroup createPowerUpMenu() {
-//        final ButtonGroup btngrp = new ButtonGroup();
-//
-//
-//        JRadioButtonMenuItem button = new JRadioButtonMenuItem();
-//        btngrp.add(myPerma);
-//        add(btn);
-//
-//        return btngrp;
-//    }
-
-//    /**
-//     *
-//     */
-//    public void hasPowerUps(final Player thePlayer) {
-////        if (thePlayer.containsFreeQuestion()) {
-////            freeLabel.setVisible(true);
-////        }
-////        if (thePlayer.containsPermaUnlock()) {
-////            unlockLabel.setVisible(true);
-////        }
-////        if (thePlayer.getPowerUps().isEmpty()) {
-////            noPowerUpLabel.setVisible(true);
-////        }
-//
-//    }
-
-//    /**
-//     *
-//     */
-//    private void addLabels() {
-////        JLabel unlockLabel = new JLabel(PERMA_UNLOCK);
-////        JLabel freeLabel = new JLabel(FREE_QUESTION);
-////        JLabel noPowerUpLabel = new JLabel(NO_POWERUP);
-////
-////        unlockLabel.setVisible(false);
-////        freeLabel.setVisible(false);
-//
-//        this.add(noPowerUpLabel, JPanel.CENTER_ALIGNMENT);
-//        this.add(unlockLabel, JPanel.TOP_ALIGNMENT);
-//        this.add(freeLabel, JPanel.BOTTOM_ALIGNMENT);
-//    }
 
 }

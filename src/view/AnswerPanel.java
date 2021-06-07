@@ -11,6 +11,7 @@ import javax.swing.*;
 
 import model.Maze;
 import model.Question;
+import model.Room;
 
 /**
  * This class is a panel where the user can enter their answer
@@ -30,7 +31,7 @@ public class AnswerPanel extends JPanel {
     private final static String CORRECT_MESSAGE = "Answer was correct! Door unlocked!";
     /**String message for if a room contains a free question */
     private final static String FREE_QUESTION = "You have been awarded a FREE QUESTION PowerUp!"
-            + " Use it to skip ay quesiton into the next room!";
+            + " Use it to skip any question into the next room!";
     private final static String PERMA_UNLOCK = "You have been awarded a PERMA UNLOCK PowerUp!"
             + " Use it to unlock doors that have been Perma-Locked!";
     /**
@@ -105,9 +106,11 @@ public class AnswerPanel extends JPanel {
     public void buttonListener() {
         myAnswer = myAnswerField.getText();
 
+        Room myRoom = myMaze.getCurrentRoom();
+
         myMaze.doorSolution(myAnswer, myDirection);
 
-        if (myMaze.getCurrentRoom().getUserDoor(myDirection).isPermaLocked()) {
+        if (myRoom.getUserDoor(myDirection).isPermaLocked()) {
             myQuestionPanel.setMyQuestion("Answer was incorrect! Door permanently locked!");
             mySubmit.setVisible(false);
         } else {
@@ -183,7 +186,7 @@ public class AnswerPanel extends JPanel {
             myQuestionPanel.setMyQuestion(PERMA_UNLOCK);
             myPowerUpMenu.enablePermaUnlock();
         }
-
+        myMaze.getCurrentRoom().removePowerUp();
     }
 
     /**

@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Random;
 
 
@@ -35,7 +36,7 @@ public class Maze implements Serializable{
     /**Door object for current selected door*/
     private Door myCurrentDoor;
 //    /**Int value to keep track of what direction door is being accessed */
-//    private int userDir;
+    private int userDir;
 
 
     /* Creates default 2-d array maze with 4x4 dimensions
@@ -73,7 +74,7 @@ public class Maze implements Serializable{
 
         myCurrentDoor = new Door();
         //default directions is up
-        Room.userDir = 0;
+        userDir = 0;
 
         //Generate PowerUps in the Maze
         generatePowerUps();
@@ -143,7 +144,9 @@ public class Maze implements Serializable{
         return myLose;
     }
 
-
+    public int getDirection() {
+        return userDir;
+    }
 
     /** Returns current room
      *
@@ -187,7 +190,7 @@ public class Maze implements Serializable{
      */
     public void doorSolution(final String theSolution, final int theDir) {
         myQuestionCounter ++;
-        Room.userDir = theDir;
+        userDir = theDir;
         // myCorrectCounter++;
         myCurrentDoor = this.getCurrentRoom().getUserDoor(theDir);
         myCurrentDoor.checkLock(theSolution);
@@ -203,6 +206,7 @@ public class Maze implements Serializable{
         if (!myCurrentDoor.isLocked()) {
             myCorrectCounter ++;
             incrementMaze();
+            reverseDoorPermaLock(userDir);
             //Check for if the user has won the game
             if (hasWon()) {
                 return;
@@ -243,7 +247,7 @@ public class Maze implements Serializable{
      * @param thePowerUp
      */
     public void usePowerUp(final PowerUp thePowerUp, final int theDir) {
-        Room.userDir = theDir;
+        userDir = theDir;
 
         if (thePowerUp.isFreeQuestion()) {
             incrementMaze();
@@ -319,18 +323,18 @@ public class Maze implements Serializable{
      *
      */
     private void incrementMaze() {
-        if (Room.userDir == Room.UP) {
+        if (userDir == Room.UP) {
             myYCount --;
-        } else if (Room.userDir == Room.LEFT) {
+        } else if (userDir == Room.LEFT) {
             myXCount --;
-        } else if (Room.userDir == Room.DOWN) {
+        } else if (userDir == Room.DOWN) {
             myYCount ++;
-        } else if (Room.userDir == Room.RIGHT) {
+        } else if (userDir == Room.RIGHT) {
             myXCount ++;
         } else {
             throw new IllegalArgumentException("Error: Improper door directional value.");
         }
-        myPlayer.move(Room.userDir);
+        myPlayer.move(userDir);
     }
 
     /** If x count and y count match the max size of the 2-d array return myWin as true
@@ -393,4 +397,19 @@ public class Maze implements Serializable{
 
     }
 
+
+    @Override
+    public String toString() {
+        return "Maze{" +
+                "myPlayer=" + myPlayer +
+                ", myMaze=" + Arrays.toString(myMaze) +
+                ", myWin=" + myWin +
+                ", myLose=" + myLose +
+                ", myQuestionCounter=" + myQuestionCounter +
+                ", myCorrectCounter=" + myCorrectCounter +
+                ", myXCount=" + myXCount +
+                ", myYCount=" + myYCount +
+                ", myCurrentDoor=" + myCurrentDoor +
+                '}';
+    }
 }

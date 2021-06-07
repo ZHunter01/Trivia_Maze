@@ -1,5 +1,6 @@
 package controller;
 
+import model.Door;
 import model.Player;
 import model.Room;
 import view.MazePanel;
@@ -18,7 +19,7 @@ public class Drawer {
      * @param mazePanel the observer
      */
     public static void drawPlayer(final Graphics g, final Player player, final MazePanel mazePanel) {
-        g.setColor(Color.PINK);
+        //g.setColor(Color.PINK);
         g.drawImage(player.getImage(), player.getX(), player.getY(), mazePanel);
     }
 
@@ -69,5 +70,13 @@ public class Drawer {
             g.fillRect(room.getX() + 50, room.getY(), 70, 5);
         }
     }
+
+//    public static void setToGreen(final Graphics g, final Room theRoom, final int theDir) {
+//        g.setColor(Color.GREEN);
+//        theRoom.getUserDoor(theDir);
+//        if (theDir == Room.RIGHT) {
+//
+//        }
+//    }
 
 }

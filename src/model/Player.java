@@ -18,8 +18,7 @@ public class Player extends GameObject implements Serializable {
 
     /** */
     private transient Image myPlayerImage;
-    /** */
-    private Color myPlayerColor;
+
     /** */
     private int myX;
     /** */
@@ -51,17 +50,8 @@ public class Player extends GameObject implements Serializable {
         setY(MY_START_Y);
     }
 
-    /** Creates player object with specified ImageIcon as the object's icon
-     *
-     * @param theIcon
-     */
-    public Player(final Image theIcon) {
-        myPlayerImage = theIcon;
-        myPowerUps = new ArrayList<>();
-
-        //Sets start point
-        setX(MY_START_X);
-        setY(MY_START_Y);
+    public ArrayList<PowerUp> getPowerUps() {
+        return myPowerUps;
     }
 
 

@@ -30,12 +30,12 @@ import model.Player;
  */
 public class PlayerMenu extends JMenu implements ActionListener {
 
-    private final static String OLD_MAN = "src/resources/Oldman.gif";
-    private final static String OLD_WOMAN = "src/resources/Oldwoman.gif";
-    private final static String BOY1 = "src/resources/Boy.gif";
-    private final static String GIRL1 = "src/resources/Girl.gif";
-    private final static String GUY = "src/resources/Guy.gif";
-    private final static String GIRL2 = "src/resources/Girl2.gif";
+    public final static String OLD_MAN = "src/resources/Oldman.gif";
+    public final static String OLD_WOMAN = "src/resources/Oldwoman.gif";
+    public final static String BOY1 = "src/resources/Boy.gif";
+    public final static String GIRL1 = "src/resources/Girl.gif";
+    public final static String GUY = "src/resources/Guy.gif";
+    public final static String GIRL2 = "src/resources/Girl2.gif";
 
     /**
      * Serial number
@@ -71,11 +71,6 @@ public class PlayerMenu extends JMenu implements ActionListener {
 //        myMenuBar = theMenuBar;
 
         setupPlayers();
-        addActionListeners();
-    }
-
-    private void addActionListeners() {
-
     }
 
     /**
@@ -137,6 +132,7 @@ public class PlayerMenu extends JMenu implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             myPlayer.setImage(myIconPath);
+            System.out.println(myIconPath);
             myMazePanel.repaint();
         }
     }

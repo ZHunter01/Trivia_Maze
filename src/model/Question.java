@@ -4,6 +4,10 @@
 
 package model;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,7 +21,10 @@ import view.MyMenuBar;
  * @author Oleksandr Maistruk
  *
  */
-public class Question {
+public class Question implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = -1065392673122444615L;
 
     /** static variable single_instance of type Singleton */
     private static Question questionInstance = null;
@@ -60,6 +67,11 @@ public class Question {
         if (questionInstance == null)
             questionInstance = new Question();
         return questionInstance;
+    }
+
+    @Serial
+    protected Object readResolve()  {
+        return this;
     }
 
 
