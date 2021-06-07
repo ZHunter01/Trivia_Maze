@@ -57,7 +57,6 @@ public class MazePanel extends JPanel {
 
         myAnswerPanel = theAnswerPanel;
         myQuestionPanel = theQuestionPanel;
-        myAnswerPanel.setMaze(maze);
         myAnswerPanel.setMazePanel(this);
         myAnswerPanel.setQuestionPanel(myQuestionPanel);
 

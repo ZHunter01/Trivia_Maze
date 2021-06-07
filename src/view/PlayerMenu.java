@@ -132,6 +132,7 @@ public class PlayerMenu extends JMenu implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             myPlayer.setImage(myIconPath);
+            myPlayer.setImagePath(myIconPath);
             System.out.println(myIconPath);
             myMazePanel.repaint();
         }

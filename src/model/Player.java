@@ -1,5 +1,7 @@
 package model;
 
+import view.PlayerMenu;
+
 import java.awt.Color;
 import java.awt.Image;
 import java.io.Serial;
@@ -17,7 +19,7 @@ public class Player extends GameObject implements Serializable {
     private static final long serialVersionUID = -2940779389095085938L;
 
     /** */
-    private transient Image myPlayerImage;
+    private String myPlayerImagePath;
 
     /** */
     private int myX;
@@ -42,7 +44,8 @@ public class Player extends GameObject implements Serializable {
      *
      */
     public Player() {
-        setImage("src/resources/Oldman.gif");
+        setImage(PlayerMenu.OLD_MAN);
+        myPlayerImagePath = PlayerMenu.OLD_MAN;
         myPowerUps = new ArrayList<>();
 
         //Set start point
@@ -59,16 +62,16 @@ public class Player extends GameObject implements Serializable {
      *
      * @return
      */
-    public Image getIcon() {
-        return myPlayerImage;
+    public String getImagePath() {
+        return myPlayerImagePath;
     }
 
     /** Sets player ImageIcon to input ImageIcon
      *
-     * @param theImage
+     * @param theImagePath
      */
-    public void setImage(final Image theImage) {
-        myPlayerImage = theImage;
+    public void setImagePath(final String theImagePath) {
+        myPlayerImagePath = theImagePath;
     }
 
     /** Sets the x and y location of the player object

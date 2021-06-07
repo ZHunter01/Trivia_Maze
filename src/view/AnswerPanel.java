@@ -61,8 +61,6 @@ public class AnswerPanel extends JPanel {
      */
     private transient String myAnswer;
 
-    private Maze myMaze;
-
     private int myDirection;
 
     private MazePanel myMazePanel;
@@ -106,9 +104,9 @@ public class AnswerPanel extends JPanel {
     public void buttonListener() {
         myAnswer = myAnswerField.getText();
 
-        Room myRoom = myMaze.getCurrentRoom();
+        Room myRoom = myMazePanel.getMaze().getCurrentRoom();
 
-        myMaze.doorSolution(myAnswer, myDirection);
+        myMazePanel.getMaze().doorSolution(myAnswer, myDirection);
 
         if (myRoom.getUserDoor(myDirection).isPermaLocked()) {
             myQuestionPanel.setMyQuestion("Answer was incorrect! Door permanently locked!");
@@ -124,9 +122,9 @@ public class AnswerPanel extends JPanel {
         myAnswerField.setText("");
         myAnswer = "";
 
-        if (myMaze.getWin()) {
+        if (myMazePanel.getMaze().getWin()) {
             this.displayWin();
-        } else if (myMaze.getLose()) {
+        } else if (myMazePanel.getMaze().getLose()) {
             this.displayLose();
         }
 
@@ -158,10 +156,6 @@ public class AnswerPanel extends JPanel {
 
     }
 
-    public void setMaze(final Maze theMaze) {
-        myMaze = theMaze;
-    }
-
     public void setDirection(final int theDirection) {
         myDirection = theDirection;
     }
@@ -178,15 +172,15 @@ public class AnswerPanel extends JPanel {
      *
      */
     private void checkForPowerUps() {
-        if (myMaze.getCurrentRoom().getRoomPowerUp().isFreeQuestion()) {
+        if (myMazePanel.getMaze().getCurrentRoom().getRoomPowerUp().isFreeQuestion()) {
             myQuestionPanel.setMyQuestion(FREE_QUESTION);
             myPowerUpMenu.enableFreeQuestion();
 
-        } else if (myMaze.getCurrentRoom().getRoomPowerUp().isPermaUnlock()) {
+        } else if (myMazePanel.getMaze().getCurrentRoom().getRoomPowerUp().isPermaUnlock()) {
             myQuestionPanel.setMyQuestion(PERMA_UNLOCK);
             myPowerUpMenu.enablePermaUnlock();
         }
-        myMaze.getCurrentRoom().removePowerUp();
+        myMazePanel.getMaze().getCurrentRoom().removePowerUp();
     }
 
     /**
