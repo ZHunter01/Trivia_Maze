@@ -43,12 +43,6 @@ public class PlayerMenu extends JMenu implements ActionListener {
      */
     private static final long serialVersionUID = 4885009744733200311L;
 
-    /** Width for player bar icons. */
-    private static final int TOOL_FOR_BAR_ICON_WIDTH = 5;
-
-    /** Height for player bar icons. */
-    private static final int TOOL_FOR_BAR_ICON_HEIGHT = 5;
-
     /** The name of this menu item */
     private final static String myMenuName = "Player";
 
@@ -56,8 +50,6 @@ public class PlayerMenu extends JMenu implements ActionListener {
     private List<PlayerAction> myPlayerActions;
 
     private String myPlayerName;
-
-//    private final MyMenuBar myMenuBar;
 
     private Player myPlayer;
 
@@ -69,14 +61,7 @@ public class PlayerMenu extends JMenu implements ActionListener {
     public PlayerMenu() {
         super(myMenuName);
 
-//        myMenuBar = theMenuBar;
-
         setupPlayers();
-        addActionListeners();
-    }
-
-    private void addActionListeners() {
-
     }
 
     /**
@@ -107,10 +92,6 @@ public class PlayerMenu extends JMenu implements ActionListener {
      * @return a fully-stocked player menu bar.
      */
     private ButtonGroup createPlayerMenu() {
-
-//        /** The player menu for player items. */
-//        final JMenuItem playerMenu = new JMenuItem(myMenuName);
-
         /** local variable to create player menu items. */
         final ButtonGroup btngrp = new ButtonGroup();
         setLayout(new GridLayout(3, 2));
@@ -124,7 +105,7 @@ public class PlayerMenu extends JMenu implements ActionListener {
                 btn.setSelected(true);
             }
         }
-        return btngrp; //playerMenu;
+        return btngrp; 
     }
 
     private class ChangeIcon implements ActionListener {
@@ -157,12 +138,6 @@ public class PlayerMenu extends JMenu implements ActionListener {
         private final String mySpecificPlayerName;
 
         private final String myPath;
-
-        //        /** The player to use. */
-//        private final Icon mySpecificPlayerIcon;
-//
-//        /** Icon for a button. */
-//        private Icon icon;
 
         /**
          * Sets up a player and assign name and icon for it.
