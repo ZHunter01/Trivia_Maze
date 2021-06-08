@@ -54,6 +54,7 @@ public class Question implements Serializable{
      */
     private Question() {
         myDataBaseName = MyMenuBar.getDataBaseName();
+        //3 Types of database questions
         idHelper("SportQuestions");
         idHelper("GeographyQuestions");
         idHelper("MusicQuestions");
@@ -72,6 +73,10 @@ public class Question implements Serializable{
     }
     
     //@Serial
+    /** Returns current state of the Question object
+     * 
+     * @return this
+     */
     protected Object readResolve()  {
         return this;
     }
@@ -124,6 +129,13 @@ public class Question implements Serializable{
         private String myQueryMultipleAnswer;
         private boolean myQueryIsMultiple;
 
+        /**
+         * 
+         * @param theQuestion
+         * @param theAnswer
+         * @param theMultipleAnswers
+         * @param isMultiple
+         */
         private QuestionQuery(final String theQuestion, final String theAnswer,
                 final String theMultipleAnswers, final boolean isMultiple) {
             myQueryQuestion = theQuestion;

@@ -1,10 +1,10 @@
+/**
+ * Trivia Maze TCSS 360 Spring 2021
+ */
 package model;
 
-import java.awt.Image;
 import java.io.Serializable;
 import java.util.ArrayList;
-
-import javax.swing.ImageIcon;
 
 
 /** Player object class
@@ -13,52 +13,48 @@ import javax.swing.ImageIcon;
  *
  */
 public class Player extends GameObject implements Serializable{
-    /**
-     * 
-     */
+    /**Serializable generated number */
     private static final long serialVersionUID = 3311504575818535717L;
-    /** */
-    private transient Image myPlayerImage;
-    /** */
+    /**Int field for current x position of the player */
     private int myX;
-    /** */
+    /**Int field for current y position of the player */
     private int myY;
-    /** */
+    /**ArrayList for holding Player's PowerUps */
     private ArrayList<PowerUp> myPowerUps;
-    /** */
+    /**Default starting x position */
     private static final int MY_START_X = 68;
-    /** */
+    /**Default starting y position */
     private static final int MY_START_Y = 40;
+    /**Default Image for the Player object */
+    private static final String DEFAULT_IMAGE = "resources/Oldman.gif";
    
     /** Creates a default player object with default black color
     *
     */
    public Player() {
-       setImage("resources/Oldman.gif");
+       setImage(DEFAULT_IMAGE);
        myPowerUps = new ArrayList<>();
 
-       //Set start point
+       //Set Player start point
        setX(MY_START_X);
        setY(MY_START_Y);
    }
     
-   /**
+   /** Returns current ArrayList of PowerUps for the Player
     * 
-    * @return
+    * @return myPowerUps
     */
     public ArrayList<PowerUp> getPowerUps() {
         return myPowerUps;
     }
     
     /** Sets the x and y location of the player object
+     * x and y can be negative
      * 
      * @param theX
      * @param theY
      */
     public void setLocation(final int theX, final int theY) {
-        if (theX < 0 || theY < 0) {
-            throw new IllegalArgumentException("Input Error: Values must be greater than or equal to 0.");
-        }
         myX = theX;
         myY = theY;
     }
@@ -73,7 +69,7 @@ public class Player extends GameObject implements Serializable{
     
     /** Returns boolean if player has a PermaUnlock PowerUp
      * 
-     * @return
+     * @return doesContain
      */
     public boolean containsPermaUnlock() {
         boolean doesContain = false;
@@ -85,7 +81,7 @@ public class Player extends GameObject implements Serializable{
     
     /** Returns boolean if player has a FreeQuestion PowerUp
      * 
-     * @return
+     * @return doesContain
      */
     public boolean containsFreeQuestion() {
         boolean doesContain = false;
@@ -118,6 +114,7 @@ public class Player extends GameObject implements Serializable{
      * @param theDir
      */
     public void move(final int theDir) {
+        //Moves user based on direction
         switch (theDir) {
             case Room.UP:
                 move(0, -110); break;
@@ -130,12 +127,9 @@ public class Player extends GameObject implements Serializable{
         }
     }
     
-    public void setPlayerIcon(final String theName) {
-        myPlayerImage = new ImageIcon("resources/" + theName + ".gif").getImage();
-    }
-    
     @Override 
     public String toString() {
+        //String of Player is simply it's x and y coordinates
         StringBuilder str = new StringBuilder();
         
         str.append(myX);

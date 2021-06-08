@@ -45,7 +45,7 @@ public class MazePanel extends JPanel {
      */
     public final static String SPORT_BACKGROUND = "resources/lightStadium.jpg";
     public final static String WORLD_BACKGROUND = "resources/world.png";
-    public final static String MUSIC_BACKGROUND = "resources/musicBackground.jpg";
+    public final static String MUSIC_BACKGROUND = "resources/music.png";
     
     public static final String SPORTS_SONG = "resources/music/gameMusic.wav";
     public static final String GEOGRAPHY_SONG = "resources/music/Geography_Song.wav";
