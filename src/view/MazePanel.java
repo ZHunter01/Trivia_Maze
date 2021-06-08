@@ -5,10 +5,17 @@ import model.Door;
 import model.Maze;
 import model.Room;
 
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.DataLine;
+import javax.sound.sampled.FloatControl;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 
 /**
  * @author Alik Balika
@@ -36,9 +43,10 @@ public class MazePanel extends JPanel {
     /**
      * background images
      */
-    public final static String SPORT_BACKGROUND = "resources/seaStadium.jpg";
+    public final static String SPORT_BACKGROUND = "resources/lightStadium.jpg";
     public final static String WORLD_BACKGROUND = "resources/world.png";
-
+    public final static String MUSIC_BACKGROUND = "resources/musicBackground.jpg";
+    
     private String myBackgroundImage;
 
 //    /**
@@ -48,7 +56,7 @@ public class MazePanel extends JPanel {
 
     private AnswerPanel myAnswerPanel;
     private QuestionPanel myQuestionPanel;
-
+    private Clip myAudioClip;
 
     /**
      * initializes the maze and constructs the panel
@@ -62,28 +70,40 @@ public class MazePanel extends JPanel {
 
         myAnswerPanel = theAnswerPanel;
         myQuestionPanel = theQuestionPanel;
-        myAnswerPanel.setMaze(maze);
         myAnswerPanel.setMazePanel(this);
         myAnswerPanel.setQuestionPanel(myQuestionPanel);
 
         myBackgroundImage = SPORT_BACKGROUND;
 
+        try {
+            File audioFile = new File("resources/music/gameMusic.wav");
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+
+            AudioFormat format = audioStream.getFormat();
+            DataLine.Info info = new DataLine.Info(Clip.class, format);
+
+            myAudioClip = (Clip) AudioSystem.getLine(info);
+
+            myAudioClip.open(audioStream);
+            myAudioClip.start();
+            setVolume(1);
+            myAudioClip.loop(Clip.LOOP_CONTINUOUSLY);
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+
     }
 
-//    /**
-//     * @return the only instance of mazePanel
-//     */
-//    public static MazePanel getInstance() {
-//        return mazePanel;
-//    }
+    public void setVolume(final int theGain) {
+        FloatControl gainControl = (FloatControl) myAudioClip.getControl(FloatControl.Type.MASTER_GAIN);
+        double gain = ((double)theGain)/10.0;
+        float dB = (float) (Math.log(gain) / Math.log(10.0) * 20.0);
+        gainControl.setValue(dB);
+    }
 
-    //166 - width of the room
-    //110 - height of the room
-
-
-    // height of panel: 440
-    // width of panel: 664
-
+    public void stopGameAudio() {
+        myAudioClip.stop();
+    }
     public void setBackgroundImage(String path) {
         myBackgroundImage = path;
     }

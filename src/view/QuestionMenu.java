@@ -37,6 +37,9 @@ public class QuestionMenu extends JMenu implements ActionListener {
     /** The button to chose geography questions */
     private transient final JRadioButtonMenuItem myGeography;
 
+    /** The button to chose music questions */
+    private transient final JRadioButtonMenuItem myMusic;
+
     /** The field is to repaint maze with new questions type */
     private MazePanel myMazePanel;
 
@@ -48,6 +51,7 @@ public class QuestionMenu extends JMenu implements ActionListener {
         super(myName);
         mySport = new JRadioButtonMenuItem("Sport Questions");
         myGeography = new JRadioButtonMenuItem("Geography Questions");
+        myMusic = new JRadioButtonMenuItem("Music Questions");
         ButtonCreator();
     }
 
@@ -58,8 +62,10 @@ public class QuestionMenu extends JMenu implements ActionListener {
         mySport.setSelected(true);
         mySport.addActionListener(new SportButton());
         myGeography.addActionListener(new GeographyButton());
+        myMusic.addActionListener(new MusicButton());
         add(mySport);
         add(myGeography);
+        add(myMusic);
 
     }
 
@@ -88,6 +94,7 @@ public class QuestionMenu extends JMenu implements ActionListener {
         @Override
         public void actionPerformed(final ActionEvent theEvent) {
             mySport.setSelected(true);
+            myMusic.setSelected(false);
             myGeography.setSelected(false);
             myDataBaseName = "SportQuestions";
 
@@ -113,12 +120,38 @@ public class QuestionMenu extends JMenu implements ActionListener {
         @Override
         public void actionPerformed(final ActionEvent theEvent) {
             mySport.setSelected(false);
+            myMusic.setSelected(false);
             myGeography.setSelected(true);
             myDataBaseName = "GeographyQuestions";
 
             Question.getQuestionInstance().setDataBaseName(myDataBaseName);
 
             myMazePanel.setBackgroundImage(MazePanel.WORLD_BACKGROUND);
+            myMazePanel.repaint();
+            //myMazePanel = new MazePanel();
+
+        }
+    }
+
+    /**
+     *
+     * Action Listener to change question type by clicking Music questions button.
+     */
+    private class MusicButton implements ActionListener {
+
+        /**
+         * Change question type to Geography Questions.
+         */
+        @Override
+        public void actionPerformed(final ActionEvent theEvent) {
+            mySport.setSelected(false);
+            myGeography.setSelected(false);
+            myMusic.setSelected(true);
+            myDataBaseName = "MusicQuestions";
+
+            Question.getQuestionInstance().setDataBaseName(myDataBaseName);
+
+            myMazePanel.setBackgroundImage(MazePanel.MUSIC_BACKGROUND);
             myMazePanel.repaint();
             //myMazePanel = new MazePanel();
 

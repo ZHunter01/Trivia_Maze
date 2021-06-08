@@ -1,6 +1,8 @@
 package view;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import model.Door;
 import model.Maze;
@@ -31,24 +33,17 @@ public class MyMenuBar extends JMenuBar {
      *
      */
     private static final long serialVersionUID = -8886354497933935360L;
-    /**
-     * JMenu mySave allows the user to save the game
-     */
-    //private JMenuItem mySave;
-    /**
-     * JMenu myLoad allows the user to load a game
-     */
-    //private JMenuItem myLoad;
-    /**
+    private static final int MIN_VALUE = 0;
+    private static final int MAX_VALUE = 10;
+    /** The default minor value for slider. */
+    private static final int MINOR = 1;
+    
+    /** The default major value for slider. */
+    private static final int MAJOR = 5;
+        /**
      * JMenu myHelp pops up a help window that explains how the game works
      */
     private JMenu myHelp;
-    /**
-     * JMenu myCustomizePlayer allows the user to change the icon of their player
-     */
-    //private JMenuItem myCustomizePlayer;
-
-    //private JMenu myPowerUps;
     /**
      * JMenu myOptions displays JMenuItems which give different options for the user
      */
@@ -65,6 +60,8 @@ public class MyMenuBar extends JMenuBar {
     private QuestionMenu myQuestionMenu;
 
     private PlayerMenu myPlayerMenu;
+    
+    private JSlider myVolumeBar;
 
     /**
      * Create an instance of the DirectionPanel
@@ -95,25 +92,24 @@ public class MyMenuBar extends JMenuBar {
      */
     private void initAndAddJMenus() {
         myFile = new JMenu("FILE");
-        //mySave = new JMenu("SAVE");
-        //myLoad = new JMenu("LOAD");
+
         myHelp = new JMenu("HELP");
-        //myPowerUps = new JMenu("PowerUps");
-        //myCustomizePlayer = new JMenu("CUSTOMIZE PLAYER");
+
         myOptions = new JMenu("OPTIONS");
 
         myPowerUps = new PowerUpMenu("PowerUps");
         final JMenuItem exit =  new JMenuItem("Exit");
-//        final JMenuItem myColor = new JMenuItem("Color");
 
         myQuestionMenu = new QuestionMenu();
         myPlayerMenu = new PlayerMenu();
-
+        
         final JMenuItem myAbout = new JMenuItem("About");
         final JMenuItem myRules = new JMenuItem("Rules");
         final JMenuItem mySave = new JMenuItem("Save");
         final JMenuItem myLoad = new JMenuItem("Load");
-        // final JMenuItem myCustomizePlayer = new JMenuItem("Customize Player");
+        
+        final JMenu myVolume = new JMenu("Volume");
+        myVolume.add(setUpSlider());
 
         add(myFile);
         myFile.add(mySave);
@@ -125,6 +121,7 @@ public class MyMenuBar extends JMenuBar {
 
         myOptions.add(myPlayerMenu);
         myOptions.add(myQuestionMenu);
+        myOptions.add(myVolume);
 
         myOptions.add(myPowerUps);
 
@@ -136,6 +133,18 @@ public class MyMenuBar extends JMenuBar {
         exit.addActionListener(new Exit());
         mySave.addActionListener(new Save());
         myLoad.addActionListener(new Load());
+    }
+    
+    private JSlider setUpSlider() {
+        myVolumeBar = new JSlider(MIN_VALUE, MAX_VALUE, JSlider.HORIZONTAL);
+        myVolumeBar.setMajorTickSpacing(MAJOR);
+        myVolumeBar.setMinorTickSpacing(MINOR);
+        myVolumeBar.setPaintTicks(true);
+        myVolumeBar.setPaintLabels(true);
+        myVolumeBar.setValue(MAJOR);
+        myVolumeBar.addChangeListener(new Volume());
+        
+       return myVolumeBar;
     }
 
     public void setQuestionPlayerMenuMazePanel(MazePanel theMazePanel) {
@@ -154,11 +163,20 @@ public class MyMenuBar extends JMenuBar {
         return myPowerUps;
     }
 
+    public static String getDataBaseName() {
+        return myDataBaseName;
+    }
+    
     public void setMazePanel(final MazePanel theMazePanel) {
         System.out.println("called");
         myMazePanel = theMazePanel;
         setMaze();
     }
+    /**
+     * 
+     * @author Alik Balika
+     *
+     */
 
     private class Load implements ActionListener {
 
@@ -301,6 +319,11 @@ public class MyMenuBar extends JMenuBar {
   
   }
 
+  /**
+   * 
+   * @author Zach Hunter
+   *
+   */
     private class Exit implements ActionListener {
 
         @Override
@@ -309,180 +332,17 @@ public class MyMenuBar extends JMenuBar {
         }
 
     }
+    
+    /**
+     * 
+     * @author Zach Hunter
+     *
+     */
+    private class Volume implements ChangeListener {
 
-    public static String getDataBaseName() {
-        return myDataBaseName;
+        @Override
+        public void stateChanged(final ChangeEvent theEvent) {
+            myMazePanel.setVolume(myVolumeBar.getValue());
+        }  
     }
-//
-//    /**
-//     * 
-//     *   @author Zach Hunter
-//     *
-//     */
-//    class PowerUpMenu extends JMenu implements ActionListener {
-//    /**String name for PowerUp Perma-Unlock */
-//    private static final String PERMA_UNLOCK = "PermaUnlock";
-//    /**String name for PowerUp Free Question */
-//    private static final String FREE_QUESTION = "FreeQuestion";
-//   
-//    /**
-//     * 
-//     */
-//    private static final long serialVersionUID = 2859544975052134927L;
-//    private JMenuItem myPerma;
-//    private JMenuItem myFree;
-//    
-//    
-//    
-//    /**
-//     * 
-//     * @param theMaze
-//     */
-//    public PowerUpMenu(final String theName) {
-//        super(theName);
-//        
-//        setUpPowerUps();
-//    }
-//    
-//    /**
-//     * 
-//     */
-//    public void enablePermaUnlock() {
-//        myPerma.setEnabled(true);
-//    }
-//    
-//
-//    /**
-//     * 
-//     */
-//    public void enableFreeQuestion() {
-//        myFree.setEnabled(true);
-//    }
-//    
-//    /**
-//     * 
-//     */
-//    private void setUpPowerUps() {
-//        myPerma = new JMenuItem(PERMA_UNLOCK);
-//        myFree = new JMenuItem(FREE_QUESTION);
-//        
-//        myPerma.addActionListener(new PermaUnlock());
-//        myFree.addActionListener(new FreeQuestion());
-//        
-//        myPerma.setEnabled(false);
-//        myFree.setEnabled(false);
-//        
-//        add(myPerma);
-//        add(myFree);
-//    }
-//    
-//    /**
-//     * 
-//     * @author Zach Hunter
-//     *
-//     */
-//    private class PermaUnlock implements ActionListener {
-//
-//        @Override
-//        public void actionPerformed(final ActionEvent theEvent) {
-//            final int currentDir = myMaze.getDirection();
-//            //int currentDir = 4;
-//            if (!myMaze.getCurrentRoom().getUserDoor(currentDir).isPermaLocked()) {
-//                return;
-//            } else {
-//                myMaze.getCurrentRoom().getUserDoor(currentDir).setPermaLock(false);
-//                myMaze.getPlayer().removePowerUp(PowerUp.createPermaUnlock());
-//                
-//                myPerma.setEnabled(false);
-//            }
-//            
-//        }
-//        
-//    }
-//    
-//    /**
-//     * 
-//     * @author Zach Hunter
-//     *
-//     */
-//    private class FreeQuestion implements ActionListener {
-//
-//        @Override
-//        public void actionPerformed(final ActionEvent theEvent) {
-//            final int currentDir = myMaze.getDirection();
-//            //int currentDir = 2;
-//            Door theDoor = myMaze.getCurrentRoom().getUserDoor(currentDir);
-//            String solution = Question.getQuestionInstance().getSolution(theDoor.getId());
-//            
-////            MazePanel.getMaze();
-//            
-//            myMaze.doorSolution(solution, currentDir);
-//         
-//            myMaze.getPlayer().removePowerUp(PowerUp.createFreeQuestion());
-//            
-//            myFree.setEnabled(false);
-//        }
-//        
-//    }
-//
-//    @Override
-//    public void actionPerformed(ActionEvent e) {
-//        // TODO Auto-generated method stub
-//        
-//    }
-//}
-
-
-
-
-
 }
-
-
-
-
-
-
-///**
-//*
-//* Action Listener to show message by clicking Rules button from Help menu.
-//*/
-//private class Rules implements ActionListener {
-//
-//   /**
-//    * Opens Message Dialog window with rules for this game.
-//    */
-//   @Override
-//   public void actionPerformed(final ActionEvent theEvent) {
-//
-//       final String content1 = "<html>"
-//               + "<body style='background-color: white; width: ";
-//       final String content2 = "'>"
-//               + "<h1>Game Rules:</h1>"
-//               + "<p>OBJECTIVE: Get to the exit of the maze located at the bottom right. ";
-//       final String content3
-//               = "HOW TO: Use navigation buttons to move. "
-//               + "Answer trivia question correctly to move to the next spot. "
-//               + "If you answer incorrectly, that way will become blocked. "
-//               + "If all routes to the exit are blocked, you lose. "
-//               + "If you reach the exit located at the bottom right, you win the trivia maze!</p>"
-//               + "PowerUps: While going through the Trivia Maze you will encounter PowerUps. "
-//               + "When you get a PowerUp, a message will tell you which one you got. "
-//               + "You can access your PowerUps from the \"Options\" menu under \"PowerUp\""
-//               + "There are two PowerUps you can get, FreeQuestion and PermaUnlock. "
-//               + "<br />FreeQuestion: The FreeQuestion PowerUp allows you to skip a question and move"
-//               + " into the next room\nPermaUnlock: The PermaUnlock PowerUp allows you to retry a question" 
-//               + " that you had previously answered incorrectly.";
-//       final String content = content1 + 300 + "px"
-//               + content2 + "\n" + content3;
-//       final Runnable r = () -> {
-//           UIManager.put("OptionPane.minimumSize",new Dimension(500,500)); 
-//           JLabel label = new JLabel(content);
-//           label.setPreferredSize(new Dimension(500,500));
-//           JOptionPane.showMessageDialog(null, label);
-//       };
-//       SwingUtilities.invokeLater(r);
-//
-//   }
-//
-//}

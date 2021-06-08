@@ -4,6 +4,7 @@
 
 package model;
 
+//import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -20,9 +21,7 @@ import view.MyMenuBar;
  */
 public class Question implements Serializable{
     
-    /**
-     * 
-     */
+    //@Serial
     private static final long serialVersionUID = 1721924346865745075L;
 
     /** static variable single_instance of type Singleton */
@@ -43,6 +42,9 @@ public class Question implements Serializable{
     /** The array list with geography questions */
     private List<QuestionQuery> myGeographyQuestions = new ArrayList<QuestionQuery>();
     
+    /** The array list with music questions */
+    private List<QuestionQuery> myMusicQuestions = new ArrayList<QuestionQuery>();
+    
     /** Service field to assign specific question */
     private QuestionQuery mySpecificQuestion;
     
@@ -54,6 +56,7 @@ public class Question implements Serializable{
         myDataBaseName = MyMenuBar.getDataBaseName();
         idHelper("SportQuestions");
         idHelper("GeographyQuestions");
+        idHelper("MusicQuestions");
     }
     
 
@@ -68,6 +71,10 @@ public class Question implements Serializable{
         return questionInstance;
     }
     
+    //@Serial
+    protected Object readResolve()  {
+        return this;
+    }
     
     /**
      * This method is used to create array list with questions. 
@@ -86,13 +93,20 @@ public class Question implements Serializable{
                         myDatabase.getIsMultipleChoice(i)));
             }
             Collections.shuffle(mySportQuestions);
-        } else {
+        } else if(theDBName.equals("GeographyQuestions")) {
             for(int i = 1; i <= lastID; i++ ) {
                 myGeographyQuestions.add(new QuestionQuery(myDatabase.getQuestion(i),
                         myDatabase.getAnswer(i), myDatabase.getMultiAnswer(i),
                         myDatabase.getIsMultipleChoice(i)));
             }
             Collections.shuffle(myGeographyQuestions);
+        } else {
+            for(int i = 1; i <= lastID; i++ ) {
+                myMusicQuestions.add(new QuestionQuery(myDatabase.getQuestion(i),
+                        myDatabase.getAnswer(i), myDatabase.getMultiAnswer(i),
+                        myDatabase.getIsMultipleChoice(i)));
+            }
+            Collections.shuffle(myMusicQuestions);
         }
         myDatabase.closeDB();
     }
@@ -101,8 +115,10 @@ public class Question implements Serializable{
      * This class create an question object.
      *
      */
-    public class QuestionQuery {
+    public class QuestionQuery implements Serializable {
         
+        //@Serial
+        private static final long serialVersionUID = 1880121979725207215L;
         private String myQueryQuestion;
         private String myQueryAnswer;
         private String myQueryMultipleAnswer;
@@ -155,17 +171,10 @@ public class Question implements Serializable{
         return mySpecificQuestion.myQueryIsMultiple;
     }
     
-//    /** Manually set question and solution for question object
-//     * 
-//     * @param theQ
-//     * @param theSol
-//     */
-//    public void setQuestionAndSolution(final String theQ, final String theSol) {
-//        myQuestion = theQ;
-//        mySolution = theSol;
-//    }
-    
-     
+    /**
+     * 
+     * @return the question ID
+     */
     public int getId() {
         int x = myId;
         if(myId < mySportQuestions.size() - 1) {
@@ -187,14 +196,6 @@ public class Question implements Serializable{
         return  mySpecificQuestion.myQueryAnswer.toLowerCase().equals(theInput.toLowerCase());
     }
     
-//    @Override
-//    public boolean equals(final Object theObj) {
-//        if (this == theObj) return true;
-//        if (theObj == null || getClass() != theObj.getClass()) return false;
-//        
-//        Question question = (Question) theObj;
-//        return Objects.equals(myQuestion, question.myQuestion) && Objects.equals(mySolution, question.mySolution);
-//    }
     
     /**
      * 
@@ -212,8 +213,10 @@ public class Question implements Serializable{
     public QuestionQuery getMySpecificQuestion(final int theId) {
         if(myDataBaseName.equals("SportQuestions")) {
             mySpecificQuestion = mySportQuestions.get(theId);
-        } else {
+        } else if(myDataBaseName.equals("GeographyQuestions")) {
             mySpecificQuestion = myGeographyQuestions.get(theId);
+        } else {
+            mySpecificQuestion = myMusicQuestions.get(theId);
         }
         
         return mySpecificQuestion;
