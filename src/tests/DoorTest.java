@@ -87,6 +87,6 @@ public class DoorTest {
     
     @Test
     void testGetId() {
-        assertEquals(Question.getQuestionInstance().getId(), myDoor.getQuestionInstance().getId());
+        assertEquals(Door.myQuestionID, myDoor.getId());
     }
 }

@@ -21,7 +21,7 @@ import view.MyMenuBar;
  */
 public class Question implements Serializable{
     
-  //  @Serial
+    //@Serial
     private static final long serialVersionUID = 1721924346865745075L;
 
     /** static variable single_instance of type Singleton */
@@ -118,8 +118,8 @@ public class Question implements Serializable{
     public class QuestionQuery implements Serializable {
         
         //@Serial
-		private static final long serialVersionUID = 1880121979725207215L;
-		private String myQueryQuestion;
+        private static final long serialVersionUID = 1880121979725207215L;
+        private String myQueryQuestion;
         private String myQueryAnswer;
         private String myQueryMultipleAnswer;
         private boolean myQueryIsMultiple;
@@ -171,10 +171,10 @@ public class Question implements Serializable{
         return mySpecificQuestion.myQueryIsMultiple;
     }
     
-	/**
-	 * 
-	 * @return the question ID
-	 */
+    /**
+     * 
+     * @return the question ID
+     */
     public int getId() {
         int x = myId;
         if(myId < mySportQuestions.size() - 1) {

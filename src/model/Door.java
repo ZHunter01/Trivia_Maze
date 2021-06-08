@@ -12,10 +12,11 @@ public class Door extends GameObject implements Serializable{
     /**
      * 
      */
-    private static final long serialVersionUID = -930527126932044388L;
-    private boolean myLock;
-    private boolean myPermaLock;
-    private int myQuestionID;
+    public static final long serialVersionUID = -930527126932044388L;
+    public boolean myLock;
+    public boolean myPermaLock;
+    public static int myQuestionID;
+    public static Question myQ;
     
     /** Creates a default door object
      * 
@@ -23,6 +24,7 @@ public class Door extends GameObject implements Serializable{
     public Door() { 
         myLock = true;
         myPermaLock = false;
+        myQ = Question.getQuestionInstance();
         myQuestionID = Question.getQuestionInstance().getId();
 //System.out.println("Door class, ID: " + myQuestionID);
     }
