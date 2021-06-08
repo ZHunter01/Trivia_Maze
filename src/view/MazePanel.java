@@ -37,6 +37,13 @@ public class MazePanel extends JPanel {
     public final static String MUSIC_BACKGROUND = "src/resources/musicBackground.jpg";
 
     /**
+     * music options
+     */
+    public static final String SPORTS_SONG = "src/resources/music/gameMusic.wav";
+    public static final String GEOGRAPHY_SONG = "src/resources/music/Geography_Song.wav";
+    public static final String MUSIC_SONG = "src/resources/music/Music_Song.wav";
+
+    /**
      * holds the current background image
      */
     private String myBackgroundImage;
@@ -74,8 +81,45 @@ public class MazePanel extends JPanel {
 
         myBackgroundImage = SPORT_BACKGROUND;
 
+        setMusic(SPORTS_SONG);
+
+        setCoordinates();
+
+    }
+
+    private void setCoordinates() {
+        // x and y are the coordinates that the rooms use to be drawn onto the panel
+        int y = 0;
+        for (Room[] rooms : myMaze.getMaze()) {
+            int x = 0;
+            for (Room room : rooms) {
+                room.setX(x);
+                room.setY(y);
+                room.getUserDoor(Room.RIGHT).setX(room.getX() + 161);
+                room.getUserDoor(Room.RIGHT).setY(room.getY() + 20);
+                room.getUserDoor(Room.LEFT).setX(room.getX());
+                room.getUserDoor(Room.LEFT).setY(room.getY() + 20);
+                room.getUserDoor(Room.DOWN).setX(room.getX() + 50);
+                room.getUserDoor(Room.DOWN).setY(room.getY() + 105);
+                room.getUserDoor(Room.UP).setX(room.getX() + 50);
+                room.getUserDoor(Room.UP).setY(room.getY());
+
+                // 166 is a the width of a room
+                x += 166;
+
+            }
+            // 110 is the height of a room
+            y += 110;
+        }
+    }
+
+    /**
+     * Sets the current music depending on which category a player chooses
+     * @param myMusic
+     */
+    public void setMusic(final String myMusic) {
         try {
-            File audioFile = new File("src/resources/music/gameMusic.wav");
+            File audioFile = new File(myMusic);
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
 
             AudioFormat format = audioStream.getFormat();
@@ -85,12 +129,13 @@ public class MazePanel extends JPanel {
 
             myAudioClip.open(audioStream);
             myAudioClip.start();
-            setVolume(1);
+
+            setVolume(MyMenuBar.myVolumeBar.getValue());
+
             myAudioClip.loop(Clip.LOOP_CONTINUOUSLY);
         } catch (Exception ex) {
             System.out.println(ex);
         }
-
     }
 
     /**
@@ -165,22 +210,24 @@ public class MazePanel extends JPanel {
         Image ii = Toolkit.getDefaultToolkit().getImage(myBackgroundImage);
         g.drawImage(ii, 0, 0, this);
 
-        // x and y are the coordinates that the rooms use to be drawn onto the panel
-        int y = 0;
+        System.out.println("PAINT COMPONENT METHOD");
+        int i = 1;
+
         for (Room[] rooms : myMaze.getMaze()) {
-            int x = 0;
+
             for (Room room : rooms) {
-                room.setX(x);
-                room.setY(y);
 
+                System.out.println("Room #" + i+": " + room.getX()+"," + room.getY() );
+                System.out.println("RIGHT: " + room.getUserDoor(Room.RIGHT).getX()+","+room.getUserDoor(Room.RIGHT).getY() + room.getUserDoor(Room.RIGHT).isLocked());
+                System.out.println("LEFT: " + room.getUserDoor(Room.LEFT).getX()+","+room.getUserDoor(Room.LEFT).getY() + room.getUserDoor(Room.LEFT).isLocked());
+                System.out.println("UP: " + room.getUserDoor(Room.UP).getX()+","+room.getUserDoor(Room.UP).getY() + room.getUserDoor(Room.UP).isLocked());
+                System.out.println("DOWN: " + room.getUserDoor(Room.DOWN).getX()+","+room.getUserDoor(Room.DOWN).getY() + room.getUserDoor(Room.DOWN).isLocked());
+                System.out.println();
                 Drawer.drawRoom(g, room);
-                // 166 is a the width of a room
-                x += 166;
-
+                i++;
             }
-            // 110 is the height of a room
-            y += 110;
         }
+
         Drawer.drawPlayer(g, myMaze.getPlayer(), this);
     }
 

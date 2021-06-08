@@ -100,6 +100,9 @@ public class QuestionMenu extends JMenu implements ActionListener {
 
             Question.getQuestionInstance().setDataBaseName(myDataBaseName);
 
+            myMazePanel.stopGameAudio();
+            myMazePanel.setMusic(MazePanel.SPORTS_SONG);
+
             myMazePanel.setBackgroundImage(MazePanel.SPORT_BACKGROUND);
             myMazePanel.repaint();
 
@@ -126,6 +129,9 @@ public class QuestionMenu extends JMenu implements ActionListener {
 
             Question.getQuestionInstance().setDataBaseName(myDataBaseName);
 
+            myMazePanel.stopGameAudio();
+            myMazePanel.setMusic(MazePanel.GEOGRAPHY_SONG);
+
             myMazePanel.setBackgroundImage(MazePanel.WORLD_BACKGROUND);
             myMazePanel.repaint();
             //myMazePanel = new MazePanel();
@@ -150,6 +156,9 @@ public class QuestionMenu extends JMenu implements ActionListener {
             myDataBaseName = "MusicQuestions";
 
             Question.getQuestionInstance().setDataBaseName(myDataBaseName);
+
+            myMazePanel.stopGameAudio();
+            myMazePanel.setMusic(MazePanel.MUSIC_SONG);
 
             myMazePanel.setBackgroundImage(MazePanel.MUSIC_BACKGROUND);
             myMazePanel.repaint();

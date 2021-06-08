@@ -64,7 +64,7 @@ public class MyMenuBar extends JMenuBar {
     /**
      * The slider controls the volume of the music
      */
-    private JSlider myVolumeBar;
+    public static JSlider myVolumeBar;
 
     /**
      * Create an instance of the DirectionPanel

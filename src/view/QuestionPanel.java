@@ -7,7 +7,7 @@ import java.awt.*;
  * @author Alik Balika
  *
  * This class is a panel that will display the question
- * This is a Singleton Class
+ *
  */
 public class QuestionPanel extends JPanel {
 
@@ -18,12 +18,6 @@ public class QuestionPanel extends JPanel {
 
     /** The id of the question */
     private int myIdForQuestion;
-
-//    /**
-//     * Create an instance of the QuestionPanel
-//     */
-//    private static final QuestionPanel questionPanel = new QuestionPanel();
-
 
     /**
      * Constructs the panel as well as initializes myQuestion
@@ -41,15 +35,6 @@ public class QuestionPanel extends JPanel {
 
         add(myQuestion);
     }
-
-//    /**
-//     * @return the only QuestionPanel object
-//     */
-//    public static QuestionPanel getInstance() {
-//        return questionPanel;
-//    }
-
-
 
     /**
      *
@@ -84,13 +69,5 @@ public class QuestionPanel extends JPanel {
      */
     public int getMyQuestionId() {
         return myIdForQuestion;
-    }
-
-
-    /**
-     * clears myQuestion
-     */
-    public void clear() {
-        myQuestion.setText("");
     }
 }

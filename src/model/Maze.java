@@ -193,6 +193,7 @@ public class Maze implements Serializable{
         userDir = theDir;
         // myCorrectCounter++;
         myCurrentDoor = this.getCurrentRoom().getUserDoor(theDir);
+        System.out.println("BEFORE CHECK LOCK: " + myXCount + "," + myYCount);
         myCurrentDoor.checkLock(theSolution);
 
         checkSolution();

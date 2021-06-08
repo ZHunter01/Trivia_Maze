@@ -132,9 +132,6 @@ public class PlayerMenu extends JMenu {
      */
     private class PlayerAction extends AbstractAction {
 
-        /** A generated serialization ID. */
-        private static final long serialVersionUID = 5378597716905801474L;
-
         /** The player to use. */
         private final String mySpecificPlayerName;
 

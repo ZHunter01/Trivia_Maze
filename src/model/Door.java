@@ -35,14 +35,6 @@ public class Door extends GameObject implements Serializable {
         return Question.getQuestionInstance().getQuestion(myQuestionID);
     }
 
-//    /** Set Question id of the Door
-//     *
-//     * @param theQ
-//     */
-//    public void setQuestion(final Question theQ) {
-//        myQuestion = theQ;
-//    }
-
     /** Checks the input string to see if it matches Question's solution
      *
      * @param theSolution
