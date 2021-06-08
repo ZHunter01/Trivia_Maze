@@ -19,12 +19,6 @@ public class QuestionPanel extends JPanel {
     /** The id of the question */
     private int myIdForQuestion;
 
-//    /**
-//     * Create an instance of the QuestionPanel
-//     */
-//    private static final QuestionPanel questionPanel = new QuestionPanel();
-
-
     /**
      * Constructs the panel as well as initializes myQuestion
      */
@@ -42,15 +36,6 @@ public class QuestionPanel extends JPanel {
         add(myQuestion);
     }
 
-//    /**
-//     * @return the only QuestionPanel object
-//     */
-//    public static QuestionPanel getInstance() {
-//        return questionPanel;
-//    }
-
-
-
     /**
      *
      * @return myQuestion
@@ -58,8 +43,6 @@ public class QuestionPanel extends JPanel {
     public JLabel getMyQuestion() {
         return myQuestion;
     }
-
-
 
     /**
      * Sets the question to a new question
@@ -85,7 +68,6 @@ public class QuestionPanel extends JPanel {
     public int getMyQuestionId() {
         return myIdForQuestion;
     }
-
 
     /**
      * clears myQuestion

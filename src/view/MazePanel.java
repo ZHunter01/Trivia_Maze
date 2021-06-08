@@ -47,8 +47,12 @@ public class MazePanel extends JPanel {
     public final static String WORLD_BACKGROUND = "resources/world.png";
     public final static String MUSIC_BACKGROUND = "resources/musicBackground.jpg";
     
+    public static final String SPORTS_SONG = "resources/music/gameMusic.wav";
+    public static final String GEOGRAPHY_SONG = "resources/music/Geography_Song.wav";
+    public static final String MUSIC_SONG = "resources/music/Music_Song.wav";
+    
     private String myBackgroundImage;
-
+    
 //    /**
 //     * Create an instance of the MazePanel
 //     */
@@ -75,8 +79,43 @@ public class MazePanel extends JPanel {
 
         myBackgroundImage = SPORT_BACKGROUND;
 
+        this.setMusic(SPORTS_SONG);
+
+    }
+
+    /**
+     * 
+     * @param theGain
+     */
+    public void setVolume(final int theGain) {
+        FloatControl gainControl = (FloatControl) myAudioClip.getControl(FloatControl.Type.MASTER_GAIN);
+        double gain = ((double)theGain)/10.0;
+        float dB = (float) (Math.log(gain) / Math.log(10.0) * 20.0);
+        gainControl.setValue(dB);
+    }
+
+    /**
+     * 
+     */
+    public void stopGameAudio() {
+        myAudioClip.stop();
+    }
+    
+    /**
+     * 
+     * @param thePath
+     */
+    public void setBackgroundImage(final String thePath) {
+        myBackgroundImage = thePath;
+    }
+    
+
+    /*
+     * 
+     */
+    public void setMusic(final String myMusic) {
         try {
-            File audioFile = new File("resources/music/gameMusic.wav");
+            File audioFile = new File(myMusic);
             AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
 
             AudioFormat format = audioStream.getFormat();
@@ -86,39 +125,26 @@ public class MazePanel extends JPanel {
 
             myAudioClip.open(audioStream);
             myAudioClip.start();
-            setVolume(1);
+            
+            setVolume(MyMenuBar.myVolumeBar.getValue());
+            
             myAudioClip.loop(Clip.LOOP_CONTINUOUSLY);
         } catch (Exception ex) {
             System.out.println(ex);
         }
-
     }
-
-    public void setVolume(final int theGain) {
-        FloatControl gainControl = (FloatControl) myAudioClip.getControl(FloatControl.Type.MASTER_GAIN);
-        double gain = ((double)theGain)/10.0;
-        float dB = (float) (Math.log(gain) / Math.log(10.0) * 20.0);
-        gainControl.setValue(dB);
-    }
-
-    public void stopGameAudio() {
-        myAudioClip.stop();
-    }
-    public void setBackgroundImage(String path) {
-        myBackgroundImage = path;
-    }
-
+    
     /**
      * Draws all of the GameObjects onto the panel
      *
      * @param g the Graphics drawer
      */
     @Override
-    protected void paintComponent(final Graphics g) {
-        super.paintComponent(g);
+    protected void paintComponent(final Graphics theGraphics) {
+        super.paintComponent(theGraphics);
 
         Image ii = Toolkit.getDefaultToolkit().getImage(myBackgroundImage);
-        g.drawImage(ii, 0, 0, this);
+        theGraphics.drawImage(ii, 0, 0, this);
         int y = 0;
         for (Room[] rooms : maze.getMaze()) {
             int x = 0;
@@ -126,13 +152,13 @@ public class MazePanel extends JPanel {
                 room.setX(x);
                 room.setY(y);
 
-                Drawer.drawRoom(g, room);
+                Drawer.drawRoom(theGraphics, room);
                 x += 166;
 
             }
             y += 110;
         }
-        Drawer.drawPlayer(g, maze.getPlayer(), this);
+        Drawer.drawPlayer(theGraphics, maze.getPlayer(), this);
     }
 
     /**
@@ -161,8 +187,8 @@ public class MazePanel extends JPanel {
          * @param e the KeyEvent
          */
         @Override
-        public void keyPressed(final KeyEvent e) {
-            int key = e.getKeyCode();
+        public void keyPressed(final KeyEvent theEvent) {
+            int key = theEvent.getKeyCode();
 
             keySwitch(key);
         }
@@ -182,9 +208,9 @@ public class MazePanel extends JPanel {
          *
          * @param key the code of the button that the user pressed
          */
-        private void keySwitch(final int key) {
+        private void keySwitch(final int theKey) {
 
-            switch (key) {
+            switch (theKey) {
 
                 case KeyEvent.VK_LEFT:
                 case KeyEvent.VK_A:

@@ -61,7 +61,7 @@ public class MyMenuBar extends JMenuBar {
 
     private PlayerMenu myPlayerMenu;
     
-    private JSlider myVolumeBar;
+    public static JSlider myVolumeBar;
 
     /**
      * Create an instance of the DirectionPanel
@@ -121,9 +121,8 @@ public class MyMenuBar extends JMenuBar {
 
         myOptions.add(myPlayerMenu);
         myOptions.add(myQuestionMenu);
-        myOptions.add(myVolume);
-
         myOptions.add(myPowerUps);
+        myOptions.add(myVolume);
 
         myHelp.add(myAbout);
         myHelp.add(myRules);
@@ -222,13 +221,6 @@ public class MyMenuBar extends JMenuBar {
         public void actionPerformed(ActionEvent e) {
             System.out.println("Saving... ");
             try {
-
-//                //Create a file chooser
-//                final JFileChooser fc = new JFileChooser();
-//
-//                //In response to a button click:
-//                int returnVal = fc.showOpenDialog();
-
                 //Saving of object in a file
                 FileOutputStream fos = new FileOutputStream("maze.ser");
                 ObjectOutputStream oos = new ObjectOutputStream(fos);
@@ -286,7 +278,6 @@ public class MyMenuBar extends JMenuBar {
       */
      @Override
      public void actionPerformed(final ActionEvent theEvent) {
-  
          final String content1 = "<html>"
                  + "<body style='background-color: white; width: ";
          final String content2 = "'>"
@@ -294,16 +285,17 @@ public class MyMenuBar extends JMenuBar {
                  + "<p>OBJECTIVE: Get to the exit of the maze located at the bottom right. ";
          final String content3
                  = "HOW TO: Use navigation buttons to move. "
-                 + "Answer trivia question correctly to move to the next spot. "
+                 + "Answer trivia question correctly to move to the next spot, but be aware, "
+                 + "the door will permanently lock behind you! "
                  + "If you answer incorrectly, that way will become blocked. "
-                 + "If all routes to the exit are blocked, you lose. "
+                 + "If all routes to the exit are blocked, you lose! "
                  + "If you reach the exit located at the bottom right, you win the trivia maze!</p>"
-                 + "PowerUps: While going through the Trivia Maze you will encounter PowerUps. "
+                 + "POWERUPS: While going through the Trivia Maze you will encounter PowerUps. "
                  + "When you get a PowerUp, a message will tell you which one you got. "
                  + "You can access your PowerUps from the \"Options\" menu under \"PowerUp\""
                  + "There are two PowerUps you can get, FreeQuestion and PermaUnlock. "
-                 + "<br />FreeQuestion: The FreeQuestion PowerUp allows you to skip a question and move"
-                 + " into the next room\nPermaUnlock: The PermaUnlock PowerUp allows you to retry a question" 
+                 + "<br />FREEQUESTION: The FreeQuestion PowerUp allows you to skip a question and move"
+                 + " into the next room.<br />PERMAUNLOCK: The PermaUnlock PowerUp allows you to retry a question" 
                  + " that you had previously answered incorrectly.";
          final String content = content1 + 300 + "px"
                  + content2 + "\n" + content3;

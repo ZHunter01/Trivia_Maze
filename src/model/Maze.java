@@ -216,6 +216,7 @@ public class Maze implements Serializable{
             myCorrectCounter ++;
             this.incrementMaze();
             this.reverseDoorPermaLock(userDir);
+            this.checkRoomPowerUp();
             //Check for if the user has won the game
             if (hasWon()) {
                 return;

@@ -146,7 +146,7 @@ public class AnswerPanel extends JPanel {
 
         } else {
             myQuestionPanel.setMyQuestion("Answer was correct! Door unlocked!");
-
+            checkForPowerUps();
             try {
                 File audioFile = new File("resources/music/correctAnswer1.wav");
                 playSound(audioFile);
@@ -173,7 +173,6 @@ public class AnswerPanel extends JPanel {
             } catch (Exception ex) {
                 System.out.println(ex);
             }
-
             this.displayWin();
         } else if (myMazePanel.getMaze().getLose()) {
             myMazePanel.stopGameAudio();
@@ -187,7 +186,6 @@ public class AnswerPanel extends JPanel {
             this.displayLose();
         }
 
-        checkForPowerUps();
         System.out.println("Answer23: " + myAnswer);
     }
 
@@ -255,7 +253,7 @@ public class AnswerPanel extends JPanel {
     /**
      * initializes the JTextField and adds it to the panel
      */
-    private void initAndAddAnswer(final boolean theVicible) {
+    private void initAndAddAnswer(final boolean theVisiblity) {
         if (myAnswerField == null) {
             myAnswerField = new JTextField(20);
 
@@ -274,8 +272,8 @@ public class AnswerPanel extends JPanel {
         }
         if(!Question.getQuestionInstance().isMultiple(myQuestionPanel.getMyQuestionId())) {
             System.out.println("in if");
-            myAnswerField.setVisible(theVicible);
-            myAnswerField.setFocusable(theVicible);
+            myAnswerField.setVisible(theVisiblity);
+            myAnswerField.setFocusable(theVisiblity);
             myAnswerField.setText("");
             myMultiAnswer.setVisible(false);
 
@@ -317,8 +315,8 @@ public class AnswerPanel extends JPanel {
             }
             box.setLayout(new GridLayout(i, 0));
             myMultiAnswer.add(box);
-            myMultiAnswer.setVisible(theVicible);
-            myMultiAnswer.setFocusable(theVicible);
+            myMultiAnswer.setVisible(theVisiblity);
+            myMultiAnswer.setFocusable(theVisiblity);
 
         }
 
@@ -327,7 +325,7 @@ public class AnswerPanel extends JPanel {
     /**
      * initializes the JLabel prompt and adds it to the panel
      */
-    private void initAndAddAnswerPrompt(final boolean theVicible) {
+    private void initAndAddAnswerPrompt(final boolean theVisiblity) {
         if (myAnswerPrompt == null) {
             myAnswerPrompt = new JLabel("Please enter your answer: ");
             myAnswerPrompt.setFont(new Font(Font.MONOSPACED, Font.BOLD, 13));
@@ -335,7 +333,7 @@ public class AnswerPanel extends JPanel {
 
             add(myAnswerPrompt);
         } else {
-            myAnswerPrompt.setVisible(theVicible);
+            myAnswerPrompt.setVisible(theVisiblity);
         }
     }
 
