@@ -19,10 +19,7 @@ import javax.swing.JRadioButtonMenuItem;
  *
  */
 public class QuestionMenu extends JMenu implements ActionListener {
-
-    /**
-     *  Serial number.
-     */
+    /**Serializable generated number */
     private static final long serialVersionUID = 991351390607951847L;
 
     /** The name of this menu item */

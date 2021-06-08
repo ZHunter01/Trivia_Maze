@@ -21,7 +21,7 @@ import view.MyMenuBar;
  */
 public class Question implements Serializable{
     
-    //@Serial
+    //@Serial number
     private static final long serialVersionUID = 1721924346865745075L;
 
     /** static variable single_instance of type Singleton */
@@ -54,7 +54,6 @@ public class Question implements Serializable{
      */
     private Question() {
         myDataBaseName = MyMenuBar.getDataBaseName();
-        //3 Types of database questions
         idHelper("SportQuestions");
         idHelper("GeographyQuestions");
         idHelper("MusicQuestions");
@@ -72,11 +71,7 @@ public class Question implements Serializable{
         return questionInstance;
     }
     
-    //@Serial
-    /** Returns current state of the Question object
-     * 
-     * @return this
-     */
+    //@Serial for serialization 
     protected Object readResolve()  {
         return this;
     }
@@ -122,19 +117,28 @@ public class Question implements Serializable{
      */
     public class QuestionQuery implements Serializable {
         
-        //@Serial
+        //@Serial number
         private static final long serialVersionUID = 1880121979725207215L;
+        
+        /** Question field for QuestionQuery class */
         private String myQueryQuestion;
+        
+        /** Answer field for QuestionQuery class */
         private String myQueryAnswer;
+        
+        /** Multiple answer field for QuestionQuery class */
         private String myQueryMultipleAnswer;
+        
+        /** If the question has multiple answer field for QuestionQuery class */
         private boolean myQueryIsMultiple;
 
         /**
+         * Constructor to construct QuestionQuery object with given inputs
          * 
-         * @param theQuestion
-         * @param theAnswer
-         * @param theMultipleAnswers
-         * @param isMultiple
+         * @param theQuestion is the question
+         * @param theAnswer is the answer
+         * @param theMultipleAnswers is the multiple answer
+         * @param isMultiple if question has multiple answer
          */
         private QuestionQuery(final String theQuestion, final String theAnswer,
                 final String theMultipleAnswers, final boolean isMultiple) {
@@ -146,6 +150,7 @@ public class Question implements Serializable{
     }
     
     /**
+     * Retrieve question by id
      * 
      * @return question by id
      */
@@ -155,6 +160,7 @@ public class Question implements Serializable{
     }
     
     /**
+     * Retrieve answer by id
      * 
      * @return answer by id
      */
@@ -166,6 +172,7 @@ public class Question implements Serializable{
     }
     
     /**
+     * Retrieve multiple answers by id
      * 
      * @return multiple answers
      */
@@ -175,6 +182,7 @@ public class Question implements Serializable{
     }
     
     /**
+     * Retrieve if question has multiple answers by id
      * 
      * @return true if the question has multiple answer
      */
@@ -184,6 +192,7 @@ public class Question implements Serializable{
     }
     
     /**
+     * Autoincrement id for questions
      * 
      * @return the question ID
      */
@@ -198,7 +207,7 @@ public class Question implements Serializable{
     }
     
     /**
-     * Determine if input is solution
+     * Determine if input is equal to the answer
      * 
      * @param theInput
      * @return mySolution.toLowerCase().equals(theInput.toLowerCase())
@@ -210,6 +219,7 @@ public class Question implements Serializable{
     
     
     /**
+     * Sets current database name.
      * 
      * @param theName
      */
@@ -218,9 +228,10 @@ public class Question implements Serializable{
     }
     
     /**
+     * This method determine current type of questions and return its specific question object 
      * 
-     * @param theId
-     * @return
+     * @param theId the Id of the question
+     * @return return question object for current type of question.
      */
     public QuestionQuery getMySpecificQuestion(final int theId) {
         if(myDataBaseName.equals("SportQuestions")) {

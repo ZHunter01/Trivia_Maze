@@ -131,7 +131,7 @@ public class AnswerPanel extends JPanel {
         myMazePanel.getMaze().doorSolution(myAnswer, myDirection);
 
         if (myRoom.getUserDoor(myDirection).isPermaLocked()) {
-            myQuestionPanel.setMyQuestion("Answer was incorrect! Door permanently locked!");
+            myQuestionPanel.setMyQuestion(LOCK_MESSAGE);
             mySubmit.setVisible(false);
 
             try {
@@ -144,7 +144,7 @@ public class AnswerPanel extends JPanel {
 
 
         } else {
-            myQuestionPanel.setMyQuestion("Answer was correct! Door unlocked!");
+            myQuestionPanel.setMyQuestion(CORRECT_MESSAGE);
             checkForPowerUps();
             try {
                 File audioFile = new File("resources/music/correctAnswer1.wav");
@@ -152,7 +152,6 @@ public class AnswerPanel extends JPanel {
             } catch (Exception ex) {
                 System.out.println(ex);
             }
-            System.out.println(x + " " + y);
         }
 
         setAnswerPanel(false);
@@ -176,7 +175,7 @@ public class AnswerPanel extends JPanel {
         } else if (myMazePanel.getMaze().getLose()) {
             myMazePanel.stopGameAudio();
             try {
-                File audioFile = new File("src/resources/music/lose.wav");
+                File audioFile = new File("resources/music/lose.wav");
                 playSound(audioFile);
 
             } catch (Exception ex) {
@@ -184,8 +183,6 @@ public class AnswerPanel extends JPanel {
             }
             this.displayLose();
         }
-
-        System.out.println("Answer23: " + myAnswer);
     }
 
     private void playSound(File audioFile) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
@@ -266,11 +263,9 @@ public class AnswerPanel extends JPanel {
             myMultiAnswer = new JMenuBar();
             add(myMultiAnswer);
             myMultiAnswer.setVisible(false);
-//            myMultiAnswer.setBackground(new Color(98, 0, 134));
 
         }
         if(!Question.getQuestionInstance().isMultiple(myQuestionPanel.getMyQuestionId())) {
-            System.out.println("in if");
             myAnswerField.setVisible(theVisiblity);
             myAnswerField.setFocusable(theVisiblity);
             myAnswerField.setText("");
@@ -280,7 +275,6 @@ public class AnswerPanel extends JPanel {
                 add(mySubmit);
             }
         } else {
-            System.out.println("in else");
             if (mySubmit != null) {
                 remove(mySubmit);
             }
@@ -293,8 +287,7 @@ public class AnswerPanel extends JPanel {
 
             box.setBackground(Color.BLACK);
             box.setForeground(Color.BLACK);
-            //box.setLayout(new BoxLayout(box, BoxLayout.Y_AXIS));
-            //box.setLayout(new GridLayout(4, 0));
+
             String multi = Question.getQuestionInstance()
                     .getMultiAnswer(myQuestionPanel.getMyQuestionId());
             int i = 0;

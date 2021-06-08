@@ -36,6 +36,8 @@ public class MyMenuBar extends JMenuBar {
     private static final int MINOR = 1;
     /** The default major value for slider. */
     private static final int MAJOR = 5;
+    /**Default volume */
+    private static final int DEFAULT_VOLUME = 2;
     /** JMenu myHelp pops up a help window that explains how the game works*/
     private JMenu myHelp;
     /**JMenu myOptions displays JMenuItems which give different options for the user*/
@@ -153,7 +155,7 @@ public class MyMenuBar extends JMenuBar {
         myVolumeBar.setMinorTickSpacing(MINOR);
         myVolumeBar.setPaintTicks(true);
         myVolumeBar.setPaintLabels(true);
-        myVolumeBar.setValue(MAJOR);
+        myVolumeBar.setValue(DEFAULT_VOLUME);
         //Add change listener
         myVolumeBar.addChangeListener(new Volume());
         
@@ -192,7 +194,6 @@ public class MyMenuBar extends JMenuBar {
      * @param theMazePanel
      */
     public void setMazePanel(final MazePanel theMazePanel) {
-        System.out.println("called");                   ///REMOVE BEFORE FINAL SUBMISSION
         myMazePanel = theMazePanel;
         setMaze();
     }
@@ -207,12 +208,10 @@ public class MyMenuBar extends JMenuBar {
         @Override
         public void actionPerformed(final ActionEvent theEvent) {
 
-            System.out.println("Loading... ");          //REMOVE BEFORE FINAL SUBMISSION
 
             Maze m = null;
             //DeSerialization
             try {
-                System.out.println("In try");          //REMOVE BEFORE FINAL SUBMISSION
                 FileInputStream fileIn = new FileInputStream("maze.ser");
                 ObjectInputStream in = new ObjectInputStream(fileIn);
                 m = (Maze) in.readObject();
@@ -227,15 +226,11 @@ public class MyMenuBar extends JMenuBar {
 
             if (m != null) {
                 myMaze = m;
-                System.out.println("Load successful!");          //REMOVE BEFORE FINAL SUBMISSION
                 myMazePanel.setMaze(myMaze);
                 System.out.println("("+myMaze.getXCount()+","+myMaze.getYCount()+")");
                 myMaze.getPlayer().setImage(PlayerMenu.OLD_MAN);
                 myMazePanel.repaint();
             }
-
-            System.out.println("end of action listener");          //REMOVE BEFORE FINAL SUBMISSION
-
         }
     }
 
@@ -249,7 +244,6 @@ public class MyMenuBar extends JMenuBar {
         @Override
         public void actionPerformed(final ActionEvent theEvent) {
             //Serialization
-            System.out.println("Saving... ");          //REMOVE BEFORE FINAL SUBMISSION
             try {
                 //Saving of object in a file
                 FileOutputStream fos = new FileOutputStream("maze.ser");
@@ -262,7 +256,6 @@ public class MyMenuBar extends JMenuBar {
                 oos.close();
                 fos.close();
 
-                System.out.println("Object has been serialized");          //REMOVE BEFORE FINAL SUBMISSION
             } catch (IOException exception) {
                 exception.printStackTrace();
             }

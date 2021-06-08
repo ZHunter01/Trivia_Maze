@@ -34,7 +34,7 @@ public class Door extends GameObject implements Serializable{
      * @return
      */
     public String getQuestion() {
-        System.out.println("Id: " + myQuestionID + " Answer87: " + Question.getQuestionInstance().getSolution(myQuestionID));
+        System.out.println(" Answer: " + Question.getQuestionInstance().getSolution(myQuestionID)); ///NEED TO REMOVE FOR FINAL SUBMIT
         return Question.getQuestionInstance().getQuestion(myQuestionID);
     }
    
@@ -43,9 +43,7 @@ public class Door extends GameObject implements Serializable{
      * @param theSolution
      */
     public void checkLock(final String theSolution) {
-        System.out.println(Question.getQuestionInstance().getSolution(myQuestionID));   ///NEED TO REMOVE FOR FINAL SUBMIT
         if (Question.getQuestionInstance().isSolution(theSolution, myQuestionID)) {
-                
             myLock = false;
         }
         else {
