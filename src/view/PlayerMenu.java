@@ -1,5 +1,5 @@
-/**
- * Trivia Maze TCSS 360 Spring 2021
+/*
+  Trivia Maze TCSS 360 Spring 2021
  */
 
 package view;
@@ -28,8 +28,11 @@ import model.Player;
  * @author Oleksandr Maistruk
  *
  */
-public class PlayerMenu extends JMenu implements ActionListener {
+public class PlayerMenu extends JMenu {
 
+    /**
+     * The paths to the images
+     */
     public final static String OLD_MAN = "src/resources/Oldman.gif";
     public final static String OLD_WOMAN = "src/resources/Oldwoman.gif";
     public final static String BOY1 = "src/resources/Boy.gif";
@@ -113,29 +116,12 @@ public class PlayerMenu extends JMenu implements ActionListener {
             final JRadioButtonMenuItem btn = new JRadioButtonMenuItem(ca);
             btngrp.add(btn);
             add(btn);
-            btn.addActionListener(new ChangeIcon(ca.myPath));
+//            btn.addActionListener(new ChangeIcon(ca.myPath));
             if (btn.getText().equals("Oldman")) {
                 btn.setSelected(true);
             }
         }
         return btngrp; //playerMenu;
-    }
-
-    private class ChangeIcon implements ActionListener {
-
-        String myIconPath;
-
-        public ChangeIcon(String theIconPath) {
-            myIconPath = theIconPath;
-        }
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            myPlayer.setImage(myIconPath);
-            myPlayer.setImagePath(myIconPath);
-            System.out.println(myIconPath);
-            myMazePanel.repaint();
-        }
     }
 
 
@@ -195,28 +181,10 @@ public class PlayerMenu extends JMenu implements ActionListener {
          */
         @Override
         public void actionPerformed(ActionEvent theEvent) {
-            myPlayerName = mySpecificPlayerName;
-//            myPlayer.setPlayerIcon(myPlayerName);
-//            myMazePane.repaint();
-
+            myPlayer.setImage(myPath);
+            myPlayer.setImagePath(myPath);
+            System.out.println(myPath);
+            myMazePanel.repaint();
         }
     }
-
-
-
-    /**
-     * Method to get current players name
-     *
-     * @return current player name
-     */
-    public String getPlayerName() {
-        return myPlayerName;
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-
-    }
-
 }

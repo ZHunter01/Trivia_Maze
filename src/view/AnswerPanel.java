@@ -1,6 +1,5 @@
-
-/**
- * Trivia Maze TCSS 360 Spring 2021
+/*
+  Trivia Maze TCSS 360 Spring 2021
  */
 
 package view;
@@ -16,8 +15,8 @@ import java.io.IOException;
 
 
 /**
- * This class is a panel where the user can enter their answer
- * This is a Singleton class
+ * This class is a panel where the user can enter their answer. The panel also will play sounds whenever
+ * a certain action is made by the user.
  *
  * @author Alik Balika
  * @author Oleksandr Maistruk
@@ -36,10 +35,6 @@ public class AnswerPanel extends JPanel {
             + " Use it to skip any question into the next room!";
     private final static String PERMA_UNLOCK = "You have been awarded a PERMA UNLOCK PowerUp!"
             + " Use it to unlock doors that have been Perma-Locked!";
-    /**
-     * The serial number
-     */
-    private static final long serialVersionUID = 7889243050424110037L;
 
     /**
      * A JLabel that prompts the user to answer the question
@@ -61,20 +56,27 @@ public class AnswerPanel extends JPanel {
     /**
      * The player's answer
      */
-    private transient String myAnswer;
+    private String myAnswer;
 
+    /**
+     * The direction that the player is facing
+     */
     private int myDirection;
 
+    /**
+     * Reference to the maze panel
+     */
     private MazePanel myMazePanel;
 
+    /**
+     * reference to the question panel
+     */
     private QuestionPanel myQuestionPanel;
 
+    /**
+     * reference to the power up menu
+     */
     private PowerUpMenu myPowerUpMenu;
-
-//    /**
-//     * Create an instance of the AnswerPanel
-//     */
-//    private static final AnswerPanel answerPanel = new AnswerPanel();
 
     /**
      * constructs the panel and initializes everything
@@ -86,6 +88,10 @@ public class AnswerPanel extends JPanel {
 
     }
 
+    /**
+     * Displays the components on the JPanel
+     * @param theVisibility will display components if set to true
+     */
     public void setAnswerPanel(final boolean theVisibility) {
 
         initAndAddAnswerPrompt(theVisibility);
@@ -94,17 +100,61 @@ public class AnswerPanel extends JPanel {
 
     }
 
+    /**
+     * Sets the power up menu so it can be referenced
+     * @param theMenu
+     */
     public void setPowerUpMenu(final PowerUpMenu theMenu) {
         myPowerUpMenu = theMenu;
     }
 
+    /**
+     * Sets the current direction that the player is facing
+     * @param theDirection
+     */
+    public void setDirection(final int theDirection) {
+        myDirection = theDirection;
+    }
+
+    /**
+     * Sets the maze panel so it can be referenced
+     * @param theMazePanel
+     */
+    public void setMazePanel(final MazePanel theMazePanel) {
+        myMazePanel = theMazePanel;
+    }
+
+    /**
+     * Sets the questionPanel so it can be referenced
+     * @param theQuestionPanel
+     */
+    public void setQuestionPanel(final QuestionPanel theQuestionPanel) {
+        myQuestionPanel = theQuestionPanel;
+    }
+
+    /**
+     * @return the answer that the user inputted
+     */
+    public String getMyAnswer() {
+        return myAnswer;
+    }
+
+    /**
+     * @return the answer field
+     */
+    public JTextField getAnswerField() {
+        return myAnswerField;
+    }
+
+    /**
+     * Action Listener for when user presses submit or chooses an option from the multiple
+     * choice buttons. It will check if the user answer was correct as well as play sounds
+     * depending on what action the user takes
+     */
     public void buttonListener() {
         myAnswer = myAnswerField.getText();
 
         Room myRoom = myMazePanel.getMaze().getCurrentRoom();
-
-        int x = myMazePanel.getMaze().getXCount();
-        int y = myMazePanel.getMaze().getYCount();
 
         myMazePanel.getMaze().doorSolution(myAnswer, myDirection);
 
@@ -117,7 +167,7 @@ public class AnswerPanel extends JPanel {
                 playSound(audioFile);
 
             } catch (Exception ex) {
-                System.out.println(ex);
+                ex.printStackTrace();
             }
 
 
@@ -128,25 +178,9 @@ public class AnswerPanel extends JPanel {
                 File audioFile = new File("src/resources/music/correctAnswer1.wav");
                 playSound(audioFile);
             } catch (Exception ex) {
-                System.out.println(ex);
+                ex.printStackTrace();
             }
-            System.out.println(x + " " + y);
-//            myRoom.getUserDoor(myDirection).setLock(false);
         }
-
-
-//        int x = 0;
-//        for (Room[] rooms : myMazePanel.getMaze().getMaze()) {
-//            int y = 0;
-//            for (Room room : rooms) {
-//                System.out.println("room coordinates: " + x + " " + y + " door left: " + room.getUserDoor(Room.LEFT).isLocked());
-//                System.out.println("room coordinates: " + x + " " + y + " door right: " + room.getUserDoor(Room.RIGHT).isLocked());
-//                System.out.println("room coordinates: " + x + " " + y + " door up: " + room.getUserDoor(Room.UP).isLocked());
-//                System.out.println("room coordinates: " + x + " " + y + " door down: " + room.getUserDoor(Room.DOWN).isLocked());
-//                y++;
-//            }
-//            x++;
-//        }
 
         setAnswerPanel(false);
 
@@ -163,7 +197,7 @@ public class AnswerPanel extends JPanel {
                 playSound(audioFile);
 
             } catch (Exception ex) {
-                System.out.println(ex);
+                ex.printStackTrace();
             }
 
             this.displayWin();
@@ -174,17 +208,23 @@ public class AnswerPanel extends JPanel {
                 playSound(audioFile);
 
             } catch (Exception ex) {
-                System.out.println(ex);
+                ex.printStackTrace();
             }
             this.displayLose();
         }
 
         checkForPowerUps();
-        System.out.println("Answer23: " + myAnswer);
     }
 
-    private void playSound(File audioFile) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-        AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+    /**
+     * Takes in a file with the given sound and plays the sound.
+     * @param theAudioFile
+     * @throws UnsupportedAudioFileException
+     * @throws IOException
+     * @throws LineUnavailableException
+     */
+    private void playSound(final File theAudioFile) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        AudioInputStream audioStream = AudioSystem.getAudioInputStream(theAudioFile);
 
         AudioFormat format = audioStream.getFormat();
         DataLine.Info info = new DataLine.Info(Clip.class, format);
@@ -199,55 +239,28 @@ public class AnswerPanel extends JPanel {
     /**
      * initializes the submit button and adds it to the panel
      */
-    private void initAndAddSubmit(final boolean theVicible) {
+    private void initAndAddSubmit(final boolean theVisibility) {
         if (mySubmit == null) {
             mySubmit = new JButton("SUBMIT");
             mySubmit.setBackground(Color.BLACK);
             mySubmit.setForeground(Color.WHITE);
-            mySubmit.setFocusable(theVicible);
+            mySubmit.setFocusable(theVisibility);
             mySubmit.setPreferredSize(new Dimension(205, 30));
             add(mySubmit);
-
 
             mySubmit.addActionListener(e -> buttonListener());
 
         } else {
-            mySubmit.setVisible(theVicible);
+            mySubmit.setVisible(theVisibility);
         }
 
     }
 
-    public void setDirection(final int theDirection) {
-        myDirection = theDirection;
-    }
-
-    public void setMazePanel(final MazePanel theMazePanel) {
-        myMazePanel = theMazePanel;
-    }
-
-    public void setQuestionPanel(final QuestionPanel theQuestionPanel) {
-        myQuestionPanel = theQuestionPanel;
-    }
-
     /**
-     *
+     * initializes the JTextField and adds it to the panel. Also depending on if a Question is
+     * a Multichoice question or not, it will display a different view of the panel
      */
-    private void checkForPowerUps() {
-        if (myMazePanel.getMaze().getCurrentRoom().getRoomPowerUp().isFreeQuestion()) {
-            myQuestionPanel.setMyQuestion(FREE_QUESTION);
-            myPowerUpMenu.enableFreeQuestion();
-
-        } else if (myMazePanel.getMaze().getCurrentRoom().getRoomPowerUp().isPermaUnlock()) {
-            myQuestionPanel.setMyQuestion(PERMA_UNLOCK);
-            myPowerUpMenu.enablePermaUnlock();
-        }
-        myMazePanel.getMaze().getCurrentRoom().removePowerUp();
-    }
-
-    /**
-     * initializes the JTextField and adds it to the panel
-     */
-    private void initAndAddAnswer(final boolean theVicible) {
+    private void initAndAddAnswer(final boolean theVisibility) {
         if (myAnswerField == null) {
             myAnswerField = new JTextField(20);
 
@@ -261,13 +274,11 @@ public class AnswerPanel extends JPanel {
             myMultiAnswer = new JMenuBar();
             add(myMultiAnswer);
             myMultiAnswer.setVisible(false);
-//            myMultiAnswer.setBackground(new Color(98, 0, 134));
 
         }
         if(!Question.getQuestionInstance().isMultiple(myQuestionPanel.getMyQuestionId())) {
-            System.out.println("in if");
-            myAnswerField.setVisible(theVicible);
-            myAnswerField.setFocusable(theVicible);
+            myAnswerField.setVisible(theVisibility);
+            myAnswerField.setFocusable(theVisibility);
             myAnswerField.setText("");
             myMultiAnswer.setVisible(false);
 
@@ -275,7 +286,6 @@ public class AnswerPanel extends JPanel {
                 add(mySubmit);
             }
         } else {
-            System.out.println("in else");
             if (mySubmit != null) {
                 remove(mySubmit);
             }
@@ -288,10 +298,9 @@ public class AnswerPanel extends JPanel {
 
             box.setBackground(Color.BLACK);
             box.setForeground(Color.BLACK);
-            //box.setLayout(new BoxLayout(box, BoxLayout.Y_AXIS));
-            //box.setLayout(new GridLayout(4, 0));
             String multi = Question.getQuestionInstance()
                     .getMultiAnswer(myQuestionPanel.getMyQuestionId());
+
             int i = 0;
             for (String word : multi.split(",")){
 
@@ -309,17 +318,15 @@ public class AnswerPanel extends JPanel {
             }
             box.setLayout(new GridLayout(i, 0));
             myMultiAnswer.add(box);
-            myMultiAnswer.setVisible(theVicible);
-            myMultiAnswer.setFocusable(theVicible);
-
+            myMultiAnswer.setVisible(theVisibility);
+            myMultiAnswer.setFocusable(theVisibility);
         }
-
     }
 
     /**
      * initializes the JLabel prompt and adds it to the panel
      */
-    private void initAndAddAnswerPrompt(final boolean theVicible) {
+    private void initAndAddAnswerPrompt(final boolean theVisibility) {
         if (myAnswerPrompt == null) {
             myAnswerPrompt = new JLabel("Please enter your answer: ");
             myAnswerPrompt.setFont(new Font(Font.MONOSPACED, Font.BOLD, 13));
@@ -327,36 +334,28 @@ public class AnswerPanel extends JPanel {
 
             add(myAnswerPrompt);
         } else {
-            myAnswerPrompt.setVisible(theVicible);
+            myAnswerPrompt.setVisible(theVisibility);
         }
     }
 
     /**
-     * @return the answer that the user inputed
+     * Checks to see if a room contains a power up. Will display to user that power up has been obtained
+     * and will activate the power up
      */
-    public String getMyAnswer() {
-        return myAnswer;
+    private void checkForPowerUps() {
+        if (myMazePanel.getMaze().getCurrentRoom().getRoomPowerUp().isFreeQuestion()) {
+            myQuestionPanel.setMyQuestion(FREE_QUESTION);
+            myPowerUpMenu.enableFreeQuestion();
+
+        } else if (myMazePanel.getMaze().getCurrentRoom().getRoomPowerUp().isPermaUnlock()) {
+            myQuestionPanel.setMyQuestion(PERMA_UNLOCK);
+            myPowerUpMenu.enablePermaUnlock();
+        }
+        myMazePanel.getMaze().getCurrentRoom().removePowerUp();
     }
 
-    public JTextField getAnswerField() {
-        return myAnswerField;
-    }
-
-    public JLabel getAnswerPrompt() {
-        return myAnswerPrompt;
-    }
-
-    public JButton getSubmit() {
-        return mySubmit;
-    }
-
-    public void setMyAnswer(final String myAnswer) {
-        this.myAnswer = myAnswer;
-    }
-
-
-    /** Displays a JOptionPane with a win message
-     *
+    /**
+     * Displays a JOptionPane with a win message
      */
     private void displayWin() {
         int result = JOptionPane.showConfirmDialog(null,
@@ -364,8 +363,8 @@ public class AnswerPanel extends JPanel {
         if (result == JOptionPane.YES_OPTION) System.exit(0);
     }
 
-    /** Displays a JOptionPane with a lose message
-     *
+    /**
+     * Displays a JOptionPane with a lose message
      */
     private void displayLose() {
         int result = JOptionPane.showConfirmDialog(null,

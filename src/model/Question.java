@@ -24,6 +24,7 @@ public class Question implements Serializable{
     /**
      * Serial number
      */
+    @Serial
     private static final long serialVersionUID = 1721924346865745075L;
 
     /** static variable single_instance of type Singleton */

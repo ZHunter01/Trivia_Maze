@@ -16,14 +16,13 @@ import java.io.File;
  * @author Alik Balika
  * This class contains the Maze object and player object and displays the entire maze and where the player will move
  *
- * This is a Singleton class
  */
 public class MazePanel extends JPanel {
 
     /**
      * The maze object that contains all of the data
      */
-    private Maze maze;
+    private Maze myMaze;
 
     /**
      * The adapter controls the movement of the player
@@ -37,17 +36,25 @@ public class MazePanel extends JPanel {
     public final static String WORLD_BACKGROUND = "src/resources/world.png";
     public final static String MUSIC_BACKGROUND = "src/resources/musicBackground.jpg";
 
+    /**
+     * holds the current background image
+     */
     private String myBackgroundImage;
 
-    Clip myAudioClip;
+    /**
+     * Plays the music in the game
+     */
+    private Clip myAudioClip;
 
-//    /**
-//     * Create an instance of the MazePanel
-//     */
-//    private static final MazePanel mazePanel = new MazePanel();
+    /**
+     * reference to the answer panel
+     */
+    private final AnswerPanel myAnswerPanel;
 
-    private AnswerPanel myAnswerPanel;
-    private QuestionPanel myQuestionPanel;
+    /**
+     * reference to the question panel
+     */
+    private final QuestionPanel myQuestionPanel;
 
 
     /**
@@ -57,7 +64,7 @@ public class MazePanel extends JPanel {
 
         myAdapter = new TAdapter();
         setFocusable(true);
-        maze = new Maze();
+        myMaze = new Maze();
         addKeyListener(myAdapter);
 
         myAnswerPanel = theAnswerPanel;
@@ -78,7 +85,7 @@ public class MazePanel extends JPanel {
 
             myAudioClip.open(audioStream);
             myAudioClip.start();
-            setVolume(myAudioClip);
+            setVolume(1);
             myAudioClip.loop(Clip.LOOP_CONTINUOUSLY);
         } catch (Exception ex) {
             System.out.println(ex);
@@ -86,27 +93,65 @@ public class MazePanel extends JPanel {
 
     }
 
-    public static void setVolume(Clip clip) {
-        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-        double gain = 0.25;
+    /**
+     * sets the volume of the game audio
+     * @param theGain
+     */
+    public void setVolume(final int theGain) {
+        FloatControl gainControl = (FloatControl) myAudioClip.getControl(FloatControl.Type.MASTER_GAIN);
+        double gain = ((double)theGain)/10.0;
         float dB = (float) (Math.log(gain) / Math.log(10.0) * 20.0);
         gainControl.setValue(dB);
     }
 
+    /**
+     * stops the game audio
+     */
     public void stopGameAudio() {
         myAudioClip.stop();
+        myAudioClip.close();
     }
-
-    //166 - width of the room
-    //110 - height of the room
-
 
     // height of panel: 440
     // width of panel: 664
 
-    public void setBackgroundImage(String path) {
-        myBackgroundImage = path;
+    /**
+     * sets the background image to a new background image
+     * @param thePath
+     */
+    public void setBackgroundImage(final String thePath) {
+        myBackgroundImage = thePath;
     }
+
+    /**
+     * sets the maze of the maze panel (primarily used for serialization)
+     * @param theMaze
+     */
+    public void setMaze(final Maze theMaze) {
+        myMaze = theMaze;
+    }
+
+    /**
+     * @return an instance of the TAdapter that controls the player
+     */
+    public TAdapter getMyAdapter() {
+        return myAdapter;
+    }
+
+    /**
+     * @return the reference to the answer panel
+     */
+    public AnswerPanel getAnswerPanel() {
+        return myAnswerPanel;
+    }
+
+    /**
+     * @return the maze object that the maze panel contains
+     */
+    public Maze getMaze() {
+        return myMaze;
+    }
+
 
     /**
      * Draws all of the GameObjects onto the panel
@@ -119,39 +164,24 @@ public class MazePanel extends JPanel {
 
         Image ii = Toolkit.getDefaultToolkit().getImage(myBackgroundImage);
         g.drawImage(ii, 0, 0, this);
+
+        // x and y are the coordinates that the rooms use to be drawn onto the panel
         int y = 0;
-        for (Room[] rooms : maze.getMaze()) {
+        for (Room[] rooms : myMaze.getMaze()) {
             int x = 0;
             for (Room room : rooms) {
                 room.setX(x);
                 room.setY(y);
 
                 Drawer.drawRoom(g, room);
+                // 166 is a the width of a room
                 x += 166;
 
             }
+            // 110 is the height of a room
             y += 110;
         }
-        Drawer.drawPlayer(g, maze.getPlayer(), this);
-    }
-
-    /**
-     * @return an instance of the TAdapter that controls the player
-     */
-    public TAdapter getMyAdapter() {
-        return myAdapter;
-    }
-
-    public AnswerPanel getAnswerPanel() {
-        return myAnswerPanel;
-    }
-
-    public Maze getMaze() {
-        return maze;
-    }
-
-    public void setMaze(Maze theMaze) {
-        maze = theMaze;
+        Drawer.drawPlayer(g, myMaze.getPlayer(), this);
     }
 
     /**
@@ -184,15 +214,16 @@ public class MazePanel extends JPanel {
          * Chooses the direction that the player object will move in as well as does not allow user to go
          * out of bounds
          *
-         * @param key the code of the button that the user pressed
+         * @param theKey the code of the button that the user pressed
          */
-        private void keySwitch(final int key) {
+        private void keySwitch(final int theKey) {
 
-            switch (key) {
+            switch (theKey) {
 
                 case KeyEvent.VK_LEFT:
                 case KeyEvent.VK_A:
-                    if (!maze.isInBounds(Room.LEFT)) {
+                    if (!myMaze.isInBounds(Room.LEFT)) {
+                        myQuestionPanel.setMyQuestion("You cannot move there!");
                         return;
                     }
 
@@ -201,7 +232,8 @@ public class MazePanel extends JPanel {
 
                 case KeyEvent.VK_RIGHT:
                 case KeyEvent.VK_D:
-                    if (!maze.isInBounds(Room.RIGHT)) {
+                    if (!myMaze.isInBounds(Room.RIGHT)) {
+                        myQuestionPanel.setMyQuestion("You cannot move there!");
                         return;
                     }
 
@@ -210,7 +242,8 @@ public class MazePanel extends JPanel {
 
                 case KeyEvent.VK_UP:
                 case KeyEvent.VK_W:
-                    if (!maze.isInBounds(Room.UP)) {
+                    if (!myMaze.isInBounds(Room.UP)) {
+                        myQuestionPanel.setMyQuestion("You cannot move there!");
                         return;
                     }
 
@@ -219,7 +252,8 @@ public class MazePanel extends JPanel {
 
                 case KeyEvent.VK_DOWN:
                 case KeyEvent.VK_S:
-                    if (!maze.isInBounds(Room.DOWN)) {
+                    if (!myMaze.isInBounds(Room.DOWN)) {
+                        myQuestionPanel.setMyQuestion("You cannot move there!");
                         return;
                     }
 
@@ -229,8 +263,7 @@ public class MazePanel extends JPanel {
                 default:
                     break;
             }
-            System.out.println("(" + maze.getXCount() + "," + maze.getYCount() + ")");
-            System.out.println(maze.getWin());
+            System.out.println("(" + myMaze.getXCount() + "," + myMaze.getYCount() + ")");
             repaint();
         }
 
@@ -240,8 +273,8 @@ public class MazePanel extends JPanel {
          *
          * @param theDir
          */
-        private void retrieveQuestion(int theDir) {
-            Room myRoom = maze.getCurrentRoom();
+        private void retrieveQuestion(final int theDir) {
+            Room myRoom = myMaze.getCurrentRoom();
             Door myDoor = myRoom.getUserDoor(theDir);
             myQuestionPanel.setMyQuestion(myDoor.getQuestion());
             myQuestionPanel.setMyQuestionId(myDoor.getId());

@@ -1,9 +1,10 @@
 package view;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import model.Maze;
-import model.Question;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -25,43 +26,45 @@ import java.io.ObjectOutputStream;
 public class MyMenuBar extends JMenuBar {
 
     /**
-     *
+     * The min value of the JSlider for the volume
      */
-    private static final long serialVersionUID = -8886354497933935360L;
-    /**
-     * JMenu mySave allows the user to save the game
-     */
-    //private JMenuItem mySave;
-    /**
-     * JMenu myLoad allows the user to load a game
-     */
-    //private JMenuItem myLoad;
-    /**
-     * JMenu myHelp pops up a help window that explains how the game works
-     */
-    private JMenu myHelp;
-    /**
-     * JMenu myCustomizePlayer allows the user to change the icon of their player
-     */
-    //private JMenuItem myCustomizePlayer;
+    private static final int MIN_VALUE = 0;
 
-    //private JMenu myPowerUps;
     /**
-     * JMenu myOptions displays JMenuItems which give different options for the user
+     * The max volume of the JSlider for the volume
      */
-    private JMenu myOptions;
-    /** */
-    private JMenu myFile;
+    private static final int MAX_VALUE = 10;
+
+    /** The default minor value for slider. */
+    private static final int MINOR = 1;
+
+    /** The default major value for slider. */
+    private static final int MAJOR = 5;
+
+    /**
+     * the reference to the power up menu
+     */
     private PowerUpMenu myPowerUps;
-    private Maze myMaze;
-    private MazePanel myMazePanel;
-    //private JMenuItem myExit;
-    /** The Database name by default */
-    private static String myDataBaseName = "SportQuestions";
 
+    /**
+     * the reference to the maze panel
+     */
+    private MazePanel myMazePanel;
+
+    /**
+     * the reference to the question menu
+     */
     private QuestionMenu myQuestionMenu;
 
+    /**
+     * The reference to the player menu
+     */
     private PlayerMenu myPlayerMenu;
+
+    /**
+     * The slider controls the volume of the music
+     */
+    private JSlider myVolumeBar;
 
     /**
      * Create an instance of the DirectionPanel
@@ -77,31 +80,55 @@ public class MyMenuBar extends JMenuBar {
     }
 
     /**
+     * sets the maze panel
+     * @param theMazePanel
+     */
+    public void setMazePanel(final MazePanel theMazePanel) {
+        myMazePanel = theMazePanel;
+    }
+
+    /**
+     * Sets the maze panel for the question panel, player menu and the power up menu
+     * @param theMazePanel
+     */
+    public void setQuestionPlayerMenuMazePanel(final MazePanel theMazePanel) {
+        myQuestionMenu.setMazePanel(theMazePanel);
+        myPlayerMenu.setMazePanel(theMazePanel);
+        myPowerUps.setPanels(theMazePanel);
+    }
+
+    /**
+     * @return return the reference to the power up menu
+     */
+    public PowerUpMenu getPowerUpMenu() {
+        return myPowerUps;
+    }
+
+    /** The Database name by default */
+    public static String getDataBaseName() {
+        return "SportQuestions";
+    }
+
+    /**
      * @return the only instance of MenuBar
      */
     public static MyMenuBar getInstance() {
         return myMenuBar;
     }
 
-    private void setMaze() {
-        myMaze = myMazePanel.getMaze();
-    }
-
     /**
      * initialize fields and add then to the menu bar
      */
     private void initAndAddJMenus() {
-        myFile = new JMenu("FILE");
-        //mySave = new JMenu("SAVE");
-        //myLoad = new JMenu("LOAD");
-        myHelp = new JMenu("HELP");
-        //myPowerUps = new JMenu("PowerUps");
-        //myCustomizePlayer = new JMenu("CUSTOMIZE PLAYER");
-        myOptions = new JMenu("OPTIONS");
+
+        JMenu myFile = new JMenu("FILE");
+
+        JMenu myHelp = new JMenu("HELP");
+
+        JMenu myOptions = new JMenu("OPTIONS");
 
         myPowerUps = new PowerUpMenu("PowerUps");
         final JMenuItem exit =  new JMenuItem("Exit");
-//        final JMenuItem myColor = new JMenuItem("Color");
 
         myQuestionMenu = new QuestionMenu();
         myPlayerMenu = new PlayerMenu();
@@ -110,7 +137,9 @@ public class MyMenuBar extends JMenuBar {
         final JMenuItem myRules = new JMenuItem("Rules");
         final JMenuItem mySave = new JMenuItem("Save");
         final JMenuItem myLoad = new JMenuItem("Load");
-        // final JMenuItem myCustomizePlayer = new JMenuItem("Customize Player");
+
+        final JMenu myVolume = new JMenu("Volume");
+        myVolume.add(setUpSlider());
 
         add(myFile);
         myFile.add(mySave);
@@ -122,6 +151,7 @@ public class MyMenuBar extends JMenuBar {
 
         myOptions.add(myPlayerMenu);
         myOptions.add(myQuestionMenu);
+        myOptions.add(myVolume);
 
         myOptions.add(myPowerUps);
 
@@ -135,42 +165,37 @@ public class MyMenuBar extends JMenuBar {
         myLoad.addActionListener(new Load());
     }
 
-    public void setQuestionPlayerMenuMazePanel(MazePanel theMazePanel) {
-        myQuestionMenu.setMazePanel(theMazePanel);
-        myPlayerMenu.setMazePanel(theMazePanel);
-        myPowerUps.setPanels(theMazePanel);
-    }
-
-//    public void setPlayerMenuMazePanel(PlayerMen)
-
     /**
-     *
+     * creates the slider object and adds a listener to it
      * @return
      */
-    public PowerUpMenu getPowerUpMenu() {
-        return myPowerUps;
+    private JSlider setUpSlider() {
+        myVolumeBar = new JSlider(MIN_VALUE, MAX_VALUE, JSlider.HORIZONTAL);
+        myVolumeBar.setMajorTickSpacing(MAJOR);
+        myVolumeBar.setMinorTickSpacing(MINOR);
+        myVolumeBar.setPaintTicks(true);
+        myVolumeBar.setPaintLabels(true);
+        myVolumeBar.setValue(MAJOR);
+        myVolumeBar.addChangeListener(new Volume());
+
+        return myVolumeBar;
     }
 
-    public void setMazePanel(final MazePanel theMazePanel) {
-        System.out.println("called");
-        myMazePanel = theMazePanel;
-        setMaze();
-    }
-
+    /**
+     * The load action listener. Loads the previously saved state
+     */
     private class Load implements ActionListener {
 
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(final ActionEvent e) {
 
             System.out.println("Loading... ");
 
             Maze m = null;
             try {
-                System.out.println("In try");
                 FileInputStream fileIn = new FileInputStream("maze.ser");
                 ObjectInputStream in = new ObjectInputStream(fileIn);
                 m = (Maze) in.readObject();
-                //System.out.println(m);
                 in.close();
                 fileIn.close();
             } catch (IOException i) {
@@ -181,42 +206,32 @@ public class MyMenuBar extends JMenuBar {
             }
 
             if (m != null) {
-                myMaze = m;
                 System.out.println("Load successful!");
-                myMazePanel.setMaze(myMaze);
-                System.out.println("("+myMaze.getXCount()+","+myMaze.getYCount()+")");
-
-                String path = myMaze.getPlayer().getImagePath();
-                myMaze.getPlayer().setImage(path);
-
-                myPlayerMenu.setMazePanel(myMazePanel);
+                myMazePanel.setMaze(m);
+                System.out.println("("+m.getXCount()+","+m.getYCount()+")");
+                m.getPlayer().setImage(PlayerMenu.OLD_MAN);
                 myMazePanel.repaint();
             }
-
-            System.out.println("end of action listener");
 
         }
     }
 
+    /**
+     * The save action listener. saves the current state of the game
+     */
     private class Save implements ActionListener {
 
         @Override
-        public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(final ActionEvent e) {
             System.out.println("Saving... ");
             try {
-
-//                //Create a file chooser
-//                final JFileChooser fc = new JFileChooser();
-//
-//                //In response to a button click:
-//                int returnVal = fc.showOpenDialog();
 
                 //Saving of object in a file
                 FileOutputStream fos = new FileOutputStream("maze.ser");
                 ObjectOutputStream oos = new ObjectOutputStream(fos);
 
                 // Method for serialization of B's class object
-                oos.writeObject(myMaze);
+                oos.writeObject(myMazePanel.getMaze());
 
                 // closing streams
                 oos.close();
@@ -240,7 +255,7 @@ public class MyMenuBar extends JMenuBar {
          * Opens Message Dialog window with About program information Sets up logo.
          */
         @Override
-        public void actionPerformed(ActionEvent theEvent) {
+        public void actionPerformed(final ActionEvent theEvent) {
             JPanel labelPanel = new JPanel(new GridBagLayout());
             JPanel textPanel = new JPanel(new GridLayout(3, 1, 5, 7));
 //            labelPanel.add(new JLabel("Game Name: "));
@@ -280,7 +295,7 @@ public class MyMenuBar extends JMenuBar {
                     + "If you answer incorrectly, that way will become blocked. "
                     + "If all routes to the exit are blocked, you lose. "
                     + "If you reach the exit located at the bottom right, you win the trivia maze!</p>"
-                    + "PowerUps: While going through the Trivia Maze you will encounter PowerUps. "
+                    + "<h3>PowerUps:</h3> While going through the Trivia Maze you will encounter PowerUps. "
                     + "When you get a PowerUp, a message will tell you which one you got. "
                     + "You can access your PowerUps from the \"Options\" menu under \"PowerUp\""
                     + "There are two PowerUps you can get, FreeQuestion and PermaUnlock. "
@@ -301,7 +316,12 @@ public class MyMenuBar extends JMenuBar {
 
     }
 
-
+    /**
+     *
+     * Exits and closes the game
+     * @author Zach Hunter
+     *
+     */
     private class Exit implements ActionListener {
 
         @Override
@@ -311,8 +331,17 @@ public class MyMenuBar extends JMenuBar {
 
     }
 
-    public static String getDataBaseName() {
-        return myDataBaseName;
+    /**
+     *
+     * adds the volume action listener to the JSlider
+     * @author Zach Hunter
+     *
+     */
+    private class Volume implements ChangeListener {
+
+        @Override
+        public void stateChanged(final ChangeEvent theEvent) {
+            myMazePanel.setVolume(myVolumeBar.getValue());
+        }
     }
 }
-

@@ -1,6 +1,5 @@
-
-/**
- * Trivia Maze TCSS 360 Spring 2021
+/*
+  Trivia Maze TCSS 360 Spring 2021
  */
 
 package view;
