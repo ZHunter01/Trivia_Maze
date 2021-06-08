@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 
 import model.Door;
 import model.Maze;
-import model.Player;
 import model.PowerUp;
 import model.Room;
 

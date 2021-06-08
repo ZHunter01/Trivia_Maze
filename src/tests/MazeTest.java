@@ -1,6 +1,9 @@
 package tests;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import org.junit.jupiter.api.Assertions;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
@@ -72,8 +75,6 @@ public class MazeTest {
         theMaze.usePowerUp(power, Room.DOWN);
         
         assertTrue(theMaze.getXCount() == x  && theMaze.getYCount() == y + 1);
-        
-        
     }
     
     @Test
@@ -89,7 +90,6 @@ public class MazeTest {
     
     @Test
     void testUsePowerUpPermaUnlock_DoorIsPermaLocked() {
-        //theMaze.getCurrentRoom().getUserDoor(Room.UP).getQuestion().setQuestionAndSolution("Does this work?", "Yes");
         theMaze.getCurrentRoom().getUserDoor(Room.UP).checkLock(MY_INCORRECT);
         
         
@@ -150,6 +150,18 @@ public class MazeTest {
     }
     
     @Test
+    void testIncrementMaze_Exception() {
+        Maze.userDir = 7;
+        final IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, 
+                () -> { theMaze.incrementMaze(); });
+        
+        final String expected = "Error: Improper door directional value.";
+        final String actual = exception.getMessage();
+        
+        assertTrue(actual.equals(expected));        
+    }
+    
+    @Test
     void testHasWon_False() {
         assertFalse(theMaze.hasWon());
     }
@@ -159,6 +171,38 @@ public class MazeTest {
         theMaze.reverseDoorPermaLock(Room.UP);
         
         assertTrue(theMaze.getCurrentRoom().getUserDoor(Room.DOWN).isPermaLocked());
+    }
+    
+    @Test
+    void testReverseDoorPermaLock_Left() {
+        theMaze.reverseDoorPermaLock(Room.LEFT);
+        
+        assertTrue(theMaze.getCurrentRoom().getUserDoor(Room.RIGHT).isPermaLocked());
+    }
+    
+    @Test
+    void testReverseDoorPermaLock_Down() {
+        theMaze.reverseDoorPermaLock(Room.DOWN);
+        
+        assertTrue(theMaze.getCurrentRoom().getUserDoor(Room.UP).isPermaLocked());
+    }
+    
+    @Test
+    void testReverseDoorPermaLock_Right() {
+        theMaze.reverseDoorPermaLock(Room.RIGHT);
+        
+        assertTrue(theMaze.getCurrentRoom().getUserDoor(Room.LEFT).isPermaLocked());
+    }
+    
+    @Test
+    void testReverseDoorPermaLock_Exception() {
+        final IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, 
+                () -> { theMaze.reverseDoorPermaLock(4); });
+        
+        final String expected = "Error: Improper door directional value.";
+        final String actual = exception.getMessage();
+        
+        assertTrue(actual.equals(expected));        
     }
     
     @Test
@@ -198,7 +242,6 @@ public class MazeTest {
     
     @Test
     void testCheckSolution_True() {
-      //  theMaze.setRoom(3, 3);
         theMaze.userDir = Room.DOWN;
         
         Door userDoor = theMaze.getCurrentRoom().getUserDoor(Room.DOWN);
@@ -323,4 +366,3 @@ public class MazeTest {
         assertFalse(theMaze.isInBounds(Room.RIGHT));
     }
 }
-

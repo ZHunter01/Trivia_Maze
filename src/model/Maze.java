@@ -35,7 +35,7 @@ public class Maze implements Serializable{
     /**Door object for current selected door*/
     public Door myCurrentDoor;
     /**Int value to keep track of what direction door is being accessed */
-    public int userDir;
+    public static int userDir;
     public boolean myIncorrect;
     
     /* Creates default 2-d array maze with 4x4 dimensions
