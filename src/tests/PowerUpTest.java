@@ -1,6 +1,7 @@
 package tests;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 
@@ -102,4 +103,27 @@ public class PowerUpTest {
         
         assertFalse(myPower.isPermaUnlock());
     }
+    
+    @Test
+    void testEquals() {
+        final PowerUp power = PowerUp.createFreeQuestion();
+        
+        assertTrue(power.equals(PowerUp.createFreeQuestion()));
+    }
+
+    @Test
+    void testEquals_False() {
+        final PowerUp power = PowerUp.createFreeQuestion();
+        
+        assertFalse(power.equals(PowerUp.createPermaUnlock()));
+    }
+    
+    @Test
+    void testCreateEmptyPowerUp() {
+        final PowerUp power = PowerUp.createEmptyPowerUp();
+        
+        assertTrue(power.myFreeQuestion == false && power.myPermaUnlock == false);
+        
+    }
+
 }

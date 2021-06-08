@@ -98,7 +98,7 @@ public class RoomTest {
     }
     
     @Test
-    void testGetUserDoorError() {
+    void testGetUserDoor_Exception() {
         final IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, 
                 () -> { myRoom.getUserDoor(4); });
         
@@ -134,4 +134,47 @@ public class RoomTest {
         myRoom.removePowerUp();
         assertTrue(myRoom.getRoomPowerUp().equals(PowerUp.createEmptyPowerUp()));
     }
+    
+    @Test
+    void testSetUserDoor_Up() {
+        final Door door = new Door();
+        myRoom.setUserDoor(Room.UP, door);
+        assertEquals(myRoom.getUserDoor(Room.UP), door);
+    }
+
+    @Test
+    void testSetUserDoor_Left() {
+        final Door door = new Door();
+        myRoom.setUserDoor(Room.LEFT, door);
+        assertEquals(myRoom.getUserDoor(Room.LEFT), door);
+    }
+
+    @Test
+    void testSetUserDoor_Down() {
+        final Door door = new Door();
+        myRoom.setUserDoor(Room.DOWN, door);
+        assertEquals(myRoom.getUserDoor(Room.DOWN), door);
+    }
+
+    @Test
+    void testSetUserDoor_Right() {
+        final Door door = new Door();
+        myRoom.setUserDoor(Room.RIGHT, door);
+        assertEquals(myRoom.getUserDoor(Room.RIGHT), door);
+    }
+    
+    @Test
+    void testSetUserDoor_Exception() {
+        final Door door = new Door();
+        final IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, 
+                () -> { myRoom.setUserDoor(4, door); });
+        
+        final String expected = "Error: Parameter must be an int value from 0 to 3";
+        final String actual = exception.getMessage();
+        
+        assertTrue(actual.equals(expected));
+    }
+
+
+
 }

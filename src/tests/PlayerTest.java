@@ -13,6 +13,7 @@ import org.junit.jupiter.api.Test;
 
 import model.Player;
 import model.PowerUp;
+import model.Room;
 
 /**
  * 
@@ -30,8 +31,8 @@ public class PlayerTest {
     }
     
     @Test
-    void testGetIconDefault() {        
-        assertTrue(myPlayer.getIcon().equals(new ImageIcon("./resources/player.png").getImage()));
+    void testGetImageDefault() {        
+        assertTrue(myPlayer.getImage().equals(new ImageIcon("resources/Oldman.gif").getImage()));
     }
     
 //    @Test
@@ -48,12 +49,12 @@ public class PlayerTest {
 //        assertEquals(10, myPlayer.getY());
 //    }
     
-    @Test
-    void testSetImage() {
-        myPlayer.setImage(new ImageIcon("./resources/ellipse.gif").getImage());
-        
-        assertEquals(myPlayer.getIcon(), (new ImageIcon("./resources/ellipse.gif").getImage()));
-    }
+//    @Test
+//    void testSetImage() {
+//        myPlayer.setImage(new ImageIcon("./resources/ellipse.gif").getImage());
+//        
+//        assertEquals(myPlayer.getImage(), (new ImageIcon("./resources/ellipse.gif").getImage()));
+//    }
     
     @Test
     void testSetLocationThrow_BothValuesIllegal() {
@@ -113,12 +114,71 @@ public class PlayerTest {
         
         assertTrue(myPlayer.toString().equals(expected));
     }
+
+    @Test
+    void testGetPowerUps() {
+        final PowerUp free = PowerUp.createFreeQuestion();
+        final PowerUp perma = PowerUp.createPermaUnlock();
+        myPlayer.addPowerUp(free);
+        myPlayer.addPowerUp(perma);
+        
+        assertTrue(myPlayer.getPowerUps().contains(free) && myPlayer.getPowerUps().contains(perma));
+    }
     
     @Test
-    void testPlayerWithImage() {
-        myPlayer = new Player(new ImageIcon("./resources/ellipse.gif").getImage());
+    void testMove_X_Y() {
+        final int x = myPlayer.getX();
+        final int y = myPlayer.getY();
         
-        assertTrue(myPlayer.getIcon().equals(new ImageIcon("./resources/ellipse.gif").getImage()));
+        myPlayer.move(x, y);
+        
+        assertTrue(myPlayer.getX() == x + x && myPlayer.getY() == y + y);
     }
+    
+    @Test
+    void testMove_Up() {
+        final int x = myPlayer.getX();
+        final int y = myPlayer.getY();
+        
+        myPlayer.move(Room.UP);
+        
+        assertTrue(myPlayer.getX() == x && myPlayer.getY() == (y - 110));
+    }
+
+    @Test
+    void testMove_Left() {
+        final int x = myPlayer.getX();
+        final int y = myPlayer.getY();
+        
+        myPlayer.move(Room.LEFT);
+        
+        assertTrue(myPlayer.getX() == (x - 166) && myPlayer.getY() == y);
+    }    
+    
+    @Test
+    void testMove_Down() {
+        final int x = myPlayer.getX();
+        final int y = myPlayer.getY();
+        
+        myPlayer.move(Room.DOWN);
+        
+        assertTrue(myPlayer.getX() == x && myPlayer.getY() == (y + 110));
+    }
+    
+    @Test
+    void testMove_Right() {
+        final int x = myPlayer.getX();
+        final int y = myPlayer.getY();
+        
+        myPlayer.move(Room.RIGHT);
+        
+        assertTrue(myPlayer.getX() == (x + 166) && myPlayer.getY() == y);
+    }
+//    @Test
+//    void testPlayerWithImage() {
+//        myPlayer = new Player(new ImageIcon("./resources/ellipse.gif").getImage());
+//        
+//        assertTrue(myPlayer.getImage().equals(new ImageIcon("./resources/ellipse.gif").getImage()));
+//    }
 
 }
