@@ -79,6 +79,10 @@ public class Door extends GameObject implements Serializable {
         return myLock;
     }
 
+    public void setLock(final boolean theLock) {
+        myLock = theLock;
+    }
+
     /** Returns boolean if door is permanently locked
      *
      * @return myPermaLock

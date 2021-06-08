@@ -5,10 +5,12 @@ import model.Door;
 import model.Maze;
 import model.Room;
 
+import javax.sound.sampled.*;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.io.File;
 
 /**
  * @author Alik Balika
@@ -33,8 +35,11 @@ public class MazePanel extends JPanel {
      */
     public final static String SPORT_BACKGROUND = "src/resources/lightStadium.jpg";
     public final static String WORLD_BACKGROUND = "src/resources/world.png";
+    public final static String MUSIC_BACKGROUND = "src/resources/musicBackground.jpg";
 
     private String myBackgroundImage;
+
+    Clip myAudioClip;
 
 //    /**
 //     * Create an instance of the MazePanel
@@ -62,6 +67,34 @@ public class MazePanel extends JPanel {
 
         myBackgroundImage = SPORT_BACKGROUND;
 
+        try {
+            File audioFile = new File("src/resources/music/gameMusic.wav");
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+
+            AudioFormat format = audioStream.getFormat();
+            DataLine.Info info = new DataLine.Info(Clip.class, format);
+
+            myAudioClip = (Clip) AudioSystem.getLine(info);
+
+            myAudioClip.open(audioStream);
+            myAudioClip.start();
+            setVolume(myAudioClip);
+            myAudioClip.loop(Clip.LOOP_CONTINUOUSLY);
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+
+    }
+
+    public static void setVolume(Clip clip) {
+        FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        double gain = 0.25;
+        float dB = (float) (Math.log(gain) / Math.log(10.0) * 20.0);
+        gainControl.setValue(dB);
+    }
+
+    public void stopGameAudio() {
+        myAudioClip.stop();
     }
 
     //166 - width of the room

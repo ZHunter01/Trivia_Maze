@@ -5,13 +5,15 @@
 
 package view;
 
-import java.awt.*;
-
-import javax.swing.*;
-
-import model.Maze;
 import model.Question;
 import model.Room;
+
+import javax.sound.sampled.*;
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+
 
 /**
  * This class is a panel where the user can enter their answer
@@ -81,17 +83,12 @@ public class AnswerPanel extends JPanel {
         setPreferredSize(new Dimension(222, 0));
         setBackground(Color.BLACK);
         myAnswer = "";
-//        initAndAddAnswerPrompt();
-//        initAndAddAnswer();
-//        initAndAddSubmit();
+
     }
 
     public void setAnswerPanel(final boolean theVisibility) {
 
         initAndAddAnswerPrompt(theVisibility);
-//        if(Question.getQuestionInstance().isMultiple(myQuestionPanel.getMyQuestionId())) {
-//
-//        }
         initAndAddSubmit(theVisibility);
         initAndAddAnswer(theVisibility);
 
@@ -106,14 +103,50 @@ public class AnswerPanel extends JPanel {
 
         Room myRoom = myMazePanel.getMaze().getCurrentRoom();
 
+        int x = myMazePanel.getMaze().getXCount();
+        int y = myMazePanel.getMaze().getYCount();
+
         myMazePanel.getMaze().doorSolution(myAnswer, myDirection);
 
         if (myRoom.getUserDoor(myDirection).isPermaLocked()) {
             myQuestionPanel.setMyQuestion("Answer was incorrect! Door permanently locked!");
             mySubmit.setVisible(false);
+
+            try {
+                File audioFile = new File("src/resources/music/wrongAnswer3.wav");
+                playSound(audioFile);
+
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+
+
         } else {
             myQuestionPanel.setMyQuestion("Answer was correct! Door unlocked!");
+
+            try {
+                File audioFile = new File("src/resources/music/correctAnswer1.wav");
+                playSound(audioFile);
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+            System.out.println(x + " " + y);
+//            myRoom.getUserDoor(myDirection).setLock(false);
         }
+
+
+//        int x = 0;
+//        for (Room[] rooms : myMazePanel.getMaze().getMaze()) {
+//            int y = 0;
+//            for (Room room : rooms) {
+//                System.out.println("room coordinates: " + x + " " + y + " door left: " + room.getUserDoor(Room.LEFT).isLocked());
+//                System.out.println("room coordinates: " + x + " " + y + " door right: " + room.getUserDoor(Room.RIGHT).isLocked());
+//                System.out.println("room coordinates: " + x + " " + y + " door up: " + room.getUserDoor(Room.UP).isLocked());
+//                System.out.println("room coordinates: " + x + " " + y + " door down: " + room.getUserDoor(Room.DOWN).isLocked());
+//                y++;
+//            }
+//            x++;
+//        }
 
         setAnswerPanel(false);
 
@@ -123,13 +156,43 @@ public class AnswerPanel extends JPanel {
         myAnswer = "";
 
         if (myMazePanel.getMaze().getWin()) {
+            myMazePanel.stopGameAudio();
+
+            try {
+                File audioFile = new File("src/resources/music/win.wav");
+                playSound(audioFile);
+
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+
             this.displayWin();
         } else if (myMazePanel.getMaze().getLose()) {
+            myMazePanel.stopGameAudio();
+            try {
+                File audioFile = new File("src/resources/music/lose.wav");
+                playSound(audioFile);
+
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
             this.displayLose();
         }
 
         checkForPowerUps();
         System.out.println("Answer23: " + myAnswer);
+    }
+
+    private void playSound(File audioFile) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+
+        AudioFormat format = audioStream.getFormat();
+        DataLine.Info info = new DataLine.Info(Clip.class, format);
+
+        Clip audioClip = (Clip) AudioSystem.getLine(info);
+
+        audioClip.open(audioStream);
+        audioClip.start();
     }
 
 
@@ -147,8 +210,6 @@ public class AnswerPanel extends JPanel {
 
 
             mySubmit.addActionListener(e -> buttonListener());
-
-            //myAnswerField.addActionListener(e -> myAnswer = myAnswerField.getText());
 
         } else {
             mySubmit.setVisible(theVicible);
@@ -244,20 +305,10 @@ public class AnswerPanel extends JPanel {
                 });
                 box.add(btn);
                 i++;
-                //box.add(Box.createRigidArea(new Dimension(0,5)));
-
-//                final JRadioButton btn = new JRadioButton(word.strip());
-////                btn.setBackground(new Color(98, 0, 134));
-//                btn.addActionListener(e -> {
-//                    myAnswerField.setText(btn.getText());
-//                });
-//                box.add(btn);
-//                myMultiAnswer.add(box);
 
             }
             box.setLayout(new GridLayout(i, 0));
             myMultiAnswer.add(box);
-//            box.setLayout(new GridLayout(9, 1));
             myMultiAnswer.setVisible(theVicible);
             myMultiAnswer.setFocusable(theVicible);
 
