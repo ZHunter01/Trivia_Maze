@@ -21,15 +21,9 @@ import java.io.File;
  * @author Alik Balika
  * This class contains the Maze object and player object and displays the entire maze and where the player will move
  *
- * This is a Singleton class
+ * 
  */
 public class MazePanel extends JPanel {
-
-    /**
-     * 
-     */
-    private static final long serialVersionUID = -2890387412303301149L;
-
     /**
      * The maze object that contains all of the data
      */

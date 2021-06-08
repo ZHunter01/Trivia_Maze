@@ -6,6 +6,8 @@ package model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import view.PlayerMenu;
+
 
 /** Player object class
  * 
@@ -27,14 +29,16 @@ public class Player extends GameObject implements Serializable{
     private static final int MY_START_Y = 40;
     /**Default Image for the Player object */
     private static final String DEFAULT_IMAGE = "resources/Oldman.gif";
-   
+    private String myPlayerImagePath;
+    
     /** Creates a default player object with default black color
     *
     */
    public Player() {
        setImage(DEFAULT_IMAGE);
        myPowerUps = new ArrayList<>();
-
+       myPlayerImagePath = PlayerMenu.OLD_MAN;
+       
        //Set Player start point
        setX(MY_START_X);
        setY(MY_START_Y);
@@ -47,6 +51,22 @@ public class Player extends GameObject implements Serializable{
     public ArrayList<PowerUp> getPowerUps() {
         return myPowerUps;
     }
+    
+    /** Returns current ImageIcon of the player
+    *
+    * @return
+    */
+   public String getImagePath() {
+       return myPlayerImagePath;
+   }
+
+   /** Sets player ImageIcon to input ImageIcon
+    *
+    * @param theImagePath
+    */
+   public void setImagePath(final String theImagePath) {
+       myPlayerImagePath = theImagePath;
+   }
     
     /** Sets the x and y location of the player object
      * x and y can be negative

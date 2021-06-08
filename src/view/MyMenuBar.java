@@ -225,10 +225,8 @@ public class MyMenuBar extends JMenuBar {
             }
 
             if (m != null) {
-                myMaze = m;
-                myMazePanel.setMaze(myMaze);
-                System.out.println("("+myMaze.getXCount()+","+myMaze.getYCount()+")");
-                myMaze.getPlayer().setImage(PlayerMenu.OLD_MAN);
+                myMazePanel.setMaze(m);
+                m.getPlayer().setImage(m.getPlayer().getImagePath());
                 myMazePanel.repaint();
             }
         }

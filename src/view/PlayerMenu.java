@@ -1,5 +1,5 @@
-/**
- * Trivia Maze TCSS 360 Spring 2021
+/*
+  Trivia Maze TCSS 360 Spring 2021
  */
 
 package view;
@@ -28,8 +28,11 @@ import model.Player;
  * @author Oleksandr Maistruk
  *
  */
-public class PlayerMenu extends JMenu implements ActionListener {
+public class PlayerMenu extends JMenu {
 
+    /**
+     * The paths to the images
+     */
     public final static String OLD_MAN = "resources/Oldman.gif";
     public final static String OLD_WOMAN = "resources/Oldwoman.gif";
     public final static String BOY1 = "resources/Boy.gif";
@@ -37,10 +40,6 @@ public class PlayerMenu extends JMenu implements ActionListener {
     public final static String GUY = "resources/Guy.gif";
     public final static String GIRL2 = "resources/Girl2.gif";
 
-    /**
-     * Serial number
-     */
-    private static final long serialVersionUID = 4885009744733200311L;
 
     /** The name of this menu item */
     private final static String myMenuName = "Player";
@@ -49,6 +48,8 @@ public class PlayerMenu extends JMenu implements ActionListener {
     private List<PlayerAction> myPlayerActions;
 
     private String myPlayerName;
+
+//    private final MyMenuBar myMenuBar;
 
     private Player myPlayer;
 
@@ -59,6 +60,8 @@ public class PlayerMenu extends JMenu implements ActionListener {
      */
     public PlayerMenu() {
         super(myMenuName);
+
+//        myMenuBar = theMenuBar;
 
         setupPlayers();
     }
@@ -79,7 +82,7 @@ public class PlayerMenu extends JMenu implements ActionListener {
         createPlayerMenu();
     }
 
-    public void setMazePanel(final MazePanel theMazePanel) {
+    public void setMazePanel(MazePanel theMazePanel) {
         myMazePanel = theMazePanel;
         myPlayer = myMazePanel.getMaze().getPlayer();
     }
@@ -91,6 +94,10 @@ public class PlayerMenu extends JMenu implements ActionListener {
      * @return a fully-stocked player menu bar.
      */
     private ButtonGroup createPlayerMenu() {
+
+//        /** The player menu for player items. */
+//        final JMenuItem playerMenu = new JMenuItem(myMenuName);
+
         /** local variable to create player menu items. */
         final ButtonGroup btngrp = new ButtonGroup();
         setLayout(new GridLayout(3, 2));
@@ -99,27 +106,12 @@ public class PlayerMenu extends JMenu implements ActionListener {
             final JRadioButtonMenuItem btn = new JRadioButtonMenuItem(ca);
             btngrp.add(btn);
             add(btn);
-            btn.addActionListener(new ChangeIcon(ca.myPath));
+//            btn.addActionListener(new ChangeIcon(ca.myPath));
             if (btn.getText().equals("Oldman")) {
                 btn.setSelected(true);
             }
         }
-        return btngrp; 
-    }
-
-    private class ChangeIcon implements ActionListener {
-
-        String myIconPath;
-
-        public ChangeIcon(final String theIconPath) {
-            myIconPath = theIconPath;
-        }
-
-        @Override
-        public void actionPerformed(final ActionEvent e) {
-            myPlayer.setImage(myIconPath);
-            myMazePanel.repaint();
-        }
+        return btngrp; //playerMenu;
     }
 
 
@@ -130,13 +122,16 @@ public class PlayerMenu extends JMenu implements ActionListener {
      */
     private class PlayerAction extends AbstractAction {
 
-        /** A generated serialization ID. */
-        private static final long serialVersionUID = 5378597716905801474L;
-
         /** The player to use. */
         private final String mySpecificPlayerName;
 
         private final String myPath;
+
+        //        /** The player to use. */
+//        private final Icon mySpecificPlayerIcon;
+//
+//        /** Icon for a button. */
+//        private Icon icon;
 
         /**
          * Sets up a player and assign name and icon for it.
@@ -173,28 +168,9 @@ public class PlayerMenu extends JMenu implements ActionListener {
          */
         @Override
         public void actionPerformed(ActionEvent theEvent) {
-            myPlayerName = mySpecificPlayerName;
-//            myPlayer.setPlayerIcon(myPlayerName);
-//            myMazePane.repaint();
-
+            myPlayer.setImage(myPath);
+            myPlayer.setImagePath(myPath);
+            myMazePanel.repaint();
         }
     }
-
-
-
-    /**
-     * Method to get current players name
-     *
-     * @return current player name
-     */
-    public String getPlayerName() {
-        return myPlayerName;
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        // TODO Auto-generated method stub
-
-    }
-
 }

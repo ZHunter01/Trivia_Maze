@@ -18,9 +18,7 @@ import model.Question;
  * @author Zach Hunter
  *
  */
-public class PowerUpMenu extends JMenu implements ActionListener {
-    /**Serializable generated number */
-    private static final long serialVersionUID = 2859544975052134927L;
+public class PowerUpMenu extends JMenu {
     /**String name for PowerUp Perma-Unlock */
     private static final String PERMA_UNLOCK = "PermaUnlock";
     /**String name for PowerUp Free Question */
@@ -142,12 +140,4 @@ public class PowerUpMenu extends JMenu implements ActionListener {
         }
         
     }
-
-    @Override
-    public void actionPerformed(final ActionEvent theEvent) {
-        //Eclipse wants this here
-        return;
-    }
-
-
 }

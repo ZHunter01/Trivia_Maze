@@ -18,10 +18,7 @@ import javax.swing.JRadioButtonMenuItem;
  * @author Oleksandr Maistruk
  *
  */
-public class QuestionMenu extends JMenu implements ActionListener {
-    /**Serializable generated number */
-    private static final long serialVersionUID = 991351390607951847L;
-
+public class QuestionMenu extends JMenu {
     /** The name of this menu item */
     private final static String myName = "Questions type ";
 
@@ -66,14 +63,6 @@ public class QuestionMenu extends JMenu implements ActionListener {
 
     }
 
-//    /**
-//     * The method to return database name to work with needed type of questions.
-//     *
-//     * @return name of database.
-//     */
-//    public static String getDataBaseName() {
-//        return myDataBaseName;
-//    }
 
     public void setMazePanel(MazePanel theMazePanel) {
         myMazePanel = theMazePanel;
@@ -131,8 +120,6 @@ public class QuestionMenu extends JMenu implements ActionListener {
             
             myMazePanel.setBackgroundImage(MazePanel.WORLD_BACKGROUND);
             myMazePanel.repaint();
-            //myMazePanel = new MazePanel();
-
         }
     }
 
@@ -159,15 +146,6 @@ public class QuestionMenu extends JMenu implements ActionListener {
             
             myMazePanel.setBackgroundImage(MazePanel.MUSIC_BACKGROUND);
             myMazePanel.repaint();
-            //myMazePanel = new MazePanel();
-
         }
     }
-
-    @Override
-    public void actionPerformed(final ActionEvent theEvent) {
-        // TODO Auto-generated method stub
-
-    }
-
 }
