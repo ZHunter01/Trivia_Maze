@@ -19,12 +19,6 @@ public class QuestionPanel extends JPanel {
     /** The id of the question */
     private int myIdForQuestion;
 
-//    /**
-//     * Create an instance of the QuestionPanel
-//     */
-//    private static final QuestionPanel questionPanel = new QuestionPanel();
-
-
     /**
      * Constructs the panel as well as initializes myQuestion
      */
@@ -33,7 +27,7 @@ public class QuestionPanel extends JPanel {
         setPreferredSize(new Dimension(50, 50));
         setBackground(Color.BLACK);
 
-        myQuestion = new JLabel("This is where the question will show up");
+        myQuestion = new JLabel();
         myQuestion.setFont(new Font(Font.MONOSPACED, Font.BOLD, 15));
         myQuestion.setHorizontalAlignment(JLabel.CENTER);
         myQuestion.setVerticalAlignment(JLabel.CENTER);
@@ -42,15 +36,6 @@ public class QuestionPanel extends JPanel {
         add(myQuestion);
     }
 
-//    /**
-//     * @return the only QuestionPanel object
-//     */
-//    public static QuestionPanel getInstance() {
-//        return questionPanel;
-//    }
-
-
-
     /**
      *
      * @return myQuestion
@@ -58,8 +43,6 @@ public class QuestionPanel extends JPanel {
     public JLabel getMyQuestion() {
         return myQuestion;
     }
-
-
 
     /**
      * Sets the question to a new question
@@ -85,7 +68,6 @@ public class QuestionPanel extends JPanel {
     public int getMyQuestionId() {
         return myIdForQuestion;
     }
-
 
     /**
      * clears myQuestion

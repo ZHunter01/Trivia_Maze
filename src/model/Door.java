@@ -1,20 +1,23 @@
+/**
+ * Trivia Maze TCSS 360 Spring 2021
+ */
 package model;
 
 import java.io.Serializable;
 
-/**
+/**Door object class containing a question object
  * 
  * @author Zach Hunter
  *
  */
 public class Door extends GameObject implements Serializable{
-    
-    /**
-     * 
-     */
+    /**Serializable generated number */
     private static final long serialVersionUID = -930527126932044388L;
+    /**Boolean field for current lock state of the door */
     private boolean myLock;
+    /**Boolean field for current Perma-Lock state of the door */
     private boolean myPermaLock;
+    /**int field for door's question ID */
     private int myQuestionID;
     
     /** Creates a default door object
@@ -24,7 +27,6 @@ public class Door extends GameObject implements Serializable{
         myLock = true;
         myPermaLock = false;
         myQuestionID = Question.getQuestionInstance().getId();
-//System.out.println("Door class, ID: " + myQuestionID);
     }
     
     /** Get current Door Question object
@@ -32,29 +34,16 @@ public class Door extends GameObject implements Serializable{
      * @return
      */
     public String getQuestion() {
-        System.out.println("Id: " + myQuestionID + " Answer87: " + Question.getQuestionInstance().getSolution(myQuestionID));
+        System.out.println(" Answer: " + Question.getQuestionInstance().getSolution(myQuestionID)); ///NEED TO REMOVE FOR FINAL SUBMIT
         return Question.getQuestionInstance().getQuestion(myQuestionID);
     }
-    
-//    /** Set Question id of the Door
-//     * 
-//     * @param theQ
-//     */
-//    public void setQuestion(final Question theQ) {
-//        myQuestion = theQ;
-//    }
-    
+   
     /** Checks the input string to see if it matches Question's solution
      * 
      * @param theSolution
      */
     public void checkLock(final String theSolution) {
-       // if (myQuestion.isSolution(theSolution)) {
-        System.out.println(Question.getQuestionInstance().getSolution(myQuestionID));
         if (Question.getQuestionInstance().isSolution(theSolution, myQuestionID)) {
-                        //Question.getQuestionInstance().getSolution(myQuestionID).
-                        //toLowerCase().equals(theSolution.toLowerCase().trim())
-                
             myLock = false;
         }
         else {
@@ -66,7 +55,7 @@ public class Door extends GameObject implements Serializable{
      * 
      * @param theBoolean
      */
-    protected void setPermaLock(boolean theBoolean) {
+    public void setPermaLock(boolean theBoolean) {
         myPermaLock = theBoolean;
     }
     
