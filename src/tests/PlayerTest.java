@@ -33,38 +33,6 @@ public class PlayerTest {
     void testGetImageDefault() {        
         assertTrue(myPlayer.getImage().equals(new ImageIcon("resources/Oldman.gif").getImage()));
     }
-    
-//    @Test
-//    void testGetX() {
-//        myPlayer.setLocation(10, 0);
-//        
-//        assertEquals(10, myPlayer.getX());
-//    }
-//    
-//    @Test
-//    void testGetY() {
-//        myPlayer.setLocation(0, 10);
-//        
-//        assertEquals(10, myPlayer.getY());
-//    }
-    
-//    @Test
-//    void testSetImage() {
-//        myPlayer.setImage(new ImageIcon("./resources/ellipse.gif").getImage());
-//        
-//        assertEquals(myPlayer.getImage(), (new ImageIcon("./resources/ellipse.gif").getImage()));
-//    }
-    
-    @Test
-    void testSetLocationThrow_BothValuesIllegal() {
-        final IllegalArgumentException exception = Assertions.assertThrows(IllegalArgumentException.class, 
-                () -> { myPlayer.setLocation(-1, -1); });
-        
-        final String expected = "Input Error: Values must be greater than or equal to 0.";
-        final String actual = exception.getMessage();
-        
-        assertTrue(actual.equals(expected));
-    }
 
     @Test
     void testAddPowerUp_FreeQuestion() {
