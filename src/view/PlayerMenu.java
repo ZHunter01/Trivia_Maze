@@ -111,6 +111,7 @@ public class PlayerMenu extends JMenu {
     private class PlayerAction extends AbstractAction {
 
         /** The player to use. */
+        @SuppressWarnings("unused")
         private final String mySpecificPlayerName;
 
         private final String myPath;

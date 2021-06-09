@@ -35,31 +35,15 @@ public class AnswerPanel extends JPanel {
             + " Use it to skip any question into the next room!";
     private final static String PERMA_UNLOCK = "You have been awarded a PERMA UNLOCK PowerUp!"
             + " Use it to unlock doors that have been Perma-Locked!";
-    /**
-     * The serial number
-     */
-    private static final long serialVersionUID = 7889243050424110037L;
-
-    /**
-     * A JLabel that prompts the user to answer the question
-     */
+    /**A JLabel that prompts the user to answer the question*/
     private JLabel myAnswerPrompt;
-    /**
-     * A JTextField object that the user can use to answer the question
-     */
+    /** A JTextField object that the user can use to answer the question */
     private JTextField myAnswerField;
-
     /** The menu for multichoice answers. */
     private JMenuBar myMultiAnswer;
-
-    /**
-     * A button that the user can use to submit their answer
-     */
+    /** A button that the user can use to submit their answer*/
     private JButton mySubmit;
-
-    /**
-     * The player's answer
-     */
+    /** The player's answer*/
     private transient String myAnswer;
 
     private int myDirection;
@@ -69,11 +53,6 @@ public class AnswerPanel extends JPanel {
     private QuestionPanel myQuestionPanel;
 
     private PowerUpMenu myPowerUpMenu;
-
-//    /**
-//     * Create an instance of the AnswerPanel
-//     */
-//    private static final AnswerPanel answerPanel = new AnswerPanel();
 
     /**
      * constructs the panel and initializes everything
