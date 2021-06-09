@@ -7,7 +7,6 @@ package view;
 
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -47,10 +46,6 @@ public class PlayerMenu extends JMenu {
     /** A list of players actions. */
     private List<PlayerAction> myPlayerActions;
 
-    private String myPlayerName;
-
-//    private final MyMenuBar myMenuBar;
-
     private Player myPlayer;
 
     private MazePanel myMazePanel;
@@ -60,8 +55,6 @@ public class PlayerMenu extends JMenu {
      */
     public PlayerMenu() {
         super(myMenuName);
-
-//        myMenuBar = theMenuBar;
 
         setupPlayers();
     }
@@ -94,10 +87,6 @@ public class PlayerMenu extends JMenu {
      * @return a fully-stocked player menu bar.
      */
     private ButtonGroup createPlayerMenu() {
-
-//        /** The player menu for player items. */
-//        final JMenuItem playerMenu = new JMenuItem(myMenuName);
-
         /** local variable to create player menu items. */
         final ButtonGroup btngrp = new ButtonGroup();
         setLayout(new GridLayout(3, 2));
@@ -106,7 +95,6 @@ public class PlayerMenu extends JMenu {
             final JRadioButtonMenuItem btn = new JRadioButtonMenuItem(ca);
             btngrp.add(btn);
             add(btn);
-//            btn.addActionListener(new ChangeIcon(ca.myPath));
             if (btn.getText().equals("Oldman")) {
                 btn.setSelected(true);
             }

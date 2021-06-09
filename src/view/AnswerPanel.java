@@ -125,9 +125,6 @@ public class AnswerPanel extends JPanel {
 
         Room myRoom = myMazePanel.getMaze().getCurrentRoom();
 
-        int x = myMazePanel.getMaze().getXCount();
-        int y = myMazePanel.getMaze().getYCount();
-
         myMazePanel.getMaze().doorSolution(myAnswer, myDirection);
 
         if (myRoom.getUserDoor(myDirection).isPermaLocked()) {
