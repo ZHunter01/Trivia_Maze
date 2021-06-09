@@ -1,17 +1,21 @@
+/**
+ * Trivia Maze TCSS 360 Spring 2021
+ */
 package model;
 
 import java.io.Serializable;
 
-/**
+/** PowerUp object class. Creates 3 types of PowerUps
  * 
  * @author Zach Hunter
  *
  */
 public class PowerUp implements Serializable{
-  
+    /**Serializable generated number */
     private static final long serialVersionUID = 6950740297210484269L;
-    //private static PowerUp myPowerUp;
+    /**boolean value for if PowerUp is a PermaUnlock PowerUp */
     private boolean myPermaUnlock;
+    /**boolean value for if PowerUp is a FreeQuestion PowerUp*/
     private boolean myFreeQuestion;
     
     /**

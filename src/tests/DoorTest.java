@@ -1,98 +1,92 @@
-//package tests;
-//
-//import static org.junit.jupiter.api.Assertions.assertTrue;
-//import static org.junit.Assert.assertEquals;
-//import static org.junit.jupiter.api.Assertions.assertFalse;
-//
-//
-//import org.junit.jupiter.api.BeforeEach;
-//import org.junit.jupiter.api.Test;
-//
-//import model.Door;
-//import model.Question;
-//
-///**
-// * 
-// * @author Zach Hunter
-// *
-// */
-//public class DoorTest {
-//    Door myDoor;
-//    Question myQ;
-//    
-//    
-//    @BeforeEach
-//    void setUp() {
-//        myDoor = new Door();
-//        myQ = new Question();        
-//    }
-//    
-//    @Test
-//    void checkLockFalse() {
-//        myDoor.checkLock(myDoor.getQuestion().getSolution());
-//        
-//        assertFalse(myDoor.isLocked());
-//    }
-//    
-//    @Test
-//    void checkLockTrue() {
-//        myQ.setQuestionAndSolution("Does this work?", "Yes");
-//        myDoor.setQuestion(myQ);
-//        myDoor.checkLock("NO");
-//        
-//        assertTrue(myDoor.isLocked());
-//    }
-//    
-//    @Test
-//    void checkPermaLockNoSolution() {
-//        myQ.setQuestionAndSolution("Does this work?", "Yes");
-//        myDoor.setQuestion(myQ);
-//        
-//        assertFalse(myDoor.isPermaLocked());
-//    }
-//    
-//    @Test
-//    void checkPermaLockFalseWithCorrectSolution() {
-//        myDoor.checkLock(myDoor.getQuestion().getSolution());
-//        
-//        assertFalse(myDoor.isPermaLocked());
-//    }
-//    
-//    @Test
-//    void checkPermaLockTrue() {
-//        myQ.setQuestionAndSolution("Does this work?", "Yes");
-//        myDoor.setQuestion(myQ);
-//        myDoor.checkLock("NO");
-//        
-//        assertTrue(myDoor.isPermaLocked());
-//    }
-//    
-//    @Test
-//    void checkGetQuestion() {
-//        myQ.setQuestionAndSolution("Does this work?", "Yes");
-//        myDoor.setQuestion(myQ);
-//        
-//        assertEquals(myDoor.getQuestion(), myQ);
-//    }
-//    
-//    @Test
-//    void checkGetQuestionFalse() {
-//        myQ.setQuestionAndSolution("Does this work?", "Yes");
-//        myDoor.setQuestion(myQ);
-//        
-//        assert(!myDoor.getQuestion().equals(new Question()));
-//    }
-//    
-//    @Test
-//    void checkEquals() {
-//        Door newDoor = new Door();
-//        newDoor = myDoor;
-//        
-//        assertTrue(myDoor.equals(newDoor));
-//    }
-//    
-//    @Test
-//    void testGetId() {
-//        assertEquals(myDoor.getQuestion().getId(), myDoor.getId());
-//    }
-//}
+package tests;
+
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import model.Door;
+import model.Question;
+
+/**
+ * 
+ * @author Zach Hunter
+ *
+ */
+public class DoorTest {
+    Door myDoor;
+    //NO12123 is not an answer for any question in the database
+    static final String MY_INCORRECT = "NO12123";
+    
+    @BeforeEach
+    void setUp() {
+        myDoor = new Door();
+    }
+    
+    @Test
+    void testGetQuestionInstance() {
+        assertEquals(myDoor.getQuestion(), Question.getQuestionInstance());
+    }
+    
+    @Test
+    void checkLockFalse() {
+        myDoor.checkLock(Question.getQuestionInstance().getSolution(myDoor.getId()));
+        
+        assertFalse(myDoor.isLocked());
+    }
+    
+    @Test
+    void checkLockTrue() {
+        myDoor.checkLock(MY_INCORRECT);
+        
+        assertTrue(myDoor.isLocked());
+    }
+
+    
+    @Test
+    void checkPermaLockFalseWithCorrectSolution() {
+        myDoor.checkLock(Question.getQuestionInstance().getSolution(myDoor.getId()));
+        
+        assertFalse(myDoor.isPermaLocked());
+    }
+    
+    @Test
+    void checkPermaLockTrue() {
+        myDoor.checkLock(MY_INCORRECT);
+        
+        assertTrue(myDoor.isPermaLocked());
+    }
+    
+    @Test
+    void checkGetQuestion() {
+        assertEquals(myDoor.getQuestion(), Question.getQuestionInstance().getQuestion(myDoor.getId()));
+    }
+    
+    @Test
+    void checkGetQuestionFalse() {
+        assert(!myDoor.getQuestion().equals(Question.getQuestionInstance().getQuestion(myDoor.getId() + 1)));
+    }
+    
+    @Test
+    void checkEquals() {
+        Door newDoor = new Door();
+        newDoor = myDoor;
+        
+        assertTrue(myDoor.equals(newDoor));
+    }
+    
+    @Test
+    void testSetPermaLock() {
+        myDoor.setPermaLock(true);
+        
+        assertTrue(myDoor.isPermaLocked());
+    }
+    
+    @Test
+    void testGetId() {
+//        assertEquals(Door.myQuestionID, myDoor.getId());
+    }
+}

@@ -1,26 +1,18 @@
-
 /**
  * Trivia Maze TCSS 360 Spring 2021
  */
 
 package view;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Font;
-import java.awt.GridLayout;
-
-import javax.swing.Box;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-
-import model.Maze;
 import model.Question;
+import model.Room;
+
+import javax.sound.sampled.*;
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
+
 
 /**
  * This class is a panel where the user can enter their answer
@@ -28,7 +20,6 @@ import model.Question;
  *
  * @author Alik Balika
  * @author Oleksandr Maistruk
- * @author Zach Hunter
  */
 public class AnswerPanel extends JPanel {
     /**String message for when game is won */
@@ -41,37 +32,19 @@ public class AnswerPanel extends JPanel {
     private final static String CORRECT_MESSAGE = "Answer was correct! Door unlocked!";
     /**String message for if a room contains a free question */
     private final static String FREE_QUESTION = "You have been awarded a FREE QUESTION PowerUp!"
-            + " Use it to skip any quesiton into the next room!";
+            + " Use it to skip any question into the next room!";
     private final static String PERMA_UNLOCK = "You have been awarded a PERMA UNLOCK PowerUp!"
             + " Use it to unlock doors that have been Perma-Locked!";
-    /**
-     * The serial number
-     */
-    private static final long serialVersionUID = 7889243050424110037L;
-
-    /**
-     * A JLabel that prompts the user to answer the question
-     */
+    /**A JLabel that prompts the user to answer the question*/
     private JLabel myAnswerPrompt;
-    /**
-     * A JTextField object that the user can use to answer the question
-     */
+    /** A JTextField object that the user can use to answer the question */
     private JTextField myAnswerField;
-
     /** The menu for multichoice answers. */
     private JMenuBar myMultiAnswer;
-
-    /**
-     * A button that the user can use to submit their answer
-     */
+    /** A button that the user can use to submit their answer*/
     private JButton mySubmit;
-
-    /**
-     * The player's answer
-     */
-    private transient static String myAnswer;
-
-//    private Maze myMaze;
+    /** The player's answer*/
+    private transient String myAnswer;
 
     private int myDirection;
 
@@ -81,11 +54,6 @@ public class AnswerPanel extends JPanel {
 
     private PowerUpMenu myPowerUpMenu;
 
-//    /**
-//     * Create an instance of the AnswerPanel
-//     */
-//    private static final AnswerPanel answerPanel = new AnswerPanel();
-
     /**
      * constructs the panel and initializes everything
      */
@@ -93,11 +61,9 @@ public class AnswerPanel extends JPanel {
         setPreferredSize(new Dimension(222, 0));
         setBackground(Color.BLACK);
         myAnswer = "";
-//        initAndAddAnswerPrompt();
-//        initAndAddAnswer();
-//        initAndAddSubmit();
-    }
 
+    }
+    
     /**
      * @return the answer that the user inputed
      */
@@ -117,23 +83,117 @@ public class AnswerPanel extends JPanel {
         return mySubmit;
     }
 
-    public void setAnswer(String theAnswer) {
-        myAnswer = theAnswer;
+    public void setAnswer(final String myAnswer) {
+        this.myAnswer = myAnswer;
     }
-    
+
     public void setAnswerPanel(final boolean theVisibility) {
 
         initAndAddAnswerPrompt(theVisibility);
-//        if(Question.getQuestionInstance().isMultiple(myQuestionPanel.getMyQuestionId())) {
-//
-//        }
         initAndAddSubmit(theVisibility);
         initAndAddAnswer(theVisibility);
+
     }
 
-//    public void setMaze(final Maze theMaze) {
-//        myMaze = theMaze;
-//    }
+    public void setPowerUpMenu(final PowerUpMenu theMenu) {
+        myPowerUpMenu = theMenu;
+    }
+
+    public void buttonListener() {
+        myAnswer = myAnswerField.getText();
+
+        Room myRoom = myMazePanel.getMaze().getCurrentRoom();
+
+        myMazePanel.getMaze().doorSolution(myAnswer, myDirection);
+
+        if (myRoom.getUserDoor(myDirection).isPermaLocked()) {
+            myQuestionPanel.setMyQuestion(LOCK_MESSAGE);
+            mySubmit.setVisible(false);
+
+            try {
+                File audioFile = new File("resources/music/wrongAnswer3.wav");
+                playSound(audioFile);
+
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+
+
+        } else {
+            myQuestionPanel.setMyQuestion(CORRECT_MESSAGE);
+            checkForPowerUps();
+            try {
+                File audioFile = new File("resources/music/correctAnswer1.wav");
+                playSound(audioFile);
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+        }
+
+        setAnswerPanel(false);
+
+        myMazePanel.repaint();
+
+        myAnswerField.setText("");
+        myAnswer = "";
+
+        if (myMazePanel.getMaze().getWin()) {
+            myMazePanel.stopGameAudio();
+
+            try {
+                File audioFile = new File("resources/music/win.wav");
+                playSound(audioFile);
+
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+            this.displayWin();
+        } else if (myMazePanel.getMaze().getLose()) {
+            myMazePanel.stopGameAudio();
+            try {
+                File audioFile = new File("resources/music/lose.wav");
+                playSound(audioFile);
+
+            } catch (Exception ex) {
+                System.out.println(ex);
+            }
+            this.displayLose();
+        }
+    }
+
+    private void playSound(File audioFile) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+
+        AudioFormat format = audioStream.getFormat();
+        DataLine.Info info = new DataLine.Info(Clip.class, format);
+
+        Clip audioClip = (Clip) AudioSystem.getLine(info);
+
+        audioClip.open(audioStream);
+        audioClip.start();
+    }
+
+
+    /**
+     * initializes the submit button and adds it to the panel
+     */
+    private void initAndAddSubmit(final boolean theVicible) {
+        if (mySubmit == null) {
+            mySubmit = new JButton("SUBMIT");
+            mySubmit.setBackground(Color.BLACK);
+            mySubmit.setForeground(Color.WHITE);
+            mySubmit.setFocusable(theVicible);
+            mySubmit.setPreferredSize(new Dimension(205, 30));
+            add(mySubmit);
+
+
+            mySubmit.addActionListener(e -> buttonListener());
+
+        } else {
+            mySubmit.setVisible(theVicible);
+        }
+
+    }
 
     public void setDirection(final int theDirection) {
         myDirection = theDirection;
@@ -146,63 +206,6 @@ public class AnswerPanel extends JPanel {
     public void setQuestionPanel(final QuestionPanel theQuestionPanel) {
         myQuestionPanel = theQuestionPanel;
     }
-    
-    public void setPowerUpMenu(final PowerUpMenu theMenu) {
-        myPowerUpMenu = theMenu;
-    }
-    
-    public void buttonListener() {
-        myAnswer = myAnswerField.getText();
-
-        myMazePanel.getMaze().doorSolution(myAnswer, myDirection);
-
-        if (myMazePanel.getMaze().getCurrentRoom().getUserDoor(myDirection).isPermaLocked() && myMazePanel.getMaze().getIncorrect()) {
-            myQuestionPanel.setMyQuestion("Answer was incorrect! Door permanently locked!");
-            mySubmit.setVisible(false);
-        } else {
-            myQuestionPanel.setMyQuestion("Answer was correct! Door unlocked!");
-        }
-
-        setAnswerPanel(false);
-
-        myMazePanel.repaint();
-
-        myAnswerField.setText("");
-        myAnswer = "";
-
-        if (myMazePanel.getMaze().getWin()) {
-            this.displayWin();
-        } else if (myMazePanel.getMaze().getLose()) {
-            this.displayLose();
-        }
-
-        checkForPowerUps();
-        System.out.println("Answer23: " + myAnswer);
-    }
-
-
-    /**
-     * initializes the submit button and adds it to the panel
-     */
-    private void initAndAddSubmit(final boolean theVisibility) {
-        if (mySubmit == null) {
-            mySubmit = new JButton("SUBMIT");
-            mySubmit.setBackground(Color.BLACK);
-            mySubmit.setForeground(Color.WHITE);
-            mySubmit.setFocusable(theVisibility);
-            mySubmit.setPreferredSize(new Dimension(205, 30));
-            add(mySubmit);
-
-
-            mySubmit.addActionListener(e -> buttonListener());
-
-            //myAnswerField.addActionListener(e -> myAnswer = myAnswerField.getText());
-
-        } else {
-            mySubmit.setVisible(theVisibility);
-        }
-
-    }
 
     /**
      *
@@ -211,7 +214,7 @@ public class AnswerPanel extends JPanel {
         if (myMazePanel.getMaze().getCurrentRoom().getRoomPowerUp().isFreeQuestion()) {
             myQuestionPanel.setMyQuestion(FREE_QUESTION);
             myPowerUpMenu.enableFreeQuestion();
-            
+
         } else if (myMazePanel.getMaze().getCurrentRoom().getRoomPowerUp().isPermaUnlock()) {
             myQuestionPanel.setMyQuestion(PERMA_UNLOCK);
             myPowerUpMenu.enablePermaUnlock();
@@ -222,7 +225,7 @@ public class AnswerPanel extends JPanel {
     /**
      * initializes the JTextField and adds it to the panel
      */
-    private void initAndAddAnswer(final boolean theVisibility) {
+    private void initAndAddAnswer(final boolean theVisiblity) {
         if (myAnswerField == null) {
             myAnswerField = new JTextField(20);
 
@@ -236,13 +239,11 @@ public class AnswerPanel extends JPanel {
             myMultiAnswer = new JMenuBar();
             add(myMultiAnswer);
             myMultiAnswer.setVisible(false);
-//            myMultiAnswer.setBackground(new Color(98, 0, 134));
 
         }
         if(!Question.getQuestionInstance().isMultiple(myQuestionPanel.getMyQuestionId())) {
-            System.out.println("in if");
-            myAnswerField.setVisible(theVisibility);
-            myAnswerField.setFocusable(theVisibility);
+            myAnswerField.setVisible(theVisiblity);
+            myAnswerField.setFocusable(theVisiblity);
             myAnswerField.setText("");
             myMultiAnswer.setVisible(false);
 
@@ -250,7 +251,6 @@ public class AnswerPanel extends JPanel {
                 add(mySubmit);
             }
         } else {
-            System.out.println("in else");
             if (mySubmit != null) {
                 remove(mySubmit);
             }
@@ -263,8 +263,7 @@ public class AnswerPanel extends JPanel {
 
             box.setBackground(Color.BLACK);
             box.setForeground(Color.BLACK);
-            //box.setLayout(new BoxLayout(box, BoxLayout.Y_AXIS));
-            //box.setLayout(new GridLayout(4, 0));
+
             String multi = Question.getQuestionInstance()
                     .getMultiAnswer(myQuestionPanel.getMyQuestionId());
             int i = 0;
@@ -280,22 +279,12 @@ public class AnswerPanel extends JPanel {
                 });
                 box.add(btn);
                 i++;
-                //box.add(Box.createRigidArea(new Dimension(0,5)));
-
-//                final JRadioButton btn = new JRadioButton(word.strip());
-////                btn.setBackground(new Color(98, 0, 134));
-//                btn.addActionListener(e -> {
-//                    myAnswerField.setText(btn.getText());
-//                });
-//                box.add(btn);
-//                myMultiAnswer.add(box);
 
             }
             box.setLayout(new GridLayout(i, 0));
             myMultiAnswer.add(box);
-//            box.setLayout(new GridLayout(9, 1));
-            myMultiAnswer.setVisible(theVisibility);
-            myMultiAnswer.setFocusable(theVisibility);
+            myMultiAnswer.setVisible(theVisiblity);
+            myMultiAnswer.setFocusable(theVisiblity);
 
         }
 
@@ -304,7 +293,7 @@ public class AnswerPanel extends JPanel {
     /**
      * initializes the JLabel prompt and adds it to the panel
      */
-    private void initAndAddAnswerPrompt(final boolean theVisibility) {
+    private void initAndAddAnswerPrompt(final boolean theVisiblity) {
         if (myAnswerPrompt == null) {
             myAnswerPrompt = new JLabel("Please enter your answer: ");
             myAnswerPrompt.setFont(new Font(Font.MONOSPACED, Font.BOLD, 13));
@@ -312,10 +301,9 @@ public class AnswerPanel extends JPanel {
 
             add(myAnswerPrompt);
         } else {
-            myAnswerPrompt.setVisible(theVisibility);
+            myAnswerPrompt.setVisible(theVisiblity);
         }
     }
-
 
     /** Displays a JOptionPane with a win message
      *

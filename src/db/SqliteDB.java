@@ -4,6 +4,7 @@
 
 package db;
 
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -250,9 +251,9 @@ public class SqliteDB {
             final ResultSet resultingSet = stmt.executeQuery(lastRow);  
             questionID = resultingSet.getInt("ID");
             resultingSet.close();
-//            System.out.println("get last id: " + questionID);        
+//            System.out.println("get last id: " +id);        
         } catch (final Exception theError) {
-//            System.out.println("Error 8: " + theError.getMessage() );
+            System.out.println("Error 8: " + theError.getMessage() );
         }
         return questionID;
     }

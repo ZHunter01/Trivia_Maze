@@ -11,6 +11,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import model.Question;
@@ -32,7 +33,7 @@ class QuestionTest {
      */
     @BeforeAll
     static void setUpBeforeClass() throws Exception {
-    	myQuestionClass = Question.getQuestionInstance();
+        myQuestionClass = Question.getQuestionInstance();
     }
 
     /**
@@ -50,7 +51,7 @@ class QuestionTest {
      */
     @Test
     void testGetQuestionInstanceTheSame() {
-    	assertEquals(myQuestionClass, Question.getQuestionInstance(), "The question class instance is not the same.");
+        assertEquals(myQuestionClass, Question.getQuestionInstance(), "The question class instance is not the same.");
     }
 
     /**
@@ -59,8 +60,8 @@ class QuestionTest {
      */
     @Test
     void testGetQuestion() {
-    	final String question = myQuestionClass.getQuestion(1);
-    	assertEquals(question, myQuestionClass.getQuestion(1), "The question is not the same.");
+        final String question = myQuestionClass.getQuestion(1);
+        assertEquals(question, myQuestionClass.getQuestion(1), "The question is not the same.");
     }
 
     /**
@@ -69,8 +70,8 @@ class QuestionTest {
      */
     @Test
     void testGetSolution() {
-    	final String answer = myQuestionClass.getSolution(5);
-    	assertEquals(answer, myQuestionClass.getSolution(5), "The answer is not the same.");
+        final String answer = myQuestionClass.getSolution(5);
+        assertEquals(answer, myQuestionClass.getSolution(5), "The answer is not the same.");
     }
 
     /**
@@ -79,8 +80,8 @@ class QuestionTest {
      */
     @Test
     void testGetMultiAnswer() {
-    	final String multipleAnswer = myQuestionClass.getMultiAnswer(15);
-    	assertEquals(multipleAnswer, myQuestionClass.getMultiAnswer(15), "The multiple answer is not the same.");
+        final String multipleAnswer = myQuestionClass.getMultiAnswer(15);
+        assertEquals(multipleAnswer, myQuestionClass.getMultiAnswer(15), "The multiple answer is not the same.");
     }
 
     /**
@@ -90,9 +91,9 @@ class QuestionTest {
     @Test
     void testIsMultiple() {
         if (!myQuestionClass.isMultiple(2)) {
-        	assertNull(myQuestionClass.getMultiAnswer(2));
+            assertNull(myQuestionClass.getMultiAnswer(2));
         } else {
-        	assertNotNull(myQuestionClass.getMultiAnswer(2));
+            assertNotNull(myQuestionClass.getMultiAnswer(2));
         }
     }
 
@@ -102,12 +103,12 @@ class QuestionTest {
      */
     @Test
     void testGetId() {
-    	int x;
-    	for(int i = 0; i < 50; i++) {
-	    	x = myQuestionClass.getId();
-	    	assert  x >= 0 : "Wrong ID: it is less than 0";
-	    	assert  x <= 45 : "Wrong ID: it is greater than 45";
-    	}
+        int x;
+        for(int i = 0; i < 50; i++) {
+            x = myQuestionClass.getId();
+            assert  x >= 0 : "Wrong ID: it is less than 0";
+            assert  x <= 45 : "Wrong ID: it is greater than 45";
+        }
     }
     
 
@@ -117,8 +118,8 @@ class QuestionTest {
      */
     @Test
     void testIsSolution() {
-    	final String answer = myQuestionClass.getSolution(15);
-    	assertTrue(myQuestionClass.isSolution(answer, 15), "The isSolution isn't right.");
+        final String answer = myQuestionClass.getSolution(15);
+        assertTrue(myQuestionClass.isSolution(answer, 15), "The isSolution isn't right.");
     }
 
 
@@ -128,9 +129,9 @@ class QuestionTest {
      */
     @Test
     void testGetMySpecificQuestionSame() {
-    	myQuestionClass.setDataBaseName("GeographyQuestions");
-    	final QuestionQuery answer = myQuestionClass.getMySpecificQuestion(5);
-    	assertEquals(answer, myQuestionClass.getMySpecificQuestion(5), "The SpecificQuestion should be the same.");
+        myQuestionClass.setDataBaseName("GeographyQuestions");
+        final QuestionQuery answer = myQuestionClass.getMySpecificQuestion(5);
+        assertEquals(answer, myQuestionClass.getMySpecificQuestion(5), "The SpecificQuestion should be the same.");
     }
     
     /**
@@ -139,10 +140,10 @@ class QuestionTest {
      */
     @Test
     void testGetMySpecificQuestionDifferent() {
-    	myQuestionClass.setDataBaseName("GeographyQuestions");
-    	final QuestionQuery answer = myQuestionClass.getMySpecificQuestion(5);
-    	myQuestionClass.setDataBaseName("SportQuestions");
-    	assertNotEquals(answer, myQuestionClass.getMySpecificQuestion(5), "The SpecificQuestion should not be the same.");
+        myQuestionClass.setDataBaseName("GeographyQuestions");
+        final QuestionQuery answer = myQuestionClass.getMySpecificQuestion(5);
+        myQuestionClass.setDataBaseName("SportQuestions");
+        assertNotEquals(answer, myQuestionClass.getMySpecificQuestion(5), "The SpecificQuestion should not be the same.");
     }
 
 

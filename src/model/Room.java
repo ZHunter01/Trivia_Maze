@@ -1,17 +1,18 @@
+/**
+ * Trivia Maze TCSS 360 Spring 2021
+ */
 package model;
 
 import java.awt.Image;
 import java.io.Serializable;
 
-/**
+/** Room object class. Contains 4 Door objects and a PowerUp object.
  * 
  * @author Zach Hunter
  *
  */
 public class Room extends GameObject implements Serializable{
-    /**
-     * 
-     */
+    /**Serializable generated number */
     private static final long serialVersionUID = -4667756480655907185L;
     /**Door object to represent door at the top of the room */
     private Door myDoorUp;
@@ -33,8 +34,6 @@ public class Room extends GameObject implements Serializable{
     public final static int DOWN = 2;
     /**Int value to indicate right door is selected */
     public final static int RIGHT = 3;
-    /**Int value to keep track of what direction door is being accessed */
-    //static int userDir;
     
     
     /** Creates default Room object
@@ -46,6 +45,7 @@ public class Room extends GameObject implements Serializable{
         myDoorRight = new Door();
         myDoorDown = new Door();
                 
+        //Create an empty PowerUp to avoid null pointers
         myPowerUp = PowerUp.createEmptyPowerUp();
     }
     
@@ -57,21 +57,13 @@ public class Room extends GameObject implements Serializable{
         return myRoomIcon;
     }
     
-    /**
+    /** Sets Room Image object to the input
      * 
      * @param theIcon
      */
     public void setRoomImage(final Image theIcon) {
         myRoomIcon = theIcon;
     }
-    
-//    /** Returns current direction user is pointing in
-//     * 
-//     * @return userDir
-//     */
-//    public int getUserDir() {
-//        return userDir;
-//    }
     
     /** Returns PowerUp object contained in the room
      * 
@@ -115,7 +107,12 @@ public class Room extends GameObject implements Serializable{
         return userDoor;
     }
     
-    public void setUserDoor(final int theDir, final Door theDoor) {        
+    /** Sets the current door specified by input direction to the input door
+     * 
+     * @param theDir
+     * @param theDoor
+     */
+    void setUserDoor(final int theDir, final Door theDoor) {        
         if (theDir == UP) {
             myDoorUp = theDoor; 
         } else if (theDir == LEFT) {
@@ -166,6 +163,9 @@ public class Room extends GameObject implements Serializable{
          
     }
     
+    /** Removes PowerUp from the Room, if the Room contains a non-empty PowerUp
+     * 
+     */
     public void removePowerUp() {
         if (this.getRoomPowerUp() == PowerUp.createEmptyPowerUp()) {
             return;

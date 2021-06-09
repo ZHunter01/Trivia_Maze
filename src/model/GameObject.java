@@ -1,3 +1,6 @@
+/**
+ * Trivia Maze TCSS 360 Spring 2021
+ */
 package model;
 
 import javax.swing.*;
@@ -10,25 +13,16 @@ import java.io.Serializable;
  * This class is the parent class for all the objects inside the game that will be displayed on screen
  */
 public abstract class GameObject implements Serializable{
-
-    /**
-     * 
-     */
+    /**Serializable generated number */
     private static final long serialVersionUID = 3588155796279251981L;
 
-    /**
-     * The x-coordinate of the object
-     */
+    /** The x-coordinate of the object*/
     private int myX;
 
-    /**
-     * The y-coordinate of the object
-     */
+    /** The y-coordinate of the object*/
     private int myY;
 
-    /**
-     * The icon of the object
-     */
+    /**The icon of the object  */
     private transient Image image;
 
     /**
