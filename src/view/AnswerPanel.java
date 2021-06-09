@@ -44,14 +44,14 @@ public class AnswerPanel extends JPanel {
     /** A button that the user can use to submit their answer*/
     private JButton mySubmit;
     /** The player's answer*/
-    private transient String myAnswer;
-
+    private String myAnswer;
+    /** The direction that the player is facing */
     private int myDirection;
-
+    /** Reference to the maze panel */
     private MazePanel myMazePanel;
-
+    /** Reference to the question panel */
     private QuestionPanel myQuestionPanel;
-
+    /** Reference to the PowerUp menu */
     private PowerUpMenu myPowerUpMenu;
 
     /**
@@ -70,23 +70,39 @@ public class AnswerPanel extends JPanel {
     public String getAnswer() {
         return myAnswer;
     }
-
+    
+    /**
+     * @return the answer field
+     */
     public JTextField getAnswerField() {
         return myAnswerField;
     }
-
+    
+    /**
+     * @return the answer prompt
+     */
     public JLabel getAnswerPrompt() {
         return myAnswerPrompt;
     }
 
+    /**
+     * @return the submit button
+     */
     public JButton getSubmit() {
         return mySubmit;
     }
 
-    public void setAnswer(final String myAnswer) {
+    /**
+     * Sets the myAnswer field to theAnswer
+     */
+    public void setAnswer(final String theAnswer) {
         this.myAnswer = myAnswer;
     }
 
+    /**
+     * Displays the components on the JPanel
+     * @param theVisibility will display components if set to true
+     */
     public void setAnswerPanel(final boolean theVisibility) {
 
         initAndAddAnswerPrompt(theVisibility);
@@ -95,10 +111,19 @@ public class AnswerPanel extends JPanel {
 
     }
 
+    /**
+     * Sets the power up menu so it can be referenced
+     * @param theMenu is the PowerUpMenu
+     */
     public void setPowerUpMenu(final PowerUpMenu theMenu) {
         myPowerUpMenu = theMenu;
     }
 
+    /**
+     * Action Listener for when user presses submit or chooses an option from the multiple
+     * choice buttons. It will check if the user answer was correct as well as play sounds
+     * depending on what action the user takes
+     */
     public void buttonListener() {
         myAnswer = myAnswerField.getText();
 
@@ -161,8 +186,15 @@ public class AnswerPanel extends JPanel {
         }
     }
 
-    private void playSound(File audioFile) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-        AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+    /**
+     * Takes in a file with the given sound and plays the sound.
+     * @param theAudioFile the current sound effect
+     * @throws UnsupportedAudioFileException
+     * @throws IOException
+     * @throws LineUnavailableException
+     */
+    private void playSound(final File theAudioFile) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        AudioInputStream audioStream = AudioSystem.getAudioInputStream(theAudioFile);
 
         AudioFormat format = audioStream.getFormat();
         DataLine.Info info = new DataLine.Info(Clip.class, format);
@@ -177,7 +209,7 @@ public class AnswerPanel extends JPanel {
     /**
      * initializes the submit button and adds it to the panel
      */
-    private void initAndAddSubmit(final boolean theVicible) {
+    private void initAndAddSubmit(final boolean theVisibility) {
         if (mySubmit == null) {
             mySubmit = new JButton("SUBMIT");
             mySubmit.setBackground(Color.BLACK);
@@ -190,25 +222,38 @@ public class AnswerPanel extends JPanel {
             mySubmit.addActionListener(e -> buttonListener());
 
         } else {
-            mySubmit.setVisible(theVicible);
+            mySubmit.setVisible(theVisibility);
         }
 
     }
 
+    /**
+     * Sets the current direction that the player is facing
+     * @param theDirection the direction in which the user is facing
+     */
     public void setDirection(final int theDirection) {
         myDirection = theDirection;
     }
 
+    /**
+     * Sets the maze panel so it can be referenced
+     * @param theMazePanel the MazePanel object that is referenced
+     */
     public void setMazePanel(final MazePanel theMazePanel) {
         myMazePanel = theMazePanel;
     }
 
+    /**
+     * Sets the questionPanel so it can be referenced
+     * @param theQuestionPanel the QuestionPanel object that is referenced
+     */
     public void setQuestionPanel(final QuestionPanel theQuestionPanel) {
         myQuestionPanel = theQuestionPanel;
     }
 
     /**
-     *
+     * Checks to see if a room contains a power up. Will display to user that power up has been obtained
+     * and will activate the power up
      */
     private void checkForPowerUps() {
         if (myMazePanel.getMaze().getCurrentRoom().getRoomPowerUp().isFreeQuestion()) {
@@ -223,7 +268,8 @@ public class AnswerPanel extends JPanel {
     }
 
     /**
-     * initializes the JTextField and adds it to the panel
+     * initializes the JTextField and adds it to the panel. Also depending on if a Question is
+     * a Multichoice question or not, it will display a different view of the panel
      */
     private void initAndAddAnswer(final boolean theVisiblity) {
         if (myAnswerField == null) {

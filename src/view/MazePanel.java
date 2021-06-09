@@ -24,14 +24,10 @@ import java.io.File;
  * 
  */
 public class MazePanel extends JPanel {
-    /**
-     * The maze object that contains all of the data
-     */
+    /** The maze object that contains all of the data */
     private Maze myMaze;
 
-    /**
-     * The adapter controls the movement of the player
-     */
+    /** The adapter controls the movement of the player */
     private final TAdapter myAdapter;
 
     /**
@@ -41,19 +37,20 @@ public class MazePanel extends JPanel {
     public final static String WORLD_BACKGROUND = "resources/world.png";
     public final static String MUSIC_BACKGROUND = "resources/musicBackground.jpg";
     
+    /**
+     * music options
+     */
     public static final String SPORTS_SONG = "resources/music/gameMusic.wav";
     public static final String GEOGRAPHY_SONG = "resources/music/Geography_Song.wav";
     public static final String MUSIC_SONG = "resources/music/Music_Song.wav";
     
+    /** holds the current background image */
     private String myBackgroundImage;
-    
-//    /**
-//     * Create an instance of the MazePanel
-//     */
-//    private static final MazePanel mazePanel = new MazePanel();
-
+    /** reference to the answer panel */
     private AnswerPanel myAnswerPanel;
+    /** reference to the question panel */
     private QuestionPanel myQuestionPanel;
+    /** Plays the music in the game */
     private Clip myAudioClip;
 
     /**
@@ -78,6 +75,9 @@ public class MazePanel extends JPanel {
         this.setCoordinates();
     }
 
+    /**
+     * Sets the coordinates of the Rooms and Doors in the maze object
+     */
     private void setCoordinates() {
         // x and y are the coordinates that the rooms use to be drawn onto the panel
         int y = 0;
@@ -105,8 +105,8 @@ public class MazePanel extends JPanel {
     }
 
     /**
-     * 
-     * @param theGain
+     * sets the volume of the game audio
+     * @param theGain the volume level
      */
     public void setVolume(final int theGain) {
         FloatControl gainControl = (FloatControl) myAudioClip.getControl(FloatControl.Type.MASTER_GAIN);
@@ -116,23 +116,24 @@ public class MazePanel extends JPanel {
     }
 
     /**
-     * 
+     * stops the game audio
      */
     public void stopGameAudio() {
         myAudioClip.stop();
     }
     
     /**
-     * 
-     * @param thePath
+     * sets the background image to a new background image
+     * @param thePath the current background
      */
     public void setBackgroundImage(final String thePath) {
         myBackgroundImage = thePath;
     }
     
 
-    /*
-     * 
+    /**
+     * Sets the current music depending on which category a player chooses
+     * @param myMusic the category of music
      */
     public void setMusic(final String myMusic) {
         try {
@@ -162,10 +163,17 @@ public class MazePanel extends JPanel {
         return myAdapter;
     }
 
+    /**
+     * @return the maze object that the maze panel contains
+     */
     public Maze getMaze() {
         return myMaze;
     }
 
+    /**
+     * sets the maze of the maze panel (primarily used for serialization)
+     * @param theMaze the old maze object with all of its data
+     */
     public void setMaze(Maze theMaze) {
         myMaze = theMaze;
     }
@@ -283,7 +291,7 @@ public class MazePanel extends JPanel {
          * gets the questions and updates the gui to display the question as well as the AnswerPanel. Checks if
          * the user is correct or incorrect.
          *
-         * @param theDir
+         * @param theDir the direction that the player is moving in
          */
         private void retrieveQuestion(int theDir) {
             Room myRoom = myMaze.getCurrentRoom();
@@ -302,6 +310,9 @@ public class MazePanel extends JPanel {
         }
     }
 
+    /**
+     * returns the reference to the answer panel
+     */
     public AnswerPanel getAnswerPanel() {
         return myAnswerPanel;
     }
