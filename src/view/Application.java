@@ -8,26 +8,29 @@ import java.io.IOException;
 
 /**
  *
+ * This class creates the JFrame and adds all of the essential panels inside it.
+ *
  * @author Alik Balika, Oleksandr Maistruk, Zach Hunter
  *
  */
 public class Application extends JFrame {
 
     /**
-     *
+     * The width and height of the JFrame
      */
-    private static final long serialVersionUID = -1533040357004060524L;
     private static final int WIDTH = 900;
     private static final int HEIGHT = 600;
 
-    //rivate SqliteDB myDataBase = new SqliteDB(QuestionMenu.getDataBaseName());
-
+    /**
+     * Constructs an Application object
+     * @throws IOException
+     */
     public Application() throws IOException {
         init();
     }
 
     /**
-     *
+     * Sets all the necessary details for the frame as well as adds all the panels into the JFrame
      */
     private void init() {
         setSize(WIDTH, HEIGHT);
@@ -35,16 +38,12 @@ public class Application extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
-        //myDataBase.setIsUsedToDefault();
 
         AnswerPanel answerPanel = new AnswerPanel();
 
         QuestionPanel questionPanel = new QuestionPanel();
 
         MazePanel panel = new MazePanel(answerPanel, questionPanel);
-
-        //Menu Bar
-        //MyMenuBar.getInstance().setMaze(panel.getMaze());
 
         MyMenuBar.getInstance().setMazePanel(panel);
         setJMenuBar(MyMenuBar.getInstance());
