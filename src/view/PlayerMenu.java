@@ -29,14 +29,22 @@ import model.Player;
  */
 public class PlayerMenu extends JMenu {
 
-    /**
-     * The paths to the images
-     */
+    /** The paths to the images OLD_MAN icon*/
     public final static String OLD_MAN = "resources/Oldman.gif";
+    
+    /** The paths to the images OLD_WOMAN icon*/
     public final static String OLD_WOMAN = "resources/Oldwoman.gif";
+    
+    /** The paths to the images BOY1 icon*/
     public final static String BOY1 = "resources/Boy.gif";
+    
+    /** The paths to the images GIRL1 icon*/
     public final static String GIRL1 = "resources/Girl.gif";
+    
+    /** The paths to the images GUY icon*/
     public final static String GUY = "resources/Guy.gif";
+    
+    /** The paths to the images GIRL2 icon*/
     public final static String GIRL2 = "resources/Girl2.gif";
 
 
@@ -46,8 +54,10 @@ public class PlayerMenu extends JMenu {
     /** A list of players actions. */
     private List<PlayerAction> myPlayerActions;
 
+    /** The field to interact with Player class */
     private Player myPlayer;
 
+    /** The field to interact with mazePanel class */
     private MazePanel myMazePanel;
 
     /**
@@ -75,6 +85,11 @@ public class PlayerMenu extends JMenu {
         createPlayerMenu();
     }
 
+    /**
+     * Setters for mazePanel
+     * 
+     * @param theMazePanel is the current mazePanel
+     */
     public void setMazePanel(MazePanel theMazePanel) {
         myMazePanel = theMazePanel;
         myPlayer = myMazePanel.getMaze().getPlayer();
@@ -114,13 +129,8 @@ public class PlayerMenu extends JMenu {
         @SuppressWarnings("unused")
         private final String mySpecificPlayerName;
 
+        /** The path to player icon */
         private final String myPath;
-
-        //        /** The player to use. */
-//        private final Icon mySpecificPlayerIcon;
-//
-//        /** Icon for a button. */
-//        private Icon icon;
 
         /**
          * Sets up a player and assign name and icon for it.
@@ -135,7 +145,6 @@ public class PlayerMenu extends JMenu {
 
             putValue(Action.SMALL_ICON, theIcon);
             mySpecificPlayerName = theName;
-//            mySpecificPlayerIcon = theIcon;
 
             setLayout(new GridLayout(3, 2));
 
@@ -145,9 +154,6 @@ public class PlayerMenu extends JMenu {
             putValue(Action.NAME, "");
 
             myPath = thePath;
-
-//            myPlayerName = mySpecificPlayerName;
-
 
         }
 
