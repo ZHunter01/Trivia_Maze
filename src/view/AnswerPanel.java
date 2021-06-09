@@ -193,8 +193,8 @@ public class AnswerPanel extends JPanel {
      * @throws IOException
      * @throws LineUnavailableException
      */
-    private void playSound(File audioFile) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-        AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile);
+    private void playSound(final File theAudioFile) throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        AudioInputStream audioStream = AudioSystem.getAudioInputStream(theAudioFile);
 
         AudioFormat format = audioStream.getFormat();
         DataLine.Info info = new DataLine.Info(Clip.class, format);
@@ -209,7 +209,7 @@ public class AnswerPanel extends JPanel {
     /**
      * initializes the submit button and adds it to the panel
      */
-    private void initAndAddSubmit(final boolean theVicible) {
+    private void initAndAddSubmit(final boolean theVisibility) {
         if (mySubmit == null) {
             mySubmit = new JButton("SUBMIT");
             mySubmit.setBackground(Color.BLACK);
@@ -222,7 +222,7 @@ public class AnswerPanel extends JPanel {
             mySubmit.addActionListener(e -> buttonListener());
 
         } else {
-            mySubmit.setVisible(theVicible);
+            mySubmit.setVisible(theVisibility);
         }
 
     }
