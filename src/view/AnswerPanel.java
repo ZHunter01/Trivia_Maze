@@ -214,7 +214,7 @@ public class AnswerPanel extends JPanel {
             mySubmit = new JButton("SUBMIT");
             mySubmit.setBackground(Color.BLACK);
             mySubmit.setForeground(Color.WHITE);
-            mySubmit.setFocusable(theVicible);
+            mySubmit.setFocusable(theVisibility);
             mySubmit.setPreferredSize(new Dimension(205, 30));
             add(mySubmit);
 

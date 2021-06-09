@@ -19,6 +19,8 @@ public class Door extends GameObject implements Serializable{
     private boolean myPermaLock;
     /**int field for door's question ID */
     private int myQuestionID;
+    /**String that holds cheat value. If this is the input, the door is unlocked */
+    private static final String CHEAT = "TOM";
     
     /** Creates a default door object
      * 
@@ -34,7 +36,7 @@ public class Door extends GameObject implements Serializable{
      * @return
      */
     public String getQuestion() {
-        System.out.println(" Answer: " + Question.getQuestionInstance().getSolution(myQuestionID)); ///NEED TO REMOVE FOR FINAL SUBMIT
+        System.out.println(" Answer: " + Question.getQuestionInstance().getSolution(myQuestionID)); //Left in for ease of testing our code. Prints solution
         return Question.getQuestionInstance().getQuestion(myQuestionID);
     }
    
@@ -43,7 +45,7 @@ public class Door extends GameObject implements Serializable{
      * @param theSolution
      */
     public void checkLock(final String theSolution) {
-        if (Question.getQuestionInstance().isSolution(theSolution, myQuestionID)) {
+        if (Question.getQuestionInstance().isSolution(theSolution, myQuestionID) || theSolution.equalsIgnoreCase(CHEAT)) {
             myLock = false;
         }
         else {

@@ -38,7 +38,7 @@ public class Drawer {
     }
 
     /**
-     * Draws the doors to each room as well as sets their coordinates
+     * Draws the doors to each room
      * @param g the Graphics drawer
      * @param room the room object
      */
