@@ -29,7 +29,11 @@ public class Player extends GameObject implements Serializable{
     private static final int MY_START_Y = 40;
     /**Default Image for the Player object */
     private static final String DEFAULT_IMAGE = "resources/Oldman.gif";
+    /**String that holds image for the player object */
     private String myPlayerImagePath;
+    private PowerUp myPerma;
+    private PowerUp myFree;
+    
     
     /** Creates a default player object with default black color
     *
@@ -85,6 +89,12 @@ public class Player extends GameObject implements Serializable{
      */
     public void addPowerUp(final PowerUp thePowerUp) {
         myPowerUps.add(thePowerUp);
+        
+        if (thePowerUp.isFreeQuestion()) {
+            myFree = thePowerUp;
+        } else if (thePowerUp.isPermaUnlock()) {
+            myPerma = thePowerUp;
+        }
     }
     
     /** Returns boolean if player has a PermaUnlock PowerUp
@@ -116,7 +126,11 @@ public class Player extends GameObject implements Serializable{
      * @param thePowerUp
      */
     public void removePowerUp(final PowerUp thePowerUp) {
-        myPowerUps.remove(thePowerUp);        
+        if (thePowerUp.isFreeQuestion()) {
+            myPowerUps.remove(myFree);
+        } else if (thePowerUp.isPermaUnlock()) {
+            myPowerUps.remove(myPerma);
+        }
     }
     
     /** Updates the x and y coordinates of the Player

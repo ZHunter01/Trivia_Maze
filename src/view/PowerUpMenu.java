@@ -106,6 +106,7 @@ public class PowerUpMenu extends JMenu {
                 myMazePanel.getMaze().getCurrentRoom().getUserDoor(currentDir).setPermaLock(false);
                 //Remove PowerUp from Player object
                 myMazePanel.getMaze().getPlayer().removePowerUp(PowerUp.createPermaUnlock());
+                System.out.println(myMazePanel.getMaze().getPlayer().containsPermaUnlock());
                 //Once used MenuItem becomes disabled
                 myPerma.setEnabled(false);
             }
