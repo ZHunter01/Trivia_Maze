@@ -63,13 +63,16 @@ public class QuestionMenu extends JMenu {
 
     }
 
-
+    /**
+     * Setters for mazePanel
+     * 
+     * @param theMazePanel current mazePanel
+     */
     public void setMazePanel(MazePanel theMazePanel) {
         myMazePanel = theMazePanel;
     }
 
     /**
-     *
      * Action Listener to change question type by clicking Sport button.
      */
     private class SportButton implements ActionListener {
@@ -91,8 +94,6 @@ public class QuestionMenu extends JMenu {
             
             myMazePanel.setBackgroundImage(MazePanel.SPORT_BACKGROUND);
             myMazePanel.repaint();
-
-            //myMazePanel = new MazePanel();
 
         }
     }
