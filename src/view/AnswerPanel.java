@@ -96,7 +96,7 @@ public class AnswerPanel extends JPanel {
      * Sets the myAnswer field to theAnswer
      */
     public void setAnswer(final String theAnswer) {
-        this.myAnswer = myAnswer;
+        this.myAnswer = theAnswer;
     }
 
     /**
